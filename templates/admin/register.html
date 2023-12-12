@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% block title %} Registrazione utenti {% endblock %}
+
+{% block content %}
+<main>
+    <div class="container h-100">
+        <h1 class="border-bottom pb-3 mb-4 text-primary">Registrazione utente</h1>
+        <div class="d-flex justify-content-center">
+            <form class="row align-items-center" id="register_form" action="{{ doc_root }}register" method="post">
+                {% if errors %}
+                    <div class="alert alert-danger"> Correggere gli errori </div>
+                {% endif %}
+
+                <div class="col-md-6 mt-3">
+                    <label for="email" class="form-label"> Indirizzo e-mail: </label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+                            <div class="errors"> {{ errors.email }} </div>
+                </div>
+
+                <div class="col-md-6 mt-3">
+                    <label for="username" class="form-label"> Username: </label>
+                        <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}">
+                            <div class="errors"> {{ errors.username }} </div>
+                </div>
+
+                <div class="col-md-5 mt-4">
+                    <label for="name" class="form-label"> Nome: </label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ user.name }}">
+                            <div class="errors"> {{ errors.name }} </div>
+                </div>
+
+                <div class="col-md-5 mt-4">
+                    <label for="surname" class="form-label"> Cognome: </label>
+                        <input type="text" class="form-control" id="surname" name="surname" value="{{ user.surname }}">
+                            <div class="errors"> {{ errors.surname }} </div>
+                </div>
+
+                <div class="col-md-2 mt-4">
+                    <label for="role" class="form-label"> Posizione: </label>
+                        <select id="role" class="form-select" name="role">
+                            <option></option>
+                            <option> Admin </option>
+                            <option> Membro </option>
+                            <option> Sospeso </option>
+                        </select>
+                </div>
+
+                <div class="col-md-6 mt-4">
+                    <label for="pass" class="form-label"> Password: </label>
+                        <input type="password" class="form-control" id="password" name="password">
+                            <div class="errors"> {{ errors.password }} </div>
+                </div>
+
+                <div class="col-md-6 mt-4">
+                    <label for="confirm" class="form-label"> Conferma password: </label>
+                        <input type="password" class="form-control" id="confirm" name="confirm">
+                            <div class="errors"> {{ errors.confirm }} </div>
+                </div>                
+
+                <div class="d-flex justify-content-center col-12 mt-4 mb-2">
+                    <button type="reset" class="btn btn-outline-danger me-2" name="reset"> Cancella </button>
+                    <button type="submit" class="btn btn-outline-success" name="submit"> Salva </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

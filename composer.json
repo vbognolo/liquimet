@@ -1,0 +1,14 @@
+{
+    "require": {
+        "twig/twig": "^3.6",
+        "twig/intl-extra": "^3.6",
+        "twig/extra-bundle": "^3.6",
+        "datatables/datatables": "^1.10"
+    },
+    
+    "autoload": {
+        "psr-4": {
+            "Liquimet\\":"src/models/"
+        }
+    }
+}
