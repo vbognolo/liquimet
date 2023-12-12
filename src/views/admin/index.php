@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);     
-is_admin($session->role);                               
+//is_admin($session->role);                               
 
 if(!$id){                                              // If no valid id
     include APP_ROOT . '/src/views/page-not-found.php';     // Page not found
