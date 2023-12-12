@@ -2,10 +2,10 @@
 namespace Liquimet\Model;
 
 class User{
-    protected $db;                                       // holds ref to database object
+    protected $db;                                       //holds ref to database object
 
     public function __construct(Database $db){
-        $this->db = $db;                                 // add ref to database object
+        $this->db = $db;                                 //add ref to database object
     }
 
 //          --> ! GET USER BY ID ! <--
@@ -33,23 +33,17 @@ class User{
         return $this->db->runSQL($sql)->fetchAll();         
     }
     
-//          --> ! RETURNS USER IF AUTHENTICATED, FALSE IF NOT ! <--
-    public function login(string $username, string $pass){
+//  ===> LOGIN: RETURNS USER IF AUTHENTICATED, FALSE IF NOT
+    public function login(string $username, string $password){
         $sql = "SELECT u.*,
                        CONCAT(u.name, ' ', u.surname) AS member, 
                        r.name AS role 
-                FROM users AS u
-                JOIN roles AS r
+                FROM `users` AS u
+                JOIN `roles` AS r
                 ON u.id_role = r.id_role
-                WHERE u.username = :username;";   
-                                         
-            $user = $this->db->runSQL($sql, [$username])->fetch();          
-                if(!$user){                                             // if no user found
-                    return false;                 
-                }       
-                                               
-            $auth = password_verify($pass, $user['password']);      // verify if password match
-                return ($auth ? $user : false);                             // return whether password matched
+                WHERE u.username = :username;";  
+
+        return $this->db->runSQL($sql, [$username])->fetch();    
     }
 
 //          --> ! ADD NEW USER ! <-- 
