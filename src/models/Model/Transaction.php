@@ -49,40 +49,40 @@ class Transaction {
         }
     }
    
-//  ===>    CREATE TRANSACTION FOR INSERTING PARTIAL TRANSPORTS (transport + quantity + partials) 
-    public function createPart(array $transport, array $partial): bool{
-        try{                                                                                        
-            $this->db->beginTransaction();
-                
+//          --> ! CREATE TRANSACTION FOR INSERTING PARTIAL TRANSPORTS ! <--
+public function createPart(array $transport, array $partial): bool{
+    try{                                                                                        
+        $this->db->beginTransaction();
+            
             //try to insert transport data
-            $sql = "INSERT INTO `transports` 
-                        (`type`, `slot`, `cmr`, `issuer`, `supplier`, `transport`, `date_load`, `date_unload`, 
-                        `container`, `note`, `id_user`, `seo`)
+            $sql = "INSERT INTO transports 
+                        (type, slot, cmr, issuer, supplier, transport, date_load, date_unload, 
+                        container, note, id_user, seo)
                     VALUES 
                         (:type, :slot, :cmr, :issuer, :supplier, :transport, :date_load, :date_unload, 
                         :container, :note, :id_user, :seo);";
-                            
+                        
             $this->db->runSQL($sql, $transport);
             $id = $this->db->lastInsertId();
-                
+            
             //try to insert quantity data           
-            /*$sql = "INSERT INTO quantities 
+        /*    $sql = "INSERT INTO quantities 
                         (kg_load, cooling, price_typology, price_value, kg_unload, liquid_density, 
-                        gas_weight, pcs_ghv, id_transport, id_user)
+                        gas_weight, pcs_ghv, id_transport, id_user, created, modified, modified_by)
                     VALUES 
                         (:kg_load, :cooling, :price_typology, :price_value, :kg_unload, :liquid_density, 
-                        :gas_weight, :pcs_ghv, $id, :id_user);";
-        
+                        :gas_weight, :pcs_ghv, $id, :id_user, :created, null, null);";
+    
             $this->db->runSQL($sql, $quantity);       */    
-            
-            //try to insert partial data
+        
+        //try to insert partial data   
             foreach($partial['destination'] as $key => $value){
-                $sql = "INSERT INTO `partials`
-                            (`destination`, `exw`, `date`, `place`, `q_unloaded`, `invoice`, `id_transport`, `id_user`)
-                        VALUES
+                $sql = "INSERT INTO partials 
+                            (destination, exw, date, place, q_unloaded, invoice, id_transport, id_user)
+                        VALUES 
                             (:destination, :exw, :date, :place, :q_unloaded, :invoice, :id_transport, :id_user);";
-                            
-                $stmt = $this->db->prepare($sql); 
+            
+                $stmt = $this->db->prepare($sql);
                 $stmt->execute([
                     'destination' => $value,
                     'exw' => $partial['exw'][$key],
@@ -93,24 +93,24 @@ class Transaction {
                     'id_transport' => $id,
                     'id_user' => 1
                 ]);
-            }    
-                
-            // commit inserted data (saved)
-            $this->db->commit();                                      
-                return true;                                 
-        } catch(\PDOException $e){                                                                     // if exception was raised
-            //$this->db->rollBack();
-            $e->getMessage();
-            throw $e;
-            
-            /*if($e->errorInfo[1] === 1062){              // if an integrity constraint
-                return false;                           // return false
-            } else{                                     // for all other reasons
-                throw $e;                               // re-throw exception
-            }*/
-        }
-    }
+            }
 
+            
+        // commit inserted data (saved)
+        $this->db->commit();                                      
+            return true;                                 
+    } catch(\PDOException $e){                                                                     // if exception was raised
+        //$this->db->rollBack();
+        $e->getMessage();
+        throw $e;
+        
+        /*if($e->errorInfo[1] === 1062){              // if an integrity constraint
+            return false;                           // return false
+        } else{                                     // for all other reasons
+            throw $e;                               // re-throw exception
+        }*/
+    }
+}
 
 //          --> ! UPDATE TRANSACTION FOR FULL TRANSPORT ! <--
     public function updateFull(array $transport, array $quantity): bool{
