@@ -47,7 +47,7 @@ class Category{
                 FROM categories AS c
                 JOIN groups AS g 
                 ON c.id_group = g.id_group
-                WHERE g.id_group = 1;";  
+                WHERE g.menu = 1;";  
                 
         return $this->db->runSQL($sql)->fetchAll();      
     }

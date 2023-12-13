@@ -22,7 +22,7 @@ declare(strict_types = 1);
                    
         }else{
             $message[] = 'incorrect email or password!';
-        
+        }
     }
 
 $data['username'] = $username;                                              //username if validation successfull
