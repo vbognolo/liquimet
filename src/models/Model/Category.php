@@ -8,7 +8,7 @@ class Category{
         $this->db = $db;                                 
     }
 
-//          --> ! GET CATEGORY BY ID WITH GROUP NAME ! <--
+//  ===> GET CATEGORY BY ID WITH GROUP NAME
     public function get(int $id){
         $sql = "SELECT c.id_category, c.name AS category, c.description, c.navigation, c.id_group, c.seo, 
                        g.name AS name,
@@ -22,21 +22,21 @@ class Category{
         return $this->db->runSQL($sql, [$id])->fetch();  
     }
 
-//          --> ! GET ALL CATEGORIES WITH GROUP NAME ! <--
+//  ===> GET ALL CATEGORIES WITH GROUP NAME
     public function getAll(): array{
         $sql = "SELECT c.id_category, c.description, c.navigation, c.id_group, c.seo,
-                       c.name AS category, 
-                       g.name AS name,
-                       g.seo AS seo_group,
-                       g.title AS title
+                    c.name AS category, 
+                    g.name AS name,
+                    g.seo AS seo_group,
+                    g.title AS title
                 FROM categories AS c
                 JOIN groups AS g
                 ON c.id_group = g.id_group;";                       
                 
         return $this->db->runSQL($sql)->fetchAll();      
-    }
+    }   
 
-//          --> ! GET DISTINCT GROUPS OF CATEGORIES ! <--
+//  ===> GET ALL GROUPS OF CATEGORIES FOR NAVIGATION (DISTINCT)
     public function getGroups(): array{
         $sql = "SELECT DISTINCT g.id_group,
                                 g.name AS name,
@@ -46,12 +46,20 @@ class Category{
                                 c.id_group
                 FROM categories AS c
                 JOIN groups AS g 
-                ON c.id_group = g.id_group;";  
+                ON c.id_group = g.id_group
+                WHERE g.id_group = 1;";  
                 
         return $this->db->runSQL($sql)->fetchAll();      
     }
 
-//          --> ! COUNT ALL CATEGORIES (ADMIN) ! <--
+//  ===> GET ALL GROUPS OF CATEGORIES FOR NAVIGATION [ADMIN]
+    public function getAdminGroups(): array{
+        $sql = "SELECT * FROM groups;";  
+                
+        return $this->db->runSQL($sql)->fetchAll();      
+    }    
+
+//  ===> COUNT ALL CATEGORIES [ADMIN]
     public function countC(): int{
         $sql = "SELECT COUNT(id_category) 
                 FROM categories;";        
@@ -59,7 +67,7 @@ class Category{
         return $this->db->runSQL($sql)->fetchColumn();  
     }
 
-//          --> ! COUNT ALL GROUPS (ADMIN) ! <--
+//  ===> COUNT ALL GROUPS [ADMIN]
     public function countG(): int{
         $sql = "SELECT COUNT(id_group) 
                 FROM groups;";        
