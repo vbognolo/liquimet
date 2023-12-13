@@ -45,7 +45,7 @@
                             <!--    ===>    NAVIGATION    <===    -->
             <ul class="nav nav-tabs-bordered d-flex my-auto mx-auto p-2 hstack gap-2" id="navigation">
                 <li class="nav-item nav-justified nav-fill mx-auto my-auto">
-                    <a class="nav-link w-100" href="{{ doc_root }}admin/index/{{ user.id_role }}">
+                    <a class="nav-link w-100" href="{{ doc_root }}admin/index/{{ user.id_role}}">
                         <i class="bi bi-house"></i>
                     </a>
                     
@@ -55,18 +55,20 @@
                 {% for link in navigation %}
                     <li class="nav-item nav-justified nav-fill mx-auto my-auto">       
                         <a class="nav-link w-100" aria-controls="nav-platform"
-                            href="{{ doc_root }}admin/category/{{ link.id_group }}"
-                                {% if (group == link.id_group) %} 
-                                    class="active" aria-current="page" 
-                                {% endif %}>
-                                    {{ link.name|capitalize }}
-                        </a>
+                            {% if (link.id_group == 1) %}
+                                href="{{ doc_root }}category/{{ link.id_group }}/{{ link.seo }}"
+                            {% else %}
+                                href="{{ doc_root }}users/{{ link.id_group }}/{{ link.seo }}"
 
-                        {% if (link.id_group < group_count) %}            
-                            <li class="icon-divider"> <i class="bi bi-chevron-double-right" style="color: #0066cc"></i> </li>
-                        {% endif %}
+                                    {% endif %}>
+                                        {{ link.name|capitalize }}
+                        </a>
                     </li>     
-                {% endfor %}                     
+                        
+                    {% if (link.id_group < group_count) %}            
+                        <li class="icon-divider"> <i class="bi bi-chevron-double-right" style="color: #0066cc"></i> </li>
+                    {% endif %}
+                {% endfor %}                       
             </ul>          
                             <!--    ===>    END NAVIGATION    <===    -->               
 
