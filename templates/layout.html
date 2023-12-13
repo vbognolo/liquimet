@@ -34,18 +34,18 @@
         <header id="header" class="header d-flex">
                                         <!-- LOGO -->
             <div class="d-flex align-items-center div-title">
-                <a href="{{ doc_root }}index" class="logo d-flex align-items-center w-100">
+                <a href="{{ doc_root }}index/{{ user.id_role }}" class="logo d-flex align-items-center w-100">
                     <img src="{{ doc_root }}img/liquimet_logo.jpg" class="img-logo my-auto" alt="">
                     <span></span>
-                    <h3 class="d-none d-lg-block my-auto ms-4" id="title">Liquimet S.r.l.</h3>
+                    <h3 class="d-none d-lg-block my-auto ms-4" id="title"> Liquimet Padova </h3>
                 </a>
             </div>
                                         <!-- END LOGO -->
 
                                         <!-- NAVIGATION -->
-            <ul class="nav nav-tabs-bordered d-flex my-auto mx-auto hstack gap-3 p-0" id="navigation">
+            <ul class="nav nav-tabs-bordered d-flex my-auto mx-auto hstack gap-3" id="navigation">
                 <li class="nav-item nav-justified nav-fill mx-auto my-auto">
-                    <a class="nav-link w-100" href="{{ doc_root }}index/{{ user.id_user }}">
+                    <a class="nav-link w-100" href="{{ doc_root }}index/{{ user.id_role }}">
                         <i class="bi bi-house"></i>
                     </a>
                     
@@ -53,45 +53,42 @@
                 </li>
 
                 {% for link in navigation %}
-                    
-                        <li class="nav-item nav-justified nav-fill mx-auto my-auto">       
-                            <a class="nav-link w-100" aria-controls="nav-platform"
-                                href="{{ doc_root }}category/{{ link.id_group }}/{{ link.seo }}"
-                                    {% if (group == link.id_group) %} 
-                                        class="active" aria-current="page" 
-                                    {% endif %}>
-                                        {{ link.name|capitalize }}
-                            </a>
-                        </li>     
+                    <li class="nav-item nav-justified nav-fill mx-auto my-auto">       
+                        <a class="nav-link w-100" aria-controls="nav-platform"
+                            href="{{ doc_root }}category/{{ link.id_group }}/{{ link.seo }}"
+                                {% if (group == link.id_group) %} 
+                                    class="active" aria-current="page" 
+                                {% endif %}>
+                                    {{ link.name|capitalize }}
+                        </a>
+                    </li>     
                         
-                        {% if (link.id_group < group_count) %}            
-                            <li class="icon-divider"> <i class="bi bi-chevron-double-right" style="color: #0066cc"></i> </li>
-                        {% endif %}
-                    
-                    
+                    {% if (link.id_group > group_count) %}            
+                        <li class="icon-divider"> <i class="bi bi-chevron-double-right" style="color: #0066cc"></i> </li>
+                    {% endif %}
                 {% endfor %}                     
             </ul>
                                         <!-- END NAVIGATION -->
 
                                         <!-- SEARCH BAR -->
-            <div class="search-bar ms-auto my-auto p-1">
+            <!--<div class="search-bar ms-auto my-auto p-1">
                 <form class="search-form d-flex align-items-center" method="POST" action="#">
                     <input type="text" name="query" placeholder="Cerca">
                         <button type="submit" title="Cerca"> 
                             <i class="bi bi-search"></i>
                         </button>
                 </form>
-            </div>
+            </div>-->
                                         <!-- END SEARCH BAR -->
 
                                         <!-- SEARCH ICON -->
             <nav class="header-nav me-1 p-2">
                 <ul class="d-flex align-items-center">
-                    <li class="nav-item d-block d-lg-none">
+                    <!--<li class="nav-item d-block d-lg-none">
                         <a class="nav-link nav-icon search-bar-toggle" href="#">
                             <i class="bi bi-search"></i>
                         </a>
-                    </li>
+                    </li>-->
                                         <!-- END SEARCH ICON-->
 
                                         <!-- PROFILE ICON -->
