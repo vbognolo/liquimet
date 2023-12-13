@@ -4,20 +4,29 @@
 {% block content %}
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1> Benvenuto/a {{ user.name }}! </h1>
+            <h1 class="mx-auto my-1 py-1"> 
+                {% if user.gender == 'm' %}
+                    Benvenuto 
+                {% else %}
+                    Benvenuta 
+                {% endif %}
+                    {{ user.name }}!
+            </h1>
             
-                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                    <ol class="breadcrumb d-flex align-items-center p-1" style="--bs-breadcrumb-divider-color: white">
-                        <li class="breadcrumb-item">
-                            <a href="{{ doc_root }}admin/index" class="pageicon" style="font-size: 18px"> 
-                                <i class="bi bi-house"></i> 
-                            </a>
+                <nav style="--bs-breadcrumb-divider: none" aria-label="breadcrumb" style="text-align: center">
+                    <ol class="breadcrumb p-2 mx-auto mt-3" style="border: 1px solid white; border-radius: 5px; text-align: center; width: 20rem">        
+                        <li class="breadcrumb-item mx-auto my-auto circle">
+                            <i class="bi bi-arrow-right-circle"></i>
                         </li>
-
-                        <li class="breadcrumb-item active"> 
-                            <a href="{{ doc_root }}admin/user" class="pageicon">
+                        
+                        <li class="breadcrumb-item mx-auto my-auto" > 
+                            <a href="#" class="pageicon">
                                 Pannello di controllo
                             </a> 
+                        </li>
+                        
+                        <li class="breadcrumb-item mx-auto my-auto circle">
+                            <i class="bi bi-arrow-left-circle"></i>
                         </li>
                     </ol>
                 </nav>
