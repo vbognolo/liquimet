@@ -5,12 +5,20 @@
     <main id="main" class="main mx-2">
         <div class="pagetitle">
             <h1 class="mx-auto my-1 py-1"> 
+<<<<<<< HEAD
                 {% if session.gender == 'm' %}
+=======
+                {% if user.gender == 'm' %}
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7
                     Benvenuto 
                 {% else %}
                     Benvenuta 
                 {% endif %}
+<<<<<<< HEAD
                     {{ session.name }}!
+=======
+                    {{ user.name }}!
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7
             </h1>
             
                 <nav style="--bs-breadcrumb-divider: none" aria-label="breadcrumb" style="text-align: center">
@@ -315,6 +323,7 @@
             </div>
         </section>
     </main>
+<<<<<<< HEAD
 <!-- 
     <script>
         let w = window.innerWidth;
@@ -324,3 +333,6 @@
     </script>
 -->
 {% endblock %}
+=======
+{% endblock %}
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7

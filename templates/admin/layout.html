@@ -34,7 +34,11 @@
         <header id="header" class="header d-flex">
                             <!--    ===>    LOGO    <===    -->
             <div class="d-flex align-items-center div-title">
+<<<<<<< HEAD
                 <a href="{{ doc_root }}admin/index/{{ session.id_user }}" class="logo d-flex align-items-center w-100">
+=======
+                <a href="{{ doc_root }}admin/index/{{ user.id_role }}" class="logo d-flex align-items-center w-100">
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7
                     <img src="{{ doc_root }}img/liquimet_logo.jpg" class="img-logo my-auto" alt="">
                     <span></span>
                     <h3 class="d-none d-lg-block my-auto ms-4" id="title"> Liquimet Padova </h3>
@@ -45,7 +49,11 @@
                             <!--    ===>    NAVIGATION    <===    -->
             <ul class="nav nav-tabs-bordered d-flex my-auto mx-auto p-2 hstack gap-2" id="navigation">
                 <li class="nav-item nav-justified nav-fill mx-auto my-auto">
+<<<<<<< HEAD
                     <a class="nav-link w-100" href="{{ doc_root }}admin/index/{{ session.id_user}}">
+=======
+                    <a class="nav-link w-100" href="{{ doc_root }}admin/index/{{ user.id_role}}">
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7
                         <i class="bi bi-house"></i>
                     </a>
 
@@ -55,9 +63,16 @@
                 {% for link in navigation %}
                     <li class="nav-item nav-justified nav-fill mx-auto my-auto">       
                         <a class="nav-link w-100" aria-controls="nav-platform"
+<<<<<<< HEAD
                             href="{{ doc_root }}admin/{{ link.seo }}/{{ link.id_group }}"
                             {% if (group == link.id_group) %} 
                                 class="active" aria-current="page" 
+=======
+                            {% if (link.id_group == 1) %}
+                                href="{{ doc_root }}category/{{ link.id_group }}/{{ link.seo }}"
+                            {% else %}
+                                href="{{ doc_root }}users/{{ link.id_group }}/{{ link.seo }}"
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7
                             {% endif %}>
                                 {{ link.name|capitalize }}
                         </a>
@@ -93,6 +108,7 @@
 
                                             <!-- PROFILE ICON -->                                                              
                     <li class="nav-item dropdown d-flex justify-content-end ms-5 mb-1">
+<<<<<<< HEAD
                         <a class="nav-link p-1 my-auto mx-1 nav-profile" data-bs-toggle="dropdown" id="nav-profile"
                             href="{{ doc_root }}admin/user/{{ session.id_user }}">
                                 <span class="d-none d-md-block dropdown-toggle ps-2"> {{ session.username }} </span>
@@ -141,6 +157,57 @@
                     
                     </li>               
                 </ul>
+=======
+                        {% if (user.id_user != 0) %}
+                            <a class="nav-link p-1 my-auto mx-1 nav-profile" data-bs-toggle="dropdown" id="nav-profile"
+                                href="{{ doc_root }}user/{{ user.id_user }}">
+                                    <span class="d-none d-md-block dropdown-toggle ps-2"> {{ user.username }} </span>
+                            </a>
+                        {% endif %}
+                                        <!-- END PROFILE ICON -->
+
+                                        <!-- PROFILE DROPDOWN ITEMS -->
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                                <li class="dropdown-header">
+                                    <h5>{{ user.member }}</h5>
+                                        <span>{{ user.role|capitalize }} </span>
+                                </li>
+            
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item d-flex justify-content-center" 
+                                        href="{{ doc_root }}user/{{ user.id_user }}">
+                                        <span> Profilo </span>
+                                    </a>
+                                </li>
+            
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+    
+                                <li>
+                                    <a class="dropdown-item d-flex justify-content-center" href="#">
+                                        <span>Impostazioni</span>
+                                    </a>
+                                </li>
+    
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item d-flex justify-content-center" href="{{ doc_root }}logout/">
+                                        <span>Esci</span>
+                                    </a>
+                                </li>
+                            </ul>  
+                                        <!-- END PROFILE DROPDOWN ITEMS -->     
+                        </li>               
+                    </ul>
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7
             </nav>                   
         </header>    
         

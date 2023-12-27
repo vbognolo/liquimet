@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 declare(strict_types = 1);                                 
 
@@ -31,3 +32,30 @@ $data['category'] = $category;                                                  
 $data['group'] = $category['id_group'];                                               //group id for link     
 
 echo $twig->render('admin/users.html', $data);                     
+=======
+<?php
+declare(strict_types = 1);                                 
+/*
+if(!$id){                                                   // If no valid id
+    include APP_ROOT . '/src/views/page-not-found.php';     // Page not found
+}
+
+$user = $model->getUser()->get($id);                   // Get member data
+    if(!$user){                                          // If array is empty
+        include APP_ROOT . '/src/views/page-not-found.php';     // Page not found
+    }
+*/
+// navigation menu data 
+$data['navigation'] = $model->getCategory()->getAdminGroups(); 
+$data['categories'] = $model->getCategory()->getAll();  
+$data['group_count'] = $model->getCategory()->countG();  
+
+// users data
+$data['users'] = $model->getUser()->getAll();
+
+// other data
+$data['group'] = '';                                                                    // group id for link
+$data['section'] = '';    
+
+echo $twig->render('admin/users.html', $data);                       
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7

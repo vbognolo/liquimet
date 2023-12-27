@@ -21,6 +21,7 @@ class Platform{
         return $this->db->runSQL($sql, [$id])->fetch();  
     }
 
+<<<<<<< HEAD:src/models/Model/Platform.php
 //  ===> GET ALL CATEGORIES WITH GROUP NAME 
     public function getAll(): array{
         $sql = "SELECT c.*,
@@ -31,9 +32,21 @@ class Platform{
                 FROM `categories` AS c
                 JOIN `groups` AS g
                     ON c.id_group = g.id_group;";                       
+=======
+//  ===> GET ALL CATEGORIES WITH GROUP NAME
+    public function getAll(): array{
+        $sql = "SELECT c.id_category, c.description, c.navigation, c.id_group, c.seo,
+                    c.name AS category, 
+                    g.name AS name,
+                    g.seo AS seo_group,
+                    g.title AS title
+                FROM categories AS c
+                JOIN groups AS g
+                ON c.id_group = g.id_group;";                       
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7:src/models/Model/Category.php
                 
         return $this->db->runSQL($sql)->fetchAll();      
-    }
+    }   
 
 //  ===> GET ALL GROUPS OF CATEGORIES FOR NAVIGATION (DISTINCT)
     public function getGroups(): array{
@@ -43,10 +56,17 @@ class Platform{
                                 g.menu AS menu,
                                 g.title AS title,
                                 c.id_group
+<<<<<<< HEAD:src/models/Model/Platform.php
                 FROM `categories` AS c
                 JOIN `groups` AS g 
                     ON c.id_group = g.id_group
                 WHERE g.id_group = 1;";  
+=======
+                FROM categories AS c
+                JOIN groups AS g 
+                ON c.id_group = g.id_group
+                WHERE g.menu = 1;";  
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7:src/models/Model/Category.php
                 
         return $this->db->runSQL($sql)->fetchAll();      
     }
@@ -58,6 +78,16 @@ class Platform{
         return $this->db->runSQL($sql)->fetchAll();      
     }  
 
+<<<<<<< HEAD:src/models/Model/Platform.php
+=======
+//  ===> GET ALL GROUPS OF CATEGORIES FOR NAVIGATION [ADMIN]
+    public function getAdminGroups(): array{
+        $sql = "SELECT * FROM groups;";  
+                
+        return $this->db->runSQL($sql)->fetchAll();      
+    }    
+
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7:src/models/Model/Category.php
 //  ===> COUNT ALL CATEGORIES [ADMIN]
     public function countC(): int{
         $sql = "SELECT COUNT(id_category) 
@@ -125,5 +155,10 @@ class Platform{
             }
         }
     }
+<<<<<<< HEAD:src/models/Model/Platform.php
 */
 }
+=======
+
+}
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7:src/models/Model/Category.php

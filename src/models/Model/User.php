@@ -38,6 +38,7 @@ class User{
         return $this->db->runSQL($sql)->fetchAll();         
     }
     
+<<<<<<< HEAD
 //  ===> GET ALL COMPANY TITLES FOR USERS
     public function getTitles(): array{
         $sql = "SELECT * 
@@ -46,10 +47,13 @@ class User{
         return $this->db->runSQL($sql)->fetchAll();         
     }
     
+=======
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7
 //  ===> LOGIN: RETURNS USER IF AUTHENTICATED, FALSE IF NOT
     public function login(string $username, string $password){
         $sql = "SELECT u.*,
                        CONCAT(u.name, ' ', u.surname) AS member, 
+<<<<<<< HEAD
                        r.name AS role,
                        t.name AS title 
                 FROM `users` AS u
@@ -66,6 +70,15 @@ class User{
                                                
         $auth = password_verify($password, $user['password']);      // verify if password match
             return ($auth ? $user : false);                             // return whether password matched*/
+=======
+                       r.name AS role 
+                FROM `users` AS u
+                JOIN `roles` AS r
+                ON u.id_role = r.id_role
+                WHERE u.username = :username;";  
+
+        return $this->db->runSQL($sql, [$username])->fetch();    
+>>>>>>> fa83cdb56ec98407968a1c9bb5aa724a53e3bcd7
     }
 
 //  ===> CREATE NEW USER [ADMIN]
