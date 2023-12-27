@@ -227,10 +227,10 @@ class __TwigTemplate_be99bea91165f15fc467df0c1da791d437b58fe5bf88bcf5a7b6798e70b
         $macros = $this->macros;
         echo " 
     <section class=\"grid-container my-auto mx-auto d-flex justify-content-center\">
-        <form id=\"msform\" novalidate action=\"";
+        <form id=\"msform\" action=\"";
         // line 165
         echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
-        echo "partadd\" method=\"post\">
+        echo "partadd\" method=\"POST\">
 
                         <!-- !! PROGRESS BAR !! -->
             <div class=\"container mb-2 pb-2\" style=\"max-width: 45rem\">
@@ -309,7 +309,7 @@ class __TwigTemplate_be99bea91165f15fc467df0c1da791d437b58fe5bf88bcf5a7b6798e70b
 
                         <div class=\"col-lg-4\">
                             <label for=\"date_load\" class=\"form-control-label mb-0\" data-toggle=\"tooltip\" title=\"-- Terminale\"> Data carico </label>
-                            <input type=\"text\" class=\"form-control date\" name=\"date_load\" autocomplete=\"off\" value=\"";
+                            <input type=\"text\" class=\"form-control date\" name=\"date_load\" value=\"";
         // line 229
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["transport"] ?? null), "date_load", [], "any", false, false, false, 229), "html", null, true);
         echo "\" />
@@ -317,7 +317,7 @@ class __TwigTemplate_be99bea91165f15fc467df0c1da791d437b58fe5bf88bcf5a7b6798e70b
                                     
                         <div class=\"col-lg-4\">
                             <label for=\"date_unload\" class=\"form-control-label mb-0\" data-toggle=\"tooltip\" title=\"-- Padova\"> Data scarico </label>
-                            <input type=\"text\" class=\"form-control date\" name=\"date_unload\" autocomplete=\"off\" value=\"";
+                            <input type=\"text\" class=\"form-control date\" name=\"date_unload\" value=\"";
         // line 234
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["transport"] ?? null), "date_unload", [], "any", false, false, false, 234), "html", null, true);
         echo "\" />
@@ -375,11 +375,14 @@ class __TwigTemplate_be99bea91165f15fc467df0c1da791d437b58fe5bf88bcf5a7b6798e70b
                                             
                             <tr class=\"mx-auto my-0 pt-1\">
                                 <td class=\"tbl_id\">
-                                    <input type=\"hidden\" name=\"tbl_id[]\">
+                                    <input type=\"hidden\" name=\"tbl_id[]\" />
                                 </td>
-                           
+                          
                                 <td style=\"width: 40%\">
-                                    <input type=\"text\" name=\"destination[]\" class=\"form-control\" /> 
+                                    <input type=\"text\" name=\"destination[]\" class=\"form-control\" value=\"";
+        // line 287
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["partial"] ?? null), "destination", [], "any", false, false, false, 287), "html", null, true);
+        echo "\"/> 
                                 </td>
 
                                 <td style=\"width: 20%\">
@@ -394,19 +397,31 @@ class __TwigTemplate_be99bea91165f15fc467df0c1da791d437b58fe5bf88bcf5a7b6798e70b
                                 </td>
                                             
                                 <td style=\"width: 20%\"> 
-                                    <input type=\"text\" class=\"form-control date\" name=\"date[]\" autocomplete=\"off\" />
+                                    <input type=\"text\" class=\"form-control date\" name=\"date[]\" autocomplete=\"off\" value=\"";
+        // line 299
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["partial"] ?? null), "date", [], "any", false, false, false, 299), "html", null, true);
+        echo "\"/>
                                 </td>
                         
                                 <td style=\"width: 40%\">
-                                    <input type=\"text\" class=\"form-control\" name=\"place[]\" />
+                                    <input type=\"text\" class=\"form-control\" name=\"place[]\" value=\"";
+        // line 303
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["partial"] ?? null), "place", [], "any", false, false, false, 303), "html", null, true);
+        echo "\" />
                                 </td>
                         
                                 <td style=\"width: 40%\">
-                                    <input type=\"text\" class=\"form-control mx-auto\" name=\"q_unloaded[]\" />
+                                    <input type=\"text\" class=\"form-control mx-auto\" name=\"q_unloaded[]\" value=\"";
+        // line 307
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["partial"] ?? null), "q_unloaded", [], "any", false, false, false, 307), "html", null, true);
+        echo "\" />
                                 </td>
                         
                                 <td style=\"width: 10%\">
-                                    <input type=\"text\" class=\"form-control mx-auto\" name=\"invoice[]\" />
+                                    <input type=\"text\" class=\"form-control mx-auto\" name=\"invoice[]\" value=\"";
+        // line 311
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["partial"] ?? null), "invoice", [], "any", false, false, false, 311), "html", null, true);
+        echo "\"/>
                                 </td>
 
                                 <td class=\"d-flex my-auto pt-2\">
@@ -460,7 +475,7 @@ class __TwigTemplate_be99bea91165f15fc467df0c1da791d437b58fe5bf88bcf5a7b6798e70b
         echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["link"] ?? null), "seo", [], "any", false, false, false, 358), "html", null, true);
         echo "\" class=\"text-light\"> Piattaforma </a>
                 </button> 
-                <button type=\"submit\" name=\"submit\" class=\"submit action-button mb-3 mt-2 mx-auto\"> Salva </button>
+                <button type=\"submit\" name=\"submit\" id=\"submit\" class=\"submit action-button mb-3 mt-2 mx-auto\"> Salva </button>
             </fieldset>
                     <!-- !! END FIELDSET 4 (CONFIRM NEW TRANSPORT) !! -->
         </form>
@@ -688,7 +703,7 @@ class __TwigTemplate_be99bea91165f15fc467df0c1da791d437b58fe5bf88bcf5a7b6798e70b
 
     public function getDebugInfo()
     {
-        return array (  472 => 367,  458 => 358,  389 => 292,  338 => 244,  330 => 239,  322 => 234,  314 => 229,  306 => 224,  298 => 219,  290 => 214,  282 => 209,  274 => 204,  232 => 165,  225 => 163,  66 => 7,  62 => 5,  58 => 4,  49 => 2,  38 => 1,);
+        return array (  487 => 367,  473 => 358,  423 => 311,  416 => 307,  409 => 303,  402 => 299,  392 => 292,  384 => 287,  338 => 244,  330 => 239,  322 => 234,  314 => 229,  306 => 224,  298 => 219,  290 => 214,  282 => 209,  274 => 204,  232 => 165,  225 => 163,  66 => 7,  62 => 5,  58 => 4,  49 => 2,  38 => 1,);
     }
 
     public function getSourceContext()
@@ -857,7 +872,7 @@ class __TwigTemplate_be99bea91165f15fc467df0c1da791d437b58fe5bf88bcf5a7b6798e70b
 
 {% block content %} 
     <section class=\"grid-container my-auto mx-auto d-flex justify-content-center\">
-        <form id=\"msform\" novalidate action=\"{{ doc_root }}partadd\" method=\"post\">
+        <form id=\"msform\" action=\"{{ doc_root }}partadd\" method=\"POST\">
 
                         <!-- !! PROGRESS BAR !! -->
             <div class=\"container mb-2 pb-2\" style=\"max-width: 45rem\">
@@ -921,12 +936,12 @@ class __TwigTemplate_be99bea91165f15fc467df0c1da791d437b58fe5bf88bcf5a7b6798e70b
 
                         <div class=\"col-lg-4\">
                             <label for=\"date_load\" class=\"form-control-label mb-0\" data-toggle=\"tooltip\" title=\"-- Terminale\"> Data carico </label>
-                            <input type=\"text\" class=\"form-control date\" name=\"date_load\" autocomplete=\"off\" value=\"{{ transport.date_load }}\" />
+                            <input type=\"text\" class=\"form-control date\" name=\"date_load\" value=\"{{ transport.date_load }}\" />
                         </div>
                                     
                         <div class=\"col-lg-4\">
                             <label for=\"date_unload\" class=\"form-control-label mb-0\" data-toggle=\"tooltip\" title=\"-- Padova\"> Data scarico </label>
-                            <input type=\"text\" class=\"form-control date\" name=\"date_unload\" autocomplete=\"off\" value=\"{{ transport.date_unload }}\" />
+                            <input type=\"text\" class=\"form-control date\" name=\"date_unload\" value=\"{{ transport.date_unload }}\" />
                         </div>
                                 
                         <div class=\"col-lg-4\"> 
@@ -975,11 +990,11 @@ class __TwigTemplate_be99bea91165f15fc467df0c1da791d437b58fe5bf88bcf5a7b6798e70b
                                             
                             <tr class=\"mx-auto my-0 pt-1\">
                                 <td class=\"tbl_id\">
-                                    <input type=\"hidden\" name=\"tbl_id[]\">
+                                    <input type=\"hidden\" name=\"tbl_id[]\" />
                                 </td>
-                           
+                          
                                 <td style=\"width: 40%\">
-                                    <input type=\"text\" name=\"destination[]\" class=\"form-control\" /> 
+                                    <input type=\"text\" name=\"destination[]\" class=\"form-control\" value=\"{{ partial.destination }}\"/> 
                                 </td>
 
                                 <td style=\"width: 20%\">
@@ -991,19 +1006,19 @@ class __TwigTemplate_be99bea91165f15fc467df0c1da791d437b58fe5bf88bcf5a7b6798e70b
                                 </td>
                                             
                                 <td style=\"width: 20%\"> 
-                                    <input type=\"text\" class=\"form-control date\" name=\"date[]\" autocomplete=\"off\" />
+                                    <input type=\"text\" class=\"form-control date\" name=\"date[]\" autocomplete=\"off\" value=\"{{ partial.date }}\"/>
                                 </td>
                         
                                 <td style=\"width: 40%\">
-                                    <input type=\"text\" class=\"form-control\" name=\"place[]\" />
+                                    <input type=\"text\" class=\"form-control\" name=\"place[]\" value=\"{{ partial.place }}\" />
                                 </td>
                         
                                 <td style=\"width: 40%\">
-                                    <input type=\"text\" class=\"form-control mx-auto\" name=\"q_unloaded[]\" />
+                                    <input type=\"text\" class=\"form-control mx-auto\" name=\"q_unloaded[]\" value=\"{{ partial.q_unloaded }}\" />
                                 </td>
                         
                                 <td style=\"width: 10%\">
-                                    <input type=\"text\" class=\"form-control mx-auto\" name=\"invoice[]\" />
+                                    <input type=\"text\" class=\"form-control mx-auto\" name=\"invoice[]\" value=\"{{ partial.invoice }}\"/>
                                 </td>
 
                                 <td class=\"d-flex my-auto pt-2\">
@@ -1052,7 +1067,7 @@ class __TwigTemplate_be99bea91165f15fc467df0c1da791d437b58fe5bf88bcf5a7b6798e70b
                 <button type=\"button\" class=\"action-button mb-2 mx-auto\">
                     <a href=\"{{ doc_root }}category/1/{{ link.seo }}\" class=\"text-light\"> Piattaforma </a>
                 </button> 
-                <button type=\"submit\" name=\"submit\" class=\"submit action-button mb-3 mt-2 mx-auto\"> Salva </button>
+                <button type=\"submit\" name=\"submit\" id=\"submit\" class=\"submit action-button mb-3 mt-2 mx-auto\"> Salva </button>
             </fieldset>
                     <!-- !! END FIELDSET 4 (CONFIRM NEW TRANSPORT) !! -->
         </form>

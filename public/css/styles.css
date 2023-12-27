@@ -1,11 +1,15 @@
 /* min-width: 1500px --> laptops */
 /*--------------------------------------------------------------
-#                          GENERAL
+#   =====>                 GENERAL                             #
 --------------------------------------------------------------*/
 :root {
     scroll-behavior: smooth;
 }
 
+html {
+    overflow-x: hidden;
+    margin-right: calc(-1 * (100vw - 100%));
+}
 * {
     box-sizing: border-box;
 }
@@ -21,11 +25,11 @@ body {
 }
 
 /*--------------------------------------------------------------
-#                         END GENERAL
+#   =====>                END GENERAL                          #
 --------------------------------------------------------------*/
 
 /*--------------------------------------------------------------
-#                         LOGIN PAGE
+#   =====>                LOGIN PAGE                           #
 --------------------------------------------------------------*/  
 .user_card {
     height: 450px;
@@ -129,28 +133,28 @@ body {
     font-weight: bold;
 }
 /*--------------------------------------------------------------
-#                         END LOGIN PAGE
+# =====>                  END LOGIN PAGE                       #
 --------------------------------------------------------------*/
 
 /*--------------------------------------------------------------
-#                          LAYOUT PAGE
+# =====>                   LAYOUT PAGE                         #
 --------------------------------------------------------------*/                                
 header {
     box-shadow: 4px 4px 8px 15px lightblue; 
 }
 
 .logo {
-    line-height: 1;
+    line-height: 2;
 }
-  
-@media (min-width: 1200px) {
-    .logo {
-        width: 280px;
-    }
-}
-  
+                /*  
+                @media (min-width: 1200px) {
+                    .logo {
+                        width: 280px;
+                    }
+                }
+                */ 
 .logo img {
-    max-height: 35px;
+    max-height: 2.75rem;
     margin: auto;
     padding: 4px;
 /*    border: 3px double rgba(0,102,204, 0.3); 
@@ -160,7 +164,7 @@ header {
 .logo span {
     font-size: 18px;
     font-weight: bold;
-    margin-left: 1em;
+    margin-left: 0.6rem;
     color: #0066cc;
     font-family: "Rubik", sans-serif;
 }
@@ -179,7 +183,7 @@ header {
     font-weight: 400;
 }
 
-                                /* ------- BORDERED TABS (HEADER NAVIGATION) ------- */
+/* =====> BORDERED TABS [HEADER NAVIGATION] <===== */
 .nav-tabs-bordered .nav-link {
     margin-bottom: -2px;
     background-color: #fff;
@@ -218,7 +222,7 @@ header {
 .nav-tabs-bordered li.icon-divider {
     font-size: 13px;
 }
-                                /* ------- END BORDERED TABS (HEADER NAVIGATION) ------- */
+/* =====> END BORDERED TABS [HEADER NAVIGATION] <===== */
   
 .header {
     transition: all 0.5s;
@@ -240,29 +244,29 @@ header {
 .header .search-bar {
     min-width: 20%;
 }
-  
-@media (max-width: 1199px) {
-    .header .search-bar {
-        position: fixed;
-        top: 50px;
-        left: 0;
-        right: 0;
-        padding: 20px;
-        box-shadow: 0px 0px 15px 0px rgba(1, 41, 112, 0.1);
-        background: white;
-        z-index: 9999;
-        transition: 0.3s;
-        visibility: hidden;
-        opacity: 0;
-    }
-  
-    .header .search-bar-show {
-        top: 60px;
-        visibility: visible;
-        opacity: 1;
-    }
-}
-  
+                /*  
+                @media (max-width: 1199px) {
+                    .header .search-bar {
+                        position: fixed;
+                        top: 50px;
+                        left: 0;
+                        right: 0;
+                        padding: 20px;
+                        box-shadow: 0px 0px 15px 0px rgba(1, 41, 112, 0.1);
+                        background: white;
+                        z-index: 9999;
+                        transition: 0.3s;
+                        visibility: hidden;
+                        opacity: 0;
+                    }
+                
+                    .header .search-bar-show {
+                        top: 60px;
+                        visibility: visible;
+                        opacity: 1;
+                    }
+                }
+                */  
 .header .search-form {
     width: 100%;
 }
@@ -385,15 +389,6 @@ header {
     border-radius: 25px;
     box-shadow: 1px 1px 6px #71bf44;
 }
-/*
-#platform-tab, #charts-tab, #user-tab {
-    font-family: "Rubik", sans-serif;
-    color: #0066cc;
-    font-weight: 400;
-    font-size: 20px;
-    text-align: center;
-}
-*/
 
 div.vr {
     background-color: #0066cc;
@@ -414,37 +409,38 @@ footer {
     width: 100%;
 }
 /*--------------------------------------------------------------
-#                        END LAYOUT PAGE
+# =====>                 END LAYOUT PAGE                       #
 --------------------------------------------------------------*/    
 
 /*--------------------------------------------------------------
-#                          INDEX PAGE
+# =====>                   INDEX PAGE                          #
 --------------------------------------------------------------*/
-/* main */
+/* =====> MAIN <===== */
 #main {
     margin-top: 10px;
     padding: 10px 20px;
     transition: all 0.3s;
 }
-
-    @media (min-width: 1500px) {
-        #main {
-            margin-top: 5px;
-            padding: 5px 10px;
-        }
-    }
-
-/* page title */
+/* =====> END MAIN <===== */
+                /*
+                    @media (min-width: 1500px) {
+                        #main {
+                            margin-top: 5px;
+                            padding: 5px 10px;
+                        }
+                    }
+                */
+/* =====> PAGE TITLE <===== */
 .pagetitle {
     margin-bottom: 30px;
 }
-
-    @media (min-width: 1500px) {
-        .pagetitle {
-            margin-bottom: 15px;
-        }
-    }
-  
+                /*
+                    @media (min-width: 1500px) {
+                        .pagetitle {
+                            margin-bottom: 15px;
+                        }
+                    }
+                */ 
 .pagetitle h1 {
     font-size: 1.5rem;
     font-weight: 600;
@@ -452,46 +448,52 @@ footer {
     text-transform: uppercase;
     font-family: "Rubik", sans-serif;
     letter-spacing: 0.2rem;
-    width: 25%;
-    border-bottom: 2px solid white;   
+    text-decoration: underline;
+    text-underline-offset: 10px;
+    text-decoration-thickness: 10%;
+    /*width: 30%;*/
+    /*border-bottom: 2px solid white;   */
     text-align: center;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: white;
 }
-
-    @media (min-width: 1500px) {
-        .pagetitle h1 {
-            width: 28%;
-        }
-    }
-  
+                /*
+                    @media (min-width: 1500px) {
+                        .pagetitle h1 {
+                            width: 28%;
+                        }
+                    }
+                */ 
 .pagetitle .breadcrumb .breadcrumb-item .pageicon {
     color: white;
     font-family: "Rubik", sans-serif;
-    font-size: 0.3rem;
+    font-size: 0.4rem;
     text-align: center;
     text-transform: uppercase;
+    letter-spacing: 0.1rem;
 }
-
-    @media (min-width: 1500px) {
-        .pagetitle .breadcrumb .breadcrumb-item .pageicon {
-            font-size: 0.91rem;
-        }
-    }
-
+                /*
+                    @media (min-width: 1500px) {
+                        .pagetitle .breadcrumb .breadcrumb-item .pageicon {
+                            font-size: 0.91rem;
+                        }
+                    }
+                */
 .pagetitle .breadcrumb .circle {
     font-size: 0.1rem;
     color: white;
 }
+                /*
+                    @media (min-width: 1500px) {
+                        .pagetitle .breadcrumb .circle {
+                            font-size: 0.93rem;
+                            color: white;
+                        }
+                    }
+                */ 
+/* =====> END PAGE TITLE <===== */
 
-    @media (min-width: 1500px) {
-        .pagetitle .breadcrumb .circle {
-            font-size: 0.93rem;
-            color: white;
-        }
-    }
-  
-/* info cards */
+/* =====> INFO CARDS <===== */
 .dashboard .info-card .card-title {
     font-weight: 600;
     color: #0066cc;
@@ -505,13 +507,13 @@ footer {
     margin: 0;
     padding: 0;
 }
-
-    @media (min-width: 1500px) {
-        .dashboard .info-card .info-body span {
-            font-size: 0.8rem;
-        }
-    }
-
+                /*
+                    @media (min-width: 1500px) {
+                        .dashboard .info-card .info-body span {
+                            font-size: 0.8rem;
+                        }
+                    }
+                */
 .dashboard .info-card h6 {
     font-size: 18px;
     color: #023365;
@@ -520,12 +522,12 @@ footer {
     padding: 0;
 }
 
-    @media (min-width: 1500px) {
-        .dashboard .info-card h6 {
-            font-size: 21px;
-        }
-    }
-
+                /*    @media (min-width: 1500px) {
+                        .dashboard .info-card h6 {
+                            font-size: 21px;
+                        }
+                    }
+                */
 .dashboard .card-icon {
     font-size: 20px;
     line-height: 0;
@@ -535,12 +537,12 @@ footer {
     flex-grow: 0;
 }
 
-    @media (min-width: 1500px) {
-        .dashboard .card-icon {
-            font-size: 22px;
-        }
-    }
-
+                /*   @media (min-width: 1500px) {
+                        .dashboard .card-icon {
+                            font-size: 22px;
+                        }
+                    }
+                */
 .dashboard .trans-card .card-icon {
     color: #0066cc;
     background: rgb(220, 247, 215);
@@ -574,37 +576,37 @@ footer {
     text-align: center;
     color: #023365;
 }
-
-    @media (min-width: 1500px) {
-        .dashboard .recent-card .table thead th {
-            font-size: 0.83rem;
-        }
-    }
-
+                /*
+                    @media (min-width: 1500px) {
+                        .dashboard .recent-card .table thead th {
+                            font-size: 0.83rem;
+                        }
+                    }
+                */
 .dashboard .recent-card .table tbody td {
     font-family: "Rubik", sans-serif;
     font-size: 0.625rem;
     vertical-align: middle;
     text-align: center;
 }
-
-    @media (min-width: 1500px) {
-        .dashboard .recent-card .table tbody td {
-            font-size: 0.79rem;
-            padding: 0.55rem;
-        }
-    }
-
+                /*
+                    @media (min-width: 1500px) {
+                        .dashboard .recent-card .table tbody td {
+                            font-size: 0.79rem;
+                            padding: 0.55rem;
+                        }
+                    }
+                */
 .dashboard .recent-card .table {
     vertical-align: middle;
 }
-
-    @media (min-width: 1500px) {
-        .dashboard .recent-card .table {
-            margin-bottom: 0.3rem;
-        }
-    }
-
+                /*
+                    @media (min-width: 1500px) {
+                        .dashboard .recent-card .table {
+                            margin-bottom: 0.3rem;
+                        }
+                    }
+                */
 .dashboard .recent-card .table .recent-hover:hover {
     background: rgba(101, 214, 255, 0.2);
 }
@@ -620,37 +622,37 @@ footer {
     font-weight: 400;
     vertical-align: middle;
 }
-
-    @media (min-width: 1500px) {
-        .dashboard .profile-card .profile-body div {
-            font-size: 0.95rem;
-            letter-spacing: 0.05rem;
-        }
-    }
-
+                /*
+                    @media (min-width: 1500px) {
+                        .dashboard .profile-card .profile-body div {
+                            font-size: 0.95rem;
+                            letter-spacing: 0.05rem;
+                        }
+                    }
+                */
 .dashboard .profile-card .profile-body i {
     font-size: 1rem; 
     color: #71bf44; 
     font-weight: 600;
 }
-
-    @media (min-width: 1500px) {
-        .dashboard .profile-card .profile-body i {
-            font-size: 1.15rem; 
-        }
-    }
-
+                /*
+                    @media (min-width: 1500px) {
+                        .dashboard .profile-card .profile-body i {
+                            font-size: 1.15rem; 
+                        }
+                    }
+                */
 .dashboard .profile-card img {
     max-width: 5rem;
     margin: -20px 0 20px 0;
     border: 0;
 }
-    @media (min-width: 1500px) {
-        .dashboard .profile-card img {
-            max-width: 7rem; 
-        }
-    }
-
+                /* @media (min-width: 1500px) {
+                        .dashboard .profile-card img {
+                            max-width: 7rem; 
+                        }
+                    }
+                */
 .dashboard .users-card {
     margin-bottom: 0;
     font-family: "Rubik", sans-serif;
@@ -660,23 +662,24 @@ footer {
 .dashboard .users-card .users-body {
     vertical-align: middle;
 }
-    @media (min-width: 1500px) {
-        .dashboard .users-card .users-body {
-            font-size: 0.85rem;
-            text-align: center;
-        }
-    }
-
+                /* @media (min-width: 1500px) {
+                        .dashboard .users-card .users-body {
+                            font-size: 0.85rem;
+                            text-align: center;
+                        }
+                    }
+                */
 .dashboard .users-card .card-icon {
     color: #0066cc;
     background: rgb(220, 247, 215);
 }
+/* =====> END INFO CARDS <===== */
 /*--------------------------------------------------------------
-#                         END INDEX PAGE
+# =====>                  END INDEX PAGE                       #
 --------------------------------------------------------------*/
 
 /*--------------------------------------------------------------
-#                         CATEGORY PAGE
+# =====>                  CATEGORY PAGE                        #
 --------------------------------------------------------------*/                                
 .grid-container {
     display: block;
@@ -840,7 +843,8 @@ li .breadcrumb-link a.active{
     box-shadow: 1px 1px 6px #71bf44;
 }
 
-table.platform tbody tr:hover {
+table.platform tbody tr:hover,
+table.signup tbody tr:hover {
     background-color: antiquewhite;
 }
 /*
@@ -876,7 +880,22 @@ table *{
     text-transform: uppercase;
 }
 
-.platform th {
+.signup {
+    border-collapse: collapse;
+    font-size: 0.7rem;
+    font-weight: 600;
+    font-family: "Rubik", sans-serif;
+    /*margin: 25px 0;*/
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    /*overflow: auto;*/
+/*    max-width: 95vw; */
+    /*width: 100vw; */
+    /*display: inline-block;
+    vertical-align: middle;*/
+}
+
+.platform th,
+.signup th {
     background: none;
     color: white;
     text-align: center;
@@ -931,24 +950,24 @@ table *{
     padding: 0 !important;
 }
 /*--------------------------------------------------------------
-#                      END CATEGORY PAGE                                     staro, provjeriti klase
+# =====>               END CATEGORY PAGE                       #                              staro, provjeriti klase
 --------------------------------------------------------------*/
 
 /*--------------------------------------------------------------
-# Profile Page
+# =====>                 PROFILE PAGE                          #
 --------------------------------------------------------------*/
 
 /*--------------------------------------------------------------
-# End Profile Page
+# =====>               END PROFILE PAGE                        #
 --------------------------------------------------------------*/
  
 
   
  
 /*--------------------------------------------------------------
-# OVERRIDE SOME DEFAULT BOOTSTRAP STYLINGS
+#           OVERRIDE SOME DEFAULT BOOTSTRAP STYLINGS           #
 --------------------------------------------------------------*/
-/* Dropdown menus */
+/* =====> DROPDOWN MENUS <===== */
 .dropdown-menu {
     border-radius: 5%;
     -webkit-animation-name: dropdown-animate;
@@ -999,22 +1018,22 @@ table *{
     background-color: #f6f9ff;
     border-radius: 5%;
 }
-  
-@media (min-width: 768px) {
-    .dropdown-menu-arrow::before {
-        content: "";
-        width: 13px;
-        height: 13px;
-        background: #fff;
-        position: absolute;
-        top: -7px;
-        right: 20px;
-        transform: rotate(45deg);
-        border-top: 1px solid #eaedf1;
-        border-left: 1px solid #eaedf1;
-    }
-}
-  
+                    /*
+                    @media (min-width: 768px) {
+                        .dropdown-menu-arrow::before {
+                            content: "";
+                            width: 13px;
+                            height: 13px;
+                            background: #fff;
+                            position: absolute;
+                            top: -7px;
+                            right: 20px;
+                            transform: rotate(45deg);
+                            border-top: 1px solid #eaedf1;
+                            border-left: 1px solid #eaedf1;
+                        }
+                    }
+                    */
 @-webkit-keyframes dropdown-animate {
     0% {
         opacity: 0;
@@ -1042,45 +1061,52 @@ table *{
         opacity: 0;
     }
 }
+/*--------------------------------------------------------------
+#         END OVERRIDE SOME DEFAULT BOOTSTRAP STYLINGS         #                              
+--------------------------------------------------------------*/
    
-  /*--------------------------------------------------------------
-  # Error 404
-  --------------------------------------------------------------*/
-  .error-404 {
+/*--------------------------------------------------------------
+#                      ERROR 404 PAGE                          #
+--------------------------------------------------------------*/
+.error-404 {
     padding: 30px;
-  }
+}
   
-  .error-404 h1 {
+.error-404 h1 {
     font-size: 180px;
     font-weight: 700;
     color: #4154f1;
     margin-bottom: 0;
     line-height: 150px;
-  }
+}
   
-  .error-404 h2 {
+.error-404 h2 {
     font-size: 24px;
     font-weight: 700;
     color: #012970;
     margin-bottom: 30px;
-  }
+}
   
-  .error-404 .btn {
+.error-404 .btn {
     background: #51678f;
     color: #fff;
     padding: 8px 30px;
-  }
+}
   
-  .error-404 .btn:hover {
+.error-404 .btn:hover {
     background: #3e4f6f;
-  }
-  
-  @media (min-width: 992px) {
-    .error-404 img {
-      max-width: 50%;
-    }
-  }
-  
+}
+                /*
+                @media (min-width: 992px) {
+                    .error-404 img {
+                    max-width: 50%;
+                    }
+                }
+                */
+/*--------------------------------------------------------------
+#                     END ERROR 404 PAGE                       #                              
+--------------------------------------------------------------*/
+    
 /* multistep form */  
 /* Progress Bar Start 
 .progressbar {
@@ -1140,28 +1166,17 @@ table *{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /*--------------------------------------------------------------
-#                      ADD/EDIT FORM PAGE                                     
+# =====>               ADD/EDIT FORM PAGE                      #                              
 --------------------------------------------------------------*/
-#msform {
+#msform, #signup {
     text-align: center;
     position: relative;
     margin-top: 10px;
 }
 
-#msform fieldset .form-card {
+#msform fieldset .form-card, 
+#signup fieldset .form-card {
     background: none;
     border: 0 none;
     border-radius: 1rem;
@@ -1173,7 +1188,8 @@ table *{
     position: relative;
 }
 
-#msform fieldset {
+#msform fieldset,
+#signup fieldset {
     background: rgba(233, 229, 229, 0.8);
     border: 0 none;
     border-radius: 1rem;
@@ -1186,25 +1202,27 @@ table *{
     position: relative;
 }
 
-/*Hide all except first fieldset*/
-#msform fieldset:not(:first-of-type) {
+#msform fieldset:not(:first-of-type) {          /* hide all except first fieldset */
     display: none;
 }
 
-#msform fieldset .form-card {
+#msform fieldset .form-card,
+#signup fieldset .form-card {
     text-align: center;
     height: 27rem !important;
 }
 
-/*inputs*/
-#msform .form-group {
+/* =====> INPUTS <===== */
+#msform .form-group,
+#signup .form-group {
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#msform input {
+#msform input,
+#signup input {
     height: 40px;
     vertical-align: middle;
     text-align: center;
@@ -1212,7 +1230,8 @@ table *{
     font-size: 14px;
 }
 
-#msform select .form-control {
+#msform select .form-control,
+#signup select .form-control {
     height: 40px;
     vertical-align: middle;
     text-align-last: center;
@@ -1221,7 +1240,8 @@ table *{
     width: 100%;
 }
 
-#msform select .opt-type {
+#msform select .opt-type,
+#signup select .opt-type {
     height: 40px;
     vertical-align: middle;
     text-align: center;
@@ -1231,7 +1251,8 @@ table *{
     font-size: 14px;
 }
 
-#msform .form-group select, #msform .form-group input, #msform .form-group textarea {
+#msform .form-group select, #msform .form-group input, #msform .form-group textarea,
+#signup .form-group select, #signup .form-group input {
     border: 1px solid #0066cc;
     border-radius: 5px;
     margin-bottom: 15px;
@@ -1247,7 +1268,8 @@ table *{
     -webkit-box-sizing: border-box;
 }
 
-#msform select:focus, #msform input:focus, #msform textarea:focus {
+#msform select:focus, #msform input:focus, #msform textarea:focus,
+#signup select:focus, #signup input:focus {
     -moz-box-shadow: 0 0 0 1px rgba(113,191,68)  !important;
     -webkit-box-shadow: 0 0 0 1px rgba(113,191,68)   !important;
     box-shadow: 0 0 0 1px rgba(113,191,68)   !important;
@@ -1279,9 +1301,11 @@ table *{
     font-weight: 500;
     font-size: 14px;
 }
+/* =====> END INPUTS <===== */
 
-/*buttons*/
-#msform .action-button {
+/* =====> BUTTONS <===== */
+#msform .action-button,
+#signup .action-button {
     width: 8rem;
     background: rgb(238,9,121);
     background: radial-gradient(circle, rgba(238,9,121,1) 35%, rgba(240,45,139,1) 100%);
@@ -1299,22 +1323,26 @@ table *{
     justify-content: center;
 }
 
-#msform .action-button:hover {
+#msform .action-button:hover,
+#signup .action-button:hover {
     box-shadow: 0 0 1px 2px white, 0 0 0 3px #ee0979;
     font-weight: 600;
 }
 
-#msform .reset, #msform .add {
+#msform .reset, #msform .add,
+#signup .reset, #signup .add {
     background: #525eb7;
 /*    background: #3748ae;*/
     color: white;
 }
 
-#msform .reset:hover, #msform .add:hover {
+#msform .reset:hover, #msform .add:hover,
+#signup .reset:hover, #signup .add:hover {
     box-shadow: 0 0 0 2px white, 0 0 0 3px #525eb7;
 }
+/* =====> END BUTTONS <===== */
 
-/*headings*/
+/* =====> HEADINGS <=====*/
 .fs-title {
     font-size: 21px;
     text-transform: uppercase;
@@ -1352,13 +1380,13 @@ table *{
     width: auto;
     margin: 0;
 }
+/* =====> END HEADINGS <===== */
 
-/*progressbar*/
+/* =====> PROGRESSBAR <===== */
 #progressbar {
     margin-bottom: 15px;
     overflow: hidden;
-    /*CSS counters to number the steps*/
-    counter-reset: step;
+    counter-reset: step;            /* CSS counters to number the steps */
     font-size: 0.6rem;
     max-width: 100%;
 }
@@ -1388,7 +1416,7 @@ table *{
     margin: 0 auto 5px auto;
 }
 
-/*progressbar connectors*/
+/* =====> END PROGRESSBAR <===== */
 #progressbar li:after {
     content: '';
     width: 100%;
@@ -1397,18 +1425,16 @@ table *{
     position: absolute;
     left: -50%;
     top: 9px;
-    z-index: -1; /*put it behind the numbers*/
+    z-index: -1;            /* put it behind the numbers */
 }
 
 #progressbar li:first-child:after {
-    /*connector not needed before the first step*/
-    content: none;
+    content: none;          /* connector not needed before the first step */
 }
 
-/*marking active/completed steps green*/
-/*The number of the step and the connector before it = green*/
+/* =====> MARKING ACTIVE/COMPLETED STEPS <===== */
 #progressbar li.active:before {
-    background: #71bf44;
+    background: #71bf44;            /* the number of the step and the connector before it = green */
     color: #333;
     font-size: 0.6rem;
 }
@@ -1418,8 +1444,7 @@ table *{
     color: white;
     font-size: 0.6rem;
 }
+/* =====> END MARKING ACTIVE/COMPLETED STEPS <===== */
 /*--------------------------------------------------------------
-#                      END ADD/EDIT FORM PAGE                                     
+# =====>              END ADD/EDIT FORM PAGE                   #                                   
 --------------------------------------------------------------*/
-
-

@@ -1,20 +1,20 @@
 <?php
 declare(strict_types = 1);   
-is_admin($session->role);                                
+//is_admin($session->role);                                
 
-if(!$id){                                              // If no valid id
-    include APP_ROOT . '/src/views/page-not-found.php';     // Page not found
-}
-
-$user = $model->getUser()->get($id);                   // Get member data
-    if(!$user){                                          // If array is empty
-        include APP_ROOT . '/src/views/page-not-found.php';     // Page not found
+    if(!$id){                                                       //if no valid id
+        include APP_ROOT . '/src/views/page-not-found.php';         //page not found
     }
 
+    $user = $model->getUser()->get($id);                            //get member data
+        if(!$user){                                                 //if array is empty
+            include APP_ROOT . '/src/views/page-not-found.php';     //page not found
+        }
+
 // navigation menu data 
-$data['navigation'] = $model->getCategory()->getGroups(); 
-$data['categories'] = $model->getCategory()->getAll();  
-$data['group_count'] = $model->getCategory()->countG();  
+$data['navigation'] = $model->getPlatform()->getGroups(); 
+$data['categories'] = $model->getPlatform()->getAll();  
+$data['group_count'] = $model->getPlatform()->countG();  
 
 // dashboard data
 $data['countU'] = $model->getUser()->count();

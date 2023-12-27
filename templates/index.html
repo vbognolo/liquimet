@@ -5,16 +5,16 @@
     <main id="main" class="main mx-2">
         <div class="pagetitle">
             <h1 class="mx-auto my-1 py-1"> 
-                {% if user.gender == 'm' %}
+                {% if session.gender == 'm' %}
                     Benvenuto 
                 {% else %}
                     Benvenuta 
                 {% endif %}
-                    {{ user.name }}!
+                    {{ session.name }}!
             </h1>
             
                 <nav style="--bs-breadcrumb-divider: none" aria-label="breadcrumb" style="text-align: center">
-                    <ol class="breadcrumb p-2 mx-auto mt-3" style="border: 1px solid white; border-radius: 5px; width: 18%; text-align: center">        
+                    <ol class="breadcrumb p-2 mx-auto mt-3" style="border: 1px solid white; border-radius: 5px; text-align: center; width: 20rem">        
                         <li class="breadcrumb-item mx-auto my-auto circle">
                             <i class="bi bi-arrow-right-circle"></i>
                         </li>
@@ -189,7 +189,7 @@
                                         PROFILO
                                     </h5>
 
-                                    {% if user.id_user %}
+                                    {% if session.id_user == user.id_user %}
                                     <div class="row mx-auto p-0">
                                         <div class="col-7 mx-auto my-0 p-1 profile-body">
                                             <div class="col align-middle mx-auto">

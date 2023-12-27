@@ -11,9 +11,9 @@ $user = $model->getUser()->get($id);                   // Get member data
     }
 
 // navigation menu data 
-$data['navigation'] = $model->getCategory()->getGroups(); 
-$data['categories'] = $model->getCategory()->getAll();  
-$data['group_count'] = $model->getCategory()->countG();  
+$data['navigation'] = $model->getPlatform()->getGroups(); 
+$data['categories'] = $model->getPlatform()->getAll();  
+$data['group_count'] = $model->getPlatform()->countG();  
 
 // dashboard data
 $data['countU'] = $model->getUser()->count();

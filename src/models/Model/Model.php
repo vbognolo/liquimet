@@ -2,30 +2,30 @@
 namespace Liquimet\Model;
 
 class Model{
-    protected $db = null;                   // stores reference to database object
-    protected $category = null;             // stores reference to database object
-    protected $transport = null;            // stores reference to transport object
-    protected $quantity = null;             // stores reference to quantity object
-    protected $partial = null;              // stores reference to partial object
-    protected $transaction = null;          // stores reference to transaction object
-    protected $user = null;                 // stores reference to user object
-    protected $session = null;              // stores reference to session object
+    protected $db = null;                   //stores reference to database object
+    protected $platform = null;             //stores reference to platform object
+    protected $transport = null;            //stores reference to transport object
+    protected $quantity = null;             //stores reference to quantity object
+    protected $partial = null;              //stores reference to partial object
+    protected $transaction = null;          //stores reference to transaction object
+    protected $user = null;                 //stores reference to user object
+    protected $session = null;              //stores reference to session object
 
     public function __construct($dsn, $username, $password){
-        $this->db = new Database($dsn, $username, $password);           // create database object
+        $this->db = new Database($dsn, $username, $password);               //create database object
     }   
     
-    public function getCategory(){
-        if($this->category === null){                                  // if $transport property null
-            $this->category = new Category($this->db);                // create transport object
+    public function getPlatform(){
+        if($this->platform === null){                                       //if $platform property null
+            $this->platform = new Platform($this->db);                      //create platform object
         }
         
-        return $this->category;                                          
+        return $this->platform;                                          
     }
-
+ 
     public function getTransport(){
-        if($this->transport === null){                                  // if $transport property null
-            $this->transport = new Transport($this->db);                // create transport object
+        if($this->transport === null){                                  
+            $this->transport = new Transport($this->db);                
         }
         
         return $this->transport;                                          

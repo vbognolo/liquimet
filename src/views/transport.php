@@ -14,8 +14,8 @@ declare(strict_types = 1);
             redirect('transport/' . $id . '/' . $transport['seo'], [], 301);                   // redirect to correct url
         }
 
-$data['navigation'] = $model->getCategory()->getGroups(); 
-$data['categories'] = $model->getCategory()->getAll();   
+$data['navigation'] = $model->getPlatform()->getGroups(); 
+$data['categories'] = $model->getPlatform()->getAll();   
 $data['transports'] = $model->getTransport()->getFull();
 
 $data['transport'] = $transport;                                                            

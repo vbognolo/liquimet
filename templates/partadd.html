@@ -162,7 +162,7 @@
 
 {% block content %} 
     <section class="grid-container my-auto mx-auto d-flex justify-content-center">
-        <form id="msform" novalidate action="{{ doc_root }}partadd" method="post">
+        <form id="msform" action="{{ doc_root }}partadd" method="POST">
 
                         <!-- !! PROGRESS BAR !! -->
             <div class="container mb-2 pb-2" style="max-width: 45rem">
@@ -226,12 +226,12 @@
 
                         <div class="col-lg-4">
                             <label for="date_load" class="form-control-label mb-0" data-toggle="tooltip" title="-- Terminale"> Data carico </label>
-                            <input type="text" class="form-control date" name="date_load" autocomplete="off" value="{{ transport.date_load }}" />
+                            <input type="text" class="form-control date" name="date_load" value="{{ transport.date_load }}" />
                         </div>
                                     
                         <div class="col-lg-4">
                             <label for="date_unload" class="form-control-label mb-0" data-toggle="tooltip" title="-- Padova"> Data scarico </label>
-                            <input type="text" class="form-control date" name="date_unload" autocomplete="off" value="{{ transport.date_unload }}" />
+                            <input type="text" class="form-control date" name="date_unload" value="{{ transport.date_unload }}" />
                         </div>
                                 
                         <div class="col-lg-4"> 
@@ -357,7 +357,7 @@
                 <button type="button" class="action-button mb-2 mx-auto">
                     <a href="{{ doc_root }}category/1/{{ link.seo }}" class="text-light"> Piattaforma </a>
                 </button> 
-                <button type="submit" name="submit" class="submit action-button mb-3 mt-2 mx-auto"> Salva </button>
+                <button type="submit" name="submit" id="submit" class="submit action-button mb-3 mt-2 mx-auto"> Salva </button>
             </fieldset>
                     <!-- !! END FIELDSET 4 (CONFIRM NEW TRANSPORT) !! -->
         </form>

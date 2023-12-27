@@ -12,8 +12,8 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* category.html */
-class __TwigTemplate_33175348e5ab1421836bb6fd2fd43a2ac658c14ad38e2db3b6ccbe58bf2842a4 extends Template
+/* admin/category.html */
+class __TwigTemplate_c52cc2bb6e6ddcf6bf4a999d84ae3a3e4b76dade1886b03348716da12a5cc9a4 extends Template
 {
     private $source;
     private $macros = [];
@@ -33,13 +33,13 @@ class __TwigTemplate_33175348e5ab1421836bb6fd2fd43a2ac658c14ad38e2db3b6ccbe58bf2
     protected function doGetParent(array $context)
     {
         // line 1
-        return "layout.html";
+        return "admin/layout.html";
     }
 
     protected function doDisplay(array $context, array $blocks = [])
     {
         $macros = $this->macros;
-        $this->parent = $this->loadTemplate("layout.html", "category.html", 1);
+        $this->parent = $this->loadTemplate("admin/layout.html", "admin/category.html", 1);
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
@@ -73,83 +73,75 @@ class __TwigTemplate_33175348e5ab1421836bb6fd2fd43a2ac658c14ad38e2db3b6ccbe58bf2
         foreach ($context['_seq'] as $context["_key"] => $context["nav"]) {
             // line 15
             echo "                                ";
-            if (((0 === twig_compare(twig_get_attribute($this->env, $this->source, $context["nav"], "navigation", [], "any", false, false, false, 15), 1)) && (0 === twig_compare(twig_get_attribute($this->env, $this->source, $context["nav"], "id_group", [], "any", false, false, false, 15), 1)))) {
+            if ((0 === twig_compare(twig_get_attribute($this->env, $this->source, $context["nav"], "navigation", [], "any", false, false, false, 15), 1))) {
                 // line 16
-                echo "                                    <li ";
-                if ((0 === twig_compare(($context["section"] ?? null), twig_get_attribute($this->env, $this->source, $context["nav"], "id_category", [], "any", false, false, false, 16)))) {
-                    // line 17
-                    echo "                                            class=\"active\"
-                                        ";
-                }
-                // line 18
-                echo ">
-                                        
+                echo "                                    <li>
                                         <a class=\"breadcrumb-link my-auto\" aria-current=\"page\" style=\"width: 10.9rem; font-size: 0.3rem; text-align: center\"
                                             ";
-                // line 21
-                if ((0 === twig_compare(twig_get_attribute($this->env, $this->source, $context["nav"], "id_category", [], "any", false, false, false, 21), 1))) {
-                    // line 22
+                // line 18
+                if ((0 === twig_compare(twig_get_attribute($this->env, $this->source, $context["nav"], "id_category", [], "any", false, false, false, 18), 1))) {
+                    // line 19
                     echo "                                                href=\"";
                     echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
                     echo "transports/";
-                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "id_category", [], "any", false, false, false, 22), "html", null, true);
+                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "id_category", [], "any", false, false, false, 19), "html", null, true);
                     echo "/";
-                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "seo", [], "any", false, false, false, 22), "html", null, true);
+                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "seo", [], "any", false, false, false, 19), "html", null, true);
                     echo "\"
                                             ";
-                } elseif ((0 === twig_compare(twig_get_attribute($this->env, $this->source,                 // line 23
-$context["nav"], "id_category", [], "any", false, false, false, 23), 2))) {
-                    // line 24
+                } elseif ((0 === twig_compare(twig_get_attribute($this->env, $this->source,                 // line 20
+$context["nav"], "id_category", [], "any", false, false, false, 20), 2))) {
+                    // line 21
                     echo "                                                href=\"";
                     echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
                     echo "quantity/";
-                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "id_category", [], "any", false, false, false, 24), "html", null, true);
+                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "id_category", [], "any", false, false, false, 21), "html", null, true);
                     echo "/";
-                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "seo", [], "any", false, false, false, 24), "html", null, true);
+                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "seo", [], "any", false, false, false, 21), "html", null, true);
                     echo "\"
                                             ";
                 } else {
-                    // line 26
+                    // line 23
                     echo "                                                href=\"";
                     echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
                     echo "partials/";
-                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "id_category", [], "any", false, false, false, 26), "html", null, true);
+                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "id_category", [], "any", false, false, false, 23), "html", null, true);
                     echo "/";
-                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "seo", [], "any", false, false, false, 26), "html", null, true);
+                    echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "seo", [], "any", false, false, false, 23), "html", null, true);
                     echo "\"
                                             ";
                 }
-                // line 28
+                // line 25
                 echo "                                        >
                                             <abbr title=\"Transport Management System\">TMS</abbr> 
                                                 ";
-                // line 30
-                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "category", [], "any", false, false, false, 30)), "html", null, true);
+                // line 27
+                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, $context["nav"], "category", [], "any", false, false, false, 27)), "html", null, true);
                 echo " 
                                         </a>
                                     </li>
                                 ";
             }
-            // line 34
+            // line 31
             echo "                            ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['nav'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 35
+        // line 32
         echo "                        </ul>
                     </div>
             </div>
         </div>
     </section>
 
-    <section class=\"grid-container mx-1 mt-0\">
+    <section class=\"grid-container mx-3 mt-0\">
 \t    <div class=\"col-md-12\">
     \t    <div class=\"panel panel-default\">
                 <div class=\"panel-heading d-flex justify-content-center p-1\">
                     <a role=\"button\" class=\"btn btn-outline-light bg-gradient mx-1 mb-3\"
                         href=\"";
-        // line 46
+        // line 43
         echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
         echo "partadd/\"> 
                             <i class=\"bi bi-plus\" style=\"font-weight: 400; text-align: center\"></i>
@@ -187,49 +179,49 @@ $context["nav"], "id_category", [], "any", false, false, false, 23), 2))) {
 
                         <tbody class=\"table-body\">  
                         ";
-        // line 81
+        // line 78
         $context["id"] = 1;
-        // line 82
+        // line 79
         echo "                        ";
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(range(1, ($context["transports"] ?? null), 1));
         foreach ($context['_seq'] as $context["_key"] => $context["i"]) {
-            // line 83
+            // line 80
             echo "                            ";
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable(range(0, (twig_length_filter($this->env, ($context["quantities"] ?? null)) - 1), 1));
             foreach ($context['_seq'] as $context["_key"] => $context["i"]) {
-                // line 84
+                // line 81
                 echo "                                <tr data-bs-toggle=\"collapse\" data-bs-target=\"#q-";
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_0 = ($context["quantities"] ?? null)) && is_array($__internal_compile_0) || $__internal_compile_0 instanceof ArrayAccess ? ($__internal_compile_0[$context["i"]] ?? null) : null), "id_transport", [], "any", false, false, false, 84), "html", null, true);
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_0 = ($context["quantities"] ?? null)) && is_array($__internal_compile_0) || $__internal_compile_0 instanceof ArrayAccess ? ($__internal_compile_0[$context["i"]] ?? null) : null), "id_transport", [], "any", false, false, false, 81), "html", null, true);
                 echo "\" class=\"accordion-toggle\" 
                                     aria-expanded=\"false\" style=\"font-size: 0.2rem\">
                                     <td scope=\"row\" class=\"align-middle\" style=\"border-right: 2px solid rgba(0, 0, 0, 0.2)\">
                                         <a href=\"";
-                // line 87
+                // line 84
                 echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
                 echo "transports/";
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_1 = ($context["transports"] ?? null)) && is_array($__internal_compile_1) || $__internal_compile_1 instanceof ArrayAccess ? ($__internal_compile_1[$context["i"]] ?? null) : null), "id_transport", [], "any", false, false, false, 87), "html", null, true);
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_1 = ($context["transports"] ?? null)) && is_array($__internal_compile_1) || $__internal_compile_1 instanceof ArrayAccess ? ($__internal_compile_1[$context["i"]] ?? null) : null), "id_transport", [], "any", false, false, false, 84), "html", null, true);
                 echo "/";
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_2 = ($context["transports"] ?? null)) && is_array($__internal_compile_2) || $__internal_compile_2 instanceof ArrayAccess ? ($__internal_compile_2[$context["i"]] ?? null) : null), "seo", [], "any", false, false, false, 87), "html", null, true);
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_2 = ($context["transports"] ?? null)) && is_array($__internal_compile_2) || $__internal_compile_2 instanceof ArrayAccess ? ($__internal_compile_2[$context["i"]] ?? null) : null), "seo", [], "any", false, false, false, 84), "html", null, true);
                 echo "\" class=\"text-dark\"
                                             aria-current=\"page\">
                                                 ";
-                // line 89
+                // line 86
                 echo twig_escape_filter($this->env, ($context["id"] ?? null), "html", null, true);
                 echo "
                                             ";
-                // line 90
+                // line 87
                 $context["id"] = (($context["id"] ?? null) + 1);
-                // line 91
+                // line 88
                 echo "                                        </a> <br>
                                         <a href=\"";
-                // line 92
+                // line 89
                 echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
                 echo "transport-edit/";
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_3 = ($context["transports"] ?? null)) && is_array($__internal_compile_3) || $__internal_compile_3 instanceof ArrayAccess ? ($__internal_compile_3[$context["i"]] ?? null) : null), "id_transport", [], "any", false, false, false, 92), "html", null, true);
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_3 = ($context["transports"] ?? null)) && is_array($__internal_compile_3) || $__internal_compile_3 instanceof ArrayAccess ? ($__internal_compile_3[$context["i"]] ?? null) : null), "id_transport", [], "any", false, false, false, 89), "html", null, true);
                 echo "/";
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_4 = ($context["transports"] ?? null)) && is_array($__internal_compile_4) || $__internal_compile_4 instanceof ArrayAccess ? ($__internal_compile_4[$context["i"]] ?? null) : null), "seo", [], "any", false, false, false, 92), "html", null, true);
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_4 = ($context["transports"] ?? null)) && is_array($__internal_compile_4) || $__internal_compile_4 instanceof ArrayAccess ? ($__internal_compile_4[$context["i"]] ?? null) : null), "seo", [], "any", false, false, false, 89), "html", null, true);
                 echo "\" 
                                             class=\"text-dark\" role=\"button\">
                                                 <i class=\"bi bi-pencil-square\"></i> 
@@ -237,67 +229,67 @@ $context["nav"], "id_category", [], "any", false, false, false, 23), 2))) {
                                     </td>
                                     <td class=\"align-middle\"> 
                                         ";
-                // line 98
-                if ((0 === twig_compare(twig_get_attribute($this->env, $this->source, (($__internal_compile_5 = ($context["transports"] ?? null)) && is_array($__internal_compile_5) || $__internal_compile_5 instanceof ArrayAccess ? ($__internal_compile_5[$context["i"]] ?? null) : null), "type", [], "any", false, false, false, 98), 0))) {
-                    // line 99
+                // line 95
+                if ((0 === twig_compare(twig_get_attribute($this->env, $this->source, (($__internal_compile_5 = ($context["transports"] ?? null)) && is_array($__internal_compile_5) || $__internal_compile_5 instanceof ArrayAccess ? ($__internal_compile_5[$context["i"]] ?? null) : null), "type", [], "any", false, false, false, 95), 0))) {
+                    // line 96
                     echo "                                            F 
                                         ";
                 } else {
-                    // line 101
+                    // line 98
                     echo "                                            P
                                         ";
                 }
-                // line 103
+                // line 100
                 echo "                                    </td>
                                     <td style=\"word-break: break-all\" class=\"align-middle\"> ";
-                // line 104
-                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_6 = ($context["transports"] ?? null)) && is_array($__internal_compile_6) || $__internal_compile_6 instanceof ArrayAccess ? ($__internal_compile_6[$context["i"]] ?? null) : null), "slot", [], "any", false, false, false, 104)), "html", null, true);
+                // line 101
+                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_6 = ($context["transports"] ?? null)) && is_array($__internal_compile_6) || $__internal_compile_6 instanceof ArrayAccess ? ($__internal_compile_6[$context["i"]] ?? null) : null), "slot", [], "any", false, false, false, 101)), "html", null, true);
                 echo " </td>
                                     <td style=\"word-break: break-all\" class=\"align-middle\"> ";
+                // line 102
+                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_7 = ($context["transports"] ?? null)) && is_array($__internal_compile_7) || $__internal_compile_7 instanceof ArrayAccess ? ($__internal_compile_7[$context["i"]] ?? null) : null), "cmr", [], "any", false, false, false, 102)), "html", null, true);
+                echo " </td>
+                                    <td class=\"align-middle\"> ";
+                // line 103
+                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_8 = ($context["transports"] ?? null)) && is_array($__internal_compile_8) || $__internal_compile_8 instanceof ArrayAccess ? ($__internal_compile_8[$context["i"]] ?? null) : null), "issuer", [], "any", false, false, false, 103)), "html", null, true);
+                echo " </td>
+                                    <td class=\"align-middle\"> ";
+                // line 104
+                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_9 = ($context["transports"] ?? null)) && is_array($__internal_compile_9) || $__internal_compile_9 instanceof ArrayAccess ? ($__internal_compile_9[$context["i"]] ?? null) : null), "supplier", [], "any", false, false, false, 104)), "html", null, true);
+                echo " </td>
+                                    <td class=\"align-middle\"> ";
                 // line 105
-                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_7 = ($context["transports"] ?? null)) && is_array($__internal_compile_7) || $__internal_compile_7 instanceof ArrayAccess ? ($__internal_compile_7[$context["i"]] ?? null) : null), "cmr", [], "any", false, false, false, 105)), "html", null, true);
+                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_10 = ($context["transports"] ?? null)) && is_array($__internal_compile_10) || $__internal_compile_10 instanceof ArrayAccess ? ($__internal_compile_10[$context["i"]] ?? null) : null), "transport", [], "any", false, false, false, 105)), "html", null, true);
                 echo " </td>
                                     <td class=\"align-middle\"> ";
                 // line 106
-                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_8 = ($context["transports"] ?? null)) && is_array($__internal_compile_8) || $__internal_compile_8 instanceof ArrayAccess ? ($__internal_compile_8[$context["i"]] ?? null) : null), "issuer", [], "any", false, false, false, 106)), "html", null, true);
+                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_11 = ($context["transports"] ?? null)) && is_array($__internal_compile_11) || $__internal_compile_11 instanceof ArrayAccess ? ($__internal_compile_11[$context["i"]] ?? null) : null), "univoco", [], "any", false, false, false, 106)), "html", null, true);
                 echo " </td>
                                     <td class=\"align-middle\"> ";
                 // line 107
-                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_9 = ($context["transports"] ?? null)) && is_array($__internal_compile_9) || $__internal_compile_9 instanceof ArrayAccess ? ($__internal_compile_9[$context["i"]] ?? null) : null), "supplier", [], "any", false, false, false, 107)), "html", null, true);
+                echo twig_escape_filter($this->env, twig_date_format_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_12 = ($context["transports"] ?? null)) && is_array($__internal_compile_12) || $__internal_compile_12 instanceof ArrayAccess ? ($__internal_compile_12[$context["i"]] ?? null) : null), "date_load", [], "any", false, false, false, 107), "d/m/Y"), "html", null, true);
                 echo " </td>
                                     <td class=\"align-middle\"> ";
                 // line 108
-                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_10 = ($context["transports"] ?? null)) && is_array($__internal_compile_10) || $__internal_compile_10 instanceof ArrayAccess ? ($__internal_compile_10[$context["i"]] ?? null) : null), "transport", [], "any", false, false, false, 108)), "html", null, true);
+                echo twig_escape_filter($this->env, twig_date_format_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_13 = ($context["transports"] ?? null)) && is_array($__internal_compile_13) || $__internal_compile_13 instanceof ArrayAccess ? ($__internal_compile_13[$context["i"]] ?? null) : null), "date_unload", [], "any", false, false, false, 108), "d/m/Y"), "html", null, true);
                 echo " </td>
                                     <td class=\"align-middle\"> ";
                 // line 109
-                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_11 = ($context["transports"] ?? null)) && is_array($__internal_compile_11) || $__internal_compile_11 instanceof ArrayAccess ? ($__internal_compile_11[$context["i"]] ?? null) : null), "univoco", [], "any", false, false, false, 109)), "html", null, true);
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_14 = ($context["transports"] ?? null)) && is_array($__internal_compile_14) || $__internal_compile_14 instanceof ArrayAccess ? ($__internal_compile_14[$context["i"]] ?? null) : null), "id_month_load", [], "any", false, false, false, 109), "html", null, true);
                 echo " </td>
                                     <td class=\"align-middle\"> ";
                 // line 110
-                echo twig_escape_filter($this->env, twig_date_format_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_12 = ($context["transports"] ?? null)) && is_array($__internal_compile_12) || $__internal_compile_12 instanceof ArrayAccess ? ($__internal_compile_12[$context["i"]] ?? null) : null), "date_load", [], "any", false, false, false, 110), "d/m/Y"), "html", null, true);
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_15 = ($context["transports"] ?? null)) && is_array($__internal_compile_15) || $__internal_compile_15 instanceof ArrayAccess ? ($__internal_compile_15[$context["i"]] ?? null) : null), "week_unload", [], "any", false, false, false, 110), "html", null, true);
                 echo " </td>
-                                    <td class=\"align-middle\"> ";
+                                    <td colspan=\"2\" class=\"align-middle\"> ";
                 // line 111
-                echo twig_escape_filter($this->env, twig_date_format_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_13 = ($context["transports"] ?? null)) && is_array($__internal_compile_13) || $__internal_compile_13 instanceof ArrayAccess ? ($__internal_compile_13[$context["i"]] ?? null) : null), "date_unload", [], "any", false, false, false, 111), "d/m/Y"), "html", null, true);
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_16 = ($context["transports"] ?? null)) && is_array($__internal_compile_16) || $__internal_compile_16 instanceof ArrayAccess ? ($__internal_compile_16[$context["i"]] ?? null) : null), "id_month_unload", [], "any", false, false, false, 111), "html", null, true);
+                echo " - ";
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_17 = ($context["transports"] ?? null)) && is_array($__internal_compile_17) || $__internal_compile_17 instanceof ArrayAccess ? ($__internal_compile_17[$context["i"]] ?? null) : null), "month_unload", [], "any", false, false, false, 111), "html", null, true);
                 echo " </td>
                                     <td class=\"align-middle\"> ";
                 // line 112
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_14 = ($context["transports"] ?? null)) && is_array($__internal_compile_14) || $__internal_compile_14 instanceof ArrayAccess ? ($__internal_compile_14[$context["i"]] ?? null) : null), "id_month_load", [], "any", false, false, false, 112), "html", null, true);
-                echo " </td>
-                                    <td class=\"align-middle\"> ";
-                // line 113
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_15 = ($context["transports"] ?? null)) && is_array($__internal_compile_15) || $__internal_compile_15 instanceof ArrayAccess ? ($__internal_compile_15[$context["i"]] ?? null) : null), "week_unload", [], "any", false, false, false, 113), "html", null, true);
-                echo " </td>
-                                    <td colspan=\"2\" class=\"align-middle\"> ";
-                // line 114
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_16 = ($context["transports"] ?? null)) && is_array($__internal_compile_16) || $__internal_compile_16 instanceof ArrayAccess ? ($__internal_compile_16[$context["i"]] ?? null) : null), "id_month_unload", [], "any", false, false, false, 114), "html", null, true);
-                echo " - ";
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_17 = ($context["transports"] ?? null)) && is_array($__internal_compile_17) || $__internal_compile_17 instanceof ArrayAccess ? ($__internal_compile_17[$context["i"]] ?? null) : null), "month_unload", [], "any", false, false, false, 114), "html", null, true);
-                echo " </td>
-                                    <td class=\"align-middle\"> ";
-                // line 115
-                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_18 = ($context["transports"] ?? null)) && is_array($__internal_compile_18) || $__internal_compile_18 instanceof ArrayAccess ? ($__internal_compile_18[$context["i"]] ?? null) : null), "container", [], "any", false, false, false, 115)), "html", null, true);
+                echo twig_escape_filter($this->env, twig_upper_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_18 = ($context["transports"] ?? null)) && is_array($__internal_compile_18) || $__internal_compile_18 instanceof ArrayAccess ? ($__internal_compile_18[$context["i"]] ?? null) : null), "container", [], "any", false, false, false, 112)), "html", null, true);
                 echo " </td>
                                     <td class=\"align-middle\" style=\"border-left: 2px solid rgba(0, 0, 0, 0.2)\"> <i class=\"bi bi-info-circle\"></i> </td>
                                 </tr>
@@ -305,110 +297,110 @@ $context["nav"], "id_category", [], "any", false, false, false, 23), 2))) {
                                     <tr>
                                         <td colspan=\"16\">
                                             <div class=\"accordian-body collapse rowQty mt-3\" id=\"q-";
-                // line 121
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_19 = ($context["quantities"] ?? null)) && is_array($__internal_compile_19) || $__internal_compile_19 instanceof ArrayAccess ? ($__internal_compile_19[$context["i"]] ?? null) : null), "id_transport", [], "any", false, false, false, 121), "html", null, true);
+                // line 118
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_19 = ($context["quantities"] ?? null)) && is_array($__internal_compile_19) || $__internal_compile_19 instanceof ArrayAccess ? ($__internal_compile_19[$context["i"]] ?? null) : null), "id_transport", [], "any", false, false, false, 118), "html", null, true);
                 echo "\"> 
                                                 <table class=\"table table-bordered\">
                                                     <tbody style=\"text-align: center\">
                                                         <tr>
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> Energia caricata [MWh] </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 126
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_20 = ($context["quantities"] ?? null)) && is_array($__internal_compile_20) || $__internal_compile_20 instanceof ArrayAccess ? ($__internal_compile_20[$context["i"]] ?? null) : null), "mwh", [], "any", false, false, false, 126), "html", null, true);
+                // line 123
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_20 = ($context["quantities"] ?? null)) && is_array($__internal_compile_20) || $__internal_compile_20 instanceof ArrayAccess ? ($__internal_compile_20[$context["i"]] ?? null) : null), "mwh", [], "any", false, false, false, 123), "html", null, true);
                 echo " </td>   
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> Quantità nominale caricata [kg] </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 128
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_21 = ($context["quantities"] ?? null)) && is_array($__internal_compile_21) || $__internal_compile_21 instanceof ArrayAccess ? ($__internal_compile_21[$context["i"]] ?? null) : null), "kg_load", [], "any", false, false, false, 128), "html", null, true);
+                // line 125
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_21 = ($context["quantities"] ?? null)) && is_array($__internal_compile_21) || $__internal_compile_21 instanceof ArrayAccess ? ($__internal_compile_21[$context["i"]] ?? null) : null), "kg_load", [], "any", false, false, false, 125), "html", null, true);
                 echo " </td>   
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> Raffreddamento </th>            
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 130
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_22 = ($context["quantities"] ?? null)) && is_array($__internal_compile_22) || $__internal_compile_22 instanceof ArrayAccess ? ($__internal_compile_22[$context["i"]] ?? null) : null), "cooling", [], "any", false, false, false, 130), "html", null, true);
+                // line 127
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_22 = ($context["quantities"] ?? null)) && is_array($__internal_compile_22) || $__internal_compile_22 instanceof ArrayAccess ? ($__internal_compile_22[$context["i"]] ?? null) : null), "cooling", [], "any", false, false, false, 127), "html", null, true);
                 echo " </td>
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> Tipologia costo extra </th>            
                                                             <td class=\"bg-light bg-gradient align-middle\"> 
                                                                 ";
-                // line 133
-                if ((0 === twig_compare(twig_get_attribute($this->env, $this->source, (($__internal_compile_23 = ($context["quantities"] ?? null)) && is_array($__internal_compile_23) || $__internal_compile_23 instanceof ArrayAccess ? ($__internal_compile_23[$context["i"]] ?? null) : null), "price_typology", [], "any", false, false, false, 133), 0))) {
-                    // line 134
+                // line 130
+                if ((0 === twig_compare(twig_get_attribute($this->env, $this->source, (($__internal_compile_23 = ($context["quantities"] ?? null)) && is_array($__internal_compile_23) || $__internal_compile_23 instanceof ArrayAccess ? ($__internal_compile_23[$context["i"]] ?? null) : null), "price_typology", [], "any", false, false, false, 130), 0))) {
+                    // line 131
                     echo "                                                                    NO
                                                                 ";
                 } else {
-                    // line 136
+                    // line 133
                     echo "                                                                    SÌ
                                                                 ";
                 }
-                // line 138
+                // line 135
                 echo "                                                            </td>          
                                                         </tr>
                                                     
                                                         <tr>
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> Valore costo extra </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 143
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_24 = ($context["quantities"] ?? null)) && is_array($__internal_compile_24) || $__internal_compile_24 instanceof ArrayAccess ? ($__internal_compile_24[$context["i"]] ?? null) : null), "price_value", [], "any", false, false, false, 143), "html", null, true);
+                // line 140
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_24 = ($context["quantities"] ?? null)) && is_array($__internal_compile_24) || $__internal_compile_24 instanceof ArrayAccess ? ($__internal_compile_24[$context["i"]] ?? null) : null), "price_value", [], "any", false, false, false, 140), "html", null, true);
                 echo " </td>
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> Quantità scaricata PD [kg] </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 145
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_25 = ($context["quantities"] ?? null)) && is_array($__internal_compile_25) || $__internal_compile_25 instanceof ArrayAccess ? ($__internal_compile_25[$context["i"]] ?? null) : null), "kg_unload", [], "any", false, false, false, 145), "html", null, true);
+                // line 142
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_25 = ($context["quantities"] ?? null)) && is_array($__internal_compile_25) || $__internal_compile_25 instanceof ArrayAccess ? ($__internal_compile_25[$context["i"]] ?? null) : null), "kg_unload", [], "any", false, false, false, 142), "html", null, true);
                 echo " </td>
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> Densità (liquido) [<sup>kg</sup>&frasl;<sub>m<sup>3</sup></sub>] </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 147
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_26 = ($context["quantities"] ?? null)) && is_array($__internal_compile_26) || $__internal_compile_26 instanceof ArrayAccess ? ($__internal_compile_26[$context["i"]] ?? null) : null), "liquid_density", [], "any", false, false, false, 147), "html", null, true);
+                // line 144
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_26 = ($context["quantities"] ?? null)) && is_array($__internal_compile_26) || $__internal_compile_26 instanceof ArrayAccess ? ($__internal_compile_26[$context["i"]] ?? null) : null), "liquid_density", [], "any", false, false, false, 144), "html", null, true);
                 echo " </td>
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> Peso specifico (gas) <big>[</big><sup>kg</sup>&frasl;<sub>Nm<sup>3</sup></sub><big>]</big> </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 149
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_27 = ($context["quantities"] ?? null)) && is_array($__internal_compile_27) || $__internal_compile_27 instanceof ArrayAccess ? ($__internal_compile_27[$context["i"]] ?? null) : null), "gas_weight", [], "any", false, false, false, 149), "html", null, true);
+                // line 146
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_27 = ($context["quantities"] ?? null)) && is_array($__internal_compile_27) || $__internal_compile_27 instanceof ArrayAccess ? ($__internal_compile_27[$context["i"]] ?? null) : null), "gas_weight", [], "any", false, false, false, 146), "html", null, true);
                 echo " </td>
                                                         </tr>
                                                     
                                                         <tr>
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> PCS/GHV <big>[</big><sup>MJ</sup>&frasl;<sub>kg</sub><big>]</big> </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 154
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_28 = ($context["quantities"] ?? null)) && is_array($__internal_compile_28) || $__internal_compile_28 instanceof ArrayAccess ? ($__internal_compile_28[$context["i"]] ?? null) : null), "mj_kg", [], "any", false, false, false, 154), "html", null, true);
+                // line 151
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_28 = ($context["quantities"] ?? null)) && is_array($__internal_compile_28) || $__internal_compile_28 instanceof ArrayAccess ? ($__internal_compile_28[$context["i"]] ?? null) : null), "mj_kg", [], "any", false, false, false, 151), "html", null, true);
                 echo " </td>
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> PCS/GHV <big>[</big><sup>kWh</sup>&frasl;<sub>kg</sub><big>]</big> </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 156
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_29 = ($context["quantities"] ?? null)) && is_array($__internal_compile_29) || $__internal_compile_29 instanceof ArrayAccess ? ($__internal_compile_29[$context["i"]] ?? null) : null), "pcs_ghv", [], "any", false, false, false, 156), "html", null, true);
+                // line 153
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_29 = ($context["quantities"] ?? null)) && is_array($__internal_compile_29) || $__internal_compile_29 instanceof ArrayAccess ? ($__internal_compile_29[$context["i"]] ?? null) : null), "pcs_ghv", [], "any", false, false, false, 153), "html", null, true);
                 echo " </td>
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> Volume scaricato (liquido) <big>[</big>m<sup>3</sup><big>]</big> </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 158
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_30 = ($context["quantities"] ?? null)) && is_array($__internal_compile_30) || $__internal_compile_30 instanceof ArrayAccess ? ($__internal_compile_30[$context["i"]] ?? null) : null), "volume_mc", [], "any", false, false, false, 158), "html", null, true);
+                // line 155
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_30 = ($context["quantities"] ?? null)) && is_array($__internal_compile_30) || $__internal_compile_30 instanceof ArrayAccess ? ($__internal_compile_30[$context["i"]] ?? null) : null), "volume_mc", [], "any", false, false, false, 155), "html", null, true);
                 echo " </td>
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> Volume sviluppato <big>[</big><sup>Nm<sup>3</sup></sup>&frasl;<sub>m<sup>3</sup></sub><big>]</big> </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 160
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_31 = ($context["quantities"] ?? null)) && is_array($__internal_compile_31) || $__internal_compile_31 instanceof ArrayAccess ? ($__internal_compile_31[$context["i"]] ?? null) : null), "volume_nmc", [], "any", false, false, false, 160), "html", null, true);
+                // line 157
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_31 = ($context["quantities"] ?? null)) && is_array($__internal_compile_31) || $__internal_compile_31 instanceof ArrayAccess ? ($__internal_compile_31[$context["i"]] ?? null) : null), "volume_nmc", [], "any", false, false, false, 157), "html", null, true);
                 echo " </td> 
                                                         </tr>
                                                     
                                                         <tr>
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>m<sup>3</sup></sub> </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 165
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_32 = ($context["quantities"] ?? null)) && is_array($__internal_compile_32) || $__internal_compile_32 instanceof ArrayAccess ? ($__internal_compile_32[$context["i"]] ?? null) : null), "smc_mc", [], "any", false, false, false, 165), "html", null, true);
+                // line 162
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_32 = ($context["quantities"] ?? null)) && is_array($__internal_compile_32) || $__internal_compile_32 instanceof ArrayAccess ? ($__internal_compile_32[$context["i"]] ?? null) : null), "smc_mc", [], "any", false, false, false, 162), "html", null, true);
                 echo " </td>   
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> Gas sviluppato <big>[</big>Nm<sup>3</sup><big>]</big> </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 167
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_33 = ($context["quantities"] ?? null)) && is_array($__internal_compile_33) || $__internal_compile_33 instanceof ArrayAccess ? ($__internal_compile_33[$context["i"]] ?? null) : null), "gas_nmc", [], "any", false, false, false, 167), "html", null, true);
+                // line 164
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_33 = ($context["quantities"] ?? null)) && is_array($__internal_compile_33) || $__internal_compile_33 instanceof ArrayAccess ? ($__internal_compile_33[$context["i"]] ?? null) : null), "gas_nmc", [], "any", false, false, false, 164), "html", null, true);
                 echo " </td>   
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> Gas sviluppato <big>[</big>Sm<sup>3</sup></sup><big>]</big> </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 169
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_34 = ($context["quantities"] ?? null)) && is_array($__internal_compile_34) || $__internal_compile_34 instanceof ArrayAccess ? ($__internal_compile_34[$context["i"]] ?? null) : null), "gas_smc", [], "any", false, false, false, 169), "html", null, true);
+                // line 166
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_34 = ($context["quantities"] ?? null)) && is_array($__internal_compile_34) || $__internal_compile_34 instanceof ArrayAccess ? ($__internal_compile_34[$context["i"]] ?? null) : null), "gas_smc", [], "any", false, false, false, 166), "html", null, true);
                 echo " </td>   
                                                             <th class=\"bg-secondary bg-gradient align-middle\"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>kg</sub> </th>
                                                             <td class=\"bg-light bg-gradient align-middle\"> ";
-                // line 171
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_35 = ($context["quantities"] ?? null)) && is_array($__internal_compile_35) || $__internal_compile_35 instanceof ArrayAccess ? ($__internal_compile_35[$context["i"]] ?? null) : null), "smc_kg", [], "any", false, false, false, 171), "html", null, true);
+                // line 168
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, (($__internal_compile_35 = ($context["quantities"] ?? null)) && is_array($__internal_compile_35) || $__internal_compile_35 instanceof ArrayAccess ? ($__internal_compile_35[$context["i"]] ?? null) : null), "smc_kg", [], "any", false, false, false, 168), "html", null, true);
                 echo " </td>            
                                                         </tr>
                                                     </tbody>
@@ -421,22 +413,22 @@ $context["nav"], "id_category", [], "any", false, false, false, 23), 2))) {
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['i'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 179
+            // line 176
             echo "                        ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['i'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 180
+        // line 177
         echo "                        </tbody>
                         
                         <tfoot>
                             <tr>
-                                <td colspan=\"16\" class=\"text-light align-middle\">
+                                <td colspan=\"16\" class=\"text-light align-middle mb-2 p-1\">
                                     <h5 style=\"font-weight: 600\" class=\"align-middle\">
                                         TOTALE <i class=\"bi bi-fuel-pump-fill ms-1\"></i> + <i class=\"bi bi-fuel-pump\"></i>:
                                         <span> ";
-        // line 187
+        // line 184
         echo twig_escape_filter($this->env, ($context["total"] ?? null), "html", null, true);
         echo " </span>
                                     </h5> 
@@ -447,13 +439,17 @@ $context["nav"], "id_category", [], "any", false, false, false, 23), 2))) {
                 </div> 
             </div>
         </div>
-    </section>    
+    </section>  
+    
+    <section>
+        
+    </section>  
 ";
     }
 
     public function getTemplateName()
     {
-        return "category.html";
+        return "admin/category.html";
     }
 
     public function isTraitable()
@@ -463,12 +459,12 @@ $context["nav"], "id_category", [], "any", false, false, false, 23), 2))) {
 
     public function getDebugInfo()
     {
-        return array (  440 => 187,  431 => 180,  425 => 179,  411 => 171,  406 => 169,  401 => 167,  396 => 165,  388 => 160,  383 => 158,  378 => 156,  373 => 154,  365 => 149,  360 => 147,  355 => 145,  350 => 143,  343 => 138,  339 => 136,  335 => 134,  333 => 133,  327 => 130,  322 => 128,  317 => 126,  309 => 121,  300 => 115,  294 => 114,  290 => 113,  286 => 112,  282 => 111,  278 => 110,  274 => 109,  270 => 108,  266 => 107,  262 => 106,  258 => 105,  254 => 104,  251 => 103,  247 => 101,  243 => 99,  241 => 98,  228 => 92,  225 => 91,  223 => 90,  219 => 89,  210 => 87,  203 => 84,  198 => 83,  193 => 82,  191 => 81,  153 => 46,  140 => 35,  134 => 34,  127 => 30,  123 => 28,  113 => 26,  103 => 24,  101 => 23,  92 => 22,  90 => 21,  85 => 18,  81 => 17,  78 => 16,  75 => 15,  71 => 14,  56 => 4,  47 => 2,  36 => 1,);
+        return array (  432 => 184,  423 => 177,  417 => 176,  403 => 168,  398 => 166,  393 => 164,  388 => 162,  380 => 157,  375 => 155,  370 => 153,  365 => 151,  357 => 146,  352 => 144,  347 => 142,  342 => 140,  335 => 135,  331 => 133,  327 => 131,  325 => 130,  319 => 127,  314 => 125,  309 => 123,  301 => 118,  292 => 112,  286 => 111,  282 => 110,  278 => 109,  274 => 108,  270 => 107,  266 => 106,  262 => 105,  258 => 104,  254 => 103,  250 => 102,  246 => 101,  243 => 100,  239 => 98,  235 => 96,  233 => 95,  220 => 89,  217 => 88,  215 => 87,  211 => 86,  202 => 84,  195 => 81,  190 => 80,  185 => 79,  183 => 78,  145 => 43,  132 => 32,  126 => 31,  119 => 27,  115 => 25,  105 => 23,  95 => 21,  93 => 20,  84 => 19,  82 => 18,  78 => 16,  75 => 15,  71 => 14,  56 => 4,  47 => 2,  36 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Source("{% extends 'layout.html' %}
+        return new Source("{% extends 'admin/layout.html' %}
 {% block title %} Piattaforma {{ 'now'|date('Y') }} {% endblock %}
 
 {% block content %} 
@@ -482,11 +478,8 @@ $context["nav"], "id_category", [], "any", false, false, false, 23), 2))) {
                     <div class=\"breadcrumb-holder justify-content-center mx-auto p-2 my-auto\" aria-label=\"breadcrumb\">
                         <ul class=\"rounded-breadcrumbs mx-auto my-auto p-1 justify-content-center\">
                             {% for nav in categories %}
-                                {% if (nav.navigation == 1) and (nav.id_group == 1) %}
-                                    <li {% if (section == nav.id_category) %}
-                                            class=\"active\"
-                                        {% endif %}>
-                                        
+                                {% if (nav.navigation == 1) %}
+                                    <li>
                                         <a class=\"breadcrumb-link my-auto\" aria-current=\"page\" style=\"width: 10.9rem; font-size: 0.3rem; text-align: center\"
                                             {% if (nav.id_category == 1) %}
                                                 href=\"{{ doc_root }}transports/{{ nav.id_category }}/{{ nav.seo }}\"
@@ -508,7 +501,7 @@ $context["nav"], "id_category", [], "any", false, false, false, 23), 2))) {
         </div>
     </section>
 
-    <section class=\"grid-container mx-1 mt-0\">
+    <section class=\"grid-container mx-3 mt-0\">
 \t    <div class=\"col-md-12\">
     \t    <div class=\"panel panel-default\">
                 <div class=\"panel-heading d-flex justify-content-center p-1\">
@@ -651,7 +644,7 @@ $context["nav"], "id_category", [], "any", false, false, false, 23), 2))) {
                         
                         <tfoot>
                             <tr>
-                                <td colspan=\"16\" class=\"text-light align-middle\">
+                                <td colspan=\"16\" class=\"text-light align-middle mb-2 p-1\">
                                     <h5 style=\"font-weight: 600\" class=\"align-middle\">
                                         TOTALE <i class=\"bi bi-fuel-pump-fill ms-1\"></i> + <i class=\"bi bi-fuel-pump\"></i>:
                                         <span> {{ total }} </span>
@@ -663,7 +656,11 @@ $context["nav"], "id_category", [], "any", false, false, false, 23), 2))) {
                 </div> 
             </div>
         </div>
-    </section>    
-{% endblock %}", "category.html", "D:\\wamp\\www\\liquimet\\templates\\category.html");
+    </section>  
+    
+    <section>
+        
+    </section>  
+{% endblock %}", "admin/category.html", "D:\\wamp\\www\\liquimet\\templates\\admin\\category.html");
     }
 }

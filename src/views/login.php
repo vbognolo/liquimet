@@ -1,42 +1,43 @@
 <?php
 declare(strict_types = 1);           
-use Liquimet\Validate\Validate;                                       //import Validate class   
-/*
-if($model->getSession()->role !== 'public'){                         // If user is already logged in
-    redirect('index/' . $model->getSession()->id_user);        // Redirect to their page
-    exit;                                                           // Stop code running
-}
-*/
-$username = '';                                                           // initialize username variable
-$errors = [];                                                             // initialize errors                          
+//use Liquimet\Validate\Validate;                                       //import Validate class   
+
+    /*if($model->getSession()->role === 'public'){                        //if user is not logged in
+        redirect('login/');                                              //redirect to login page
+        exit;                                                           //stop code running
+    } */
+
+$username = '';                                                         //initialize username variable
+$errors = [];                                                           //initialize errors            
+$success = $_GET['success'] ?? null;                                    //get success message              
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){   
-        if(isset($_POST['submit'])){
-            $username = $_POST['username'];                                         // get username
-            $pass = $_POST['pass'];                                         // get password
+        if(isset($_POST['login'])){
+            $username = trim($_POST['username']);                            
+            $password = trim($_POST['pass']);                                     
 
-            $errors['pass'] = Validate::isPassword($pass) ? '' : "Password non valida.";                // validate password
-            $invalid = implode($errors);                                                                        // join errors
-
-            if($invalid){                                               // If data is not valid
-                $errors['message'] = 'Riprovare.';                      // Store error message
-            } else{                                                     // If data was valid
-                $user = $model->getUser()->login($username, $pass);    // Get member details
-                
-                    if($user and $user['role'] == 'sospeso'){      // If member is suspended
-                        $errors['message'] = 'Account suspended';          // Store message
-                    } elseif($user){                                   // Otherwise for members
-                        $model->getSession()->create($user);               // Create session
-                        redirect('index/' . $user['id_user']);               // Redirect to their page
-                    } else{
-                        $errors['message'] = 'Please try again.';          // Store error message
-                    }
+            $user = $model->getUser()->login($username, $password);
+            
+            if($user){
+                if($user['role'] == 'sospeso'){
+                    $errors['message'] = 'Account sospeso.';
+                        redirect('login');
+                } elseif($user['role'] == 'admin'){
+                    $model->getSession()->create($user);
+                        redirect('admin/index/' . $user['id_user']);
+                } else{
+                    $model->getSession()->create($user);
+                        redirect('index/' . $user['id_user']);
+                }
+            } else{
+                $errors['message'] = 'Riprovare';
+                    redirect('login');
             }
-        }                            // if form submitted
-        
+        }                              
     }
 
-$data['username'] = $username;                                                    // email if validation failed
-$data['errors'] = $errors;                                                  // errors array
+$data['success'] = $success;                                            //success message
+$data['username'] = $username;                                          //username
+$data['errors'] = $errors;                                              //errors array
 
-echo $twig->render('login.html', $data);                 
+echo $twig->render('login.html', $data);

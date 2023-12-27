@@ -1,21 +1,22 @@
 <?php
-declare(strict_types = 1);                                  
+declare(strict_types = 1);  
+//session_start();                                                      //start or renew session
 
-if(!$id){                                              // If no valid id
-    include APP_ROOT . '/src/views/page-not-found.php';     // Page not found
-}
-
-$user = $model->getUser()->get($id);                   // Get member data
-    if(!$user){                                          // If array is empty
-        include APP_ROOT . '/src/views/page-not-found.php';     // Page not found
+    /*if(!$id){                                                           //if no valid id
+        include APP_ROOT . '/src/views/page-not-found.php';             //page not found
     }
 
-// navigation menu data 
-$data['navigation'] = $model->getCategory()->getGroups(); 
-$data['categories'] = $model->getCategory()->getAll();  
-$data['group_count'] = $model->getCategory()->countG();  
+    $user = $model->getUser()->get($id);                                //get member data
+        if(!$user){                                                     //if array is empty
+            include APP_ROOT . '/src/views/page-not-found.php';         //page not found
+        }*/
 
-// dashboard data
+//navigation menu data 
+$data['navigation'] = $model->getPlatform()->getGroups(); 
+$data['categories'] = $model->getPlatform()->getAll();  
+$data['group_count'] = $model->getPlatform()->countG();  
+
+//dashboard data
 $data['countU'] = $model->getUser()->count();
 $data['countT'] = $model->getTransport()->count();
 $data['sum'] = $model->getQuantity()->sum();
@@ -26,11 +27,11 @@ $data['admins'] = $model->getUser()->countAdmin();
 $data['members'] = $model->getUser()->countMember();
 $data['offlines'] = $model->getUser()->countSuspended();
 
-// other data
-$data['user'] = $user;                                                                  // user data
-$data['trans'] = $model->getTransport()->getAll($user['id_user'], 5);                          // get user's transports
+//other data
+$data['user'] = $user = $model->getUser()->get($id);                                                                  //user data
+$data['trans'] = $model->getTransport()->getAll($user['id_user'], 5);                   //get user's transports
 
-$data['group'] = '';                                                                    // group id for link
-$data['section'] = '';    
+$data['group'] = '';                                                                    //group id for link
+//$data['section'] = '';    
 
 echo $twig->render('index.html', $data);                       

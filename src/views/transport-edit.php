@@ -80,9 +80,9 @@ $user = $model->getSession()->id;                            // Get user's id fr
     }
 
 // navigation menu data
-$data['navigation'] = $model->getCategory()->getGroups(); 
-$data['categories'] = $model->getCategory()->getAll();   
-$data['group_count'] = $model->getCategory()->countG();  
+$data['navigation'] = $model->getPlatform()->getGroups(); 
+$data['categories'] = $model->getPlatform()->getAll();   
+$data['group_count'] = $model->getPlatform()->countG();  
 
 // edit form data
 $data['transport'] = $transport;

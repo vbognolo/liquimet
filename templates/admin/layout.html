@@ -1,7 +1,7 @@
 {% block html %} {% endblock %}
 
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it-IT">
 <head>
 {% block head %}
     <title>
@@ -32,88 +32,80 @@
 {% block body %}
     <body class="d-flex flex-column vh-100">
         <header id="header" class="header d-flex">
-                                        <!-- LOGO -->
+                            <!--    ===>    LOGO    <===    -->
             <div class="d-flex align-items-center div-title">
-                <a href="{{ doc_root }}admin/index" class="logo d-flex align-items-center w-100">
+                <a href="{{ doc_root }}admin/index/{{ session.id_user }}" class="logo d-flex align-items-center w-100">
                     <img src="{{ doc_root }}img/liquimet_logo.jpg" class="img-logo my-auto" alt="">
                     <span></span>
                     <h3 class="d-none d-lg-block my-auto ms-4" id="title"> Liquimet Padova </h3>
                 </a>
             </div>
-                                        <!-- END LOGO -->
+                            <!--    ===>    END LOGO    <===    -->
 
-                                        <!-- NAVIGATION -->
+                            <!--    ===>    NAVIGATION    <===    -->
             <ul class="nav nav-tabs-bordered d-flex my-auto mx-auto p-2 hstack gap-2" id="navigation">
                 <li class="nav-item nav-justified nav-fill mx-auto my-auto">
-                    <a class="nav-link w-100" href="{{ doc_root }}admin/index">
+                    <a class="nav-link w-100" href="{{ doc_root }}admin/index/{{ session.id_user}}">
                         <i class="bi bi-house"></i>
                     </a>
-                    
+
                     <li> <i class="bi bi-chevron-double-right" style="color: #0066cc"></i> </li>
                 </li>
 
                 {% for link in navigation %}
                     <li class="nav-item nav-justified nav-fill mx-auto my-auto">       
                         <a class="nav-link w-100" aria-controls="nav-platform"
-                            href="{{ doc_root }}admin/category/{{ link.id_group }}"
-                                {% if (group == link.id_group) %} 
-                                    class="active" aria-current="page" 
-                                {% endif %}>
-                                    {{ link.name|capitalize }}
+                            href="{{ doc_root }}admin/{{ link.seo }}/{{ link.id_group }}"
+                            {% if (group == link.id_group) %} 
+                                class="active" aria-current="page" 
+                            {% endif %}>
+                                {{ link.name|capitalize }}
                         </a>
-
-                        {% if (link.id_group < group_count) %}            
-                            <li class="icon-divider"> <i class="bi bi-chevron-double-right" style="color: #0066cc"></i> </li>
-                        {% endif %}
                     </li>     
-                {% endfor %}                     
+                        
+                    {% if (link.id_group < group_count) %}            
+                        <li class="icon-divider"> <i class="bi bi-chevron-double-right" style="color: #0066cc"></i> </li>
+                    {% endif %}
+                {% endfor %}                       
             </ul>          
-                                            <!-- END NAVIGATION -->
+                            <!--    ===>    END NAVIGATION    <===    -->               
 
-                                            <!-- SEARCH BAR -->
-            <div class="search-bar ms-auto my-auto p-2">
+                            <!--    ===>    SEARCH BAR    <===    -->
+            <!--<div class="search-bar ms-auto my-auto p-2">
                 <form class="search-form d-flex align-items-center" method="POST" action="#">
                     <input type="text" name="query" placeholder="Cerca" title="Enter search keyword">
                         <button type="submit" title="Cerca"> 
                             <i class="bi bi-search"></i>
                         </button>
                 </form>
-            </div>
+            </div>-->
                                             <!-- END SEARCH BAR -->
 
                                             <!-- SEARCH ICON -->
             <nav class="header-nav me-1 p-2">
                 <ul class="d-flex align-items-center">
-                    <li class="nav-item d-block d-lg-none">
+                    <!--<li class="nav-item d-block d-lg-none">
                         <a class="nav-link nav-icon search-bar-toggle" href="#">
                             <i class="bi bi-search"></i>
                         </a>
-                    </li>
+                    </li>-->
                                             <!-- END SEARCH ICON-->
 
                                             <!-- PROFILE ICON -->                                                              
-                    {% if session.id_user == 0 %}
-                    <li class="nav-item d-flex align-items-center ms-5 p-2" style="float: right;">
-                        <a class="nav-link ms-5 p-2" id="nav-login"
-                            href="{{ doc_root }}login">
-                                LOGIN
-                        </a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item dropdown d-flex align-items-center ms-5 p-2" style="float: right;">
-                        <a class="nav-link dropdown-toggle ms-5 p-2" data-bs-toggle="dropdown" id="nav-profile"
+                    <li class="nav-item dropdown d-flex justify-content-end ms-5 mb-1">
+                        <a class="nav-link p-1 my-auto mx-1 nav-profile" data-bs-toggle="dropdown" id="nav-profile"
                             href="{{ doc_root }}admin/user/{{ session.id_user }}">
-                                {{ session.username }}
-                        </a>
-                                            <!-- END PROFILE ICON -->
+                                <span class="d-none d-md-block dropdown-toggle ps-2"> {{ session.username }} </span>
+                        </a>  
+                                        <!-- END PROFILE ICON --> 
 
-                                            <!-- PROFILE DROPDOWN ITEMS -->
+                                        <!-- PROFILE DROPDOWN ITEMS -->  
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                             <li class="dropdown-header">
-                                <h5>{{ session.member }}</h5>
-                                    <span>{{ session.role }} </span>
+                                <h5 style="letter-spacing: 0.15rem">{{ session.name|upper }}</h5>
+                                    <span>{{ session.role|capitalize }} </span>
                             </li>
-                
+            
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -121,21 +113,20 @@
                             <li>
                                 <a class="dropdown-item d-flex justify-content-center" 
                                     href="{{ doc_root }}admin/user/{{ session.id_user }}">
-                                        <span> Profilo </span>
+                                    <span> Profilo </span>
                                 </a>
-                                
                             </li>
-                
+            
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-        <!--
-                                    <li>
-                                        <a class="dropdown-item d-flex justify-content-center" href="#">
-                                            <span>Impostazioni</span>
-                                        </a>
-                                    </li>
-        -->
+    
+                            <li>
+                                <a class="dropdown-item d-flex justify-content-center" href="#">
+                                    <span>Impostazioni</span>
+                                </a>
+                            </li>
+    
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -144,18 +135,18 @@
                                 <a class="dropdown-item d-flex justify-content-center" href="{{ doc_root }}logout/">
                                     <span>Esci</span>
                                 </a>
-                            </li>
+                            </li>    
                         </ul>  
-                                            <!-- END PROFILE DROPDOWN ITEMS -->     
-                    </li>  
-                    {% endif %}             
+                                        <!-- END PROFILE DROPDOWN ITEMS -->     
+                    
+                    </li>               
                 </ul>
             </nav>                   
-    </header>  
+        </header>    
         
     {% block content %}{% endblock %}
 
-    <footer class="footer mt-auto p-2 fixed-bottom">
+    <footer class="footer mt-2 p-2 fixed-bottom">
         <div class="container">
             <span class="">&copy; Liquimet Italia {{ 'now'|date('Y')}} </span>
         </div>

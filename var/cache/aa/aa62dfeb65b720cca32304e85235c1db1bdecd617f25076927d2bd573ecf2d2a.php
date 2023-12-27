@@ -12,8 +12,8 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* index.html */
-class __TwigTemplate_c642eaafe5fee8afe812b34c34a9b50bb2599b6ad88b1e8cbf96515b84a09ca2 extends Template
+/* admin/index.html */
+class __TwigTemplate_7518783b01f095e166419d27f5169f0c5e9ba6ec0dcc02bef64f36d8676944f4 extends Template
 {
     private $source;
     private $macros = [];
@@ -33,13 +33,13 @@ class __TwigTemplate_c642eaafe5fee8afe812b34c34a9b50bb2599b6ad88b1e8cbf96515b84a
     protected function doGetParent(array $context)
     {
         // line 1
-        return "layout.html";
+        return "admin/layout.html";
     }
 
     protected function doDisplay(array $context, array $blocks = [])
     {
         $macros = $this->macros;
-        $this->parent = $this->loadTemplate("layout.html", "index.html", 1);
+        $this->parent = $this->loadTemplate("admin/layout.html", "admin/index.html", 1);
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
@@ -518,7 +518,7 @@ class __TwigTemplate_c642eaafe5fee8afe812b34c34a9b50bb2599b6ad88b1e8cbf96515b84a
 
     public function getTemplateName()
     {
-        return "index.html";
+        return "admin/index.html";
     }
 
     public function isTraitable()
@@ -533,7 +533,7 @@ class __TwigTemplate_c642eaafe5fee8afe812b34c34a9b50bb2599b6ad88b1e8cbf96515b84a
 
     public function getSourceContext()
     {
-        return new Source("{% extends 'layout.html' %}
+        return new Source("{% extends 'admin/layout.html' %}
 {% block title %} Liquimet {% endblock %}
 
 {% block content %}
@@ -724,7 +724,7 @@ class __TwigTemplate_c642eaafe5fee8afe812b34c34a9b50bb2599b6ad88b1e8cbf96515b84a
                                         PROFILO
                                     </h5>
 
-                                    {% if session.id_user == user.id_user %}
+                                    {% if (session.id_user == user.id_user) %}
                                     <div class=\"row mx-auto p-0\">
                                         <div class=\"col-7 mx-auto my-0 p-1 profile-body\">
                                             <div class=\"col align-middle mx-auto\">
@@ -858,6 +858,6 @@ class __TwigTemplate_c642eaafe5fee8afe812b34c34a9b50bb2599b6ad88b1e8cbf96515b84a
         document.getElementById(\"demo\").innerHTML = \"Width: \" + w + \"<br>Height: \" + h;
     </script>
 -->
-{% endblock %}", "index.html", "D:\\wamp\\www\\liquimet\\templates\\index.html");
+{% endblock %}", "admin/index.html", "D:\\wamp\\www\\liquimet\\templates\\admin\\index.html");
     }
 }

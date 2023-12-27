@@ -9,13 +9,13 @@
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb d-flex align-items-center p-1" style="--bs-breadcrumb-divider-color: white">
                         <li class="breadcrumb-item">
-                            <a href="{{ doc_root }}admin/index" class="pageicon" style="font-size: 18px"> 
+                            <a href="{{ doc_root }}admin/index/{{ user.id_user }}" class="pageicon" style="font-size: 18px"> 
                                 <i class="bi bi-house"></i> 
                             </a>
                         </li>
 
                         <li class="breadcrumb-item active"> 
-                            <a href="{{ doc_root }}admin/user" class="pageicon">
+                            <a href="{{ doc_root }}admin/user/{{ user.id_user }}" class="pageicon">
                                 Pannello di controllo
                             </a> 
                         </li>

@@ -1,0 +1,92 @@
+{% extends 'admin/layout.html' %}
+{% block title %} Utenti {{ 'now'|date('Y') }} {% endblock %}
+
+{% block content %} 
+    <section class="grid-container mt-1 mb-0">
+        <div class="submenu align-items-center my-auto mx-auto p-2">
+            <div class="grid-item mx-auto my-1 p-1 justify-content-center">
+                <h3 class="m-0 p-4 submenu-title"> 
+                    Utenti
+                </h3>
+                
+                <div class="breadcrumb-holder justify-content-center mx-auto p-2 my-auto" aria-label="breadcrumb">
+                    <ul class="rounded-breadcrumbs mx-auto my-auto p-1 justify-content-center">
+                        {% for nav in categories %}
+                            {% if (nav.navigation == 1) and (nav.id_group == 2) %}
+                                <li>
+                                    <a class="breadcrumb-link my-auto" aria-current="page" style="width: 10.9rem; font-size: 0.3rem; text-align: center"
+                                        {% if (nav.id_category == 4) %}
+                                            href="{{ doc_root }}admin/members/{{ nav.id_category }}"
+                                        {% else %}
+                                            href="{{ doc_root }}admin/register/{{ nav.id_category }}"
+                                        {% endif %}
+                                    >
+                                        {{ nav.category|upper }} 
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid-container mx-1 mt-0">
+	    <div class="col-md-12">
+    	    <div class="panel panel-default">
+                <div class="panel-body table-responsive">
+					<table class="table table-hover mx-auto w-auto signup" style="text-align: center; font-weight: 400">
+                        <thead>
+                            <tr class="table-title border-bottom border-light">
+					            <th class="align-middle p-3 px-4" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> # </th>
+                                <th class="align-middle p-3 px-4" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Username </th>
+                                <th class="align-middle p-3 px-4" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Indirizzo e-mail </th>
+                                <th class="align-middle p-3 px-4" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Nome e cognome </th>
+                                <th class="align-middle p-3 px-4" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Ruolo aziendale </th>
+                                <th class="align-middle p-3 px-4" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Accesso </th>
+                                <th class="align-middle p-3 px-4"> Account creato </th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="table-body">  
+                        {% set id = 1 %}
+                        {% for u in users %}
+                            <tr>
+                                <td scope="row" class="align-middle" style="border-right: 2px solid rgba(255, 255, 255, 0.2)">
+                                    <a href="{{ doc_root }}admin/user/{{ u.id_user }}" class="text-dark"
+                                        aria-current="page">
+                                            {{ id }}
+                                            {% set id = id + 1 %}
+                                    </a> <br>
+                                    <a href="{{ doc_root }}admin/user-edit/{{ u.id_user }}" 
+                                        class="text-dark" role="button">
+                                            <i class="bi bi-pencil-square"></i> 
+                                    </a>
+                                </td>
+                                <td class="align-middle"> {{ u.username|lower }} </td>
+                                <td class="align-middle"> {{ u.email }} </td>
+                                <td class="align-middle"> {{ u.member|upper }} </td>
+                                <td class="align-middle"> {{ u.title|capitalize }} </td>
+                                <td class="align-middle"> {{ u.role|capitalize }} </td>
+                                <td class="align-middle"> {{ u.joined|date('d-M-Y') }} </td>
+                            </tr> 
+                        {% endfor %}
+                        </tbody>
+                        
+                        <tfoot>
+                            <tr>
+                                <td colspan="7" class="text-light align-middle mb-2 p-1">
+                                    <h5 style="font-weight: 600" class="my-1">
+                                        TOTALE <i class="bi bi-people ms-1"></i> :
+                                        <span> {{ total }} </span>
+                                    </h5> 
+                                </td>
+                            </tr>
+                        </tfoot>
+               	    </table>
+                </div> 
+            </div>
+        </div>
+    </section>    
+{% endblock %}

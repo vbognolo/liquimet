@@ -55,7 +55,7 @@ class __TwigTemplate_3855ede57a60d26f300600d05b8e7a6112e4ff0c558148c32c1e0317a4d
 ";
         // line 32
         $this->displayBlock('body', $context, $blocks);
-        // line 241
+        // line 239
         echo "</html>";
     }
 
@@ -121,25 +121,27 @@ class __TwigTemplate_3855ede57a60d26f300600d05b8e7a6112e4ff0c558148c32c1e0317a4d
                 <a href=\"";
         // line 37
         echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
-        echo "index\" class=\"logo d-flex align-items-center w-100\">
+        echo "index/";
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["session"] ?? null), "id_user", [], "any", false, false, false, 37), "html", null, true);
+        echo "\" class=\"logo d-flex align-items-center w-100\">
                     <img src=\"";
         // line 38
         echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
         echo "img/liquimet_logo.jpg\" class=\"img-logo my-auto\" alt=\"\">
                     <span></span>
-                    <h3 class=\"d-none d-lg-block my-auto ms-4\" id=\"title\">Liquimet S.r.l.</h3>
+                    <h3 class=\"d-none d-lg-block my-auto ms-4\" id=\"title\">Liquimet Padova</h3>
                 </a>
             </div>
                                         <!-- END LOGO -->
 
                                         <!-- NAVIGATION -->
             <ul class=\"nav nav-tabs-bordered d-flex my-auto mx-auto hstack gap-3 p-0\" id=\"navigation\">
-                <li class=\"nav-item nav-justified nav-fill mx-auto my-auto\">
+                <li class=\"nav-item nav-justified nav-fill my-auto mx-auto\">
                     <a class=\"nav-link w-100\" href=\"";
         // line 48
         echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
         echo "index/";
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "id_user", [], "any", false, false, false, 48), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["session"] ?? null), "id_user", [], "any", false, false, false, 48), "html", null, true);
         echo "\">
                         <i class=\"bi bi-house\"></i>
                     </a>
@@ -153,191 +155,191 @@ class __TwigTemplate_3855ede57a60d26f300600d05b8e7a6112e4ff0c558148c32c1e0317a4d
         $context['_seq'] = twig_ensure_traversable(($context["navigation"] ?? null));
         foreach ($context['_seq'] as $context["_key"] => $context["link"]) {
             // line 56
-            echo "                    
-                        <li class=\"nav-item nav-justified nav-fill mx-auto my-auto\">       
-                            <a class=\"nav-link w-100\" aria-controls=\"nav-platform\"
-                                href=\"";
-            // line 59
+            echo "                    <li class=\"nav-item nav-justified nav-fill my-auto mx-auto\">       
+                        <a class=\"nav-link w-100\" aria-controls=\"nav-platform\"
+                            href=\"";
+            // line 58
             echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
-            echo "category/";
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["link"], "id_group", [], "any", false, false, false, 59), "html", null, true);
+            echo "platform/";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["link"], "id_group", [], "any", false, false, false, 58), "html", null, true);
             echo "/";
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["link"], "seo", [], "any", false, false, false, 59), "html", null, true);
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["link"], "seo", [], "any", false, false, false, 58), "html", null, true);
             echo "\"
-                                    ";
-            // line 60
-            if ((0 === twig_compare(($context["group"] ?? null), twig_get_attribute($this->env, $this->source, $context["link"], "id_group", [], "any", false, false, false, 60)))) {
+                                ";
+            // line 59
+            if ((0 === twig_compare(($context["group"] ?? null), twig_get_attribute($this->env, $this->source, $context["link"], "id_group", [], "any", false, false, false, 59)))) {
                 echo " 
-                                        class=\"active\" aria-current=\"page\" 
-                                    ";
+                                    class=\"active\" aria-current=\"page\" 
+                                ";
             }
-            // line 62
+            // line 61
             echo ">
-                                        ";
-            // line 63
-            echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, twig_get_attribute($this->env, $this->source, $context["link"], "name", [], "any", false, false, false, 63)), "html", null, true);
+                                    ";
+            // line 62
+            echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, twig_get_attribute($this->env, $this->source, $context["link"], "name", [], "any", false, false, false, 62)), "html", null, true);
             echo "
-                            </a>
-                        </li>     
+                        </a>
+                    </li>     
                         
                         ";
-            // line 67
-            if ((-1 === twig_compare(twig_get_attribute($this->env, $this->source, $context["link"], "id_group", [], "any", false, false, false, 67), ($context["group_count"] ?? null)))) {
+            // line 66
+            if ((1 === twig_compare(twig_get_attribute($this->env, $this->source, $context["link"], "id_group", [], "any", false, false, false, 66), ($context["group_count"] ?? null)))) {
                 echo "            
                             <li class=\"icon-divider\"> <i class=\"bi bi-chevron-double-right\" style=\"color: #0066cc\"></i> </li>
                         ";
             }
-            // line 70
-            echo "                    
-                    
+            // line 68
+            echo "    
                 ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['link'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 72
+        // line 69
         echo "                     
             </ul>
                                         <!-- END NAVIGATION -->
 
                                         <!-- SEARCH BAR -->
-            <div class=\"search-bar ms-auto my-auto p-1\">
+            <!--<div class=\"search-bar ms-auto my-auto p-1\">
                 <form class=\"search-form d-flex align-items-center\" method=\"POST\" action=\"#\">
                     <input type=\"text\" name=\"query\" placeholder=\"Cerca\">
                         <button type=\"submit\" title=\"Cerca\"> 
                             <i class=\"bi bi-search\"></i>
                         </button>
                 </form>
-            </div>
+            </div>-->
                                         <!-- END SEARCH BAR -->
 
                                         <!-- SEARCH ICON -->
             <nav class=\"header-nav me-1 p-2\">
                 <ul class=\"d-flex align-items-center\">
-                    <li class=\"nav-item d-block d-lg-none\">
+                    <!--<li class=\"nav-item d-block d-lg-none\">
                         <a class=\"nav-link nav-icon search-bar-toggle\" href=\"#\">
                             <i class=\"bi bi-search\"></i>
                         </a>
-                    </li>
+                    </li>-->
                                         <!-- END SEARCH ICON-->
 
                                         <!-- PROFILE ICON -->
                     <li class=\"nav-item dropdown d-flex justify-content-end ms-5 mb-1\">
-                        ";
-        // line 99
-        if ((0 !== twig_compare(twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "id_user", [], "any", false, false, false, 99), 0))) {
-            // line 100
-            echo "                            <a class=\"nav-link p-1 my-auto mx-1 nav-profile\" data-bs-toggle=\"dropdown\" id=\"nav-profile\"
-                                href=\"";
-            // line 101
+                    ";
+        // line 96
+        if ((0 === twig_compare(twig_get_attribute($this->env, $this->source, ($context["session"] ?? null), "id_user", [], "any", false, false, false, 96), twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "id_user", [], "any", false, false, false, 96)))) {
+            // line 97
+            echo "                        <a class=\"nav-link p-1 my-auto mx-1 nav-profile\" data-bs-toggle=\"dropdown\" id=\"nav-profile\"
+                            href=\"";
+            // line 98
             echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
             echo "user/";
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "id_user", [], "any", false, false, false, 101), "html", null, true);
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "id_user", [], "any", false, false, false, 98), "html", null, true);
             echo "\">
-                                    <span class=\"d-none d-md-block dropdown-toggle ps-2\"> ";
-            // line 102
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "username", [], "any", false, false, false, 102), "html", null, true);
+                                <span class=\"d-none d-md-block dropdown-toggle ps-2\"> ";
+            // line 99
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "username", [], "any", false, false, false, 99), "html", null, true);
             echo " </span>
-                            </a>
-                        ";
+                        </a>
+                    ";
         }
-        // line 105
-        echo "                                        <!-- END PROFILE ICON -->
+        // line 101
+        echo "    
+                                        <!-- END PROFILE ICON -->
 
                                         <!-- PROFILE DROPDOWN ITEMS -->
-                            <ul class=\"dropdown-menu dropdown-menu-end dropdown-menu-arrow profile\">
-                                <li class=\"dropdown-header\">
-                                    <h5>";
-        // line 110
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "member", [], "any", false, false, false, 110), "html", null, true);
+                        <ul class=\"dropdown-menu dropdown-menu-end dropdown-menu-arrow profile\">
+                            <li class=\"dropdown-header\">
+                                <h5>";
+        // line 107
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "member", [], "any", false, false, false, 107), "html", null, true);
         echo "</h5>
-                                        <span>";
-        // line 111
-        echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "role", [], "any", false, false, false, 111)), "html", null, true);
+                                    <span>";
+        // line 108
+        echo twig_escape_filter($this->env, twig_capitalize_string_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "role", [], "any", false, false, false, 108)), "html", null, true);
         echo " </span>
-                                </li>
+                            </li>
             
-                                <li>
-                                    <hr class=\"dropdown-divider\">
-                                </li>
+                            <li>
+                                <hr class=\"dropdown-divider\">
+                            </li>
 
-                                <li>
-                                    <a class=\"dropdown-item d-flex justify-content-center\" 
-                                        href=\"";
-        // line 120
+                            <li>
+                                <a class=\"dropdown-item d-flex justify-content-center\" 
+                                    href=\"";
+        // line 117
         echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
         echo "user/";
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "id_user", [], "any", false, false, false, 120), "html", null, true);
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["user"] ?? null), "id_user", [], "any", false, false, false, 117), "html", null, true);
         echo "\">
-                                        <span> Profilo </span>
-                                    </a>
-                                </li>
+                                    <span> Profilo </span>
+                                </a>
+                            </li>
             
-                                <li>
-                                    <hr class=\"dropdown-divider\">
-                                </li>
+                            <li>
+                                <hr class=\"dropdown-divider\">
+                            </li>
     
-                                <li>
-                                    <a class=\"dropdown-item d-flex justify-content-center\" href=\"#\">
-                                        <span>Impostazioni</span>
-                                    </a>
-                                </li>
+                            <li>
+                                <a class=\"dropdown-item d-flex justify-content-center\" href=\"#\">
+                                    <span>Impostazioni</span>
+                                </a>
+                            </li>
     
-                                <li>
-                                    <hr class=\"dropdown-divider\">
-                                </li>
+                            <li>
+                                <hr class=\"dropdown-divider\">
+                            </li>
 
-                                <li>
-                                    <a class=\"dropdown-item d-flex justify-content-center\" href=\"";
-        // line 140
+                            <li>
+                                <a class=\"dropdown-item d-flex justify-content-center\" href=\"";
+        // line 137
         echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
         echo "logout/\">
-                                        <span>Esci</span>
-                                    </a>
-                                </li>
-                            </ul>  
-                                        <!-- END PROFILE DROPDOWN ITEMS -->     
-                        </li>               
-                    </ul>
+                                    <span>Esci</span>
+                                </a>
+                            </li>
+                        </ul>  
+                                        <!-- END PROFILE DROPDOWN ITEMS -->  
+                      
+                    </li>               
+                </ul>
             </nav>                   
         </header>  
     
         ";
-        // line 151
+        // line 149
         $this->displayBlock('content', $context, $blocks);
-        // line 152
+        // line 150
         echo "
         <footer class=\"footer mt-auto p-2\">
             <div class=\"container\">
                 <span class=\"\">&copy; Liquimet Italia ";
-        // line 155
+        // line 153
         echo twig_escape_filter($this->env, twig_date_format_filter($this->env, "now", "Y"), "html", null, true);
         echo " </span>
             </div>
         </footer>
         
         ";
-        // line 159
+        // line 157
         $this->displayBlock('script', $context, $blocks);
-        // line 238
+        // line 236
         echo "
     </body>
 ";
     }
 
-    // line 151
+    // line 149
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 159
+    // line 157
     public function block_script($context, array $blocks = [])
     {
         $macros = $this->macros;
         echo "    
             <script src=\"";
-        // line 160
+        // line 158
         echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
         echo "js/main.js\"></script>
             
@@ -426,7 +428,7 @@ class __TwigTemplate_3855ede57a60d26f300600d05b8e7a6112e4ff0c558148c32c1e0317a4d
 
     public function getDebugInfo()
     {
-        return array (  341 => 160,  335 => 159,  329 => 151,  323 => 238,  321 => 159,  314 => 155,  309 => 152,  307 => 151,  293 => 140,  268 => 120,  256 => 111,  252 => 110,  245 => 105,  239 => 102,  233 => 101,  230 => 100,  228 => 99,  199 => 72,  191 => 70,  185 => 67,  178 => 63,  175 => 62,  169 => 60,  161 => 59,  156 => 56,  152 => 55,  140 => 48,  127 => 38,  123 => 37,  117 => 33,  113 => 32,  106 => 8,  84 => 12,  79 => 9,  77 => 8,  74 => 7,  70 => 6,  63 => 1,  59 => 241,  57 => 32,  53 => 30,  51 => 6,  45 => 2,  43 => 1,);
+        return array (  343 => 158,  337 => 157,  331 => 149,  325 => 236,  323 => 157,  316 => 153,  311 => 150,  309 => 149,  294 => 137,  269 => 117,  257 => 108,  253 => 107,  245 => 101,  239 => 99,  233 => 98,  230 => 97,  228 => 96,  199 => 69,  192 => 68,  186 => 66,  179 => 62,  176 => 61,  170 => 59,  162 => 58,  158 => 56,  154 => 55,  142 => 48,  129 => 38,  123 => 37,  117 => 33,  113 => 32,  106 => 8,  84 => 12,  79 => 9,  77 => 8,  74 => 7,  70 => 6,  63 => 1,  59 => 239,  57 => 32,  53 => 30,  51 => 6,  45 => 2,  43 => 1,);
     }
 
     public function getSourceContext()
@@ -467,18 +469,18 @@ class __TwigTemplate_3855ede57a60d26f300600d05b8e7a6112e4ff0c558148c32c1e0317a4d
         <header id=\"header\" class=\"header d-flex\">
                                         <!-- LOGO -->
             <div class=\"d-flex align-items-center div-title\">
-                <a href=\"{{ doc_root }}index\" class=\"logo d-flex align-items-center w-100\">
+                <a href=\"{{ doc_root }}index/{{ session.id_user}}\" class=\"logo d-flex align-items-center w-100\">
                     <img src=\"{{ doc_root }}img/liquimet_logo.jpg\" class=\"img-logo my-auto\" alt=\"\">
                     <span></span>
-                    <h3 class=\"d-none d-lg-block my-auto ms-4\" id=\"title\">Liquimet S.r.l.</h3>
+                    <h3 class=\"d-none d-lg-block my-auto ms-4\" id=\"title\">Liquimet Padova</h3>
                 </a>
             </div>
                                         <!-- END LOGO -->
 
                                         <!-- NAVIGATION -->
             <ul class=\"nav nav-tabs-bordered d-flex my-auto mx-auto hstack gap-3 p-0\" id=\"navigation\">
-                <li class=\"nav-item nav-justified nav-fill mx-auto my-auto\">
-                    <a class=\"nav-link w-100\" href=\"{{ doc_root }}index/{{ user.id_user }}\">
+                <li class=\"nav-item nav-justified nav-fill my-auto mx-auto\">
+                    <a class=\"nav-link w-100\" href=\"{{ doc_root }}index/{{ session.id_user }}\">
                         <i class=\"bi bi-house\"></i>
                     </a>
                     
@@ -486,98 +488,96 @@ class __TwigTemplate_3855ede57a60d26f300600d05b8e7a6112e4ff0c558148c32c1e0317a4d
                 </li>
 
                 {% for link in navigation %}
-                    
-                        <li class=\"nav-item nav-justified nav-fill mx-auto my-auto\">       
-                            <a class=\"nav-link w-100\" aria-controls=\"nav-platform\"
-                                href=\"{{ doc_root }}category/{{ link.id_group }}/{{ link.seo }}\"
-                                    {% if (group == link.id_group) %} 
-                                        class=\"active\" aria-current=\"page\" 
-                                    {% endif %}>
-                                        {{ link.name|capitalize }}
-                            </a>
-                        </li>     
+                    <li class=\"nav-item nav-justified nav-fill my-auto mx-auto\">       
+                        <a class=\"nav-link w-100\" aria-controls=\"nav-platform\"
+                            href=\"{{ doc_root }}platform/{{ link.id_group }}/{{ link.seo }}\"
+                                {% if (group == link.id_group) %} 
+                                    class=\"active\" aria-current=\"page\" 
+                                {% endif %}>
+                                    {{ link.name|capitalize }}
+                        </a>
+                    </li>     
                         
-                        {% if (link.id_group < group_count) %}            
+                        {% if (link.id_group > group_count) %}            
                             <li class=\"icon-divider\"> <i class=\"bi bi-chevron-double-right\" style=\"color: #0066cc\"></i> </li>
-                        {% endif %}
-                    
-                    
+                        {% endif %}    
                 {% endfor %}                     
             </ul>
                                         <!-- END NAVIGATION -->
 
                                         <!-- SEARCH BAR -->
-            <div class=\"search-bar ms-auto my-auto p-1\">
+            <!--<div class=\"search-bar ms-auto my-auto p-1\">
                 <form class=\"search-form d-flex align-items-center\" method=\"POST\" action=\"#\">
                     <input type=\"text\" name=\"query\" placeholder=\"Cerca\">
                         <button type=\"submit\" title=\"Cerca\"> 
                             <i class=\"bi bi-search\"></i>
                         </button>
                 </form>
-            </div>
+            </div>-->
                                         <!-- END SEARCH BAR -->
 
                                         <!-- SEARCH ICON -->
             <nav class=\"header-nav me-1 p-2\">
                 <ul class=\"d-flex align-items-center\">
-                    <li class=\"nav-item d-block d-lg-none\">
+                    <!--<li class=\"nav-item d-block d-lg-none\">
                         <a class=\"nav-link nav-icon search-bar-toggle\" href=\"#\">
                             <i class=\"bi bi-search\"></i>
                         </a>
-                    </li>
+                    </li>-->
                                         <!-- END SEARCH ICON-->
 
                                         <!-- PROFILE ICON -->
                     <li class=\"nav-item dropdown d-flex justify-content-end ms-5 mb-1\">
-                        {% if (user.id_user != 0) %}
-                            <a class=\"nav-link p-1 my-auto mx-1 nav-profile\" data-bs-toggle=\"dropdown\" id=\"nav-profile\"
-                                href=\"{{ doc_root }}user/{{ user.id_user }}\">
-                                    <span class=\"d-none d-md-block dropdown-toggle ps-2\"> {{ user.username }} </span>
-                            </a>
-                        {% endif %}
+                    {% if (session.id_user == user.id_user) %}
+                        <a class=\"nav-link p-1 my-auto mx-1 nav-profile\" data-bs-toggle=\"dropdown\" id=\"nav-profile\"
+                            href=\"{{ doc_root }}user/{{ user.id_user }}\">
+                                <span class=\"d-none d-md-block dropdown-toggle ps-2\"> {{ user.username }} </span>
+                        </a>
+                    {% endif %}    
                                         <!-- END PROFILE ICON -->
 
                                         <!-- PROFILE DROPDOWN ITEMS -->
-                            <ul class=\"dropdown-menu dropdown-menu-end dropdown-menu-arrow profile\">
-                                <li class=\"dropdown-header\">
-                                    <h5>{{ user.member }}</h5>
-                                        <span>{{ user.role|capitalize }} </span>
-                                </li>
+                        <ul class=\"dropdown-menu dropdown-menu-end dropdown-menu-arrow profile\">
+                            <li class=\"dropdown-header\">
+                                <h5>{{ user.member }}</h5>
+                                    <span>{{ user.role|capitalize }} </span>
+                            </li>
             
-                                <li>
-                                    <hr class=\"dropdown-divider\">
-                                </li>
+                            <li>
+                                <hr class=\"dropdown-divider\">
+                            </li>
 
-                                <li>
-                                    <a class=\"dropdown-item d-flex justify-content-center\" 
-                                        href=\"{{ doc_root }}user/{{ user.id_user }}\">
-                                        <span> Profilo </span>
-                                    </a>
-                                </li>
+                            <li>
+                                <a class=\"dropdown-item d-flex justify-content-center\" 
+                                    href=\"{{ doc_root }}user/{{ user.id_user }}\">
+                                    <span> Profilo </span>
+                                </a>
+                            </li>
             
-                                <li>
-                                    <hr class=\"dropdown-divider\">
-                                </li>
+                            <li>
+                                <hr class=\"dropdown-divider\">
+                            </li>
     
-                                <li>
-                                    <a class=\"dropdown-item d-flex justify-content-center\" href=\"#\">
-                                        <span>Impostazioni</span>
-                                    </a>
-                                </li>
+                            <li>
+                                <a class=\"dropdown-item d-flex justify-content-center\" href=\"#\">
+                                    <span>Impostazioni</span>
+                                </a>
+                            </li>
     
-                                <li>
-                                    <hr class=\"dropdown-divider\">
-                                </li>
+                            <li>
+                                <hr class=\"dropdown-divider\">
+                            </li>
 
-                                <li>
-                                    <a class=\"dropdown-item d-flex justify-content-center\" href=\"{{ doc_root }}logout/\">
-                                        <span>Esci</span>
-                                    </a>
-                                </li>
-                            </ul>  
-                                        <!-- END PROFILE DROPDOWN ITEMS -->     
-                        </li>               
-                    </ul>
+                            <li>
+                                <a class=\"dropdown-item d-flex justify-content-center\" href=\"{{ doc_root }}logout/\">
+                                    <span>Esci</span>
+                                </a>
+                            </li>
+                        </ul>  
+                                        <!-- END PROFILE DROPDOWN ITEMS -->  
+                      
+                    </li>               
+                </ul>
             </nav>                   
         </header>  
     

@@ -2,98 +2,114 @@
 {% block title %} Liquimet {% endblock %}
 
 {% block content %}
-    <main id="main" class="main">
+    <main id="main" class="main mx-2">
         <div class="pagetitle">
-            <h1> Benvenuto/a {{ user.name }}! </h1>
+            <h1 class="mx-auto my-1 py-1"> 
+                {% if session.gender == 'm' %}
+                    Benvenuto 
+                {% else %}
+                    Benvenuta 
+                {% endif %}
+                    {{ session.name }}!
+            </h1>
             
-                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                    <ol class="breadcrumb d-flex align-items-center p-1" style="--bs-breadcrumb-divider-color: white">
-                        <li class="breadcrumb-item">
-                            <a href="{{ doc_root }}admin/index" class="pageicon" style="font-size: 18px"> 
-                                <i class="bi bi-house"></i> 
-                            </a>
+                <nav style="--bs-breadcrumb-divider: none" aria-label="breadcrumb" style="text-align: center">
+                    <ol class="breadcrumb p-2 mx-auto mt-3" style="border: 1px solid white; border-radius: 5px; text-align: center; width: 20rem">        
+                        <li class="breadcrumb-item mx-auto my-auto circle">
+                            <i class="bi bi-arrow-right-circle"></i>
                         </li>
-
-                        <li class="breadcrumb-item active"> 
-                            <a href="{{ doc_root }}admin/user" class="pageicon">
+                        
+                        <li class="breadcrumb-item mx-auto my-auto" > 
+                            <a href="#" class="pageicon">
                                 Pannello di controllo
                             </a> 
+                        </li>
+                        
+                        <li class="breadcrumb-item mx-auto my-auto circle">
+                            <i class="bi bi-arrow-left-circle"></i>
                         </li>
                     </ol>
                 </nav>
         </div>
 
-        <section class="section dashboard">
+        <section class="section dashboard pt-2">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="row">
 
                         <!-- Trasporti Card -->
-                        <div class="col-xxl-4 col-md-6">
-                            <div class="card info-card trans-card">
+                        <div class="col-xxl-4 col-md-6 py-0">
+                            <div class="card info-card trans-card mb-3">
                                 <div class="card-body">
-                                    <h5 class="card-title text-primary p-0">TRASPORTI</h5>
+                                    <h5 class="card-title text-primary p-0 mb-2 mt-0"> 
+                                        TRASPORTI 
+                                    </h5>
 
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-truck"></i>
+                                        <div class="d-flex align-items-center info-body">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-truck"></i>
+                                            </div>
+                                            
+                                            <div class="ps-3">
+                                                <h6> {{ countT }} </h6>
+                                                    <div class="d-flex justify-content-center">
+                                                        <span class="text-success pt-1 fw-bold"> {{ sum|number_format(0,'.',',') }} kg</span>
+                                                        <span class="text-muted pt-1 ms-1"> scaricati in totale </span> 
+                                                    </div>    
+                                            </div>
                                         </div>
-                                        
-                                        <div class="ps-3">
-                                            <h6> {{ countT }} </h6>
-                                                <span class="text-success small pt-1 fw-bold"> % </span> 
-                                                <span class="text-muted small pt-2 ps-1"> quantita scaricate </span> 
-                                                
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                         <!-- End Trasporti Card -->
 
                         <!-- Trasporti Full Card -->
-                        <div class="col-xxl-4 col-md-6">
-                            <div class="card info-card full-card">
+                        <div class="col-xxl-4 col-md-6 py-0">
+                            <div class="card info-card full-card mb-3">
                                 <div class="card-body">
-                                    <h5 class="card-title text-muted p-0">
-                                        TRASPORTI <span class="text-primary" style="font-weight: 600">| FULL</span>
+                                    <h5 class="card-title text-muted p-0 mb-2 mt-0">
+                                        TRASPORTI <span class="text-primary">&nbsp;&#124; PIENI</span>
                                     </h5>
 
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-fuel-pump-fill"></i>
+                                        <div class="d-flex align-items-center info-body">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-fuel-pump-fill"></i>
+                                            </div>
+                                            
+                                            <div class="ps-3">
+                                                <h6> {{ countFull }} </h6>
+                                                    <div class="d-flex justify-content-center">
+                                                        {% set percentFull = ((countFull / countT) * 100) %}
+                                                        <span class="text-success pt-1 fw-bold"> {{ percentFull|number_format(2,'.',',') }}% </span> 
+                                                        <span class="text-muted pt-1 ms-1">dei trasporti totali</span>
+                                                    </div>    
+                                            </div>
                                         </div>
-                                        
-                                        <div class="ps-3">
-                                            <h6> {{ countFull }} </h6>
-                                                {% set percentFull = ((countFull / countT) * 100) %}
-                                                    <span class="text-success small pt-1 fw-bold"> {{ percentFull|number_format(2,'.',',') }}% </span> 
-                                                    <span class="text-muted small pt-2 ps-1">dei trasporti totali</span>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                         <!-- End Trasporti Full Card -->
 
                         <!-- Trasporti Part Card -->
-                        <div class="col-xxl-4 col-md-6">
-                            <div class="card info-card part-card">
+                        <div class="col-xxl-4 col-md-6 py-0">
+                            <div class="card info-card part-card mb-3">
                                 <div class="card-body">
-                                    <h5 class="card-title text-muted p-0">
-                                        TRASPORTI <span class="text-primary">| PART</span>
+                                    <h5 class="card-title text-muted p-0 mb-2 mt-0">
+                                        TRASPORTI <span class="text-primary">&nbsp;&#124; PARZIALI</span>
                                     </h5>
                                     
-                                        <div class="d-flex align-items-center">
+                                        <div class="d-flex align-items-center info-body">
                                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                                 <i class="bi bi-fuel-pump"></i>
                                             </div>
                                             
                                             <div class="ps-3">
                                                 <h6> {{ countPart }} </h6>
-                                                    {% set percentPart = ((countPart / countT) * 100) %}
-                                                        <span class="text-success small pt-1 fw-bold"> {{ percentPart|number_format(2,'.',',') }}% </span> 
-                                                        <span class="text-muted small pt-2 ps-1">dei trasporti</span>
+                                                    <div class="d-flex justify-content-center">
+                                                        {% set percentPart = ((countPart / countT) * 100) %}
+                                                        <span class="text-success pt-1 fw-bold"> {{ percentPart|number_format(2,'.',',') }}% </span> 
+                                                        <span class="text-muted pt-1 ms-1"> dei trasporti totali </span>
+                                                    </div>
                                             </div>
                                         </div>
                                 </div>
@@ -102,44 +118,58 @@
                         <!-- End Trasporti Part Card -->
 
                         <!-- Recent Transports -->
-                        <div class="col-12">
-                            <div class="card recent-trans overflow-auto">
+                        <div class="col-lg-12 py-0">
+                            <div class="card info-card recent-card mb-3">
                                 <div class="card-body">
-                                    <h5 class="card-title text-primary mb-3" style="font-weight: 600"> 
-                                        TRASPORTI RECENTI
+                                    <h5 class="card-title text-secondary p-0 mb-2 mt-0"> 
+                                        TRASPORTI <span class="text-primary">&nbsp;&#124; RECENTI</span>
                                     </h5>
                                     
-                                        <table class="table table-borderless datatable">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-hover align-middle">
                                             <thead>
                                                 <tr style="text-align: center">
                                                     <th scope="col"> # </th>
+                                                    <th scope="col"> Tipo </th>
                                                     <th scope="col"> Slot ID </th>
-                                                    <th scope="col"> Numero CMR </th>
-                                                    <th scope="col"> Status </th>
+                                                    <th scope="col"> Univoco </th>
                                                     <th scope="col"> Data </th>
+                                                    <th scope="col"> Status </th>
                                                     <th scope="col"> Membro </th>
                                                 </tr>
                                             </thead>
                                             
                                             <tbody>
-                                            {% for recent in tra %}
-                                                <tr style="text-align: center">
-                                                    <th scope="row">
-                                                        <a href="#" class="text-dark"> {{ recent.id_transport }} </a>
-                                                    </th>
-                                                    <td> {{ recent.slot }} </td>
-                                                    <td>
-                                                        <a href="#" class="text-dark"> {{ recent.cmr }} </a>
+                                            {% set id = countT %}
+                                            {% for r in recent %} 
+                                                <tr class="recent-hover" style="text-align: center">
+                                                    <td scope="row">
+                                                        {{ id }}
+                                                        {% set id = id - 1 %}
                                                     </td>
-                                                    <td>
-                                                        <span class="badge bg-success"> Created </span>
+                                                    <td> 
+                                                        {% if r.type == 0 %}
+                                                            F 
+                                                        {% else %}
+                                                            P
+                                                        {% endif %}
                                                     </td>
-                                                    <td> {{ recent.created }}</td>
-                                                    <td> {{ recent.username }}</td>
+                                                    <td> {{ r.slot }} </td>
+                                                    <td> {{ r.univoco }} </td>
+                                                    <td> {{ r.date_load|date("d/m/y") }} <strong>&#8594;</strong> {{ r.date_unload|date("d/m/y") }} </td>
+                                                    <td>
+                                                        <span class="badge rounded-pill text-bg-success p-1 m-0"> 
+                                                            <i class="bi bi-file-earmark-plus"></i>
+                                                        </span>
+                                                            <strong>&#8594;</strong>
+                                                        {{ r.created|date("d/m/y") }}
+                                                    </td>
+                                                    <td> {{ r.username }}</td>
                                                 </tr>
                                             {% endfor %}
                                             </tbody>
                                         </table>
+                                    </div>     
                                 </div>
                             </div>
                         </div>
@@ -149,126 +179,133 @@
                 
                 <!-- Right Side Columns -->
                 <div class="col-lg-4">
-                    <div class="row">
 
-                        <!-- Profilo Card -->
-                        <div class="col">
-                            <div class="card profile-card">
+                    <!-- Profilo Card -->
+                    <div class="row">
+                        <div class="col-lg-12 py-0 mx-auto">
+                            <div class="card info-card profile-card mb-3">
                                 <div class="card-body">
-                                    <h5 class="card-title text-primary p-0">
+                                    <h5 class="card-title text-primary p-0 mb-2 mt-0">
                                         PROFILO
                                     </h5>
 
-                                    {% if user.id_user %}
-                                    <div class="row justify-content-md-center m-auto">
-                                        <div class="col-7 m-auto p-2">
-                                            <div class="col align-middle mx-auto mb-1" style="text-align: center">
-                                                <span class="text-dark" style="font-size: 1.2rem">
-                                                    <i class="bi bi-person me-1" style="font-size: 1.2rem; color: #71bf44"></i>
-                                                    {{ user.member }}
-                                                </span>
+                                    {% if (session.id_user == user.id_user) %}
+                                    <div class="row mx-auto p-0">
+                                        <div class="col-7 mx-auto my-0 p-1 profile-body">
+                                            <div class="col align-middle mx-auto">
+                                                <i class="bi bi-person me-1"></i>
+                                                    <span class="text-dark"> {{ user.member|upper }} </span>
                                             </div>
         
-                                            <div class="col align-middle mx-auto mb-1" style="text-align: center">
-                                                <span class="text-dark" style="font-size: 1.2rem">
-                                                    <i class="bi bi-envelope me-1" style="font-size: 1.2rem; color: #71bf44"></i>
+                                            <div class="col align-middle mx-auto">
+                                                <i class="bi bi-envelope me-1"></i>
                                                     {{ user.email }}
-                                                </span>
-                                                
                                             </div>
         
-                                            <div class="col align-middle mx-auto mb-1" style="text-align: center">
-                                                <span class="text-dark" style="font-size: 1.2rem">
-                                                    <i class="bi bi-info-square me-1" style="font-size: 1.2rem; color: #71bf44"></i>
+                                            <div class="col align-middle mx-auto">
+                                                <i class="bi bi-info-square me-1"></i>
                                                     {{ user.role|capitalize }}
-                                                </span>
                                             </div>
         
-                                            <div class="col align-middle mx-auto mb-1" style="text-align: center">
-                                                <span class="text-dark" style="font-size: 1.2rem">
-                                                    <i class="bi bi-clock-history me-1" style="font-size: 1.2rem; color: #71bf44"></i>
+                                            <div class="col align-middle mx-auto">
+                                                <i class="bi bi-clock-history me-1"></i>
                                                     {{ user.joined|date('d/m/Y', 'Europe/Rome') }}
-                                                </span>
                                             </div>
                                         </div>
 
                                         <div class="col-4 m-auto" style="text-align: center">
                                             <img src="{{ doc_root }}img/profile-avatar-light.jpg" alt="Profilo" class="rounded-circle mb-0">
         
-                                            <h4 class="card-title mb-1"> {{ user.username }} </h4>
+                                            <h4 class="card-title text-dark mb-1"> {{ user.username }} </h4>
                                         </div>
                                     </div>
                                     {% endif %}
                                 </div>
                             </div>
                         </div>
-                        <!-- End Profilo Card -->  
                     </div>
+                    <!-- End Profilo Card -->
 
                     <!-- Utenti Card -->
-                    <div class="col-12 p-0">
-                        <div class="card info-card part-card">
-                            <div class="card-body">
-                                <h5 class="card-title text-primary p-0">
-                                    UTENTI
-                                </h5>
-                                
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-people"></i>
-                                        </div>
-                                        
-                                        <div class="ps-3 ms-2">
-                                            <h6> {{ countU }} </h6>
-                                        </div>
+                    <div class="row">
+                        <div class="col-lg-12 py-0 mx-auto">
+                            <div class="card info-card users-card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary p-0 mb-2 mt-0">
+                                        UTENTI
+                                    </h5>
+                                    
+                                        <div class="d-flex align-items-center mx-auto p-0 users-body">
+                                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-people"></i>
+                                            </div>
+                                            
+                                            <div class="ps-3 me-2">
+                                                <h6> {{ countU }} </h6>
+                                            </div>
 
-                                        <div class="d-flex justify-content-center py-1 mx-auto">
-                                            <ul class="list-group list-group-flush mx-auto">
-                                                <li class="list-group-item border-right-0">
-                                                    <span class="text-dark pt-1 fw-bold"> {{ admins }} </span> 
-                                                    <span class="text-warning pt-2 ps-1" style="font-weight: 600"> Admin </span>
-                                                </li>
-                                                <li class="list-group-item border-right-0">
-                                                    <span class="text-dark pt-1 fw-bold"> {{ members }} </span> 
-                                                    <span class="text-success pt-2 ps-1" style="font-weight: 600"> Membri </span>
-                                                </li>
-                                                <li class="list-group-item border-right-0">
-                                                    <span class="text-dark pt-1 fw-bold"> {{ offlines }} </span> 
-                                                    <span class="text-danger pt-2 ps-1" style="font-weight: 600"> Sospesi </span>
-                                                </li>
-                                            </ul>
+                                            <div class="d-flex justify-content-center py-0 mx-auto">
+                                                <ul class="list-group list-group-flush mx-auto">
+                                                    <li class="list-group-item border-right-0">
+                                                        <span class="text-dark pt-1 fw-bold"> {{ admins }} </span> 
+                                                        <span class="text-warning pt-2 ps-1" style="font-weight: 600"> 
+                                                            ADMIN
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item border-right-0">
+                                                        <span class="text-dark pt-1 fw-bold"> {{ members }} </span> 
+                                                        <span class="text-success pt-2 ps-1" style="font-weight: 600"> 
+                                                            {% if members == 1 %}
+                                                                MEMBRO
+                                                            {% else %}
+                                                                MEMBRI 
+                                                            {% endif %}
+                                                        </span>
+                                                    </li>
+                                                    <li class="list-group-item border-right-0">
+                                                        <span class="text-dark pt-1 fw-bold"> {{ offlines }} </span> 
+                                                        <span class="text-danger pt-2 ps-1" style="font-weight: 600"> 
+                                                            {% if offlines == 1 %}
+                                                                SOSPESO
+                                                            {% else %}
+                                                                SOSPESI 
+                                                            {% endif %}
+                                                        </span>
+                                                    </li>
+                                                </ul>
 
-                                            <ul class="list-group mx-auto">
-                                                <li class="list-group-item border-0">
-                                                    <i class="bi bi-arrow-right-short"></i>
-                                                </li>
-                                                <li class="list-group-item border-0">
-                                                    <i class="bi bi-arrow-right-short"></i>
-                                                </li>
-                                                <li class="list-group-item border-0">
-                                                    <i class="bi bi-arrow-right-short"></i>
-                                                </li>
-                                            </ul>
+                                                <ul class="list-group mx-auto">
+                                                    <li class="list-group-item border-0">
+                                                        <i class="bi bi-arrow-right-short"></i>
+                                                    </li>
+                                                    <li class="list-group-item border-0">
+                                                        <i class="bi bi-arrow-right-short"></i>
+                                                    </li>
+                                                    <li class="list-group-item border-0">
+                                                        <i class="bi bi-arrow-right-short"></i>
+                                                    </li>
+                                                </ul>
 
-                                            <ul class="list-group list-group-flush mx-auto" style="text-align: center">
-                                                <li class="list-group-item border-left-0">
-                                                    {% set pAdmin = ((admins / countU) * 100) %}
-                                                    <span class="text-dark pt-1" style="font-weight: 600"> {{ pAdmin }}% </span> 
-                                                    <span class="text-muted pt-2 ps-1"> degli utenti </span>
-                                                </li>
-                                                <li class="list-group-item border-left-0">
-                                                    {% set pMember = ((members / countU) * 100) %}
-                                                    <span class="text-dark pt-1" style="font-weight: 600"> {{ pMember }}% </span> 
-                                                    <span class="text-muted pt-2 ps-1"> degli utenti </span>
-                                                </li>
-                                                <li class="list-group-item border-left-0">
-                                                    {% set pOffline = ((offlines / countU) * 100) %}
-                                                    <span class="text-dark pt-1" style="font-weight: 600"> {{ pOffline }} </span> 
-                                                    <span class="text-muted pt-2 ps-1"> degli utenti </span>
-                                                </li>
-                                            </ul>
+                                                <ul class="list-group list-group-flush mx-auto" style="text-align: center">
+                                                    <li class="list-group-item border-left-0">
+                                                        {% set pAdmin = ((admins / countU) * 100) %}
+                                                        <span class="text-dark pt-1" style="font-weight: 600"> {{ pAdmin }}% </span> 
+                                                        <span class="text-muted pt-2 ps-1"> degli utenti </span>
+                                                    </li>
+                                                    <li class="list-group-item border-left-0">
+                                                        {% set pMember = ((members / countU) * 100) %}
+                                                        <span class="text-dark pt-1" style="font-weight: 600"> {{ pMember }}% </span> 
+                                                        <span class="text-muted pt-2 ps-1"> degli utenti </span>
+                                                    </li>
+                                                    <li class="list-group-item border-left-0">
+                                                        {% set pOffline = ((offlines / countU) * 100) %}
+                                                        <span class="text-dark pt-1" style="font-weight: 600"> {{ pOffline }} </span> 
+                                                        <span class="text-muted pt-2 ps-1"> degli utenti </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -278,4 +315,12 @@
             </div>
         </section>
     </main>
+<!-- 
+    <script>
+        let w = window.innerWidth;
+        let h = window.innerHeight;
+        
+        document.getElementById("demo").innerHTML = "Width: " + w + "<br>Height: " + h;
+    </script>
+-->
 {% endblock %}

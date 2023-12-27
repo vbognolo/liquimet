@@ -12,8 +12,8 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* category.html */
-class __TwigTemplate_33175348e5ab1421836bb6fd2fd43a2ac658c14ad38e2db3b6ccbe58bf2842a4 extends Template
+/* platform.html */
+class __TwigTemplate_c4dbf43498759c43297bc6e01b0e91433d2e7914a5396631e36b5233bd5d3133 extends Template
 {
     private $source;
     private $macros = [];
@@ -39,7 +39,7 @@ class __TwigTemplate_33175348e5ab1421836bb6fd2fd43a2ac658c14ad38e2db3b6ccbe58bf2
     protected function doDisplay(array $context, array $blocks = [])
     {
         $macros = $this->macros;
-        $this->parent = $this->loadTemplate("layout.html", "category.html", 1);
+        $this->parent = $this->loadTemplate("layout.html", "platform.html", 1);
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
@@ -453,7 +453,7 @@ $context["nav"], "id_category", [], "any", false, false, false, 23), 2))) {
 
     public function getTemplateName()
     {
-        return "category.html";
+        return "platform.html";
     }
 
     public function isTraitable()
@@ -664,6 +664,6 @@ $context["nav"], "id_category", [], "any", false, false, false, 23), 2))) {
             </div>
         </div>
     </section>    
-{% endblock %}", "category.html", "D:\\wamp\\www\\liquimet\\templates\\category.html");
+{% endblock %}", "platform.html", "D:\\wamp\\www\\liquimet\\templates\\platform.html");
     }
 }

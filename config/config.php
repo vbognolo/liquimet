@@ -10,13 +10,13 @@ $parent_folder = dirname($this_folder);                                     // p
 define("DOC_ROOT", $parent_folder . DIRECTORY_SEPARATOR . ROOT_FOLDER . DIRECTORY_SEPARATOR);          // document root
 
 // database credentials
-$type = 'mysql';                 
-$server = 'localhost';             
-$db = 'liquimet_srl';             
-$port = '3306';                      
-$charset = 'utf8mb4';               
-$username = 'LiquimetAdmin';         
-$password = '2016-Liquimet';         
+    $type = 'mysql';                 
+    $server = 'localhost';             
+    $db = 'liquimet_srl';             
+    $port = '3306';                      
+    $charset = 'utf8mb4';               
+    $username = 'LiquimetAdmin';         
+    $password = '2016-Liquimet';         
 
 $dsn = "$type:host=$server;dbname=$db;port=$port;charset=$charset";          // create dsn
 

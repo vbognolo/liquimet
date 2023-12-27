@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'layout-login.html' %}
 {% block html %} 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -45,11 +45,20 @@
 
                     <div class="d-flex justify-content-center form_container">
                         <form method="post" name="login_form" action="{{ doc_root }}login">
+                        {% if success %}
+                            <div class="alert alert-success"> {{ success }} </div>
+                        {% endif %}
+                        
+                        {% if errors %}
+                            <div class="alert alert-danger"> {{ errors.message }} </div>
+                        {% endif %}
+                        
+                        
                             <div class="input-group mb-3" id="login-input-group">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
-                                <input type="text" name="username" class="form-control" id ="login-input-user" value="{{ username }}" autocomplete="off" placeholder="username">
+                                <input type="text" name="username" class="form-control" id ="login-input-user" value="{{ member.username }}" autocomplete="off" placeholder="username">
                                 <div class="errors">
                                     {{ errors.username }}
                                 </div>
@@ -59,7 +68,7 @@
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                 </div>
-                                <input type="password" name="pass" class="form-control" id="login-input-pass" autocomplete="new-password" placeholder="password">
+                                <input type="password" name="pass" class="form-control" id="login-input-pass" placeholder="password">
                                 <div class="errors">
                                     {{ errors.password|raw }}
                                 </div>
@@ -79,7 +88,7 @@
                                 </button>
 
                                             <!-- MODAL -->
-                                {% if errors %}
+                                {% if errors == true %}
                                     <div class="modal fade" id="error" tabindex="-1" aria-labelledby="errorLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">

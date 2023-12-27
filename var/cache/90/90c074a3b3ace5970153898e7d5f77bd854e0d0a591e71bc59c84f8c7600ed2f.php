@@ -37,13 +37,13 @@ class __TwigTemplate_143de009d8ad5da86ad7e19570e991e4567a9b64d44f35154474cc48d60
     protected function doGetParent(array $context)
     {
         // line 1
-        return "layout.html";
+        return "layout-login.html";
     }
 
     protected function doDisplay(array $context, array $blocks = [])
     {
         $macros = $this->macros;
-        $this->parent = $this->loadTemplate("layout.html", "login.html", 1);
+        $this->parent = $this->loadTemplate("layout-login.html", "login.html", 1);
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
@@ -110,12 +110,12 @@ class __TwigTemplate_143de009d8ad5da86ad7e19570e991e4567a9b64d44f35154474cc48d60
 ";
         // line 35
         $this->displayBlock('content', $context, $blocks);
-        // line 117
+        // line 126
         echo "
 ";
-        // line 118
+        // line 127
         $this->displayBlock('footer', $context, $blocks);
-        // line 119
+        // line 128
         echo "
 ";
     }
@@ -143,18 +143,41 @@ class __TwigTemplate_143de009d8ad5da86ad7e19570e991e4567a9b64d44f35154474cc48d60
         // line 47
         echo twig_escape_filter($this->env, ($context["doc_root"] ?? null), "html", null, true);
         echo "login\">
+                        ";
+        // line 48
+        if (($context["success"] ?? null)) {
+            // line 49
+            echo "                            <div class=\"alert alert-success\"> ";
+            echo twig_escape_filter($this->env, ($context["success"] ?? null), "html", null, true);
+            echo " </div>
+                        ";
+        }
+        // line 51
+        echo "                        
+                        ";
+        // line 52
+        if (($context["errors"] ?? null)) {
+            // line 53
+            echo "                            <div class=\"alert alert-danger\"> ";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["errors"] ?? null), "message", [], "any", false, false, false, 53), "html", null, true);
+            echo " </div>
+                        ";
+        }
+        // line 55
+        echo "                        
+                        
                             <div class=\"input-group mb-3\" id=\"login-input-group\">
                                 <div class=\"input-group-append\">
                                     <span class=\"input-group-text\"><i class=\"fas fa-user\"></i></span>
                                 </div>
                                 <input type=\"text\" name=\"username\" class=\"form-control\" id =\"login-input-user\" value=\"";
-        // line 52
-        echo twig_escape_filter($this->env, ($context["username"] ?? null), "html", null, true);
+        // line 61
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["member"] ?? null), "username", [], "any", false, false, false, 61), "html", null, true);
         echo "\" autocomplete=\"off\" placeholder=\"username\">
                                 <div class=\"errors\">
                                     ";
-        // line 54
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["errors"] ?? null), "username", [], "any", false, false, false, 54), "html", null, true);
+        // line 63
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["errors"] ?? null), "username", [], "any", false, false, false, 63), "html", null, true);
         echo "
                                 </div>
                             </div>
@@ -163,11 +186,11 @@ class __TwigTemplate_143de009d8ad5da86ad7e19570e991e4567a9b64d44f35154474cc48d60
                                 <div class=\"input-group-append\">
                                     <span class=\"input-group-text\"><i class=\"fas fa-lock\"></i></span>
                                 </div>
-                                <input type=\"password\" name=\"pass\" class=\"form-control\" id=\"login-input-pass\" autocomplete=\"new-password\" placeholder=\"password\">
+                                <input type=\"password\" name=\"pass\" class=\"form-control\" id=\"login-input-pass\" placeholder=\"password\">
                                 <div class=\"errors\">
                                     ";
-        // line 64
-        echo twig_get_attribute($this->env, $this->source, ($context["errors"] ?? null), "password", [], "any", false, false, false, 64);
+        // line 73
+        echo twig_get_attribute($this->env, $this->source, ($context["errors"] ?? null), "password", [], "any", false, false, false, 73);
         echo "
                                 </div>
                             </div>
@@ -187,9 +210,9 @@ class __TwigTemplate_143de009d8ad5da86ad7e19570e991e4567a9b64d44f35154474cc48d60
 
                                             <!-- MODAL -->
                                 ";
-        // line 82
-        if (($context["errors"] ?? null)) {
-            // line 83
+        // line 91
+        if ((0 === twig_compare(($context["errors"] ?? null), true))) {
+            // line 92
             echo "                                    <div class=\"modal fade\" id=\"error\" tabindex=\"-1\" aria-labelledby=\"errorLabel\" aria-hidden=\"true\">
                                         <div class=\"modal-dialog\">
                                             <div class=\"modal-content\">
@@ -200,8 +223,8 @@ class __TwigTemplate_143de009d8ad5da86ad7e19570e991e4567a9b64d44f35154474cc48d60
                                                 
                                                 <div class=\"modal-body\">
                                                     ";
-            // line 92
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["errors"] ?? null), "message", [], "any", false, false, false, 92), "html", null, true);
+            // line 101
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, ($context["errors"] ?? null), "message", [], "any", false, false, false, 101), "html", null, true);
             echo "
                                                 </div>
                                                 
@@ -213,7 +236,7 @@ class __TwigTemplate_143de009d8ad5da86ad7e19570e991e4567a9b64d44f35154474cc48d60
                                     </div>
                                 ";
         }
-        // line 102
+        // line 111
         echo "  
                             </div>
                         </form>
@@ -231,7 +254,7 @@ class __TwigTemplate_143de009d8ad5da86ad7e19570e991e4567a9b64d44f35154474cc48d60
 ";
     }
 
-    // line 118
+    // line 127
     public function block_footer($context, array $blocks = [])
     {
         $macros = $this->macros;
@@ -249,12 +272,12 @@ class __TwigTemplate_143de009d8ad5da86ad7e19570e991e4567a9b64d44f35154474cc48d60
 
     public function getDebugInfo()
     {
-        return array (  235 => 118,  217 => 102,  204 => 92,  193 => 83,  191 => 82,  170 => 64,  157 => 54,  152 => 52,  144 => 47,  136 => 42,  128 => 36,  124 => 35,  119 => 119,  117 => 118,  114 => 117,  112 => 35,  109 => 34,  105 => 33,  98 => 11,  75 => 13,  72 => 12,  70 => 11,  67 => 10,  63 => 9,  51 => 2,  40 => 1,);
+        return array (  258 => 127,  240 => 111,  227 => 101,  216 => 92,  214 => 91,  193 => 73,  180 => 63,  175 => 61,  167 => 55,  161 => 53,  159 => 52,  156 => 51,  150 => 49,  148 => 48,  144 => 47,  136 => 42,  128 => 36,  124 => 35,  119 => 128,  117 => 127,  114 => 126,  112 => 35,  109 => 34,  105 => 33,  98 => 11,  75 => 13,  72 => 12,  70 => 11,  67 => 10,  63 => 9,  51 => 2,  40 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Source("{% extends 'layout.html' %}
+        return new Source("{% extends 'layout-login.html' %}
 {% block html %} 
     <link href=\"//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css\" rel=\"stylesheet\" id=\"bootstrap-css\">
     <script src=\"//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js\"></script>
@@ -301,11 +324,20 @@ class __TwigTemplate_143de009d8ad5da86ad7e19570e991e4567a9b64d44f35154474cc48d60
 
                     <div class=\"d-flex justify-content-center form_container\">
                         <form method=\"post\" name=\"login_form\" action=\"{{ doc_root }}login\">
+                        {% if success %}
+                            <div class=\"alert alert-success\"> {{ success }} </div>
+                        {% endif %}
+                        
+                        {% if errors %}
+                            <div class=\"alert alert-danger\"> {{ errors.message }} </div>
+                        {% endif %}
+                        
+                        
                             <div class=\"input-group mb-3\" id=\"login-input-group\">
                                 <div class=\"input-group-append\">
                                     <span class=\"input-group-text\"><i class=\"fas fa-user\"></i></span>
                                 </div>
-                                <input type=\"text\" name=\"username\" class=\"form-control\" id =\"login-input-user\" value=\"{{ username }}\" autocomplete=\"off\" placeholder=\"username\">
+                                <input type=\"text\" name=\"username\" class=\"form-control\" id =\"login-input-user\" value=\"{{ member.username }}\" autocomplete=\"off\" placeholder=\"username\">
                                 <div class=\"errors\">
                                     {{ errors.username }}
                                 </div>
@@ -315,7 +347,7 @@ class __TwigTemplate_143de009d8ad5da86ad7e19570e991e4567a9b64d44f35154474cc48d60
                                 <div class=\"input-group-append\">
                                     <span class=\"input-group-text\"><i class=\"fas fa-lock\"></i></span>
                                 </div>
-                                <input type=\"password\" name=\"pass\" class=\"form-control\" id=\"login-input-pass\" autocomplete=\"new-password\" placeholder=\"password\">
+                                <input type=\"password\" name=\"pass\" class=\"form-control\" id=\"login-input-pass\" placeholder=\"password\">
                                 <div class=\"errors\">
                                     {{ errors.password|raw }}
                                 </div>
@@ -335,7 +367,7 @@ class __TwigTemplate_143de009d8ad5da86ad7e19570e991e4567a9b64d44f35154474cc48d60
                                 </button>
 
                                             <!-- MODAL -->
-                                {% if errors %}
+                                {% if errors == true %}
                                     <div class=\"modal fade\" id=\"error\" tabindex=\"-1\" aria-labelledby=\"errorLabel\" aria-hidden=\"true\">
                                         <div class=\"modal-dialog\">
                                             <div class=\"modal-content\">

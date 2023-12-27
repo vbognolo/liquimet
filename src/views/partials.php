@@ -16,9 +16,9 @@ declare(strict_types = 1);
         } 
 */
 // navigation menu data
-$data['navigation'] = $model->getCategory()->getGroups(); 
-$data['categories'] = $model->getCategory()->getAll();   
-$data['group_count'] = $model->getCategory()->countG(); 
+$data['navigation'] = $model->getPlatform()->getGroups(); 
+$data['categories'] = $model->getPlatform()->getAll();   
+$data['group_count'] = $model->getPlatform()->countG(); 
 
 // table data
 $data['transports'] = $model->getTransport()->getPart();
