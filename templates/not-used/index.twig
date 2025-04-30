@@ -1,0 +1,467 @@
+{% extends 'layout.twig' %}
+{% block title %} Liquimet {% endblock %}
+
+{% block content %}
+    <section class="col-12 section index-header">
+        <div class="mx-auto page-title">
+            <h1 class="my-1">
+                {% if session.gender == 1 %}
+                    Benvenuto 
+                {% else %}
+                    Benvenuta 
+                {% endif %}
+                    {{ session.name }}!
+            </h1>
+
+            <h2 class="my-2">
+                <i class="bi bi-arrow-right-circle"></i> 
+                    Pannello di controllo
+                <i class="bi bi-arrow-left-circle"></i>
+            </h2>
+        </div>
+    </section>
+
+    <section class="col-12 section dashboard">
+        <div class="row my-auto">
+    
+            <!-- Left Side Column -->
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+    
+                    <!-- Trasporti Card -->
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card mb-3">
+                            <div class="card-header d-flex align-items-center">
+                                <h5 class="card-title text-primary p-1 my-auto">
+                                    TRASPORTI
+                                </h5>
+                            </div>
+                            
+                            <div class="card-body">
+                                <div class="d-flex align-items-center info-body">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-truck"></i>
+                                    </div>
+    
+                                    <div class="ps-4">
+                                        <h6> {{ allTransports }} </h6>
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <span class="text-success fw-bold"> 
+                                                {{ unloadedSum|number_format(0,'.',',') }} kg
+                                            </span>
+                                            <span class="text-secondary ms-1"> scaricati in totale. </span> 
+                                        </div>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Trasporti Card -->
+
+                    <!-- Full Transports Card -->
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card mb-3">
+                            <div class="card-header d-flex align-items-center">
+                                <h5 class="card-title text-secondary p-1 my-auto"> 
+                                    TRASPORTI <span class="text-primary"> &nbsp;&#124; PIENI </span>
+                                </h5>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="d-flex align-items-center info-body">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-fuel-pump-fill"></i>
+                                    </div>
+
+                                    <div class="ps-4">
+                                        <h6> {{ fullTransports }} </h6>
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            {% if allTransports > 0 %}
+                                                {% set percentFull = ((fullTransports / allTransports) * 100) %}
+                                            {% else %}
+                                                {% set percentFull = 0 %}
+                                            {% endif %}
+
+                                            <span class="text-success fw-bold"> 
+                                                {{ percentFull|number_format(2,'.',',') }}% 
+                                            </span> 
+                                            <span class="text-secondary ms-1"> dei trasporti totali. </span>
+                                        </div>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Full Transports Card -->
+
+                    <!-- Partial Transports Card -->
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card mb-3">
+                            <div class="card-header d-flex align-items-center">
+                                <h5 class="card-title text-secondary p-1 my-auto"> 
+                                    TRASPORTI <span class="text-primary"> &nbsp;&#124; PARZIALI </span>
+                                </h5>
+                            </div>
+
+                            <div class="card-body"> 
+                                <div class="d-flex align-items-center info-body">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-fuel-pump"></i>
+                                    </div>
+
+                                    <div class="ps-4">
+                                        <h6> {{ partTransports }} </h6>
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            {% if allTransports > 0 %}
+                                                {% set percentPart = (( partTransports / allTransports) * 100) %}
+                                            {% else %}
+                                                {% set percentPart = 0 %}
+                                            {% endif %}
+
+                                            <span class="text-success fw-bold"> 
+                                                {{ percentPart|number_format(2,'.',',') }}% 
+                                            </span> 
+                                            <span class="text-secondary ms-1"> dei trasporti totali. </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Partial Transports Card -->
+
+                    <!-- Recent Transports -->
+                    <div class="col-12">
+                        <div class="card recent-card mt-1 mb-3">
+                            <div class="card-header d-flex align-items-center">
+                                <h5 class="card-title text-secondary p-1 my-auto"> 
+                                    TRASPORTI <span class="text-primary">&nbsp;&#124; RECENTI</span>
+                                </h5>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover text-center">
+                                        <thead class="border-bottom">
+                                            <tr>
+                                                <th scope="col"> # </th>
+                                                <th scope="col"> Tipo </th>
+                                                <th scope="col"> Slot ID </th>
+                                                <th scope="col"> CMR </th>
+                                                <th scope="col"> Univoco </th>
+                                                <th scope="col"> Data </th>
+                                                <th scope="col"> Cont/ATB </th>
+                                                <th scope="col"> Membro </th>
+                                            </tr>
+                                        </thead>
+                                            
+                                        <tbody>
+                                        {% set id = allTransports %}
+                                        {% for r in recent %} 
+
+                                            <tr class="recent-hover">
+                                                <td class="text-primary fw-bold p-2">
+                                                    {{ id }}
+                                                    {% set id = id - 1 %}
+                                                </td>
+                                                <td class="p-2"> {{ r.type|upper }} </td>
+                                                <td class="p-2"> [...] _{{ r.seo|upper }} </td>
+                                                <td class="p-2"> {{ r.cmr|upper }} </td>
+                                                <td class="p-2"> {{ r.univoco|upper }} </td>
+                                                <td class="p-2"> 
+                                                    {{ r.date_load|date("d/m/y") }}
+                                                        &#8594;
+                                                    {{ r.date_unload|date("d/m/y") }} 
+                                                </td>
+                                                <td class="p-2"> {{ r.container|upper }}</td>
+                                                <td class="p-2"> {{ r.username|lower }} </td>
+                                            </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>     
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Recent Transports -->
+                </div>
+            </div>
+            <!-- End Left Side Columns -->  
+
+            <!-- Right Side Columns -->
+            <div class="col-4">
+
+                <!-- Profilo Card -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card profile-card mb-4">
+
+                            {% if isLoggedIn and session.id_user == user.id_user %}
+                            <div class="card-header d-flex align-items-center">
+                                <h5 class="card-title text-primary p-1 my-auto"> 
+                                    PROFILO <span class="text-success">&nbsp;&#124; {{ user.username|lower }} </span>
+                                </h5>
+                            </div>
+                        
+                            <div class="card-body m-2">
+                                <div class="row mx-auto">
+                                    <div class="col-7 m-auto text-center profile-body">
+                                        <div class="align-middle mx-auto">
+                                            <span class="text-dark profile-fullname"> 
+                                                <i class="bi bi-person me-1"></i> 
+                                                    {{ user.name }} {{ user.surname }}
+                                            </span>
+                                        </div>
+
+                                        <div class="align-middle mx-auto">
+                                            <span class="text-dark"> 
+                                                <i class="bi bi-envelope me-1"></i> 
+                                                    {{ user.email }}
+                                            </span>
+                                        </div>
+
+                                        <div class="align-middle mx-auto">
+                                            <span class="text-dark"> 
+                                                <i class="bi bi-info-square me-1"></i> 
+                                                    {{ user.role|capitalize }}
+                                            </span>
+                                        </div>
+
+                                        <div class="align-middle mx-auto">
+                                            <span class="text-dark"> 
+                                                <i class="bi bi-clock-history me-1"></i> 
+                                                    {{ user.joined|date('d/m/Y') }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4 m-auto profile-body">
+                                        <img src="/img/profile-avatar-light.jpg" alt="Profilo" class="rounded-circle mb-0 mx-auto">
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+                <!-- End Profilo Card -->
+
+                <!-- Utenti Card -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card users-card mb-4">
+                            <div class="card-header d-flex align-items-center">
+                                <h5 class="card-title text-primary p-1 my-auto"> 
+                                    UTENTI
+                                </h5>
+                            </div>
+                        
+                            <div class="card-body m-2">
+                                <div class="row mx-auto">
+                                    <div class="col">
+                                        <div class="col-auto card-icon rounded-circle d-flex align-items-center justify-content-center mx-auto my-2 py-1">
+                                            <i class="bi bi-people"></i>
+                                        </div>
+                                        
+                                        <div class="col-auto text-center my-1 ">
+                                            <h6> {{ activeUsers }} </h6>
+                                        </div>
+                                    </div>
+                                       
+                                    <div class="col-auto my-auto users-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item m-auto border-end-0">
+                                                <span class="col-auto text-dark fw-bold"> {{ adminUsers }} </span> 
+                                                <span class="col-auto text-warning fw-bold px-2"> 
+                                                    ADMIN
+                                                </span>
+                                            </li>
+                                            
+                                            <li class="list-group-item m-auto border-end-0">
+                                                <span class="col-auto text-dark fw-bold"> {{ memberUsers }} </span> 
+                                                <span class="col-auto text-success fw-bold px-2"> 
+                                                    {% if memberUsers == 1 %}
+                                                        MEMBRO 
+                                                    {% else %}
+                                                        MEMBRI 
+                                                    {% endif %}
+                                                </span>
+                                            </li>
+                                        
+                                            <li class="list-group-item m-auto border-end-0">
+                                                <span class="col-auto text-dark fw-bold"> {{ suspendedUsers }} </span> 
+                                                <span class="col-auto text-danger fw-bold px-2"> 
+                                                    {% if suspendedUsers == 1 %}
+                                                        SOSPESO
+                                                    {% else %}
+                                                        SOSPESI 
+                                                    {% endif %}
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-auto my-auto users-body">
+                                        <ul class="list-group">
+                                            <li class="list-group-item m-auto border-0">
+                                                <i class="bi bi-arrow-right-short"></i>
+                                            </li>
+
+                                            <li class="list-group-item m-auto border-0">
+                                                <i class="bi bi-arrow-right-short"></i>
+                                            </li>
+
+                                            <li class="list-group-item m-auto border-0">
+                                                <i class="bi bi-arrow-right-short"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-auto my-auto users-body">
+                                        <ul class="list-group list-group-flush mx-auto">
+                                            {% set adminPercent = ((adminUsers / activeUsers) * 100) %}
+                                            {% set memberPercent = ((memberUsers / activeUsers) * 100) %}
+                                            {% set suspendedPercent = ((suspendedUsers / activeUsers) * 100) %}
+
+                                            <li class="list-group-item border-start-0">
+                                                <span class="text-dark fw-bold"> 
+                                                    {% if adminPercent == adminPercent|round(0, 'floor') %}
+                                                        {{ adminPercent }}%
+                                                    {% else %}
+                                                        {{ adminPercent|number_format(2) }}%
+                                                    {% endif %}
+                                                </span> 
+                                                <span class="text-muted ps-2"> degli utenti </span>
+                                            </li>
+                                            
+                                            <li class="list-group-item border-start-0">
+                                                <span class="text-dark fw-bold"> 
+                                                    {% if memberPercent == memberPercent|round(0, 'floor') %}
+                                                        {{ memberPercent }}%
+                                                    {% else %}
+                                                        {{ memberPercent|number_format(2) }}%
+                                                    {% endif %}
+                                                </span> 
+                                                <span class="text-muted ps-2"> degli utenti </span>
+                                            </li>
+                                            
+                                            <li class="list-group-item border-start-0">
+                                                <span class="text-dark fw-bold">
+                                                    {% if suspendedPercent == suspendedPercent|round(0, 'floor') %}
+                                                        {{ suspendedPercent }}%
+                                                    {% else %}
+                                                        {{ suspendedPercent|number_format(2) }}%
+                                                    {% endif %}
+                                                </span> 
+                                                <span class="text-muted ps-2"> degli utenti </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Utenti Card -->
+
+                <!-- Liquimet Data -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card company-card mb-4">
+                            <div class="card-header d-flex align-items-center">
+                                <h5 class="card-title text-primary p-1 my-auto"> 
+                                    LIQUIMET S.R.L.
+                                </h5>
+                            </div>
+                        
+                            <div class="card-body">
+                                <div class="row mx-auto">
+                                    <div class="col-auto m-auto text-center company-body">
+                                        <div class="align-middle mx-auto my-1">
+                                            <span class="text-primary company-title"> 
+                                                <i class="bi bi-arrow-right-short text-primary"></i> 
+                                                    Ufficio Legale
+                                                <i class="bi bi-arrow-left-short text-primary"></i>  
+                                            </span>
+                                        </div>
+
+                                        <div class="align-middle mx-auto">
+                                            <span class="text-dark"> 
+                                                <i class="bi bi-house"></i> 
+                                                    Corso Spagna 14
+                                            </span>
+                                        </div>
+
+                                        <div class="align-middle mx-auto">
+                                            <span class="text-dark"> 
+                                                <i class="bi bi-arrow-return-right"></i> 
+                                                    35127 Padova
+                                            </span>
+                                        </div>
+
+                                        <div class="align-middle mx-auto my-3">
+                                            <span class="text-dark"> 
+                                                <i class="bi bi-envelope"></i> 
+                                                    liquimetspa@pec.it
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-auto m-auto text-center company-body">
+                                        <div class="align-middle mx-auto my-1">
+                                            <span class="text-primary company-title">
+                                                <i class="bi bi-arrow-right-short text-primary"></i> 
+                                                    Sede Operativa
+                                                <i class="bi bi-arrow-left-short text-primary"></i>  
+                                            </span>
+                                        </div>
+
+                                        <div class="align-middle mx-auto">
+                                            <span class="text-dark"> 
+                                                <i class="bi bi-house"></i> 
+                                                    Corso Spagna 12/F
+                                            </span>
+                                        </div>
+
+                                        <div class="align-middle mx-auto">
+                                            <span class="text-dark"> 
+                                                <i class="bi bi-arrow-return-right"></i> 
+                                                    35127 Padova
+                                            </span>
+                                        </div>
+
+                                        <div class="align-middle mx-auto my-3">
+                                            <span class="text-dark"> 
+                                                <i class="bi bi-telephone"></i> 
+                                                    (+39) 049 7160169
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Liquimet Data -->
+            </div>
+            <!-- End Right Side Columns -->
+        </div>
+    </section>
+ 
+ <!--
+    <script>
+        let w = window.innerWidth;
+        let h = window.innerHeight;
+            // Get screen resolution
+        const screenWidth = window.screen.width;
+        const screenHeight = window.screen.height;
+
+            // Display the resolution on the page
+        document.getElementById('resolution').textContent = `Screen Resolution: ${screenWidth}x${screenHeight}`;
+        
+        document.getElementById("demo").innerHTML = "Width: " + w + "<br>Height: " + h;
+    </script>
+-->
+{% endblock %}

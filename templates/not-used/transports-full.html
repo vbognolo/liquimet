@@ -1,0 +1,378 @@
+{% extends 'admin/layout.html' %}
+{% block title %} Piattaforma {{ 'now'|date('Y') }} {% endblock %}
+ 
+{% block content %} 
+    <!--    =====>    FULL TRANSPORTS TITLE NAVIGATION    <=====    -->
+    <section class="grid-container mt-1 mb-0">
+        <div class="submenu align-items-center my-auto mx-auto p-2">
+            <div class="grid-item mx-auto my-1 p-1 justify-content-center">
+                <a href="{{ doc_root }}admin/platform">
+                    <h3 class="m-0 p-4 submenu-title"> 
+                        Costo LNG
+                    </h3>
+                </a>
+                
+                <div class="breadcrumb-holder justify-content-center mx-auto p-2 my-auto" aria-label="breadcrumb">
+                    <ul class="rounded-breadcrumbs mx-auto my-auto p-1 justify-content-center">
+                        <li class="active-link">
+                            <a class="breadcrumb-link my-auto" style="width: 10.9rem; font-size: 0.3rem; text-align: center"
+                                href="{{ doc_root }}admin/transports-full">
+                                    <abbr title="Transport Management System" style="text-decoration: none">TMS - </abbr> 
+                                        PIENI
+                            </a>
+                        </li>
+                                
+                        <li>
+                            <a class="breadcrumb-link my-auto" aria-current="page" style="width: 10.9rem; font-size: 0.3rem; text-align: center"
+                                href="{{ doc_root }}admin/transports-part">
+                                    <abbr title="Transport Management System" style="text-decoration: none">TMS - </abbr> 
+                                        PARZIALI
+                            </a>
+                        </li>
+                                
+                        <li>
+                            <a class="breadcrumb-link my-auto" style="width: 10.9rem; font-size: 0.3rem; text-align: center"
+                                href="{{ doc_root }}admin/transport">
+                                    CREA TRASPORTO 
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--    =====>    END FULL TRANSPORTS TITLE NAVIGATION    <=====    -->
+    
+    <!--    =====>    FULL TRANSPORTS TABLE    <=====    -->
+    <section class="grid-container mx-auto mt-0" style="padding-right: 0px !important">
+        <div class="col-md-12">
+            <div class="panel panel-body table-responsive">
+                <table class="table table-sm mx-auto platform" style="text-align: center; font-weight: 400" id="platform">
+                    <thead>
+                        <tr class="table-title border-bottom border-top border-light">
+                            <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> # </th>
+                            <th scope="col" class="align-middle p-3" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Slot ID </th>
+                            <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Numero CMR </th>
+                            <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Emittente </th>
+                            <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Fornitore </th>
+                            <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Trasporto </th>
+                            <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Univoco </th>
+                            <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Data carico </th>
+                            <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Data scarico </th>
+                            <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Mese carico </th>
+                            <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Settimana scarico </th>
+                            <th scope="col" class="align-middle p-2" colspan="2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Mese scarico </th>
+                            <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Container<br>ATB </th>
+                            <th scope="col" class="align-middle p-2"> <i class="bi bi-gear"></i> </th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="table-body">  
+                    {% set order = 1 %}
+                    {% for i, t in transports %}
+                    
+                        <!--    ===>    Full Transport Data    <===    -->
+                        <tr class="ftd" style="font-size: 0.2rem" id="trans-{{ i }}">
+                            <td scope="row" data-bs-toggle="collapse" data-bs-target="#qty-{{ t.id_transport }}" class="accordion-toggle align-middle expand" 
+                                style="border-right: 2px solid rgba(248, 249, 250, 0.2)">
+                                {{ order }}
+                                {% set order = order + 1 %}
+                                <br>
+                                
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </td>
+
+                            <td style="word-break: break-all" class="align-middle"> {{ t.slot|upper }} </td>  
+                            <td style="word-break: break-all" class="align-middle"> {{ t.cmr|upper }} </td>
+                            <td class="align-middle"> {{ t.issuer|upper }} </td>
+                            <td class="align-middle"> {{ t.supplier|upper }} </td>
+                            <td class="align-middle"> {{ t.transport|upper }} </td>
+                            <td class="align-middle"> {{ t.univoco|upper }} </td>
+                            <td class="align-middle"> {{ t.date_load|date("d/m/Y") }} </td>
+                            <td class="align-middle"> {{ t.date_unload|date("d/m/Y") }} </td>
+                            <td class="align-middle"> {{ t.id_month_load }} </td>
+                            <td class="align-middle"> {{ t.week_unload }} </td>
+                            <td colspan="2" class="align-middle"> {{ t.id_month_unload }} - {{ t.month_unload }} </td>
+                            <td class="align-middle"> {{ t.container|upper }} </td>
+
+                            <td class="align-middle m-auto" style="border-left: 2px solid rgba(248, 249, 250, 0.2); text-align: center; vertical-align: middle">    
+                                <button type="button" class="text-dark edit_ftd" data-bs-toggle="modal" data-bs-target="#editTrans"
+                                        data-id="{{ t.id_transport }}">
+                                            <i class="bi bi-pencil-square"></i> 
+                                </button>
+
+                                <button type="button" class="text-dark delete_ftd" data-bs-toggle="modal" data-bs-target="#delete"
+                                        data-id="{{ t.id_transport }}">
+                                            <i class="bi bi-trash"></i> 
+                                </button>  
+                            </td>
+                        </tr>
+                        <!--    ===>    End Full Transport Data    <===    -->
+                        
+                        <!--    ===>    Quantity Collapse For Full Transport Data    <===    -->
+                        <tr class="accordion-toggle" style="font-size: 0.2rem; background: rgba(61, 150, 130, 0.5)" id="qty-{{ i }}">        
+                            <td colspan="16" style="border: none">
+                                <div class="accordian-body collapse mt-2 rowQty" id="qty-{{ t.id_transport }}"> 
+                                    <h4> 
+                                        <button type="button" class="text-dark edit_ftd my-auto" data-bs-toggle="modal" data-bs-target="#editQty"
+                                            data-id="{{ t.id_transport }}">
+                                                <i class="bi bi-pencil-square" style="font-size: 0.1rem !important"></i> 
+                                                        
+                                                <span style="text-transform: uppercase; font-size: 0.2rem; font-family: 'Rubik', sans-serif;
+                                                    font-weight: 600; font-style: normal !important; letter-spacing: 0.1rem">
+                                                        Quantità:
+                                                </span>   
+                                        </button> 
+                                    </h4>
+                                    
+                                    <table class="table table-bordered table-sm">
+                                        <tbody style="text-align: center">    
+                                            <tr>
+                                                <th class="sub-title align-middle p-1"> Energia caricata [MWh] </th>
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                    {{ t.mwh }} 
+                                                </td>   
+                                                <th class="sub-title align-middle p-1"> Quantità nominale caricata [kg] </th>
+                                                <td class="bg-light bg-gradient align-middle edit_input"> 
+                                                    {{ t.kg_load }} 
+                                                </td>   
+                                                <th class="sub-title align-middle p-1"> Raffreddamento </th>            
+                                                <td class="bg-light bg-gradient align-middle edit_input"> 
+                                                    {% if (t.cooling == 600) %}
+                                                        600
+                                                    {% else %}
+                                                        No
+                                                    {% endif %} 
+                                                </td>
+                                                <th class="sub-title align-middle p-1"> Tipologia costo extra </th>            
+                                                <td class="bg-light bg-gradient align-middle edit_input"> 
+                                                    {% if t.price_typology == 'Si' %}
+                                                        Sì
+                                                    {% else %}
+                                                        No
+                                                    {% endif %} 
+                                                </td>          
+                                            </tr>
+                                    
+                                            <tr>
+                                                <th class="sub-title align-middle"> Valore costo extra </th>
+                                                <td class="bg-light bg-gradient align-middle edit_input"> 
+                                                    {{ t.price_value }} 
+                                                </td>
+                                                <th class="sub-title align-middle"> Quantità scaricata PD [kg] </th>
+                                                <td class="bg-light bg-gradient align-middle edit_input"> 
+                                                    {{ t.kg_unload }} 
+                                                </td>
+                                                <th class="sub-title align-middle"> Densità (liquido) [<sup>kg</sup>&frasl;<sub>m<sup>3</sup></sub>] </th>
+                                                <td class="bg-light bg-gradient align-middle edit_input"> 
+                                                    {{ t.liquid_density }} 
+                                                </td>
+                                                <th class="sub-title align-middle"> Peso specifico (gas) <big>[</big><sup>kg</sup>&frasl;<sub>Nm<sup>3</sup></sub><big>]</big> </th>
+                                                <td class="bg-light bg-gradient align-middle edit_input"> 
+                                                    {{ t.gas_weight }} 
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <th class="sub-title align-middle"> PCS/GHV <big>[</big><sup>MJ</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                    {{ t.mj_kg }} 
+                                                </td>
+                                                <th class="sub-title align-middle"> PCS/GHV <big>[</big><sup>kWh</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                                                <td class="bg-light bg-gradient align-middle edit_input"> 
+                                                    {{ t.pcs_ghv }} 
+                                                </td>
+                                                <th class="sub-title align-middle"> Volume scaricato (liquido) <big>[</big>m<sup>3</sup><big>]</big> </th>
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                    {{ t.volume_mc }} 
+                                                </td>
+                                                <th class="sub-title align-middle"> Volume sviluppato <big>[</big><sup>Nm<sup>3</sup></sup>&frasl;<sub>m<sup>3</sup></sub><big>]</big> </th>
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                    {{ t.volume_nmc }} 
+                                                </td> 
+                                            </tr>
+                                            
+                                            <tr>
+                                                <th class="sub-title align-middle"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>m<sup>3</sup></sub> </th>
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                    {{ t.smc_mc }} 
+                                                </td>   
+                                                <th class="sub-title align-middle"> Gas sviluppato <big>[</big>Nm<sup>3</sup><big>]</big> </th>
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                    {{ t.gas_nmc }} 
+                                                </td>   
+                                                <th class="sub-title align-middle"> Gas sviluppato <big>[</big>Sm<sup>3</sup></sup><big>]</big> </th>
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                    {{ t.gas_smc}} 
+                                                </td>   
+                                                <th class="sub-title align-middle"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>kg</sub> </th>
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                    {{ t.smc_kg }} 
+                                                </td>            
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+                                    <div class="container mb-1 mt-2">
+                                        <div class="my-auto p-1 note-container" style="text-align: center; border-top: 1px solid rgba(62, 61, 61, 0.7); border-bottom: 1px solid rgba(62, 61, 61, 0.7)">
+                                            <button type="button" class="text-dark edit_ftd my-auto" data-bs-toggle="modal" data-bs-target="#editNote"
+                                                data-id="{{ t.id_transport }}">
+                                                    <i class="bi bi-pencil-square" style="font-size: 0.1rem !important"></i> 
+                                                        
+                                                    <span style="text-transform: uppercase; font-size: 0.2rem; font-family: 'Rubik', sans-serif;
+                                                        font-weight: 600; font-style: normal !important; letter-spacing: 0.1rem">
+                                                            Nota:
+                                                    </span>   
+                                            </button>     
+
+                                            <div class="container-fluid">
+                                                {% if t.note is empty %}
+                                                    Nessuna nota 
+                                                {% else %}
+                                                    {{ t.note|capitalize }}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </td> 
+                        </tr>
+                        <!--    ===>    End Quantity Collapse For Full Transport Data    <===    -->
+                        
+                        <!--    ===>    Include Edit And Delete Files    <===    -->
+                        {{ include("admin/transport-edit.html") }}
+                        {{ include("admin/transport-delete.html") }}
+                        {{ include("admin/quantity-edit.html") }}
+                        {{ include("admin/transport-note.html") }}
+                        <!--    ===>    End Include Edit And Delete Files    <===    -->
+                    {% endfor %}
+                    </tbody>
+                        
+                    <!--    ===>    TABLE FOOTER    <===    -->    
+                    <tfoot>
+                        <tr>
+                            <td colspan="16" class="text-light align-middle mb-2 p-2">
+                                <h5 style="font-weight: 600" class="align-middle my-auto">
+                                    TOTALE <i class="bi bi-fuel-pump-fill ms-1"></i>:
+                                        <span> {{ total }} </span>
+                                </h5> 
+                            </td>
+                        </tr>
+                    </tfoot>
+                    <!--    ===>    END TABLE FOOTER    <===    -->
+                </table>
+            </div> 
+        </div>
+    </section>  
+    <!--    =====>    END FULL TRANSPORTS TABLE    <=====    -->
+{% endblock %}
+
+{% block jsScript %}    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">      <!-- Bootstrap 5 CSS -->
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css'>              <!-- Vanilla Datepicker CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/css/datepicker-bs5.min.css">          <!-- Vanilla Datepicker CSS -->
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker.min.js"></script>
+    
+<script>
+$(document).ready(function(){
+//  ===> TOOLTIP SPECS  
+    $("body").tooltip({ 
+        selector: '[data-toggle = tooltip]',
+        placement: 'right' 
+    });
+//  ===> END TOOLTIP SPECS
+        
+//  ===> DATEPICKER     
+    //use datepicker on the date inputs
+    $(".date").datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        language: 'it-IT', 
+    });
+//  ===> END DATEPICKER   
+
+//  ===> TABLE ONCLICK FUNCTIONS
+    //toggle class for changing bg-color and showing/hiding table td border 
+    $(".ftd").click(function(){
+        $(this).toggleClass("active");
+    });
+    
+    $(".expand").click(function(){
+        $(this).find("i").toggleClass("bi-arrow-down-circle bi-arrow-right-circle");
+        $(this).closest("tr").toggleClass("table-bordered active");
+    });
+//  ===> END TABLE ONCLICK FUNCTIONS  
+
+//  ===>    [ M O D A L ]    <===
+//  ===> GET ID TO EDIT/DELETE TABLE DATA
+    $("#editTrans").on('show.bs.modal', function(e){
+        var id = $(e.relatedTarget).data('id');
+        $("#id_transport").val(id);
+    });
+    
+    $("#delete").on('show.bs.modal', function(e){
+        var id = $(e.relatedTarget).data('id');
+        $("#id_transport").val(id);
+    });
+    
+    $("#editQty").on('show.bs.modal', function(e){
+        var id = $(e.relatedTarget).data('id');
+        $("#id_transport").val(id);
+    });
+    
+    $("#editNote").on('show.bs.modal', function(e){
+        var id = $(e.relatedTarget).data('id');
+        $("#id_transport").val(id);
+    });
+//  ===> END GET ID TO EDIT/DELETE TABLE DATA
+
+//  ===> SAVE BUTTON ON EDIT/DELETE MODAL   
+    /*$(".modal-save").click(function(e){
+        var id = $(e.relatedTarget).data('id');
+        $("#id_transport").val(id);
+
+        $.ajax({
+            type: "POST",
+            url: "admin/transports-full.php",
+            data: { 'id_transport' : id },
+        });
+    });*/
+//  ===> END SAVE BUTTON ON EDIT/DELETE MODAL
+
+//  ===> CANCEL BUTTON ON EDIT/DELETE MODAL   
+    $(".modal-cancel").click(function(){
+        $("#editTrans").modal("hide");
+        $("#delete").modal("hide");
+        $("#editQty").modal("hide");
+        $("#editNote").modal("hide");
+    });
+//  ===> END CANCEL BUTTON ON EDIT/DELETE MODAL
+
+//  ===> RESET BUTTON ON EDIT/DELETE MODAL   
+    $(".modal-reset").click(function(){
+        $("#note").val('');
+    });
+//  ===> END RESET BUTTON ON EDIT/DELETE MODAL
+
+//  ===> SAVE INLINE EDITED PARTIAL TABLE ROW
+//  ===> END SAVE INLINE EDITED PARTIAL TABLE ROW
+
+//  ===> CANCEL INLINE TABLE ROW
+//  ===> END CANCEL INLINE TABLE ROW
+
+//  ===> DELETE INLINE PARTIAL TABLE ROW
+//  ===> END DELETE INLINE PARTIAL TABLE ROW
+});  
+</script>   
+        
+<!--    ===>    BOOTSTRAP DATEPICKER    <===    -->   
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/locales/bootstrap-datepicker.it.min.js" charset="UTF-8"></script>
+<!--    ===>    END BOOTSTRAP DATEPICKER    <===    --> 
+{% endblock %}                                         

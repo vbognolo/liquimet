@@ -1,0 +1,197 @@
+{% extends 'layout.html' %}
+{% block title %} Piattaforma {{ 'now'|date('Y') }} {% endblock %}
+
+{% block content %} 
+    <section class="grid-container mt-1 mb-0">
+        <div class="submenu align-items-center my-auto mx-auto p-2">
+            <div class="grid-item mx-auto my-1 p-1 justify-content-center">
+                <h3 class="m-0 p-4 submenu-title"> 
+                    Costo LNG
+                </h3>
+                
+                    <div class="breadcrumb-holder justify-content-center mx-auto p-2 my-auto" aria-label="breadcrumb">
+                        <ul class="rounded-breadcrumbs mx-auto my-auto p-1 justify-content-center">
+                            {% for nav in categories %}
+                                {% if (nav.navigation == 1) and (nav.id_group == 1) %}
+                                    <li {% if (section == nav.id_category) %}
+                                            class="active"
+                                        {% endif %}>
+                                        
+                                        <a class="breadcrumb-link my-auto" aria-current="page" style="width: 10.9rem; font-size: 0.3rem; text-align: center"
+                                            {% if (nav.id_category == 1) %}
+                                                href="{{ doc_root }}transports/{{ nav.id_category }}/{{ nav.seo }}"
+                                            {% elseif (nav.id_category == 2) %}
+                                                href="{{ doc_root }}quantity/{{ nav.id_category }}/{{ nav.seo }}"
+                                            {% else %}
+                                                href="{{ doc_root }}partials/{{ nav.id_category }}/{{ nav.seo }}"
+                                            {% endif %}
+                                        >
+                                            <abbr title="Transport Management System">TMS</abbr> 
+                                                {{ nav.category|upper }} 
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid-container mx-1 mt-0">
+	    <div class="col-md-12">
+    	    <div class="panel panel-default">
+                <div class="panel-heading d-flex justify-content-center p-1">
+                    <a role="button" class="btn btn-outline-light bg-gradient mx-1 mb-3"
+                        href="{{ doc_root }}partadd/"> 
+                            <i class="bi bi-plus" style="font-weight: 400; text-align: center"></i>
+                                <span style="font-style: normal; font-family: 'Rubik', sans-serif; font-size: 14px"> 
+                                    CREA TRASPORTO 
+                                </span>
+                             
+                                <!-- <i class="bi bi-plus-circle-fill"></i> za popunjeni krug sa +
+                                     <i class="bi bi-plus-lg"></i> large plus 
+                                     <i class="bi bi-plus"></i> small plus -->
+                    </a>
+                </div>
+                
+                <div class="panel-body table-responsive">
+					<table class="table table-sm table-hover mx-auto platform" style="text-align: center; font-weight: 400">
+                        <thead>
+                            <tr class="table-title border-bottom border-light">
+					            <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> # </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Tipo </th>
+                                <th scope="col" class="align-middle p-3" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Slot ID </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Numero CMR </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Emittente </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Fornitore </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Trasporto </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Univoco </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Data carico </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Data scarico </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Mese carico </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Settimana scarico </th>
+                                <th scope="col" class="align-middle p-2" colspan="2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Mese scarico </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Container<br>ATB </th>
+                                <th scope="col" class="align-middle p-2"> Nota </th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="table-body">  
+                        {% set id = 1 %}
+                        {% for i in range(1, transports, 1) %}
+                            {% for i in range(0, quantities|length - 1, 1) %}
+                                <tr data-bs-toggle="collapse" data-bs-target="#q-{{ quantities[i].id_transport }}" class="accordion-toggle" 
+                                    aria-expanded="false" style="font-size: 0.2rem">
+                                    <td scope="row" class="align-middle" style="border-right: 2px solid rgba(0, 0, 0, 0.2)">
+                                        <a href="{{ doc_root }}transports/{{ transports[i].id_transport }}/{{ transports[i].seo }}" class="text-dark"
+                                            aria-current="page">
+                                                {{ id }}
+                                            {% set id = id + 1 %}
+                                        </a> <br>
+                                        <a href="{{ doc_root }}transport-edit/{{ transports[i].id_transport }}/{{ transports[i].seo }}" 
+                                            class="text-dark" role="button">
+                                                <i class="bi bi-pencil-square"></i> 
+                                        </a>
+                                    </td>
+                                    <td class="align-middle"> 
+                                        {% if transports[i].type == 0 %}
+                                            F 
+                                        {% else %}
+                                            P
+                                        {% endif %}
+                                    </td>
+                                    <td style="word-break: break-all" class="align-middle"> {{ transports[i].slot|upper }} </td>
+                                    <td style="word-break: break-all" class="align-middle"> {{ transports[i].cmr|upper }} </td>
+                                    <td class="align-middle"> {{ transports[i].issuer|upper }} </td>
+                                    <td class="align-middle"> {{ transports[i].supplier|upper }} </td>
+                                    <td class="align-middle"> {{ transports[i].transport|upper }} </td>
+                                    <td class="align-middle"> {{ transports[i].univoco|upper }} </td>
+                                    <td class="align-middle"> {{ transports[i].date_load|date("d/m/Y") }} </td>
+                                    <td class="align-middle"> {{ transports[i].date_unload|date("d/m/Y") }} </td>
+                                    <td class="align-middle"> {{ transports[i].id_month_load }} </td>
+                                    <td class="align-middle"> {{ transports[i].week_unload }} </td>
+                                    <td colspan="2" class="align-middle"> {{ transports[i].id_month_unload }} - {{ transports[i].month_unload }} </td>
+                                    <td class="align-middle"> {{ transports[i].container|upper }} </td>
+                                    <td class="align-middle" style="border-left: 2px solid rgba(0, 0, 0, 0.2)"> <i class="bi bi-info-circle"></i> </td>
+                                </tr>
+                                    
+                                    <tr>
+                                        <td colspan="16">
+                                            <div class="accordian-body collapse rowQty mt-3" id="q-{{ quantities[i].id_transport }}"> 
+                                                <table class="table table-bordered">
+                                                    <tbody style="text-align: center">
+                                                        <tr>
+                                                            <th class="bg-secondary bg-gradient align-middle"> Energia caricata [MWh] </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].mwh }} </td>   
+                                                            <th class="bg-secondary bg-gradient align-middle"> Quantità nominale caricata [kg] </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].kg_load }} </td>   
+                                                            <th class="bg-secondary bg-gradient align-middle"> Raffreddamento </th>            
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].cooling }} </td>
+                                                            <th class="bg-secondary bg-gradient align-middle"> Tipologia costo extra </th>            
+                                                            <td class="bg-light bg-gradient align-middle"> 
+                                                                {% if quantities[i].price_typology == 0 %}
+                                                                    NO
+                                                                {% else %}
+                                                                    SÌ
+                                                                {% endif %}
+                                                            </td>          
+                                                        </tr>
+                                                    
+                                                        <tr>
+                                                            <th class="bg-secondary bg-gradient align-middle"> Valore costo extra </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].price_value }} </td>
+                                                            <th class="bg-secondary bg-gradient align-middle"> Quantità scaricata PD [kg] </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].kg_unload }} </td>
+                                                            <th class="bg-secondary bg-gradient align-middle"> Densità (liquido) [<sup>kg</sup>&frasl;<sub>m<sup>3</sup></sub>] </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].liquid_density }} </td>
+                                                            <th class="bg-secondary bg-gradient align-middle"> Peso specifico (gas) <big>[</big><sup>kg</sup>&frasl;<sub>Nm<sup>3</sup></sub><big>]</big> </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].gas_weight }} </td>
+                                                        </tr>
+                                                    
+                                                        <tr>
+                                                            <th class="bg-secondary bg-gradient align-middle"> PCS/GHV <big>[</big><sup>MJ</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].mj_kg }} </td>
+                                                            <th class="bg-secondary bg-gradient align-middle"> PCS/GHV <big>[</big><sup>kWh</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].pcs_ghv }} </td>
+                                                            <th class="bg-secondary bg-gradient align-middle"> Volume scaricato (liquido) <big>[</big>m<sup>3</sup><big>]</big> </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].volume_mc }} </td>
+                                                            <th class="bg-secondary bg-gradient align-middle"> Volume sviluppato <big>[</big><sup>Nm<sup>3</sup></sup>&frasl;<sub>m<sup>3</sup></sub><big>]</big> </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].volume_nmc }} </td> 
+                                                        </tr>
+                                                    
+                                                        <tr>
+                                                            <th class="bg-secondary bg-gradient align-middle"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>m<sup>3</sup></sub> </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].smc_mc }} </td>   
+                                                            <th class="bg-secondary bg-gradient align-middle"> Gas sviluppato <big>[</big>Nm<sup>3</sup><big>]</big> </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].gas_nmc }} </td>   
+                                                            <th class="bg-secondary bg-gradient align-middle"> Gas sviluppato <big>[</big>Sm<sup>3</sup></sup><big>]</big> </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].gas_smc }} </td>   
+                                                            <th class="bg-secondary bg-gradient align-middle"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>kg</sub> </th>
+                                                            <td class="bg-light bg-gradient align-middle"> {{ quantities[i].smc_kg }} </td>            
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div> 
+                                        </td> 
+                                    </tr>
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                        
+                        <tfoot>
+                            <tr>
+                                <td colspan="16" class="text-light align-middle">
+                                    <h5 style="font-weight: 600" class="align-middle">
+                                        TOTALE <i class="bi bi-fuel-pump-fill ms-1"></i> + <i class="bi bi-fuel-pump"></i>:
+                                        <span> {{ total }} </span>
+                                    </h5> 
+                                </td>
+                            </tr>
+                        </tfoot>
+               	    </table>
+                </div> 
+            </div>
+        </div>
+    </section>    
+{% endblock %}

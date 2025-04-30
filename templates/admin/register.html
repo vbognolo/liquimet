@@ -1,0 +1,92 @@
+{% extends 'admin/layout.html' %}
+{% block title %} Registrazione utenti {% endblock %}
+
+{% block content %}
+    <section class="grid-container mt-4 pt-3 mx-auto d-flex justify-content-center">
+        <form id="signup" action="{{ doc_root }}admin/register" method="POST">
+                
+                    <!--    ===>    REGISTER FORM    <===    -->
+            <fieldset>
+                <div class="form-card pt-0">
+                    <div class="form-title row mt-2 pt-0 mx-auto">
+                        <h2 class="fs-title"> 
+                            <i class="bi bi-people"></i>
+                                &nbsp;Registrazione&nbsp; 
+                            <i class="bi bi-people"></i>
+                        </h2>
+                        
+                        <h3 class="fs-subtitle pt-0 mt-0"> 
+                            Inserire i dati richiesti per creare il nuovo utente. 
+                        </h3>
+                    </div>
+
+                    <div class="form-group row mx-auto my-2 px-3 py-0">                
+                        <div class="col-lg-5">
+                            <label for="email" class="form-control-label mb-0"> Indirizzo e-mail </label>
+                            <input type="email" class="form-control" name="email" value="{{ member.email|lower }}"/>
+                        </div>
+                        
+                        <div class="col-lg-5">
+                            <label for="user" class="form-control-label mb-0"> Username </label>
+                            <input type="text" class="form-control" name="user" value="{{ member.username }}"/>
+                        </div>
+                        
+                        <div class="col-lg-2">
+                            <label class="form-control-label mb-0" for="role"> Accesso </label>
+                                <select class="form-control" name="role" id="role">
+                                    <option value="{{ member.role }} " class="opt-type"></option>
+                                    <option value="1" class="opt-type" style="text-align: center"> Admin </option>
+                                    <option value="2" class="opt-type"> Membro </option>
+                                    <option value="3" class="opt-type"> Sospeso </option>
+                                </select>
+                        </div> 
+                                    
+                        <div class="col-lg-5">
+                            <label for="name" class="form-control-label mb-0"> Nome </label>
+                            <input type="text" class="form-control" name="name" value="{{ member.name }}"/>
+                        </div>
+                                
+                        <div class="col-lg-5">
+                            <label for="surname" class="form-control-label mb-0"> Cognome </label>
+                            <input type="text" class="form-control" name="surname" value="{{ member.surname }}"/>
+                        </div>
+                        
+                        <div class="col-lg-2">
+                            <label class="form-control-label mb-0" for="gender"> Genere </label>
+                                <select class="form-control" name="gender" id="gender">
+                                    <option value="{{ member.gender }} " class="opt-type"></option>
+                                    <option value="m" class="opt-type"> Uomo </option>
+                                    <option value="f" class="opt-type"> Donna </option>
+                                </select>
+                        </div> 
+                        
+                        <div class="col-lg-8">
+                            <label class="form-control-label mb-0" for="title"> Ruolo aziendale </label>
+                                <select class="form-control" name="title" id="title">
+                                    <option value="{{ member.id_title }}" class="opt-type"></option>
+                                    {% for t in titles %}
+                                        <option value="{{ t.id_title }}" class="opt-type"> 
+                                            {{ t.name|capitalize }} 
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                        </div> 
+                        
+                        <div class="col-lg-6">
+                            <label for="pass" class="form-control-label mb-0"> Password </label>
+                            <input type="password" class="form-control" id="pass" name="pass">
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <label for="confirm" class="form-control-label mb-0"> Conferma password </label>
+                            <input type="password" class="form-control" id="confirm" name="confirm">
+                        </div>                
+                    </div>
+                </div>
+                
+                <button type="button" name="previous" class="previous action-button mb-3 mt-2" style="position: absolute; left: 4rem" onclick="history.back()"> Indietro </button>    
+                <button type="reset" name="reset" class="reset action-button mb-2 mt-2 mx-auto" value="reset"> Cancella </button>
+                <button type="submit" name="submit" id="submit" class="submit action-button mb-3 mt-2 mx-auto" style="position: absolute; right: 4rem"> Salva </button> 
+            </fieldset>
+                    <!--    ===>    END REGISTER FORM    <===    -->
+{% endblock %}

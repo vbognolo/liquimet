@@ -1,0 +1,169 @@
+{% extends 'layout.html' %}
+{% block title %} Piattaforma {{ 'now'|date('Y') }} {% endblock %}
+
+{% block content %} 
+<div class="main_frame mt-4" style="max-width: 660px; margin: 0 auto 0 auto; overflow-x: hidden;">
+
+
+	&nbsp;<br>
+	<div class="container" style="max-width: 660px !important; padding-bottom: 16px;">
+    <h1></h1>
+	<div class="progress">
+	<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+	</div>
+	
+	<form id="registration_form" novalidate action="action.php"  method="post">
+    
+    <!-- START PAGE 1 -->
+	<fieldset>
+		<h2>Step 1: Personal Information</h2>
+        
+        <div class="form-group row">
+		<label class="col-xs-5 col-sm-4 form-control-label" for="Name">Name</label>
+		<div class="col-xs-7 col-sm-8"> <input type="text" class="form-control" id="Name" name="Name" placeholder="As on Passport"></div>
+	 	</div>
+                
+        <div class="form-group row">
+        <label class="col-xs-12 col-sm-4 form-control-label" for="Guest_sel">I will bring a guest</label>
+		<div class="col-xs-7 col-sm-8"> 
+		<label class="form-control-label"><input type="radio" name="Guest_sel" id="Guest_sel" value="No" required> No</label> &nbsp; &nbsp; 
+        <label class="form-control-label"><input type="radio" name="Guest_sel" id="Guest_sel" value="Yes" required> Yes</label>
+		</div></div>
+      
+		&nbsp;<br><input type="button" name="data[password]" class="next btn btn-primary btn-block" value="Travel Details" />
+	</fieldset>
+    <!-- END PAGE 1 -->
+    
+    
+    <!-- START PAGE 2 -->
+	<fieldset>
+		<h2>Step 2: Travel Details</h2>
+        
+        <div class="form-group row">
+  		<div class="col-xs-12"><h4><img src="http://veeam.idext.co.th/images/arr.gif" width="26" height="26" align="absmiddle">&nbsp; Arrival</h4></div>
+  		</div>
+        
+        <div class="form-group row">
+		<label class="col-xs-5 col-sm-4 form-control-label" for="Arr_Date">Arrival Date<br>(Hotel Check In)</label>
+		<div class="col-xs-7 col-sm-8"> 
+		<select class="form-control" name="Arr_Date" id="Arr_Date" required>
+        <option value="">Select</option>
+        <option value="04/22/2017">22 Apr (On Own Expense)</option>
+        <option value="04/23/2017">23 Apr (On Own Expense)</option>
+        <option value="04/24/2017">24 Apr (On Own Expense)</option>
+        <option value="04/25/2017">25 Apr (On Own Expense)</option>
+        <option value="04/26/2017">26 Apr</option>
+        <option value="04/27/2017">27 Apr</option>
+        <option value="04/28/2017">28 Apr</option>
+        </select>
+		</div></div>
+            
+        <div class="form-group row" style="margin-top: 20px;">
+        <div class="col-xs-12"><h4><img src="http://veeam.idext.co.th/images/dep.gif" width="26" height="26" align="absmiddle">&nbsp; Departure</h4></div>
+        </div>
+            
+        <div class="form-group row">
+        <label class="col-xs-5 col-sm-4 form-control-label" for="Dep_Date">Departure Date<br>(Hotel Check Out)</label>
+        <div class="col-xs-7 col-sm-8"> 
+        <select class="form-control" name="Dep_Date" id="Dep_Date" required>
+        <option value="">Select</option>
+        <option value="04/29/2017">29 Apr</option>
+        <option value="04/30/2017">30 Apr</option>
+        <option value="05/01/2017">1 May</option>
+        <option value="05/02/2017">2 May (On Own Expense)</option>
+        <option value="05/03/2017">>3 May (On Own Expense)</option>
+        <option value="05/04/2017">4 May (On Own Expense)</option>
+        <option value="05/05/2017" >5 May (On Own Expense)</option>
+        </select>
+        </div></div>
+        
+		&nbsp;<br><input type="button" name="previous" class="previous btn btn-default" value="Back" style="width: 49%"/>
+		<input type="button" name="next" class="next btn btn-primary" value="Guest Information" style="width: 49%"/>
+	</fieldset>
+    <!-- END PAGE 2 -->
+    
+    
+    <!-- START PAGE 3 -->
+    <fieldset>
+		<h2> Step 3: Guest Information (Optional)</h2>
+		
+        <div class="form-group row">
+		<label class="col-xs-5 col-sm-4 form-control-label" for="G_Gender">Gender</label>
+		<div class="col-xs-7 col-sm-8"> 
+		<select class="form-control" name="G_Gender" id="G_Gender">
+        <option value="">Select</option>
+       	<option value="Female">Female</option>
+		<option value="Male">Male</option>
+        </select>
+		</div></div>
+        
+		&nbsp;<br><input type="button" name="previous" class="previous btn btn-default" value="Back" style="width: 49%"/>
+		<input type="button" name="next" class="next btn btn-primary" value="Activity, Dining & Hotel" style="width: 49%"/>
+	</fieldset>
+    <!-- END PAGE 3 -->
+    
+    
+    <!-- START PAGE 4 -->
+	<fieldset>
+		<h2>Step 4: Activity, Dining &amp; Hotel Preferences</h2>
+		
+        <div class="form-group row">
+		<label class="col-xs-5 col-sm-4 form-control-label" for="Room_Type">Room Request</label>
+		<div class="col-xs-7 col-sm-8"> 
+		<select class="form-control" name="Room_Type" id="Room_Type" required>
+        <option value="">Select</option>
+        <option value="Non-Smoking">Non-Smoking</option>
+        <option value="Smoking">Smoking</option>
+        </select>
+		</div></div>
+        
+		&nbsp;<br><input type="button" name="previous" class="previous btn btn-default" value="Back" style="width: 49%"/>
+		<input type="submit" name="submit" class="btn btn-primary" value="Submit" id="submit_data" style="width: 49%"/>
+	</fieldset>
+    <!-- END PAGE 4 -->
+    
+	</form>
+  </div>
+</div>
+
+
+<script>
+$(document).ready(function(){
+	var current = 1,current_step,next_step,steps;
+	steps = $("fieldset").length;
+	$(".next").click(function(){
+    current_step = $(this).parent();
+		if(current=='2' && $('input[name="Guest_sel"]:checked').val()=='No') {
+			next_step = $(this).parent().next().next();
+      ++current;
+		} else {
+      next_step = $(this).parent().next();
+    }
+		next_step.show();
+		current_step.hide();
+		setProgressBar(++current);
+	});
+	$(".previous").click(function(){
+		current_step = $(this).parent();
+    if(current=='4' && $('input[name="Guest_sel"]:checked').val()=='No') {
+			next_step = $(this).parent().prev().prev();
+      --current;
+		} else {
+      next_step = $(this).parent().prev();
+    }
+		next_step.show();
+		current_step.hide();
+		setProgressBar(--current);
+	});
+	setProgressBar(current);
+	// Change progress bar action
+	function setProgressBar(curStep){
+		var percent = parseFloat(100 / steps) * curStep;
+		percent = percent.toFixed();
+		$(".progress-bar")
+			.css("width",percent+"%")
+			.html(percent+"%");		
+	}
+});
+</script>
+{% endblock %}

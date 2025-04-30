@@ -1,0 +1,99 @@
+<!--    =====>    TRANSPORTS TITLE NAVIGATION    <=====    -->
+<section class="col-12 my-4">
+    <div class="justify-content-center m-auto p-2 submenu">
+        
+        <div class="d-flex justify-content-center mx-auto my-auto p-1">
+            <a class="m-auto" href="{{ doc_root }}platform">
+                <h1 class="m-auto p-5 submenu-title"> 
+                    Costo LNG
+                </h1>
+            </a>
+        </div>
+
+        <div class="navbar d-flex justify-content-center m-auto p-2">
+            <ul class="navbar-nav justify-content-center m-auto p-1" id="menu">
+                <li class="nav-item m-auto p-1">
+                    <a class="nav-link align-middle my-auto current" href="{{ doc_root }}platform" aria-current="page">
+                        <abbr title="Transport Management System">TMS</abbr> 
+                            - TUTTI
+                    </a>
+                </li>
+
+                <li class="nav-item m-auto p-1"> 
+                    <i class="bi bi-circle-fill"></i>
+                </li>
+
+                <li class="nav-item m-auto p-1">
+                    <a class="nav-link align-middle my-auto" href="{{ doc_root }}transports-full">
+                        <abbr title="Transport Management System">TMS</abbr> 
+                            - PIENI
+                    </a>
+                </li>
+
+                <li class="nav-item m-auto p-1"> 
+                    <i class="bi bi-circle-fill"></i>
+                </li>
+                
+                <li class="nav-item m-auto p-1">
+                    <a class="nav-link align-middle my-auto" href="{{ doc_root }}transports-part">
+                        <abbr title="Transport Management System">TMS</abbr> 
+                           - PARZIALI
+                    </a>
+                </li>
+
+                <li class="nav-item m-auto p-1"> 
+                    <i class="bi bi-circle-fill"></i>
+                </li>
+                            
+                <li class="nav-item m-auto p-1">
+                    <a class="nav-link align-middle my-auto" href="{{ doc_root }}transport">
+                        CREA TRASPORTO 
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!--    =====>    END TRANSPORTS TITLE NAVIGATION    <=====    -->
+
+
+<script>
+$(document).ready(function(){
+    /*$(".navbar .nav-link").on("click", function(){
+        $(".navbar").find(".active").removeClass("active");
+        $(this).addClass("active");
+    });*/
+
+
+    jQuery(function($){
+        $("ul a").click(function(e){
+            var link = $(this);
+            var item = link.parent("li");
+            
+            if(item.hasClass("current")){
+                item.removeClass("current").children("a").removeClass("current");
+            } else{
+                item.addClass("current").children("a").addClass("current");
+            }
+
+            if(item.children("ul").length > 0){
+                var href = link.attr("href");
+                link.attr("href");
+                    setTimeout(function(){ 
+                        link.attr("href", href);
+                    }, 300);
+                e.preventDefault();
+            }
+        })
+        .each(function(){
+            var link = $(this);
+            if(link.get(0).href === location.href){
+                link.addClass("current").parents("li").addClass("current");
+                    return false;
+            }
+        });
+    });
+
+});
+</script>
+
