@@ -1,0 +1,901 @@
+{% extends 'layout.twig' %}
+{% block title %} Crea Trasporto {% endblock %}
+
+{% block search %}
+    <!--    ===>    SEARCH BAR    <===    -->
+    <section class="row my-auto mx-auto search-header" style="border: 1px solid red">
+        <div class="my-auto m-0 search-bar">
+            <form id="search-form">
+                <button type="button" class="my-1 search-btn">
+                    <i class="bi bi-search"></i>
+                </button>
+                <input type="text" class="my-1 search-input" id="search" placeholder="      Cerca.." />  
+            </form>
+        </div>
+    </section>
+    <!--    ===>    END SEARCH BAR    <===    -->
+{% endblock %}
+
+{% block content %} 
+    {{ include('transports-navigation.twig') }}
+
+    <section class="col-9 mx-auto my-0 new-form">
+        <form id="trans-form" name="trans-form" action="{{ doc_root }}transport-new" method="POST" autocomplete="off"
+            onkeydown="return event.key != 'Enter';">
+            <!--    =====>    PROGRESS BAR    <=====    -->
+            <!--<div class="container col-8 mx-auto my-1">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>-->
+            <!--    =====>    END PROGRESS BAR    <=====    -->
+
+            <!--    =====>    FIELDSET 1 [ADD/EDIT TRANSPORT]    <=====    -->
+            <fieldset class="mx-auto my-3" data-step="1">
+                <div class="card">
+                    <div class="card-header row mx-auto pt-3">
+                        <h2 class="form-title mx-auto my-2"> 
+                            <i class="bi bi-truck-front"></i> 
+                                CREA NUOVO
+                            <i class="bi bi-truck-front"></i> 
+                        </h2>
+                    
+                            <h4 class="form-subtitle mx-auto my-2"> 
+                                Inserire i dati richiesti per creare il nuovo <b style="color: #6d1741">trasporto</b>.
+                            </h4>
+                    </div>
+                    
+                    <div class="card-body row">
+                        <div class="col-12 mx-auto">     
+                            <div class="row mx-auto my-1">
+                                <div class="col-6 py-1">
+                                    <label for="slot" class="form-control-label"> Slot ID </label>
+                                    <input type="text" class="form-control" name="slot" id="slot" />
+                                </div>
+                                                
+                                <div class="col-6 py-1">
+                                    <label for="cmr" class="form-control-label"> Numero CMR </label>
+                                    <input type="text" class="form-control" name="cmr" id="cmr" />
+                                </div>
+                            </div>
+
+                            <div class="row mx-auto py-1">
+                                <div class="col-3 my-1">
+                                    <label for="type" class="form-control-label"> Tipo </label>
+                                        <select class="form-control " name="type" id="type">
+                                            <option class="opt-type"></option>   
+                                            
+                                            <option value="F" class="opt-type"> 
+                                                PIENO
+                                            </option>
+                                                
+                                            <option value="P" class="opt-type"> 
+                                                PARZIALE
+                                            </option>
+                                        </select>
+                                </div>
+                                                
+                                <div class="col-3 py-1">
+                                    <label for="issuer" class="form-control-label"> Ditta emittente </label>
+                                    <input type="text" class="form-control" name="issuer" id="issuer" />
+                                </div>
+                                            
+                                <div class="col-3 my-1">
+                                    <label for="supplier" class="form-control-label"> Fornitore </label>
+                                    <input type="text" class="form-control" name="supplier" id="supplier" />
+                                </div>
+
+                                <div class="col-3 my-1">
+                                    <label for="transport" class="form-control-label"> Trasporto </label>
+                                    <input type="text" class="form-control" name="transport" id="transport" />
+                                </div>
+                            </div>
+
+                            <div class="row mx-auto my-1">
+                                <div class="col-4 my-1">
+                                    <label for="date_load" class="form-control-label" data-toggle="tooltip" title="--> Terminale"> Data carico </label>
+                                    <input type="text" class="form-control date" name="date_load" id="date_load" />
+                                </div>
+                                                
+                                <div class="col-4 my-1">
+                                    <label for="date_unload" class="form-control-label" data-toggle="tooltip" title="--> Padova"> Data scarico </label>
+                                    <input type="text" class="form-control date" name="date_unload" id="date_unload" />
+                                </div>
+
+                                <div class="col-4 my-1">
+                                    <label for="container" class="form-control-label"> Container </label>
+                                    <input type="text" class="form-control" name="container" id="container" />
+                                </div>
+                            </div>
+
+                            <div class="row mx-auto my-1">
+                                <div class="col-12 my-1">
+                                    <label for="note" class="form-control-label"> Nota </label>
+                                    <textarea rows="2" class="form-control" name="note" id="note"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="button" class="action-button back" onclick="history.back();" value="INDIETRO">
+                    <!--<span>
+                        <i class="bi bi-chevron-double-left"></i> INDIETRO
+                    </span>-->
+
+                <input type="button" class="action-button next" name="trans-next" value="AVANTI">
+                    <!--<span class="m-auto">
+                        AVANTI <i class="bi bi-chevron-double-right"></i>
+                    </span>-->
+            </fieldset>
+            <!--    =====>    END FIELDSET 1 [ADD/EDIT TRANSPORT]    <=====    -->
+
+            <!--    =====>    FIELDSET 2 [ADD/EDIT QUANTITY]    <=====    -->
+            <fieldset class="mx-auto my-3 steps" data-step="2">
+                <div class="card">
+                    <div class="card-header row mx-auto pt-3">
+                        <h2 class="form-title mx-auto my-2"> 
+                            <i class="bi bi-truck"></i> 
+                                CREA NUOVO
+                            <i class="bi bi-truck"></i> 
+                        </h2>
+                    
+                            <h4 class="form-subtitle mx-auto my-2"> 
+                                Inserire le <b style="color: #6d1741">quantità</b> del nuovo trasporto. 
+                            </h4>
+                    </div>
+
+                    <div class="card-body row">
+                        <div class="col-12 mx-auto my-2">     
+                            <div class="row mx-auto my-1">
+                                <div class="col-6 my-1">
+                                    <label for="kg_load" class="form-control-label my-1" data-toggle="tooltip" title="--> Quantità nominale [ kg ]"> 
+                                        Quantità caricata 
+                                    </label>
+                                        <input type="text" class="form-control" name="kg_load" id="kg_load"/>
+                                </div>  
+
+                                <div class="col-6 my-1">
+                                    <label for="cooling" class="form-control-label my-1"> Raffreddamento </label>
+                                        <select class="form-control" name="cooling" id="cooling">
+                                            <option class="opt-type" value=""></option>   
+                                        
+                                            <option value="600" class="opt-type"> 
+                                                SÌ = 600
+                                            </option>
+                                            
+                                            <option value="0" class="opt-type"> 
+                                                NO = 0
+                                            </option>
+                                        </select>
+                                </div>  
+                            </div>
+
+                            <div class="row mx-auto my-1">
+                                <div class="col-6 my-1">
+                                    <label class="form-control-label my-1" for="price_typology"> Tipologia costo </label>
+                                        <select class="form-control" name="price_typology" id="price_typology">
+                                            <option class="opt-type" value=""></option>
+                                            
+                                            <option class="opt-type" value="yes">
+                                                SÌ
+                                            </option>
+                                            
+                                            <option class="opt-type" value="no">
+                                                NO
+                                            </option>
+                                        </select>
+                                </div> 
+    
+                                <div class="col-6 my-1">
+                                    <label for="price_value" class="form-control-label my-1 price_value"> 
+                                        Valore costo 
+                                    </label>
+                                        <input type="text" class="form-control" name="price_value" id="price_value" />
+                                </div>
+                            </div>
+
+                            <div class="row mx-auto my-1">
+                                <div class="col-6 my-1">
+                                    <label for="kg_unload" class="form-control-label my-1" data-toggle="tooltip" title="-- [ kg ]"> 
+                                        Quantità scaricata PD 
+                                    </label>
+                                        <input type="text" class="form-control" name="kg_unload" id="kg_unload" />
+                                </div>
+    
+                                <div class="col-6 my-1">
+                                    <label for="liquid_density" class="form-control-label my-1" data-toggle="tooltip" title="-- [ kg &frasl; m³ ]"> 
+                                        Densità (liquido) 
+                                    </label>
+                                        <input type="text" class="form-control" name="liquid_density" id="liquid_density" />
+                                </div>
+                            </div>
+
+                            <div class="row mx-auto my-1">
+                                <div class="col-6 my-1">
+                                    <label for="gas_weight" class="form-control-label my-1" data-toggle="tooltip" title="-- [ kg &frasl; Nm³ ]"> 
+                                        Peso specifico (gas)
+                                    </label>
+                                        <input type="text" class="form-control" name="gas_weight" id="gas_weight" />
+                                </div>
+
+                                <div class="col-6 my-1">
+                                    <label for="pcs_ghv" class="form-control-label my-1"> 
+                                        PCS/GHV 
+                                    </label>
+                                        <input type="text" class="form-control" name="pcs_ghv" id="pcs_ghv" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="button" class="action-button back" name="trans-back" value="INDIETRO">
+                    <!--<span>
+                        <i class="bi bi-chevron-double-left"></i> INDIETRO
+                    </span>-->
+
+                <input type="button" class="action-button next" name="trans-next" value="AVANTI" id="next">
+                    <!--<span class="m-auto">
+                        AVANTI <i class="bi bi-chevron-double-right"></i>
+                    </span>-->
+
+                <input type="button" class="action-button save" name="trans-save" value="SALVA" id="save">
+                    <!--<span class="m-auto">
+                        AVANTI <i class="bi bi-chevron-double-right"></i>
+                    </span>-->
+                
+                <!--<button type="button" class="action-button back" name="back" onclick="ButtonClick(-1);" id="btnPrevious">
+                    <input type="hidden" id="btnPrevious" value="Previous" class="btn btn-secondary" onclick="ButtonClick(-1)" name="Previous" />
+                    <span class="m-auto">
+                        <i class="bi bi-chevron-double-left"></i> INDIETRO
+                    </span>
+                </button>
+    
+                <button type="button" class="action-button next trans-next" name="trans-next" onclick="ButtonClick(1);" id="qty-next">-->
+                    <!--<input type="hidden" id="btnNext" value="Next" class="btn btn-primary" onclick="ButtonClick(1)" name="Next" />-->
+                   <!--<span class="m-auto">
+                        AVANTI <i class="bi bi-chevron-double-right"></i>
+                    </span>
+                </button>
+    
+                <button type="submit" class="action-button save" name="save" id="qty-save" onclick="ButtonClick(0);">
+                    <span class="m-auto">
+                        SALVA <i class="bi bi-check-circle"></i>
+                    </span>
+                </button>-->
+            </fieldset>
+            <!--    =====>    END FIELDSET 2 [ADD/EDIT QUANTITY]    <=====    -->
+
+             <!--    =====>    FIELDSET 3 [ADD/EDIT PARTIAL IF TYPE = 1]    <=====    -->
+       
+            <fieldset class="mx-auto my-3 steps" data-step="3">
+                <div class="card">
+                    <div class="card-header row mx-auto pt-3">
+                        <h2 class="form-title mx-auto my-2"> 
+                            <i class="bi bi-truck-flatbed"></i>
+                                CREA NUOVO
+                            <i class="bi bi-truck-flatbed"></i>
+                        </h2>
+                    
+                            <h4 class="form-subtitle mx-auto my-2"> 
+                                Inserire gli <b style="color: #6d1741">scarichi parziali</b> del nuovo trasporto. 
+                            </h4>
+                    </div>
+
+                    <div class="card-body my-3">
+                        <div class="row table-responsive mx-auto my-2">     
+                            <table class="table table-sm table-borderless" id="partials">
+                                <tr class="mx-auto my-2">
+                                    <th class="mx-auto"> <i class="bi bi-gear my-auto"></i> </th>
+                                    <th class="mx-auto" data-toggle="tooltip" title="--> Dest. cliente"> Destinazione </th>
+                                    <th class="mx-auto"> EXW </th>
+                                    <th class="mx-auto" data-toggle="tooltip" title="--> Data scarico"> Data </th>
+                                    <th class="mx-auto" data-toggle="tooltip" title="--> Luogo scarico"> Luogo </th>
+                                    <th class="mx-auto" data-toggle="tooltip" title="--> Quantità scaricata [ kg ]"> Quantità </th>
+                                    <th class="mx-auto" data-toggle="tooltip" title="--> Fattura Rif."> Fattura </th>  
+                                    <th class="mx-auto"></th>             
+                                </tr>
+                                  
+                                <tr class="mx-auto my-1">
+                                    <td class="part-btns">
+                                        <input type="hidden" name="id[]" id="id_partial" value="0"/>
+                                    </td>
+                              
+                                    <td class="col-3">
+                                        <input type="text" name="destination_0" class="form-control destination" id="destination_0" /> 
+                                    </td>
+    
+                                    <td class="col-2">
+                                        <select class="form-control exw" name="exw" id="exw_0">
+                                            <option value=""></option>
+                                            <option value="fos"> FOS </option>
+                                            <option value="destino"> DESTINO </option>
+                                        </select>
+                                    </td>
+                                                
+                                    <td class="col-2"> 
+                                        <input type="text" class="form-control date" name="date_0" autocomplete="off" id="date_0" />
+                                    </td>
+                            
+                                    <td class="col-2">
+                                        <input type="text" class="form-control place" name="place_0" id="place_0" />
+                                    </td>
+                            
+                                    <td class="col-2">
+                                        <input type="text" class="form-control mx-auto q_unloaded" name="q_unloaded_0" id="q_unloaded_0" />
+                                    </td>
+                            
+                                    <td class="col mx-auto">
+                                        <input type="text" class="form-control mx-auto invoice" name="invoice_0" id="invoice_0" />
+                                    </td>
+
+                                    <td class="part-btns">
+                                        <button type="button" class="my-auto px-1 delete-btn"
+                                            onclick="partRows.delRow(this)">
+                                                <span class="my-auto">
+                                                    <i class="bi bi-x-square"></i>
+                                                </span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="button" class="action-button back" name="trans-back" value="INDIETRO" />
+                <!--<span>
+                    <i class="bi bi-chevron-double-left"></i> INDIETRO
+                </span>-->
+                <input type="button">
+
+                <input type="button" class="action-button add" name="add-part" value="AGGIUNGI" />
+                <!--<span class="m-auto">
+                    AVANTI <i class="bi bi-chevron-double-right"></i>
+                </span>-->
+
+                <input type="button" class="action-button save" name="trans-save" value="SALVA" />
+
+                <!--<button type="button" class="action-button add" id="add-part">
+                    <span class="m-auto">
+                        AGGIUNGI <i class="bi bi-plus-circle"></i>
+                    </span>
+                </button>
+    
+                <button type="submit" class="action-button save" name="save" onclick="ButtonClick(0);">
+                    <span class="m-auto">
+                        SALVA <i class="bi bi-check-circle"></i>
+                    </span>
+                </button>-->
+            </fieldset>
+
+            <!--    =====>    END FIELDSET 3 [ADD/EDIT PARTIAL IF TYPE = 1]    <=====    -->
+
+            <!--    =====>    FIELDSET 4 [CONFIRM NEW TRANSPORT]    <=====    -->
+
+            <!--    =====>    END FIELDSET 4 [CONFIRM NEW TRANSPORT]    <=====    -->
+        </form>
+    </section>
+{% endblock %}    
+
+{% block jsScript %}
+
+<script>
+    var current, next, previous;                //fieldsets
+    var left, opacity, scale;                   //fieldset properties which we will animate
+    var animating;                              //flag to prevent quick multi-click glitches
+    var formValidation;      
+
+$(document).ready(function(){
+    var count = 1; // used to increment the name for the inputs
+    var partAdd;
+
+    function addInput(){
+        partAdd = '<tr class="mx-auto my-1" id="' +count+ '"><td class="part-btns"><input type="hidden" name="id_' +count+ '" value="' +count+ '" /></td><td class="col-3">'
+        partAdd += '<input type="text" name="destination_' +count+ '" class="form-control destination" id="destination_' +count+ '" /></td><td class="col-2">'
+        partAdd += '<select class="form-control exw" name="exw_' +count+ '"><option value=""></option><option value="fos"> FOS </option><option value="destino"> DESTINO </option></select></td><td class="col-2">'
+        partAdd += '<input type="text" name="date_' +count+ '" class="form-control date" autocomplete="off" /></td><td class="col-2">'
+        partAdd += '<input type="text" name="place_' +count+ '" class="form-control place" /></td><td class="col-2">'
+        partAdd += '<input type="text" name="q_unloaded_' +count+ '" class="form-control mx-auto q_unloaded" /></td><td class="col mx-auto">'    
+        partAdd += '<input type="text" name="invoice_' +count+ '" class="form-control mx-auto invoice" /></td><td class="part-btns">'                
+        partAdd += '<button type="button" class="my-auto px-1 delete-btn" onclick="partRows.delRow(this)">'                
+        partAdd += '<span class="my-auto"><i class="bi bi-x-square"></i></span></button></td></tr>'
+        
+        $("#partials tr:last").after(partAdd);
+            count++;
+
+        $('.part-btns').each(function(index, item) {
+            ($(item).find('input[type=hidden]').val());
+        });
+    }
+
+// adding rules for inputs with class 'comment'
+$('input.destination').each(function() {
+    $.validator.addClassRules( 
+                    {
+                        required: true,
+            rangelength: [3, 50],
+            regexp: /^[A-Za-z\s]*$/,
+            messages: {
+                required: "Campo obbligatrio",
+                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 50 caratteri",
+                regexp: "Sono consentiti solo lettere e spazi bianchi."
+            }
+                    })
+            });  
+    /*$(".add").click(function(){
+        partAdd = '<tr class="mx-auto my-1 partials-wrap" id="' +count+ '"><td class="part-btns"><input type="hidden" name="id_' +count+ '" /></td><td class="col-3">'
+        partAdd += '<input type="text" name="destination_' +count+ '" class="form-control destination" id="destination_' +count+ '" /></td><td class="col-2">'
+        partAdd += '<select class="form-control exw" name="exw_' +count+ '"><option value=""></option><option value="fos"> FOS </option><option value="destino"> DESTINO </option></select></td><td class="col-2">'
+        partAdd += '<input type="text" name="date_' +count+ '" class="form-control date" autocomplete="off" /></td><td class="col-2">'
+        partAdd += '<input type="text" name="place_' +count+ '" class="form-control place" /></td><td class="col-2">'
+        partAdd += '<input type="text" name="q_unloaded_' +count+ '" class="form-control mx-auto q_unloaded" /></td><td class="col mx-auto">'    
+        partAdd += '<input type="text" name="invoice_' +count+ '" class="form-control mx-auto invoice" /></td><td class="part-btns">'                
+        partAdd += '<button type="button" class="my-auto px-1 delete-btn" onclick="partRows.delRow(this)">'                
+        partAdd += '<span class="my-auto"><i class="bi bi-x-square"></i></span></button></td></tr>'  
+            
+            $("#partials tr:last").after(partAdd);
+                count++;
+    });*/
+
+    // set handler for addInput button click
+    $(".add").on('click', addInput);
+
+//  ===> JQUERY VALIDATION RULES AND METHODS
+    jQuery.validator.addMethod("regexp",
+        function(value, element, regexp) {
+            if(regexp.constructor != RegExp)
+                regexp = new RegExp(regexp);
+            else if(regexp.global)
+                regexp.lastIndex = 0;
+                    return this.optional(element) || regexp.test(value);
+        }
+    );
+
+    // Define custom validation rules based on class names
+    /*$.validator.addClassRules({
+        destination: {
+            required: true,
+            rangelength: [3, 50],
+            regexp: /^[A-Za-z\s]*$/
+        },
+        exw: {
+            required: true
+        },
+        date: {
+            required: true,
+            date: true
+        },
+        place: {
+            required: true,
+            rangelength: [3, 50],
+            regexp: /^[A-Za-z\s]*$/
+        },
+        q_unloaded: {
+            required: true,
+            number: true
+        },
+        invoice: {
+            required: true,
+            number: true
+        }
+    });*/
+
+    //instantiate the jquery validation plugin on the form and define the validation rules 
+    //the key name on the left side is the name attribute of an input field. validation rules are defined on the right side
+    formValidation = $('#trans-form').validate({
+  	    submitHandler: function(){},                //prevent traditional form submission
+        rules: {
+            //transport validation rules
+            'slot': {
+                required: true,
+                rangelength: [3, 40],
+                regexp: /^[a-zA-Z0-9_-]*$/
+            },
+            'cmr': {
+                required: true,
+                rangelength: [3, 40],
+                regexp: /^[a-zA-Z0-9_-]*$/
+            },
+            'issuer': {
+                required: true,
+                rangelength: [3, 50],
+                regexp: /^[a-zA-Z\s]*$/
+            },
+            'supplier': {
+                required: true,
+                rangelength: [3, 50],
+                regexp: /^[a-zA-Z\s]*$/
+            },
+            'transport': {
+                required: true,
+                rangelength: [2, 10],
+                regexp: /^[a-zA-Z\s]*$/
+            },
+            'type': {
+                required: true
+            },
+            'date_load': {
+                required: true,
+                date: true
+            },
+            'date_unload': {
+                required: true,
+                date: true
+            },
+            'container': {
+                required: true,
+                rangelength: [3, 25],
+                regexp: /^[a-zA-Z\s]*$/
+            },
+            'note': {
+                maxlength: 250
+            },
+            //quantity validation rules
+            'kg_load': {
+                required: true,
+                number: true
+            },
+            'cooling': {
+                required: true
+            },
+            'price_typology': {
+                required: true
+            },
+            'price_value': {
+                required: true,
+                number: true
+            },
+            'kg_unload': {
+                required: true,
+                number: true
+            },
+            'liquid_density': {
+                required: true,
+                number: true
+            },
+            'gas_weight': {
+                required: true,
+                number: true
+            },
+            'pcs_ghv': {
+                required: true,
+                number: true
+            }/*,
+            //partials validation rules
+            'destination': {
+                required: true,
+                rangelength: [3, 50],
+                regexp: /^[A-Za-z\s]+$/
+            },
+            'exw': {
+                required: function(element){
+                    return $("#type").val() == "P";
+                }
+            },
+            'date': {
+                required: function(element){
+                    return $("#type").val() == "P";
+                },
+                date: true
+            },
+            'place': {
+                required: function(element){
+                    return $("#type").val() == "P";
+                },
+                rangelength: [3, 50],
+                regexp: /^[A-Za-z\s]+$/
+            },
+            'q_unloaded': {
+                required: function(element){
+                    return $("#type").val() == "P";
+                },
+                number: true
+            },
+            'invoice': {
+                required: function(element){
+                    return $("#type").val() == "P";
+                },
+                number: true
+            }*/
+        },
+        //specify validation error messages
+        messages: {
+            //transport error messages
+            slot: {
+                required: "Campo obbligatorio",
+                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 40 caratteri",
+                regexp: "Sono consentiti solo lettere, numeri e i simboli: - e _"
+            },
+            cmr: {
+                required: "Campo obbligatorio",
+                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 40 caratteri",
+                regexp: "Sono consentiti solo lettere, numeri e i simboli: - e _"
+            },
+            issuer: {
+                required: "Campo obbligatorio",
+                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 50 caratteri",
+                regexp: "Sono consentiti solo lettere e spazi bianchi"
+            },
+            supplier: {
+                required: "Campo obbligatorio",
+                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 50 caratteri",
+                regexp: "Sono consentiti solo lettere e spazi bianchi"
+            },
+            transport: {
+                required: "Campo obbligatorio",
+                rangelength: "La lunghezza minima consentita è di 2 e la lunghezza massima di 10 caratteri",
+                regexp: "Sono consentiti solo lettere e spazi bianchi"
+            },
+            type: {
+                required: "Campo obbligatorio"
+            },
+            date_load: {
+                required: "Campo obbligatorio"//,
+                //date: "Data invalida."
+                //minDate: "Non è possibile inserire una data precedente all'anno 2016.",
+                //maxDate: "Non è possibile inserire una data successiva alla data presente."
+            },
+            date_unload: {
+                required: "Campo obbligatorio"//,
+                //dateITA: "Data invalida."
+                //format: "Non è possibile inserire una data precedente all'anno 2016.",
+                //maxDate: "Non è possibile inserire una data successiva alla data presente."
+            },
+            container: {
+                required: "Campo obbligatorio",
+                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 25 caratteri",
+                regexp: "Sono consentiti solo lettere e spazi bianchi"
+            },
+            note: {
+                maxlength: "La lunghezza massima consentita è di 250 caratteri"
+            },
+            //quantity error messages
+            kg_load: {
+                required: "Campo obbligatorio",
+                number: "Sono consentiti solo numeri interi e numeri decimali"
+            },
+            cooling: {
+                required: "Campo obbligatorio"
+            },
+            price_typology: {
+                required: "Campo obbligatorio"
+            },
+            price_value: {
+                required: "Campo obbligatorio",
+                number: "Sono consentiti solo numeri interi e numeri decimali"
+            },
+            kg_unload: {
+                required: "Campo obbligatorio",
+                number: "Sono consentiti solo numeri interi e numeri decimali"
+            },
+            liquid_density: {
+                required: "Campo obbligatorio",
+                number: "Sono consentiti solo numeri interi e numeri decimali"
+            },
+            gas_weight: {
+                required: "Campo obbligatorio",
+                number: "Sono consentiti solo numeri interi e numeri decimali"
+            },
+            pcs_ghv: {
+                required: "Campo obbligatorio",
+                number: "Sono consentiti solo numeri interi e numeri decimali"
+            },
+            //partials error messages
+            /*destination: {
+                required: "Campo obbligatrio",
+                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 50 caratteri",
+                regexp: "Sono consentiti solo lettere e spazi bianchi."
+            },
+            exw: {
+                required: "Campo obbligatorio",
+            },
+            date: {
+                required: "Campo obbligatorio",
+                date: "Data invalida"
+            },
+            place: {
+                required: "Campo obbligatorio",
+                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 50 caratteri",
+                regexp: "Sono consentiti solo lettere e spazi bianchi"
+            },
+            q_unloaded: {
+                required: "Campo obbligatorio",
+                number: "Sono consentiti solo numeri"
+            },
+            invoice: {
+                required: "Campo obbligatorio",
+                number: "Sono consentiti solo numeri"
+            },*/
+        },
+        errorClass: "error",
+        validClass: "success",
+        errorPlacement: function(error, element){
+            error.appendTo( "span[class='mistake']" );
+            /*error.insertAfter(element);*/
+        }
+    });
+
+    $(".next, .save").click(function(){
+        if(animating) return false;
+        animating = true;
+    
+        current = $(this).parent();
+    
+        //run the validations on the input for the current step    
+        var validation = false;
+
+            if(current.data('step') == 1){    	  
+                validation = $('#slot, #cmr, #type, #issuer, #supplier, #transport, #date_load, #date_unload, #container, #note').valid();
+                    if($("#type option:selected").val() == 'F'){
+                        $("#next").css("display", "none");
+                        $("#save").css("display", "block");
+                    } else{
+                        $("#save").css("display", "none");
+                        $("#next").css("display", "block");
+                    }
+            } else if(current.data('step') == 2){
+                validation = $('#kg_load, #cooling, #price_typology, #price_value, #kg_unload, #liquid_density, #gas_weight, #pcs_ghv').valid();
+            } else if(current.data('step') == 3){
+                validation = $('.destination, .exw, .date, .place, .q_unloaded, .invoice').valid();
+            }
+
+            if(validation == false){
+                //do not proceed!
+                animating = false;
+                    return;
+            }        
+        
+        next = $(this).parent().next();
+        next.show();        //show the next fieldset
+
+        //hide the current fieldset with style
+        current.hide();
+        animating = false;
+    });
+
+    $(".back").click(function(){
+        if(animating) return false;
+        animating = true;
+
+        current = $(this).parent();
+        previous = $(this).parent().prev();
+        
+        previous.show();        //show the previous fieldset
+        current.animate({
+            opacity: 0
+        }, {
+            step: function(now, mx){                    //as the opacity of current fieldset reduces to 0 - stored in "now"
+                scale = 0.8 + (1 - now) * 0.2;          //1. scale previous fieldset from 80% to 100%
+                left = ((1 - now) * 50) + "%";          //2. take current fieldset to the right(50%) - from 0%
+                opacity = 1 - now;                      //3. increase opacity of previous fieldset to 1 as it moves in
+
+                current.css({
+                    'left': left
+                });
+                previous.css({
+                    'transform': 'scale(' + scale + ')',
+                    'opacity': opacity
+                });
+            },
+            duration: 800,
+            complete: function(){
+                current.hide();
+                animating = false;
+            },
+            easing: 'easeInOutBack'
+        });
+    });
+
+    formValidation.validate();
+
+    /*$(".save").click(function(){
+        return false;
+    })*/
+//});
+//});
+
+//});
+
+//  ===> TOOLTIP CHARACTERISTICS   
+    $("body").tooltip({ 
+        selector: '[data-toggle = tooltip]',
+        placement: 'right' 
+    });
+//  ===> END TOOLTIP CHARACTERISTICS
+
+//  ===> DATEPICKER     
+    //use datepicker on the date inputs
+
+//  ===> END DATEPICKER   
+
+//  ===> SELECT CHANGE
+    $('#price_typology').on('change', function(){
+        if($('#price_typology option:selected').val() == 'no'){
+            //$('#price_typology option[value=no]').attr('selected', true);
+            $('#price_value').attr('disabled', true);
+            $('#price_value').css({
+                'background': 'none',
+                'border': '1px solid rgba(76, 103, 130, 0.35)',
+                'border-radius': '0.5rem'               
+            });
+            $('#price_value').val('0') == 0;
+        } else{
+            //$('#price_typology option[value=yes]').attr('selected', true);
+            $('#price_value').attr('disabled', false);
+            $('#price_value').css({
+                'background': '#ffffff',
+                'border': '1px solid rgba(76, 103, 130, 0.35)',
+                'border-radius': '0.5rem'
+            });
+            $('#price_value').val('');
+            $("#price_value").focus(function(){
+                $("#price_value").css({
+                    '-moz-box-shadow': '0 0 0 1px rgba(113,191,68) !important',
+                    '-webkit-box-shadow': '0 0 0 1px rgba(113,191,68) !important',
+                    'box-shadow': '0 0 0 1px rgba(113,191,68) !important',
+                    'border': '1px solid #71bf44',
+                    'outline-width': '0',
+                    'transition': 'all 0.2s ease-out',
+                    '-webkit-transition': 'all 0.2s ease-out',
+                    '-moz-transition': 'all 0.2s ease-out',
+                    '-o-transition': 'all 0.2s ease-out'
+                });
+            });
+        };
+    });
+//  ===> END PRICE_TYPOLOGY SELECT DISABLED CHANGE
+}); 
+
+//  ===> METHOD TO CREATE NEW ROW IN TABLE     
+    //receives table id
+    function addRowsTable(id){
+        var table = document.getElementById(id);
+        var me = this;
+        
+        if(document.getElementById(id)){
+            var row1 = table.rows[1].outerHTML;
+                
+            //adds index-id in cols with name tbl_id
+            function setIds(){
+                var tbl_id = document.querySelectorAll('#'+ id +' tbl_id');
+                        
+                for(var i=0; i < tbl_id.length; i++) 
+                    tbl_id[i].innerHTML = i+1;
+
+                    $(".date").datepicker({
+                        format: 'dd-mm-yyyy',
+                        autoclose: true,
+                        todayHighlight: true
+                    });
+            }
+                
+            //add row after clicked row; receives clicked button in row
+            me.addRow = function(btn){
+                btn ? btn.parentNode.parentNode.insertAdjacentHTML('afterend', row1): table.insertAdjacentHTML('beforeend', row1);
+                setIds();
+            }
+                
+            //delete clicked row; receives clicked button in row
+            me.delRow = function(btn){
+                btn.parentNode.parentNode.outerHTML = '';
+                setIds();
+            }
+        }
+    }
+
+    //create object of addRowsTable(), pass the table id
+    var partRows = new addRowsTable('partials');    
+//  ===> END METHOD TO CREATE NEW ROW IN TABLE  
+
+//  ===> MULTI-STEP FIELDSET CHANGE AND FORM VALIDATION 
+   
+
+//  ===> END MULTI-STEP FIELDSET CHANGE AND FORM VALIDATION 
+</script> 
+        
+<!--    ===>    BOOTSTRAP DATEPICKER    <===    -->   
+
+<!--    ===>    END BOOTSTRAP DATEPICKER    <===    --> 
+{% endblock %}

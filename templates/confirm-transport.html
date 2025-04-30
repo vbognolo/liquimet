@@ -1,0 +1,35 @@
+<div class="modal fade" id="confirm-new" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mx-auto" id="myModalLabel"> Conferma  </h5>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-card mx-auto pt-0 mt-1">
+                    <div class="row mx-auto form-title">
+                        <h2 class="fs-title"> 
+                            <i class="bi bi-check-circle"></i> 
+                                &nbsp;Conferma&nbsp; 
+                            <i class="bi bi-check-circle"></i>  
+                        </h2>
+                        
+                        <h3 class="pt-0 mt-0"> 
+                            Confermare l'inserimento del nuovo trasporto.  
+                        </h3>
+                    </div>
+                
+                <form id="delete-form" action="{{ doc_root }}admin/transport-delete/{{ t.id_transport }}" method="POST" class="narrow">
+                    <p class="text-center delete-msg">
+                        Conferma l'inserimento del nuovo trasporto: <br>
+                    </p>
+            
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default modal-cancel" data-dismiss="modal"><span class="bi bi-x-circle"></span> CHIUDI </button>
+                        <button type="submit" class="btn btn-default modal-delete" name="delete_transport"><span class="bi bi-check-circle"></span> CONFERMA </button>
+                    </div>
+                </form>
+			</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,170 @@
+{% extends 'layout.html' %}
+{% block title %} Utenti {{ 'now'|date('Y') }} {% endblock %}
+
+{% block search %}
+    <!--    ===>    SEARCH BAR    <===    -->
+    <section class="row my-auto mx-auto px-3 search-header">
+        <div class="my-auto m-0 search-bar">
+            <form id="search-form">
+                <button type="button" class="my-1 search-btn">
+                    <i class="bi bi-search"></i>
+                </button>
+                <input type="text" class="my-1 search-input" id="search" placeholder="      Cerca.." />  
+            </form>
+        </div>
+    </section>
+    <!--    ===>    END SEARCH BAR    <===    -->
+{% endblock %}
+
+{% block content %} 
+    {{ include('admin/users-navigation.html') }}
+
+    <!--    =====>    TITLES TABLE    <=====    -->
+    <section class="col-12 mx-auto my-1">
+        <div class="panel panel-body mb-4">          
+            <div class="d-flex justify-content-center">
+                <table class="col-9 table table-sm table-hover platform"> 
+                    <thead>
+                        <tr class="border-bottom border-top border-light table-title">
+                            <th class="align-middle p-3"> # </th>
+                            <th class="align-middle p-0"> Ruolo aziendale </th>
+                            <th class="align-middle p-0"> Title (EN) </th>
+                            <th class="align-middle p-0"> Acronimo </th>
+                            <th class="align-middle p-0">
+                                <button type="button" class="edit-data" data-bs-toggle="modal" data-bs-target="#newTitle" data-id="btnNew">
+                                    <i class="bi bi-person-workspace" style="font-size: 2rem"></i>
+                                    <i class="bi bi-plus" style="font-size: 1.7rem"></i>
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="table-body" id="titleTable">  
+                    {% set order = 1 %}
+                    {% for i, t in titles %}
+
+                        <tr class="titles">
+                            <td scope="row" class="align-middle p-1" style="border-right: 2px solid rgba(255, 255, 255, 0.2)">
+                                {{ order }}
+                                {% set order = order + 1 %}
+                            </td>
+                            <td class="align-middle p-2 nameT" id="nameT"> {{ t.name|upper }} </td>
+                            <td class="align-middle p-2" id="titleT"> {{ t.title|title }} </td>
+                            <td class="align-middle p-2 acronymT" id="acronymT"> {{ t.acronym|upper }} </td>
+                            <td class="align-middle p-2 btns" style="border-left: 2px solid rgba(255, 255, 255, 0.2)">
+                                <button type="button" class="edit-data edited editBtn" data-bs-toggle="modal" data-bs-target="#editTitle-{{ t.id_title }}" 
+                                        data-id="{{ t.id_title }}">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                
+                                <button type="button" class="edit-data deleteBtn" data-bs-toggle="modal" data-bs-target="#deleteTitle-{{ t.id_title }}"
+                                        data-id="{{ t.id_title }}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        {{ include("admin/title-edit.html") }}
+                        {{ include("admin/title-delete.html") }}
+                    {% endfor %}
+                    </tbody>
+                        
+                    <tfoot>
+                        <tr>
+                            <td colspan="16" class="text-light align-middle mb-2 p-2">
+                                <h5 class="align-middle my-auto">
+                                    TOTALE <i class="bi bi-person-workspace ms-1 my-auto"></i>:
+                                        <span> {{ total }} </span>
+                                </h5> 
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div> 
+        </div>
+
+    {{ include("admin/title.html") }}
+    </section>  
+    <!--    =====>    END TITLES TABLE    <=====    --> 
+{% endblock %}
+
+{% block jsScript %}    
+
+<script>
+$(document).ready(function(){
+//  ===> BTN TO OPEN MODAL FOR NEW TITLE FORM
+    $('#btnNew').on('click', function(){
+        $('#newTitle').modal('show');
+	});
+//  ===> END BTN TO OPEN MODAL FOR NEW TITLE FORM
+
+//  ===> BTN TO OPEN MODAL FOR EDIT/DELETE TITLE FORM
+    $('.editBtn').on('click', function(){
+        var id = $(this).attr('data-id');
+    });
+
+    $('.deleteBtn').on('click', function(){
+        var id = $(this).attr('data-id');
+        $('#id_title').val(id);
+        
+        /*$(".exit").on('click', function(){
+            $('[data-id='+id+']').closest('tr').css('background','rgb(248, 215, 218)');
+            $('[data-id='+id+']').closest('tr').fadeOut(3000,function(){
+                $(this).remove();
+            });
+
+            setTimeout(function(){ 
+                parent.location.reload();
+            }, 3100);
+        });*/
+    });
+
+    /*$("#deleteTitle").on('show.bs.modal', function(e){
+        var id = $(e.relatedTarget).data('id');
+        $("#id_title").val(id);
+    })*/
+
+    /*$('.deleteBtn').on('click', function(){
+        //e.preventDefault();
+        var id = $(this).attr('data-id');
+        //$('button[name="delete_title"]').val(id);
+        $("#deleteTitle-"+id).modal('show');
+
+        /*$("#deleteTitle-"+id).on('hidden.bs.modal', function(){
+            $('.deleteBtn[data-title='+id+']').closest('tr').css('background','rgb(248, 215, 218)');
+            $('.deleteBtn[data-title='+id+']').closest('tr').fadeOut(3500,function(){
+                $(this).remove();
+            });
+        });*/
+    /*});*/
+
+//  ===> BTN TO OPEN MODAL FOR EDIT TITLE FORM
+
+//  ===> SEARCH BAR
+    $("#search").keyup(function(){
+        var value = this.value.toLowerCase().trim();
+
+        $(".platform .titles").each(function(index){
+            if(index !== -1){
+
+                $(this).find("td").each(function(){
+                    var id = $(this).text().toLowerCase().trim();
+                    var not_found = (id.indexOf(value) == -1);
+                    
+                    $(this).closest('tr').toggle(!not_found);
+                        return not_found;
+                });
+            } 
+        });
+    });
+
+    $("#search").keydown(function(e){
+        if(e.keyCode == 13){ 
+            e.preventDefault();
+                return false;
+        }
+    });
+//  ===> END SEARCH BAR
+});
+</script>
+{% endblock %}  

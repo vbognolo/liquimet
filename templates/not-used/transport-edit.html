@@ -1,0 +1,132 @@
+<div class="modal fade" id="editTrans" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mx-auto" id="myModalLabel"> Modifica trasporto #{{ t.seo }} </h5>
+            </div>
+        
+            <div class="modal-body">
+                <div class="container-fluid mx-auto">
+                    
+                    <form id="edit-form" method="POST" action="{{ doc_root }}admin/transport-edit/{{ t.id_transport }}">
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <input type="hidden" name="id_transport" data-id="{{ t.id_transport }}" value="{{ t.id_transport }}" />
+                            <input type="hidden" name="type" value="{{ t.type }}" />
+
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> Slot ID: </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="slot" id="slot" value="{{ t.slot|upper }}" class="form-control mx-auto" />
+                            </div>
+                        </div>
+                        
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> Numero CMR: </label>
+                            </div>
+                        
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="cmr" id="cmr" value="{{ t.cmr|upper }}" class="form-control" />
+                            </div>
+                        </div>
+                        
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> Fornitore: </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="issuer" id="issuer" value="{{ t.issuer|upper }}" class="form-control" />
+                            </div>
+                        </div>
+                            
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> Emittente: </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="supplier" id="supplier" value="{{ t.supplier|upper }}" class="form-control" />
+                            </div>
+                        </div>
+                            
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> Trasporto: </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="transport" id="transport" value="{{ t.transport|upper }}" class="form-control" />
+                            </div>
+                        </div>
+                            
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> Data carico: </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="date_load" id="date_load" value="{{ t.date_load|date("d-m-Y") }}" class="form-control date" />
+                            </div>
+                        </div>
+                            
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> Data scarico: </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="date_unload" id="date_unload" value="{{ t.date_unload|date("d-m-Y") }}" class="form-control date" />
+                            </div>
+                        </div>    
+                            
+                        <div class="row form-group m-auto align-middle mb-3">
+                            <div class="col-sm-4 my-auto" style="text-align: center"> 
+                                <label class="form-control-label my-auto"> Container / ATB: </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="container" id="container" value="{{ t.container|upper }}" class="form-control" />
+                            </div>
+                        </div>
+            
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default modal-cancel" data-dismiss="modal"><span class="bi bi-x-circle"></span> CHIUDI </button>
+                            <button type="submit" class="btn btn-default modal-save updateTrans" name="update_transport"><span class="bi bi-check-circle"></span> SALVA </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+//  ===> DATEPICKER     
+    //use datepicker on the date inputs
+    $(".date").datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        language: 'it-IT', 
+    });
+//  ===> END DATEPICKER 
+
+//  ===> SAVE BUTTON ON EDIT/DELETE MODAL   
+    $(".updateTrans").click(function(){
+        $.ajax({
+            method: 'POST',
+            url: 'admin/transport-edit.php',
+            data: $("#edit-form").serialize(),
+                success: function(html){
+                    console.log(html);
+                    $("#editTrans").modal("hide");
+                }
+        })
+    });
+//  ===> END SAVE BUTTON ON EDIT/DELETE MODAL
+});
+</script>

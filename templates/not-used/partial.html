@@ -1,0 +1,41 @@
+<td class="col-md-3">
+                                    <input type="text" name="destination[]" class="form-control" value="{{ partial.destination|upper }}"/> 
+                                </td>
+
+                                <td class="col-md-2">
+                                    <select class="form-control" name="exw[]">
+                                        <option value="{{ partial.exw }}"> {{ partial.exw|upper }} </option>
+                                        <option value="fos"> FOS </option>
+                                        <option value="destino"> DESTINO </option>
+                                    </select>
+                                </td>
+                                            
+                                <td class="col-md-2"> 
+                                    <input type="text" class="form-control date" name="date[]" autocomplete="off" value="{{ partial.date|date('d-m-Y') }}"/>
+                                </td>
+                        
+                                <td class="col-md-2">
+                                    <input type="text" class="form-control" name="place[]" value="{{ partial.place|upper }}" />
+                                </td>
+                        
+                                <td class="col-md-2">
+                                    <input type="text" class="form-control mx-auto" name="q_unloaded[]" value="{{ partial.q_unloaded }}" />
+                                </td>
+                        
+                                <td class="col">
+                                    <input type="text" class="form-control mx-auto" name="invoice[]" value="{{ partial.invoice }}"/>
+                                </td>
+
+                                <td class="col d-flex my-auto pt-2">
+                                    <button type="button" class="btn btn-outline-danger btn-sm d-flex justify-content-center m-auto p-0" 
+                                        style="text-align: center; height: 30px; width: 30px; border-radius: 50%" onclick="partRows.delRow(this)">
+                                            <i class="bi bi-x my-auto"></i>
+                                    </button>
+                                    
+                                    &nbsp;
+                                    
+                                    <button type="button" class="btn btn-outline-primary btn-sm d-flex justify-content-center m-auto p-0" 
+                                        style="text-align: center; height: 30px; width: 30px; border-radius: 50%" onclick="partRows.addRow(this)">
+                                            <i class="bi bi-plus my-auto"></i>
+                                    </button>
+                                </td>

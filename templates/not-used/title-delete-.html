@@ -1,0 +1,163 @@
+<dialog id="deleteTitle">
+    <form>
+        <input type="hidden" name="id_title" id="id_title" value="{{ t.id_title }}" />
+            <p class="container delete-msg">
+                Rimuovere il ruolo aziendale <br>
+                    <span> 
+                        {{ t.name|upper }} ({{ t.acronym|upper}})?
+                    </span>
+            </p>
+            
+            <div class="modal-footer mx-auto">
+                <button type="button" class="btn btn-default mx-auto modal-cancel" data-bs-dismiss="modal">
+                    <span class="bi bi-x-circle">
+                        ANNULLA
+                    </span>  
+                </button>
+
+                <button type="submit" class="btn btn-default mx-auto modal-save" id="delete" name="delete_title">
+                    <span class="bi bi-check-circle">
+                        CONFERMA
+                    </span> 
+                </button>
+            </div>
+
+
+        <button value="cancel" formmethod="dialog">Cancel</button>
+        <button id="confirmBtn" value="default">Confirm</button>
+    </form>
+  </dialog>
+
+  <p>
+    <button id="showDialog">Show the dialog</button>
+  </p>
+  <output></output>
+
+{% block jsScript %}
+<script>
+    const showButton = document.getElementById("showDialog");
+    const deleteT = document.getElementById("deleteTitle");
+    const outputBox = document.querySelector("output");
+    const selectEl = favDialog.querySelector("select");
+    const confirmBtn = favDialog.querySelector("#confirmBtn");
+
+// "Show the dialog" button opens the <dialog> modally
+showButton.addEventListener("click", () => {
+  favDialog.showModal();
+});
+
+// "Cancel" button closes the dialog without submitting because of [formmethod="dialog"], triggering a close event.
+favDialog.addEventListener("close", (e) => {
+  outputBox.value =
+    favDialog.returnValue === "default"
+      ? "No return value."
+      : `ReturnValue: ${favDialog.returnValue}.`; // Have to check for "default" rather than empty string
+});
+
+// Prevent the "confirm" button from the default behavior of submitting the form, and close the dialog with the `close()` method, which triggers the "close" event.
+confirmBtn.addEventListener("click", (event) => {
+  event.preventDefault(); // We don't want to submit this fake form
+  favDialog.close(selectEl.value); // Have to send the select box value here.
+});
+
+
+
+
+
+
+$(document).ready(function() {
+  $("form").submit(function(e) {
+    e.preventDefault();
+    var name = $("input[name='name']").val();
+    var email = $("input[name='email']").val();
+
+    var trLen = $(".data-table").find("tr").length;
+
+    $(".data-table tbody").append("<tr data-name='" + name + "' data-email='" + email + "'><td>" + name + "</td><td>" + email + "</td><td><button id='edit" + trLen + "' class='btn btn-info btn-xs btn-edit'>Edit</button><button class='btn btn-danger btn-xs btnDelete' id='delete" + trLen + "'>Delete</button></td></tr>");
+
+    $("input[name='name']").val('');
+    $("input[name='email']").val('');
+  });
+  
+  $("body").on('click', '.btn.btnDelete', function() {
+    var id = $(this).attr('id');
+    $('#myModal').data('id', id).modal('show');
+  });
+
+
+  $("body").on('click', '#btnDelteYes', function() {
+    var id = $('#myModal').data('id');
+    $('#' + id).parents("tr").remove();
+    $('#myModal').modal('hide');
+  });
+});
+</script>
+{% endblock %}
+
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<body>
+  <div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="icon-box">
+            <i class="material-icons">&#xE5CD;</i>
+          </div>
+          <h4 class="modal-title">Are you sure?</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Do you really want to delete these records? This process cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" id="btnDelteYes">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <form>
+      <div class="form-group">
+        <div class="form-group">
+          <h2><span class="badge badge-secondary">Full Name*</span></h2>
+          <input type="text" name="name" class="form-control" value="Julien" required="">
+          <div class="alert alert-warning alert-dismissible fade show">
+            <strong>Warning!</strong> Please the Fullname field is required.
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <h2><span class="badge badge-dark">Email*</span></h2>
+          <input type="text" name="email" class="form-control" value="julien@gmail" required="">
+        </div>
+        <div class="alert alert-warning alert-dismissible fade show">
+          <strong>Warning!</strong> Please the Email field is required.
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn float-right mb-3 mr-2">
+	<i class="text-success fas fa-plus fa-2x"></i>
+  </button>
+
+    </form>
+    <br/>
+    <table class="table table-bordered data-table">
+      <thead>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Options</th>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
+  </div>
+</body>

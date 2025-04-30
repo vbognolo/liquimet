@@ -1,0 +1,498 @@
+{% block head %}
+    <!-- Bootstrap Datepicker - CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+{% endblock %}
+
+<!-- Edit User Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row mx-auto">
+                    <h2 class="modal-title my-1" id="editUserLabel"> 
+                        <i class="bi bi-pencil-square my-auto mx-1"></i>
+                            MODIFICA
+                        <i class="bi bi-pencil-square my-auto mx-1"></i>
+                    </h2>
+
+                    <h4 class="modal-subtitle mx-auto my-2"> 
+                        Modifica i dati esistenti dell'utente.
+                    </h4>
+                </div>
+            </div>
+        
+            <div class="modal-body">
+                <form id="user-edit" name="user-edit" method="POST" action="user-edit" autocomplete="off" novalidate>
+                    <input type="hidden" name="id_user" id="id_user" value="{{ member.id_user }}" />
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+                    <!-- Email -->
+                    <div class="row form-group mb-3">        
+                        <label for="email" class="col-5 form-control-label"> E-mail: </label>
+                                
+                        <div class="col-6">
+                            <input name="email" type="text" id="email"
+                                class="form-control {% if errors.email %}is-invalid{% endif %}" />
+
+                            <div class="error-placeholder">
+                                {% if errors.email %}<div class="invalid-feedback">{{ errors.email }}</div>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Username -->
+                    <div class="row form-group mb-3">
+                        <label for="username" class="col-5 form-control-label"> Username: </label>
+                                
+                        <div class="col-6">
+                            <input name="username" type="text" id="username"
+                                class="form-control {% if errors.username %}is-invalid{% endif %}" />
+
+                            <div class="error-placeholder">
+                                {% if errors.username %}<div class="invalid-feedback">{{ errors.username }}</div>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="row form-group mb-3">
+                        <label for="name" class="col-5 form-control-label"> Nome: </label>
+
+                        <div class="col-6">
+                            <input name="name" type="text" id="name"
+                                class="form-control {% if errors.name %}is-invalid{% endif %}" />
+
+                            <div class="error-placeholder">
+                                {% if errors.name %}<div class="invalid-feedback">{{ errors.name }}</div>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Surname -->
+                    <div class="row form-group mb-3">
+                        <label for="surname" class="col-5 form-control-label"> Cognome: </label>
+                                
+                        <div class="col-6">
+                            <input name="surname" type="text" id="surname"
+                                class="form-control {% if errors.surname %}is-invalid{% endif %}" />
+
+                            <div class="error-placeholder">
+                                {% if errors.surname %}<div class="invalid-feedback">{{ errors.surname }}</div>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Birthday -->
+                    <div class="row form-group mb-3">
+                        <label for="bday" class="col-5 form-control-label"> Data di nascita: </label>
+                                
+                        <div class="col-6">
+                            <input name="bday" type="text" id="bday"
+                                class="form-control datepicker {% if errors.bday %}is-invalid{% endif %}" />
+
+                            <div class="error-placeholder">
+                                {% if errors.bday %}<div class="invalid-feedback">{{ errors.bday }}</div>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- City -->
+                    <div class="row form-group mb-3"> 
+                        <label for="city" class="col-5 form-control-label"> Luogo di nascita: </label>
+                                
+                        <div class="col-6">
+                            <input name="city" type="text" id="city"
+                                class="form-control {% if errors.city %}is-invalid{% endif %}" />
+
+                            <div class="error-placeholder">
+                                {% if errors.city %}<div class="invalid-feedback">{{ errors.city }}</div>{% endif %}                                    
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Country -->
+                    <div class="row form-group mb-3"> 
+                        <label for="country" class="col-5 form-control-label"> </label>
+                                
+                        <div class="col-6">
+                            <input name="country" type="text" id="country"
+                                class="form-control {% if errors.country %}is-invalid{% endif %}" />
+
+                            <div class="error-placeholder">
+                                {% if errors.country %}<div class="invalid-feedback">{{ errors.country }}</div>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gender -->
+                    <div class="row form-group mb-3">
+                        <label for="id_gender" class="col-5 form-control-label"> Genere: </label>
+        
+                        <div class="col-6">
+                            <select name="id_gender" id="id_gender" class="form-control {% if errors.gender %}is-invalid{% endif %}"> 
+                            {% for g in gender %}
+                                <option class="opt-type" value="{{ g.id_gender }}" 
+                                    {% if g.id_gender == member.id_gender %} selected {% endif %}>
+                                        {{ g.name|capitalize }}
+                                </option>
+                            {% endfor %}
+                            </select>
+
+                            <div class="error-placeholder">
+                                {% if errors.gender %}<div class="invalid-feedback">{{ errors.gender }}</div>{% endif %}
+                            </div>
+                        </div>        
+                    </div> 
+        
+                    <!-- Role -->
+                    <div class="row form-group mb-3">
+                        <label for="id_role" class="col-5 form-control-label"> Accesso: </label>
+        
+                        <div class="col-6">
+                            <select name="id_role" id="id_role" class="form-control {% if errors.role %}is-invalid{% endif %}">  
+                            {% for r in roles %}
+                                <option class="opt-type" value="{{ r.id_role }}" 
+                                    {% if r.id_role == member.id_role %} selected {% endif %}>
+                                        {{ r.name|capitalize }}
+                                </option>
+                            {% endfor %}
+                            </select>
+
+                            <div class="error-placeholder">
+                                {% if errors.role %}<div class="invalid-feedback">{{ errors.role }}</div>{% endif %}
+                            </div>
+                        </div>   
+                    </div> 
+        
+                    <!-- Title -->
+                    <div class="row form-group mb-3">
+                        <label for="id_title" class="col-5 form-control-label"> Ruolo aziendale: </label>
+        
+                        <div class="col-6">
+                            <select name="id_title" id="id_title" class="form-control {% if errors.title %}is-invalid{% endif %}"> 
+                            {% for t in titles %}
+                                <option value="{{ t.id_title }}" 
+                                    {% if t.id_title == member.id_title %} selected {% endif %}>
+                                        {{ t.name|capitalize }}
+                                </option>
+                            {% endfor %}
+                            </select>
+
+                            <div class="error-placeholder">
+                                {% if errors.title %}<div class="invalid-feedback">{{ errors.title }}</div>{% endif %}
+                            </div>
+                        </div>      
+                    </div> 
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default modal-cancel" data-bs-dismiss="modal">
+                            <span class="bi bi-x-circle">
+                                CHIUDI 
+                            </span>    
+                        </button>
+                            
+                        <button type="submit" class="btn btn-default modal-save" name="update_user">
+                            <span class="bi bi-check-circle">
+                                SALVA
+                            </span>   
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteUserLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mx-auto my-auto" id="deleteUserLabel">
+                    <i class="bi bi-trash my-auto"></i> 
+                        RIMUOVI 
+                    <i class="bi bi-trash my-auto"></i>
+                </h5>
+            </div> 
+            
+            <div class="modal-body">
+                <form id="delete-user" name="delete-user" method="POST">
+                    <input type="hidden" name="id_user_del" id="id_user_del" />
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+                    <div class="container m-auto my-2">
+                        <div class="col-12 mx-auto my-1 py-2 delete-msg">
+                            Rimuovere l'utente <br>
+                                <span id="fullname"> 
+                                    
+                                </span>
+                            ?
+                        </div>
+                    </div>
+                </form>
+			</div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default mx-auto modal-cancel exit" data-bs-dismiss="modal">
+                    <span class="bi bi-x-circle">
+                        ANNULLA
+                    </span>  
+                </button>
+
+                <button type="submit" class="btn btn-default mx-auto modal-save btnDelete" name="submit" id="deleteBtn">
+                    <span class="bi bi-check-circle">
+                        CONFERMA
+                    </span> 
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+    {# JQuery #}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+        crossorigin="anonymous">
+</script>
+
+    <!-- JQuery Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js" 
+        integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer">
+</script>
+
+    <!-- JQuery Validation Additional Methods -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js" 
+        integrity="sha512-owaCKNpctt4R4oShUTTraMPFKQWG9UdWTtG6GRzBjFV4VypcFi6+M3yc4Jk85s3ioQmkYWJbUl1b2b2r41RTjA==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer">
+</script>
+
+    {# Bootstrap JS bundle (includes modal) #}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+        crossorigin="anonymous">
+</script>
+
+    {# Bootstrap Datepicker (depends on jQuery) #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" 
+        integrity="sha384-duAtk5RV7s42V6Zuw+tRBFcqD8RjRKw6RFnxmxIj1lUGAQJyum/vtcUQX8lqKQjp" 
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer">
+</script>
+
+<script>
+$(document).ready(function(){
+//  Check if username or email exist
+    let debounce;
+    $("#email, #username").on("blur", function () {
+        clearTimeout(debounce);
+        const field = $(this).attr("id");
+        const value = $(this).val();
+        const id = $("#id_user").val();
+
+        if (value.length > 7) {
+            debounce = setTimeout(function () {
+                $.post("/admin/check-if-exists", {
+                    field: field,
+                    value: value,
+                    id: id
+                }, function (data) {
+                    const input = $("#" + field);
+                    const placeholder = input.closest(".form-group").find(".error-placeholder");
+
+                    if (data.exists) {
+                        input.removeClass("is-valid").addClass("is-invalid");
+                        placeholder.text(data.message).addClass("invalid-feedback").show();
+                    } else {
+                        input.removeClass("is-invalid").addClass("is-valid");
+                        placeholder.removeClass("invalid-feedback").empty();
+                    }
+                }, "json");
+            }, 300);
+        }
+    });
+
+//  Datepicker 
+    $(".datepicker").datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true
+    }); 
+
+    $('.datepicker').on('changeDate', function(e) {
+        $(this).datepicker('hide');        
+    });
+
+//  Method for validating age
+    $.validator.addMethod("minAge", function(value, element, min) {
+        let parts = value.split('-');
+        let birthDate = new Date(parts[2], parts[1] - 1, parts[0]);
+        let today = new Date();
+
+            if (birthDate > today) {
+                return false;
+            }
+
+        let age = today.getFullYear() - birthDate.getFullYear();
+        let monthDiff = today.getMonth() - birthDate.getMonth();
+
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        return age >= min;
+    });
+
+//  Method to set select placeholder as invalid
+    $.validator.addMethod("notPlaceholder", function(value, element) {
+        return value !== "" && value !== "0"; 
+    });
+
+//  JQuery validation and errors
+    $("#user-edit").validate({
+        rules: {
+            email: { required: true, email: true},
+            username: { required: true, rangelength: [4, 20], pattern: "^(?=.*[A-Za-z])[A-Za-z0-9]+$" },
+            name: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z ]+$" },
+            surname: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z ]+$" },
+            bday: { required: true, minAge: 18 },
+            city: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z ]+$" },
+            country: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z ]+$" },
+            id_gender: { required: true, notPlaceholder: true },
+            id_role: { required: true, notPlaceholder: true },
+            id_title: { required: true, notPlaceholder: true }
+        },
+        messages: {
+            email: {
+                required: "Campo obbligatorio.",
+                email: "Inserire un'indirizzo e-mail valido."
+            },
+            username: {
+                required: "Campo obbligatorio.",
+                pattern: "Username deve avere almeno 1 lettera. Sono permesse lettere e numeri. (4-20 caratteri)"
+            },
+            name: {
+                required: "Campo obbligatorio.",
+                pattern: "Il nome può contenere solo lettere e spazi (3-50 caratteri)."
+            }, 
+            surname: {
+                required: "Campo obbligatorio.",
+                pattern: "Il cognome può contenere solo lettere e spazi (3-50 caratteri)."
+            }, 
+            bday: {
+                required: "Campo obbligatorio.",
+                minAge: "Inserire una data valida (18+). Non sono permesse date future."
+            },
+            city: {
+                required: "Campo obbligatorio.",
+                pattern: "La città può contenere solo lettere e spazi (3-50 caratteri)."
+            }, 
+            country: {
+                required: "Campo obbligatorio.",
+                pattern: "Lo stato può contenere solo lettere e spazi (3-50 caratteri)."
+            }, 
+            id_gender: {
+                required: "Campo obbligatorio.",
+                notPlaceholder: "Selezionare un'opzione."
+            },
+            id_role: {
+                required: "Campo obbligatorio.",
+                notPlaceholder: "Selezionare un'opzione."
+            },
+            id_title: {
+                required: "Campo obbligatorio.",
+                notPlaceholder: "Selezionare un'opzione."
+            } 
+        },
+        errorPlacement: function(error, element) {
+            error.addClass("text-danger small");
+            element.addClass("is-invalid");                                             // Bootstrap error class
+            element.closest(".form-group").find(".error-placeholder").html(error);      // Insert error inside the reserved space
+        },
+        submitHandler: function (form) {
+            $.ajax({
+                url: '/admin/user-edit',
+                type: 'POST',
+                data: $(form).serialize() + '&action=handleEditUser',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        $('#editUserModal').modal('hide');
+
+                        const updated = response.updated;
+                        const bday = response.bday;
+                        const row = $('#id-' + updated.id_user);
+
+                        /*row.addClass('table-success');
+                        $('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
+                            setTimeout(() => row.removeClass('table-success'), 2500);*/
+
+                        // Update row cells manually
+                        row.find('.col-username').text(updated.username);
+                        row.find('.col-email').text(updated.email);
+                        row.find('.col-name').text(updated.name);
+                        row.find('.col-surname').text(updated.surname);
+                        row.find('.col-bday').text(bday);
+                        row.find('.col-city').text(updated.city + ', ' + updated.country);
+                        row.find('.col-role').text(updated.role);
+                        row.find('.col-title').text(updated.title);
+                        row.find('.col-acronym').text(updated.acronym);
+
+                        // Highlight and scroll
+                        row.addClass('table-success');
+                        $('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
+                            setTimeout(() => row.removeClass('table-success'), 2500);
+
+                    } else {
+                        // Display PHP validation errors
+                        $(".invalid-feedback").remove();                    // Clear previous errors
+                        $.each(response.errors, function(field, message) {
+                            let input = $("[name='" + field + "']");
+                            input.addClass("is-invalid");
+                            input.closest(".form-group").find(".error-placeholder")
+                                 .html('<div class="invalid-feedback">' + message + '</div>');
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                }
+            });
+            return false;
+        },
+        success: function(label, element) {
+            $(element).removeClass("is-invalid").addClass("is-valid");
+            $(element).closest(".form-group").find(".error-placeholder").html("");
+        }
+    });
+
+//  Delete button
+    $(document).on('click', '.btnDelete', function () {
+        const id = $("#id_user_del").val();
+        
+        $.ajax({
+            url: '/admin/user-edit',
+            type: 'POST',
+            dataType: 'json',
+            data: { id_user: id, action: 'handleDeleteUser' },
+            success: function (response) {
+                if (response.success) {
+                    $('#deleteUserModal').modal('hide'); // Hide the modal after deletion
+                    $('#id-' + id).fadeOut(300, function () {
+                        $(this).remove();
+                    });
+                } else {
+                    alert(response.message || 'Errore nella cancellazione.');
+                }
+            },
+            error: function () {
+                alert('Errore AJAX.');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

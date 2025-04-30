@@ -1,0 +1,411 @@
+{% extends 'admin/layout.html' %}
+{% block title %} Piattaforma {{ 'now'|date('Y') }} {% endblock %}
+ 
+{% block content %} 
+    <!--    =====>    PARTIAL TRANSPORTS TITLE NAVIGATION    <=====    -->
+    <section class="grid-container mt-1 mb-0">
+        <div class="submenu align-items-center my-auto mx-auto p-2">
+            <div class="grid-item mx-auto my-1 p-1 justify-content-center">
+                <a href="{{ doc_root }}admin/platform">
+                    <h3 class="m-0 p-4 submenu-title"> 
+                        Costo LNG
+                    </h3>
+                </a>
+                
+                <div class="breadcrumb-holder justify-content-center mx-auto p-2 my-auto" aria-label="breadcrumb">
+                    <ul class="rounded-breadcrumbs mx-auto my-auto p-1 justify-content-center">
+                        <li>
+                            <a class="breadcrumb-link my-auto" style="width: 10.9rem; font-size: 0.3rem; text-align: center"
+                                href="{{ doc_root }}admin/transports-full">
+                                    <abbr title="Transport Management System" style="text-decoration: none">TMS - </abbr> 
+                                        PIENI
+                            </a>
+                        </li>
+                                
+                        <li>
+                            <a class="breadcrumb-link my-auto" aria-current="page" style="width: 10.9rem; font-size: 0.3rem; text-align: center"
+                                href="{{ doc_root }}admin/transports-part">
+                                    <abbr title="Transport Management System" style="text-decoration: none">TMS - </abbr> 
+                                        PARZIALI
+                            </a>
+                        </li>
+                                
+                        <li>
+                            <a class="breadcrumb-link my-auto" style="width: 10.9rem; font-size: 0.3rem; text-align: center"
+                                href="{{ doc_root }}admin/transport">
+                                    CREA TRASPORTO 
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--    =====>    END Partial Transports Title Navigation    <=====    -->
+
+    <!--    =====>    PARTIAL TRANSPORTS TABLE    <=====    -->
+    <section class="grid-container mx-auto mt-0">
+        <div class="col-md-12">
+            <div class="panel panel-default">            
+                <div class="panel-body table-responsive">
+
+                <form id="trans-parts" action="{{ doc_root }}admin/partials" method="post">
+                
+                    <table class="table table-sm table-hover mx-auto platform" style="text-align: center; font-weight: 400" id="edit_partials">
+                        <thead>
+                            <tr class="table-title border-bottom border-light">
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> # </th>
+                                <th scope="col" class="align-middle p-3" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Slot ID </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Numero CMR </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Emittente </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Fornitore </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Trasporto </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Univoco </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Data carico </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Data scarico </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Mese carico </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Settimana scarico </th>
+                                <th scope="col" class="align-middle p-2" colspan="2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Mese scarico </th>
+                                <th scope="col" class="align-middle p-2" style="border-right: 2px solid rgba(255, 255, 255, 0.2)"> Container<br>ATB </th>
+                                <th scope="col" class="align-middle p-2"> Nota </th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="table-body" id="transport-data">  
+                        {% set order = 1 %}
+                        {% for i, t in transports %}
+                        
+                            <!--    ===>    Partial Transport Data    <===    -->
+                            <tr data-bs-toggle="collapse" data-bs-target="#qty-{{ i }}-{{ t.id_transport }}" class="accordion-toggle" 
+                                style="font-size: 0.2rem" aria-expanded="false" id="{{ t.id_transport }}">
+                                <td scope="row" class="align-middle" style="border-right: 1px solid rgba(0, 0, 0, 0.2)">
+                                    {{ order }}
+                                    {% set order = order + 1 %}
+                                    <br>
+                                    
+                                        <a class="text-dark m-auto edit_parts" type="button" value="{{ t.id_transport }}">
+                                            <i class="bi bi-pencil-square" aria-hidden="true"></i> 
+                                        </a>    
+                                        
+                                        <a class="text-dark m-auto save_parts" role="button" style="display: none" data-id="{{ t.id_transport }}">
+                                            <i class="bi bi-check-circle" aria-hidden="true"></i> 
+                                        </a> 
+                                            &nbsp;
+                                        <a class="text-dark m-auto delete_parts" role="button" data-id="{{ t.id_transport }}">
+                                            <i class="bi bi-trash" aria-hidden="true"></i> 
+                                        </a> 
+                                        
+                                        <a class="text-dark m-auto cancel_parts" role="button" style="display: none">
+                                            <i class="bi bi-x-circle" aria-hidden="true"></i> 
+                                        </a> 
+                                 
+                                </td>
+                                    
+                                <td class="align-middle" style="word-break: break-all" data-id="{{ t.slot }}"> 
+                                    {{ t.slot|upper }}
+                                    
+                                </td>
+                                
+                                <td class="align-middle" style="word-break: break-all"> 
+                                    <span class="part_view cmr"> {{ t.cmr|upper }} </span>
+                                    <input class="form-control part_input cmr" name="cmr" value="{{ t.cmr }}" style="display: none" type="text" />
+                                </td>
+                                
+                                <td class="align-middle part-transport"> 
+                                    {{ t.issuer|upper }} 
+                                    <input class="form-control part-input issuer" name="issuer" value="{{ t.issuer }}" style="display: none" type="text" />
+                                </td>
+                                
+                                <td class="align-middle part-transport"> 
+                                    {{ t.supplier|upper }} 
+                                    <input class="form-control part-input supplier" name="supplier" value="{{ t.supplier }}" style="display: none" type="text" />
+                                </td>
+                                    
+                                <td class="align-middle part-transport"> 
+                                    {{ t.transport|upper }}
+                                    <input class="form-control part-input transport" name="transport" value="{{ t.transport }}" style="display: none" type="text" />
+                                </td>
+                                
+                                <td class="align-middle part-transport"> 
+                                    {{ t.univoco|upper }} 
+                                    <input class="form-control part-input transport" name="transport" value="{{ t.transport }}" style="display: none" type="text" disabled />
+                                </td>
+                                    
+                                <td class="align-middle part-transport"> 
+                                    {{ t.date_load|date("d/m/Y") }} 
+                                    <input class="form-control part-input date_load" name="date_load" value="{{ t.date_load|date("d/m/Y") }}" style="display: none" type="text" />
+                                </td>
+                                
+                                <td class="align-middle part-transport"> 
+                                    {{ t.date_unload|date("d/m/Y") }}
+                                    <input class="form-control part-input date_unload" name="date_unload" value="{{ t.date_unload|date("d/m/Y") }}" style="display: none" type="text" />
+                                </td>    
+                                
+                                <td class="align-middle part-transport"> 
+                                    {{ t.id_month_load }}
+                                    <input class="form-control part-input id_month" name="id_month" value="{{ t.id_month_load }}" style="display: none" type="text" disabled />
+                                
+                                <td class="align-middle part-transport"> 
+                                    {{ t.week_unload }} 
+                                    <input class="form-control part-input week_unload" name="week_unload" value="{{ t.week_unload }}" style="display: none" type="text" disabled />
+                                </td>
+                                
+                                <td class="align-middle part-transport" colspan="2"> 
+                                    {{ t.id_month_unload }} - {{ t.month_unload }} 
+                                    <input class="form-control part-input months" name="months" value="{{ t.id_month_unload }} - {{ t.month.unload }}" style="display: none" type="text" disabled />
+                                </td>
+                                
+                                <td class="align-middle part-transport"> 
+                                    {{ t.container|upper }} 
+                                    <input class="form-control part-input container" name="container" value="{{ t.container }}" style="display: none" type="text" />
+                                </td>
+                                
+                                <td class="align-middle" style="border-left: 1px solid rgba(0, 0, 0, 0.2)"> 
+                                    <i class="bi bi-info-circle"></i> 
+                                </td>
+                            </tr>
+                            <!--    ===>    End Partial Transport Data    <===    -->
+                            
+                            <!--    ===>    Quantity Collapse For Partial Transport Data    <===    -->
+                            <tr data-bs-toggle="collapse" data-bs-target="#qty-{{ i }}-{{ t.id_transport }}" class="accordion-toggle" 
+                                style="font-size: 0.2rem" aria-expanded="false" id="qty-{{ i }}">
+                                        
+                                <td colspan="16">
+                                    <div class="accordian-body collapse rowQty mt-2" id="qty-{{ i }}-{{ t.id_transport }}"> 
+                                        <h4> Quantità </h4>
+                                                
+                                        <table class="table table-bordered table-sm">
+                                            <tbody style="text-align: center">
+                                                    
+                                                <tr>
+                                                    <th class="sub-title align-middle p-1"> Energia caricata [MWh] </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.mwh }} </td>   
+                                                    <th class="sub-title align-middle p-1"> Quantità nominale caricata [kg] </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.kg_load }} </td>   
+                                                    <th class="sub-title align-middle p-1"> Raffreddamento </th>            
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {% if (t.cooling == 600) %}
+                                                            600
+                                                        {% else %}
+                                                            No
+                                                        {% endif %} 
+                                                    </td>
+                                                    <th class="sub-title align-middle p-1"> Tipologia costo extra </th>            
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {% if t.price_typology == 'Si' %}
+                                                            Sì
+                                                        {% else %}
+                                                            No
+                                                        {% endif %} 
+                                                    </td>          
+                                                </tr>
+                                                        
+                                                <tr>
+                                                    <th class="sub-title align-middle"> Valore costo extra </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.price_value }} </td>
+                                                    <th class="sub-title align-middle"> Quantità scaricata PD [kg] </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.kg_unload }} </td>
+                                                    <th class="sub-title align-middle"> Densità (liquido) [<sup>kg</sup>&frasl;<sub>m<sup>3</sup></sub>] </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.liquid_density }} </td>
+                                                    <th class="sub-title align-middle"> Peso specifico (gas) <big>[</big><sup>kg</sup>&frasl;<sub>Nm<sup>3</sup></sub><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.gas_weight }} </td>
+                                                </tr>
+                                                    
+                                                <tr>
+                                                    <th class="sub-title align-middle"> PCS/GHV <big>[</big><sup>MJ</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.mj_kg }} </td>
+                                                    <th class="sub-title align-middle"> PCS/GHV <big>[</big><sup>kWh</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.pcs_ghv }} </td>
+                                                    <th class="sub-title align-middle"> Volume scaricato (liquido) <big>[</big>m<sup>3</sup><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.volume_mc }} </td>
+                                                    <th class="sub-title align-middle"> Volume sviluppato <big>[</big><sup>Nm<sup>3</sup></sup>&frasl;<sub>m<sup>3</sup></sub><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.volume_nmc }} </td> 
+                                                </tr>
+                                                    
+                                                <tr>
+                                                    <th class="sub-title align-middle"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>m<sup>3</sup></sub> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.smc_mc }} </td>   
+                                                    <th class="sub-title align-middle"> Gas sviluppato <big>[</big>Nm<sup>3</sup><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.gas_nmc }} </td>   
+                                                    <th class="sub-title align-middle"> Gas sviluppato <big>[</big>Sm<sup>3</sup></sup><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.gas_smc}} </td>   
+                                                    <th class="sub-title align-middle"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>kg</sub> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> {{ t.smc_kg }} </td>            
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div> 
+                                </td> 
+                            </tr>
+                            <!--    ===>    End Quantity Collapse For Partial Transport Data    <===    -->
+                                
+                            <!--    ===>    Partials Unload Collapse    <===    -->    
+                            <tr class="collapse-row">
+                                <td colspan="16">
+                                    <div class="accordian-body collapse rowPart mt-2" id="qty-{{ i }}-{{ t.id_transport }}">
+                                        <h4> Scarichi parziali </h4>
+                                            
+                                        <table class="table table-sm table-bordered">
+                                            <thead>
+                                                <tr class="table-title border-bottom border-light">
+                                                    <th scope="col" class="align-middle p-1"> # </th>
+                                                    <th scope="col" class="align-middle p-1"> Destinazione </th>
+                                                    <th scope="col" class="align-middle p-1"> EXW </th>
+                                                    <th scope="col" class="align-middle p-1"> Data </th>
+                                                    <th scope="col" class="align-middle p-1"> Luogo </th>
+                                                    <th scope="col" class="align-middle p-1"> Quantita scaricata </th>
+                                                    <th scope="col" class="align-middle p-1"> Fattura </th>
+                                                    <th scope="col" class="align-middle p-1"> Azione </th>
+                                                </tr>
+                                            </thead>
+                                                     
+                                            <tbody class="table-body" style="text-align: center">
+                                            {% set num = 1 %}
+                                            {% for k, p in partials %}
+                            
+                                                <tr id="part-{{ i }}-{{ t.id_transport }}">
+                    
+                                                    {% if (p.id_transport == t.id_transport) %}
+                                                    <td scope="row" class="bg-light bg-gradient align-middle"> 
+                                                        {{ num }}
+                                                        {% set num = num + 1 %} 
+                                                    </td>
+                                                            
+                                                    <td class="bg-light bg-gradient align-middle part"> {{ p.destination|upper }} </td>                                   
+                                                    <td class="bg-light bg-gradient align-middle part"> {{ p.exw|upper }} </td>  
+                                                    <td class="bg-light bg-gradient align-middle part"> {{ p.date|date('d-m-Y') }} </td>                   
+                                                    <td class="bg-light bg-gradient align-middle part"> {{ p.place|capitalize }} </td>
+                                                    <td class="bg-light bg-gradient align-middle part"> {{ p.q_unloaded }} </td>
+                                                    <td class="bg-light bg-gradient align-middle part"> {{ p.invoice }} </td>
+                                                    <td class="bg-light bg-gradient align-middle part"> 
+                                                        <button class="edit">
+                                                            <i class="bi bi-pencil-square"></i> 
+                                                        </button>
+                                                                    
+                                                        <button class="delete">
+                                                            <i class="bi bi-trash"></i> 
+                                                        </button>
+                                                                    
+                                                        <button class="save">
+                                                            <i class="bi bi-check-circle"></i> 
+                                                        </button>
+                                                                    
+                                                        <button class="cancel">
+                                                            <i class="bi bi-x-circle"></i> 
+                                                        </button>
+                                                    </td>
+                                                    {% endif %}
+                                                        
+                                                </tr>                                                    
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div> 
+                                </td> 
+                            </tr>
+                            <!--    ===>    End Partials Unload Collapse    <===    -->
+                        {% endfor %}
+                        </tbody>
+                        
+                        <!--    ===>    TABLE FOOTER    <===    -->
+                        <tfoot>
+                            <tr>
+                                <td colspan="16" class="text-light align-middle mb-2 p-2">
+                                    <h5 style="font-weight: 600" class="align-middle my-auto">
+                                        TOTALE <i class="bi bi-fuel-pump-fill ms-1"></i>:
+                                        <span> {{ total }} </span>
+                                    </h5> 
+                                </td>
+                            </tr>
+                        </tfoot>
+                        <!--    ===>    END TABLE FOOTER    <===    -->
+                    </table>
+                </form>
+                
+                </div> 
+            </div>
+        </div>
+    </section>  
+    <!--    =====>    END PARTIAL TRANSPORTS TABLE    <=====    -->
+{% endblock %}
+
+{% block jsScript %}    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">      <!-- Bootstrap 5 CSS -->
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css'>              <!-- Vanilla Datepicker CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/css/datepicker-bs5.min.css">          <!-- Vanilla Datepicker CSS -->
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker.min.js"></script>
+        
+<script>
+$(document).ready(function(){
+//  ===> TOOLTIP SPECS  
+    $("body").tooltip({ 
+        selector: '[data-toggle = tooltip]',
+        placement: 'right' 
+    });
+//  ===> END TOOLTIP SPECS
+        
+//  ===> DATEPICKER     
+    //use datepicker on the date inputs
+    $(".date").datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        language: 'it-IT', 
+    });
+//  ===> END DATEPICKER   
+
+//  ===> EDIT INLINE TABLE ROW
+    $(function(){
+        $("#edit_partials").on('click', '.edit_parts', function(){
+            $("#edit_partials").find(".save_parts, .cancel_parts").hide();
+            $("#edit_partials").find(".edit_parts, .delete_parts").show();
+        });
+    });
+    
+        //hide edit td
+        //$(this).closest("tr").find(".part-transport").hide();
+
+        //show edit input
+        //$(this).closest("tr").find(".part-input").show();
+
+        //hide edit button
+        //$(this).closest("tr").find(".edit-transport").hide();
+
+        //hide delete button
+        //$(this).closest("tr").find(".delete-transport").hide();
+        
+        //show save button
+        //$(this).closest("tr").find(".save-transport").show();
+
+        //show cancel button
+        //$(this).closest("tr").find(".cancel-transport").show();
+        
+    //});
+//  ===> END EDIT INLINE TABLE ROW
+
+//  ===> SAVE INLINE EDITED TABLE ROW
+
+//  ===> END SAVE INLINE EDITED TABLE ROW
+
+//  ===> DELETE INLINE TABLE ROW
+
+//  ===> END DELETE INLINE TABLE ROW
+
+//  ===> CANCEL INLINE EDIT
+
+//  ===> END CANCEL INLINE EDIT
+});  
+</script>	
+        
+<!--    ===>    BOOTSTRAP DATEPICKER    <===    -->   
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/locales/bootstrap-datepicker.it.min.js" charset="UTF-8"></script>
+
+<!--    ===>    END BOOTSTRAP DATEPICKER    <===    --> 
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+{% endblock %}

@@ -1,0 +1,223 @@
+<div class="modal fade" id="editQty" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mx-auto" id="myModalLabel"> Quantità #{{ t.seo }} </h5>
+            </div>
+        
+            <div class="modal-body">
+                <div class="container-fluid mx-auto">
+                    <form id="qty-form" method="POST" action="{{ doc_root }}admin/quantity-edit/{{ t.id_transport }}">
+                        <input type="hidden" name="id_transport" data-id="id_transport" value="{{ t.id_transport }}" />
+                        <input type="hidden" name="type" value="{{ t.type }}" />
+                            
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> Quantità caricata: </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="kg_load" id="kg_load" value="{{ t.kg_load }}" class="form-control mx-auto" />
+                            </div>
+                        </div>
+                        
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> Raffreddamento: </label>
+                            </div>
+                        
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <select class="form-control" name="cooling" id="cooling">
+                                    <option class="opt-type" value="{{ t.cooling }}">
+                                        {% if t.cooling == 0 %}
+                                            NO = 0
+                                        {% else %}
+                                            SÌ = 600
+                                        {% endif %}
+                                    </option>   
+                                
+                                    <option value="600" class="opt-type"> 
+                                        SÌ = 600
+                                    </option>
+                                    
+                                    <option value="0" class="opt-type"> 
+                                        NO = 0
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> Tipologia costo: </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <select class="form-control" name="price_typology" id="price_typology">
+                                    <option class="opt-type" value="{{ t.price_typology }}">
+                                        {{ t.price_typology|upper }}
+                                    </option>   
+                                    
+                                    <option value="Si" class="opt-type"> 
+                                        SÌ
+                                    </option>
+                                        
+                                    <option value="No" class="opt-type"> 
+                                        NO
+                                    </option>
+                                </select>
+                            </div>
+                        </div>        
+    
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto price_value"> Valore costo: </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="price_value" id="price_value" value="{{ t.price_value }}" class="form-control mx-auto" />
+                            </div>
+                        </div>  
+                        
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> Quantità scaricata PD: </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="kg_unload" id="kg_unload" value="{{ t.kg_unload }}" class="form-control mx-auto" />
+                            </div>
+                        </div>  
+                        
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> Densità (liquido): </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="liquid_density" id="liquid_density" value="{{ t.liquid_density }}" class="form-control mx-auto" />
+                            </div>
+                        </div>  
+                          
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> Peso specifico (gas): </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="gas_weight" id="gas_weight" value="{{ t.gas_weight }}" class="form-control mx-auto" />
+                            </div>
+                        </div>     
+
+                        <div class="row form-group m-auto align-middle mb-2">
+                            <div class="col-sm-4 my-auto mx-auto" style="text-align: center">
+                                <label class="form-control-label my-auto"> PCS/GHV: </label>
+                            </div>
+                            
+                            <div class="col-sm-8 mx-auto" style="text-align: center">
+                                <input type="text" name="pcs_ghv" id="pcs_ghv" value="{{ t.pcs_ghv }}" class="form-control mx-auto" />
+                            </div>
+                        </div>  
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default modal-cancel" data-dismiss="modal"><span class="bi bi-x-circle"></span> CHIUDI </button>
+                            <button type="submit" class="btn btn-default modal-save updateQty" name="update_quantity"><span class="bi bi-check-circle"></span> SALVA </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+//  ===> PRICE_TYPOLOGY ONCLICK CHANGE PRICE_VALUE     
+    $('#price_typology').change(function(){
+        if($(this).val() == 'No'){
+            $('#price_value').attr('disabled', true);
+            $('#price_value').val('0') == 0;
+        } else{
+            $('#price_value').attr('disabled', false);
+        };
+    });
+//  ===> END PRICE_TYPOLOGY ONCLICK CHANGE PRICE_VALUE
+
+//  ===> SAVE BUTTON ON EDIT/DELETE MODAL   
+    $(".updateQty").click(function(){
+        $.ajax({
+            method: 'POST',
+            url: 'admin/quantity-edit.php',
+            data: $("#qty-form").serialize(),
+                success: function(html){
+                    alert(html);
+                    $("#editQty").modal("hide");
+                }
+        })
+    });
+//  ===> END SAVE BUTTON ON EDIT/DELETE MODAL
+
+//  ===> SAVE BUTTON ON EDIT/DELETE MODAL   
+    //attach a submit handler to the form
+    /*$("#qty-form").on("submit", function(event){
+        //stop form from submitting normally
+        //event.preventDefault();
+       
+        //get some values from elements on the page:
+        var quantity = $(this).serialize();
+       
+        //Send the data using post
+        var posting = $.post("admin/quantity-edit.php", quantity);
+
+        // Put the results in a div
+        posting.done(function( data ) {
+            var content = $( data ).find( "#content" );
+            $( "#result" ).empty().append( content );
+        } );
+    /*$(".updateQty").submit(function(){
+        var quantity = $("#qty-form").serialize();
+        //$.post( "test.php", $( "#testform" ).serialize() );
+        $.ajax({
+            method: 'POST',
+            url: 'admin/quantity-edit.php',
+            data: { quantity : quantity },
+            success: function(response){                    
+                $(".success").html(response); 
+            }
+        })*/
+
+/*        event.preventDefault();
+    });*/
+//  ===> END SAVE BUTTON ON EDIT/DELETE MODAL
+});
+
+    // Attach a submit handler to the form
+    /*$( "#searchForm" ).on( "submit", function( event ) {
+     
+      // Stop form from submitting normally
+      event.preventDefault();
+     
+      // Get some values from elements on the page:
+      var $form = $( this ),
+        term = $form.find( "input[name='s']" ).val(),
+        url = $form.attr( "action" );
+     
+      // Send the data using post
+      var posting = $.post( url, { s: term } );
+     
+      // Put the results in a div
+      posting.done(function( data ) {
+        var content = $( data ).find( "#content" );
+        $( "#result" ).empty().append( content );
+      } );
+    } );
+
+    $(document).on("submit", "form", function (e) {
+        var oForm = $(this);
+        var formId = oForm.attr("id");
+        var firstValue = oForm.find("input").first().val();
+        alert("Form '" + formId + " is being submitted, value of first input is: " + firstValue);
+        // Do stuff 
+        return false;
+    })*/
+</script>

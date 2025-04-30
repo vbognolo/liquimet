@@ -1,0 +1,164 @@
+{% extends 'layout.html' %}
+{% block title %} Utenti {{ 'now'|date('Y') }} {% endblock %}
+
+{% block search %}
+    <!--    ===>    SEARCH BAR    <===    -->
+    <section class="row my-auto mx-auto search-header" style="border: 1px solid red">
+        <div class="my-auto m-0 search-bar">
+            <form id="search-form">
+                <button type="button" class="my-1 search-btn">
+                    <i class="bi bi-search"></i>
+                </button>
+                <input type="text" class="my-1 search-input" id="search" placeholder="      Cerca.." />  
+            </form>
+        </div>
+    </section>
+    <!--    ===>    END SEARCH BAR    <===    -->
+{% endblock %}
+
+{% block content %} 
+    {{ include('admin/users-navigation.html') }}
+
+    <!--    =====>    TITLES TABLE    <=====    -->
+    <section class="col-12 mx-auto my-1">
+        <div class="panel panel-body mb-4">          
+            <div class="d-flex justify-content-center">
+                <table class="col-9 table table-sm table-hover platform"> 
+                    <thead>
+                        <tr class="border-bottom border-top border-light table-title">
+                            <th class="align-middle p-3"> # </th>
+                            <th class="align-middle p-0"> Ruolo aziendale </th>
+                            <th class="align-middle p-0"> Title (EN) </th>
+                            <th class="align-middle p-0"> Acronimo </th>
+                            <th class="align-middle p-0">
+                                <button type="button" class="edit-data" data-bs-toggle="modal" data-bs-target="#newTitle" data-id="btnNew">
+                                    <i class="bi bi-person-workspace" style="font-size: 2rem"></i>
+                                    <i class="bi bi-plus" style="font-size: 1.7rem"></i>
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="table-body" id="titleTable">  
+                    {% set order = 1 %}
+                    {% for i, t in titles %}
+
+                        <tr class="titles">
+                            <td scope="row" class="align-middle p-1" style="border-right: 2px solid rgba(255, 255, 255, 0.2)">
+                                {{ order }}
+                                {% set order = order + 1 %}
+                            </td>
+                            <td class="align-middle p-2" id="nameT"> {{ t.name|upper }} </td>
+                            <td class="align-middle p-2" id="titleT"> {{ t.title|title }} </td>
+                            <td class="align-middle p-2" id="acronymT"> {{ t.acronym|upper }} </td>
+                            <td class="align-middle p-2 btns" style="border-left: 2px solid rgba(255, 255, 255, 0.2)">
+                                <button type="button" class="edit-data edited editBtn" data-bs-toggle="modal" data-bs-target="#editTitle" 
+                                        data-id="{{ t.id_title }}">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                
+                                <button type="button" class="edit-data" data-bs-toggle="modal" data-bs-target="#delete">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        {{ include("admin/title-edit.html") }}
+                    {% endfor %}
+                    </tbody>
+                        
+                    <tfoot>
+                        <tr>
+                            <td colspan="16" class="text-light align-middle mb-2 p-2">
+                                <h5 class="align-middle my-auto">
+                                    TOTALE <i class="bi bi-person-workspace ms-1 my-auto"></i>:
+                                        <span> {{ total }} </span>
+                                </h5> 
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div> 
+        </div>
+
+    {{ include("admin/title.html") }}
+    
+    </section>  
+    <!--    =====>    END TITLES TABLE    <=====    --> 
+{% endblock %}
+
+{% block jsScript %}    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script>
+$(document).ready(function(){
+//  ===> BTN TO OPEN MODAL FOR NEW TITLE FORM
+    $('#btnNew').on('click', function(){
+        $('#newTitle').modal('show');
+	});
+//  ===> END BTN TO OPEN MODAL FOR NEW TITLE FORM
+
+//  ===> BTN TO OPEN MODAL FOR EDIT TITLE FORM
+    $('.editBtn').on('click', function(e){
+        var id_title = $(e.relatedTarget).data('id');
+        getDetails(id_title);
+        $('#editTitle').modal('show');
+
+        $("#editTitle").on('show.bs.modal', function(){
+            $("#id_title").val(id);
+        });
+    });
+//  ===> BTN TO OPEN MODAL FOR EDIT TITLE FORM
+
+//  ===> SEARCH BAR
+    $("#search").keyup(function(){
+        var value = this.value.toLowerCase().trim();
+
+        $(".platform .titles").each(function(index){
+            if(index !== -1){
+
+                $(this).find("td").each(function(){
+                    var id = $(this).text().toLowerCase().trim();
+                    var not_found = (id.indexOf(value) == -1);
+                    
+                    $(this).closest('tr').toggle(!not_found);
+                        return not_found;
+                });
+            } 
+        });
+    });
+
+    $("#search").keydown(function(e){
+        if(e.keyCode == 13){ 
+            e.preventDefault();
+                return false;
+        }
+    });
+//  ===> END SEARCH BAR
+
+function getDetails(id_title){
+	$.ajax({
+		method: 'POST',
+		url: '../get-title.php',
+		data: {id_title:id_title},
+		dataType: 'json',
+		success: function(res){
+			if(res.error){
+				$('#editTitle').modal('hide');
+				$('#delete').modal('hide');
+				//$('#alert').show();
+				//$('#alert_message').html(response.message);
+                alert(res.message);
+			}
+			else{
+				$('#title-update .id_title').val(res.data.id_title);
+				$('#title-update .name').val(res.data.name);
+				$('#title-update .title').val(res.data.title);
+				$('#title-update .acronym').val(res.data.acronym);
+			}
+		}
+	});
+}
+});
+</script>
+{% endblock %}  

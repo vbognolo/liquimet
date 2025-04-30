@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+{% block title %} Utenti {{ 'now'|date('Y') }} {% endblock %}
+
+{% block search %}
+    <!--    ===>    SEARCH BAR    <===    -->
+    <section class="row my-auto mx-auto search-header" style="border: 1px solid red">
+        <div class="my-auto m-0 search-bar">
+            <form id="search-form">
+                <button type="button" class="my-1 search-btn">
+                    <i class="bi bi-search"></i>
+                </button>
+                <input type="text" class="my-1 search-input" id="search" placeholder="      Cerca.." />  
+            </form>
+        </div>
+    </section>
+    <!--    ===>    END SEARCH BAR    <===    -->
+{% endblock %}
+
+{% block content %} 
+    {{ include('admin/users-navigation.html') }}
+
+    <!--    =====>    ROLES TABLE    <=====    -->
+    <section class="col-12 mx-auto my-1">
+        <div class="panel panel-body mb-4">          
+            <div class="d-flex justify-content-center">
+                <table class="col-9 table table-sm table-hover platform"> 
+                    <thead>
+                        <tr class="border-bottom border-top border-light table-title">
+                            <th class="align-middle p-3"> # </th>
+                            <th class="align-middle p-0"> RUOLO D'ACCESSO </th>
+                            <th class="align-middle p-0"> PERMESSI </th>
+                            <th class="align-middle p-0">
+                                <button type="button" class="edit-data" data-bs-toggle="modal" data-bs-target="#newTitle" data-id="btnNew">
+                                    <i class="bi bi-person-workspace" style="font-size: 2rem"></i>
+                                    <i class="bi bi-plus" style="font-size: 1.7rem"></i>
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td colspan="16" class="text-light align-middle mb-2 p-2">
+                                <h5 class="align-middle my-auto">
+                                    TOTALE <i class="bi bi-person-lines-fill"></i>:
+                                        <span> {{ total }} </span>
+                                </h5> 
+                            </td>
+                        </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+        </div>
+    </section>    
+{% endblock %}
+
+
+{% block jsScript %}    
+<script>
+$(document).ready(function(){
+
+});
