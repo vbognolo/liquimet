@@ -1,30 +1,37 @@
 <?php
-define('APP_ROOT', dirname(__FILE__, 2));                       //root directory
+define('APP_ROOT', dirname(__FILE__, 2));  // Root directory
 
-require APP_ROOT . '/src/functions.php';                 
-require APP_ROOT . '/config/config.php';      
-require APP_ROOT . '/vendor/autoload.php';                      //autoload libraries
+require APP_ROOT . '/src/functions.php';
+require APP_ROOT . '/config/config.php';
+require APP_ROOT . '/vendor/autoload.php';      // Autoload libraries
 
     if(DEV === false){
-        set_exception_handler('handle_exception');              //set exception handler
-        set_error_handler('handle_error');                      //set error handler
-        register_shutdown_function('handle_shutdown');          //set shutdown handler
+        set_exception_handler('handle_exception');              // Set exception handler
+        set_error_handler('handle_error');                      // Set error handler
+        register_shutdown_function('handle_shutdown');          // Set shutdown handler
     }
 
-$model = new \Liquimet\Model\Model($dsn, $username, $password);                 //create model object
-    unset($dsn, $username, $password);                                          //remove database config data
+// Create Database instance first
+$database = new \Liquimet\Model\Database($dsn, $username, $password);
 
-$twig_options['cache'] = APP_ROOT . '/var/cache';                               //path to twig cache folder
-$twig_options['debug'] = DEV;                                                   //if dev mode, turn debug on
+// Pass the Database instance to Model instead of raw credentials
+$model = new \Liquimet\Model\Model($database);
 
-$loader = new Twig\Loader\FilesystemLoader(APP_ROOT . '/templates');            //twig loader
-$twig = new Twig\Environment($loader, $twig_options);                           //twig environment
+// Remove database config data from memory
+unset($dsn, $username, $password);
 
-$twig->addGlobal('doc_root', DOC_ROOT);                                         //document root
+$twig_options['cache'] = APP_ROOT . '/var/cache';            // Path to Twig cache folder
+$twig_options['debug'] = DEV;                                // If dev mode, turn debug on
 
-$session = $model->getSession();                                                //create session
-$twig->addGlobal('session', $session);                                          //add session to twig global
+$loader = new Twig\Loader\FilesystemLoader(APP_ROOT . '/templates');        // Twig loader
+$twig = new Twig\Environment($loader, $twig_options);             // Twig environment
+$twig->addExtension(new Twig\Extra\Intl\IntlExtension());
 
-    if(DEV === true){                                                           //if in development
-        $twig->addExtension(new \Twig\Extension\DebugExtension());              //add twig debug extension
+$twig->addGlobal('doc_root', DOC_ROOT);          // Document root
+
+$session = new \Liquimet\Session\Session;                     // Create session
+$twig->addGlobal('session', $session);           // Add session to Twig global
+
+    if(DEV === true){                                                               // If in development
+        $twig->addExtension(new \Twig\Extension\DebugExtension());       // Add Twig debug extension
     }

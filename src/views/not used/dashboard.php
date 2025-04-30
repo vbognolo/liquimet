@@ -1,0 +1,35 @@
+<?php
+declare(strict_types = 1);                                  
+
+if(!$id){                                              // If no valid id
+    include APP_ROOT . '/src/views/page-not-found.php';     // Page not found
+}
+
+$user = $model->getUser()->get($id);                   // Get member data
+    if(!$user){                                          // If array is empty
+        include APP_ROOT . '/src/views/page-not-found.php';     // Page not found
+    }
+
+// navigation menu data 
+$data['navigation'] = $model->getPlatform()->getGroups(); 
+$data['categories'] = $model->getPlatform()->getAll();  
+$data['group_count'] = $model->getPlatform()->countG();  
+
+// dashboard data
+$data['countU'] = $model->getUser()->count();
+$data['countT'] = $model->getTransport()->count();
+$data['countFull'] = $model->getTransport()->countFull();
+$data['countPart'] = $model->getTransport()->countPart();
+$data['recent'] = $model->getTransport()->getRecent();
+$data['admins'] = $model->getUser()->countAdmin();
+$data['members'] = $model->getUser()->countMember();
+$data['offlines'] = $model->getUser()->countSuspended();
+
+// other data
+$data['user'] = $user;                                                                  // user data
+$data['trans'] = $model->getTransport()->getAll($user['id_user'], 5);                          // get user's transports
+
+$data['group'] = '';                                                                    // group id for link
+$data['section'] = '';    
+
+echo $twig->render('dashboard.html', $data);                       

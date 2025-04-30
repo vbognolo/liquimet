@@ -1,0 +1,43 @@
+<div class="modal fade" id="deletePart-{{ p.id_partial }}" tabindex="-1" role="dialog" aria-labelledby="delete-partial" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mx-auto" id="delete-partial">
+                    <i class="bi bi-trash my-auto"></i> 
+                        Rimuovi 
+                    <i class="bi bi-trash my-auto"></i>
+                </h5>
+            </div> 
+
+            <div class="modal-body">
+                <form id="delete-partial" action="{{ doc_root }}admin/partial-delete/{{ p.id_partial }}" method="POST">
+
+                    <p class="container delete-msg">
+                        Rimuovere lo scarico parziale (Destinazione):
+                            <span> 
+                                {{ p.destination|upper }} 
+                            </span>
+                        del trasporto (Slot ID): <br>
+                            <span> 
+                                {{ t.slot|upper }} 
+                            </span>
+                    </p>
+            
+                    <div class="modal-footer mx-auto">
+                        <button type="button" class="btn btn-default mx-auto modal-cancel" data-bs-dismiss="modal">
+                            <span class="bi bi-x-circle">
+                                ANNULLA
+                            </span>  
+                        </button>
+
+                        <button type="submit" class="btn btn-default mx-auto modal-save" id="delete" name="delete_partial">
+                            <span class="bi bi-check-circle">
+                                CONFERMA
+                            </span> 
+                        </button>
+                    </div>
+                </form>
+			</div>
+        </div>
+    </div>
+</div>

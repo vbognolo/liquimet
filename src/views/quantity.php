@@ -9,4 +9,3 @@ $transport = $model->getTransport()->get($id);
 
 $section = $transport['id_transport'];                                              // current category
 $title = 'Costo LNG';                                              
-?>

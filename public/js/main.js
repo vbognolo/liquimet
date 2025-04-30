@@ -118,7 +118,7 @@
     /**
      * Initiate Bootstrap validation check
      */
-    var needsValidation = document.querySelectorAll('.needs-validation')
+    /*var needsValidation = document.querySelectorAll('.needs-validation')
   
     Array.prototype.slice.call(needsValidation)
       .forEach(function(form) {
@@ -130,15 +130,7 @@
   
           form.classList.add('was-validated')
         }, false)
-      })
-  
-    /**
-     * Initiate Datatables
-     */
-    const datatables = select('.datatable', true)
-    datatables.forEach(datatable => {
-      new simpleDatatables.DataTable(datatable);
-    })
+      })*/
   
     /**
      * Autoresize echart charts

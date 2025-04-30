@@ -1,0 +1,127 @@
+<div class="modal fade" id="deleteTitle-{{ t.id_title }}" tabindex="-1" role="dialog" aria-labelledby="title-delete" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header row">
+                <h5 class="modal-title mx-auto my-auto" id="title-delete">
+                    <i class="bi bi-trash my-auto"></i> 
+                        RIMUOVI 
+                    <i class="bi bi-trash my-auto"></i>
+                </h5>
+            </div> 
+            
+            <div class="modal-body">
+                <form id="delete-title" action="{{ doc_root }}admin/title-delete/{{ t.id_title }}">
+                    <input type="hidden" name="id_title" id="id_title" value="{{ t.id_title }}" />
+
+                    <div class="container m-auto my-2">
+                        <div class="col-12 mx-auto my-1 py-2 delete-msg">
+                            Rimuovere il ruolo aziendale <br>
+                                <span> 
+                                    ({{ t.acronym|upper}}) --> {{ t.name|upper }} ?
+                                </span>
+                        </div>
+
+                        <div class="col-12 mx-auto py-2 success-msg">
+
+                        </div>
+                    </div>
+            
+                    <div class="modal-footer mx-auto">
+                        <button type="button" class="btn btn-default mx-auto modal-cancel exit" data-bs-dismiss="modal">
+                            <span class="bi bi-x-circle">
+                                ANNULLA
+                            </span>  
+                        </button>
+
+                        <button type="submit" class="btn btn-default mx-auto modal-save btnDelete" data-id="{{ t.id_title }}" name="submit">
+                            <span class="bi bi-check-circle">
+                                CONFERMA
+                            </span> 
+                        </button>
+                    </div>
+                </form>
+			</div>
+        </div>
+    </div>
+</div>
+
+{% block jsScript %}
+<script>
+$(function(){
+//  ===> FORM VALIDATION AND SUBMIT 
+    $('form#delete-title').on('submit', function(e){
+        e.preventDefault();                                                         //prevent form submission
+
+        //var id = $("#id_title").val();
+        var action = $(this).attr('action');
+        var form_delete = $(this).serialize();
+
+            $.ajax({
+                method: 'POST',
+                url: action,
+                data: form_delete,
+                dataType: 'json',
+                //cache: false,
+                //processData: false,
+                success: function(data){
+                    console.log(data);
+
+                    if(data.status == 1){
+                        $(".delete-msg, .btnDelete").css('display', 'none');
+                        $(".exit span").text(' ESCI');
+                        
+                        $(".success-msg")
+                            .css('display', 'block')
+                            .html('<span><i class="bi bi-check-circle"></i> '+ data.msg +' <i class="bi bi-check-circle"></i></span>');
+                        /*$(".successText")
+                            .html('<span>'+ data.msg +': <br>'+ data.name +' ('+ data.acronym +')</span>')
+                            .css('font-size', '1.8rem');*/
+
+                        $(".exit").on('click', function(){
+                            $('[data-id='+data.id_title+']').closest('tr').css('background','rgb(239, 121, 94)');
+                            $('[data-id='+data.id_title+']').closest('tr').fadeOut(2500,function(){
+                                $(this).remove();
+                            });
+
+                            setTimeout(function(){ 
+                                parent.location.reload();
+                            }, 2500);
+                        });
+                    } /*else{
+                        $(".delete-msg").css('display', 'none');
+                        
+                        $(".msg-box")
+                            .css('display', 'block')
+                            .removeClass('alert-success')
+                            .addClass('alert-danger');
+                        $(".success").text(data.msg);
+                    }*/
+                    //$("#delete-title").submit();
+                    /*if(output.status == 1){
+                        /*$(".delete-msg")
+                            .html('Il ruolo aziendale cancellato con successo!');*/
+                        //$("#delete").on('click', function(){
+                            //$('.deleteBtn[data-id='+id+']').closest('tr').remove();
+                            //$("#deleteTitle-"+id).modal('hide');
+                            //parent.location.reload();
+                        //})
+                        //$("#deleteTitle-"+id).modal('hide');
+                        //$('.deleteBtn[data-id="'+id+'"]').closest('tr').css('background','rgb(248, 215, 218)');
+                        
+                        //$("#deleteTitle-"+id).close();
+                        //exit();
+                        /*$("#delete-title #delete").on('submit', function(){
+                            $("#deleteTitle-"+id).modal('hide');
+                            parent.location.reload();
+                        });
+                    } else{ 
+                        alert('Si e verificato un problema. Riprovare.');
+                    }*/
+                }
+            });
+        
+        return false;
+    });
+});
+</script>
+{% endblock %}

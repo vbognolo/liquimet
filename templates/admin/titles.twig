@@ -1,0 +1,127 @@
+{% extends 'layout.twig' %}
+{% block title %} Utenti {{ 'now'|date('Y') }} {% endblock %}
+
+{% block search %}
+    <!--    Search Bar    -->
+    <section class="row my-auto mx-auto search-header" style="border: 1px solid red">
+        <div class="my-auto m-0 search-bar">
+            <form id="search-form">
+                <button type="button" class="my-1 search-btn">
+                    <i class="bi bi-search"></i>
+                </button>
+                <input type="text" class="my-1 search-input" id="search" placeholder="      Cerca.." />  
+            </form>
+        </div>
+    </section>
+    <!--    End Search Bar    -->
+{% endblock %}
+
+{% block content %} 
+    {% include 'admin/users-navigation.twig' %}
+
+    <!--    Titles Table    --> 
+    <section class="col-9 mx-auto my-1">
+        <div class="panel panel-body">          
+            <div class="d-flex justify-content-center">
+                <table class="table table-sm table-hover text-center platform"> 
+                    <thead>
+                        <tr class="border-bottom border-top table-title">
+                            <th class="align-middle p-3"> # </th>
+                            <th class="align-middle p-0"> Ruolo aziendale </th>
+                            <th class="align-middle p-0"> Title (EN) </th>
+                            <th class="align-middle p-0"> Acronimo </th>
+                            <th class="align-middle p-0"> 
+                                <button type="button" class="edit-data addBtn" data-bs-toggle="modal" data-bs-target="#modalTitle">
+                                    <i class="bi bi-person-workspace" style="font-size: 2rem"></i>
+                                    <i class="bi bi-plus" style="font-size: 1.7rem"></i>
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="table-body">  
+                    {% if titles is not empty %}
+                        {% for title in titles %}
+
+                        <tr class="titles">
+                            <td scope="row" class="align-middle p-1" style="border-right: 2px solid rgba(255, 255, 255, 0.2)">
+                                {{ loop.index }}
+                            </td>
+                            <td class="align-middle p-2"> {{ title.name|upper }} </td>
+                            <td class="align-middle p-2"> {{ title.title|title }} </td>
+                            <td class="align-middle p-2"> {{ title.acronym|upper }} </td>
+                            <td class="align-middle p-2 btns" style="border-left: 2px solid rgba(255, 255, 255, 0.2)">
+                                <button type="button" class="edit-data editBtn" data-bs-toggle="modal" data-bs-target="#modalTitle" 
+                                        data-id="{{ title.id_title }}"
+                                        data-name="{{ title.name }}"
+                                        data-title="{{ title.title }}"
+                                        data-acronym="{{ title.acronym }}">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                
+                                <button type="button" class="edit-data deleteBtn" data-bs-toggle="modal" data-bs-target="#deleteTitle-{{ t.id_title }}"
+                                        data-id="{{ t.id_title }}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                            {#{% include 'admin/title-edit.twig' %}
+                            {% include 'admin/title-delete.twig' %}#}
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                        
+                    <tfoot>
+                        <tr>
+                            <td colspan="5" class="text-light align-middle mb-2 p-2">
+                                <h5 class="align-middle my-auto">
+                                    TOTALE <i class="bi bi-person-workspace ms-1 my-auto"></i>:
+                                        <span> {{ total }} </span>
+                                </h5> 
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div> 
+        </div>
+
+    {# Include title modals #}
+    
+    {% include 'admin/title-delete.twig' %}
+    </section>  
+    {% include 'admin/title.twig' %}
+    <!--    =====>    END TITLES TABLE    <=====    --> 
+{% endblock %}
+
+{% block jsScript %}    
+<script>
+$(document).ready(function(){
+//  Search Bar
+    $("#search").keyup(function(){
+        var value = this.value.toLowerCase().trim();
+
+        $(".platform .titles").each(function(index){
+            if(index !== -1){
+
+                $(this).find("td").each(function(){
+                    var id = $(this).text().toLowerCase().trim();
+                    var not_found = (id.indexOf(value) == -1);
+                    
+                    $(this).closest('tr').toggle(!not_found);
+                        return not_found;
+                });
+            } 
+        });
+    });
+
+    $("#search").keydown(function(e){
+        if(e.keyCode == 13){ 
+            e.preventDefault();
+                return false;
+        }
+    });
+//  End Search Bar
+});
+</script>
+{% endblock %}  

@@ -41,7 +41,7 @@ class CacheClearCommand extends Command
     private $cacheClearer;
     private $filesystem;
 
-    public function __construct(CacheClearerInterface $cacheClearer, Filesystem $filesystem = null)
+    public function __construct(CacheClearerInterface $cacheClearer, ?Filesystem $filesystem = null)
     {
         parent::__construct();
 
@@ -49,9 +49,6 @@ class CacheClearCommand extends Command
         $this->filesystem = $filesystem ?? new Filesystem();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this
@@ -71,9 +68,6 @@ EOF
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $fs = $this->filesystem;
@@ -137,7 +131,7 @@ EOF
                 if ($output->isVerbose()) {
                     $io->comment('Warming up optional cache...');
                 }
-                $this->warmupOptionals($realCacheDir);
+                $this->warmupOptionals($realCacheDir, $realBuildDir);
             }
         } else {
             $fs->mkdir($warmupDir);
@@ -152,7 +146,7 @@ EOF
                     if ($output->isVerbose()) {
                         $io->comment('Warming up optional cache...');
                     }
-                    $this->warmupOptionals($realCacheDir);
+                    $this->warmupOptionals($useBuildDir ? $realCacheDir : $warmupDir, $warmupDir);
                 }
             }
 
@@ -162,7 +156,7 @@ EOF
             }
 
             if ($this->isNfs($realBuildDir)) {
-                $io->note('For better performances, you should move the cache and log directories to a non-shared folder of the VM.');
+                $io->note('For better performance, you should move the cache and log directories to a non-shared folder of the VM.');
                 $fs->remove($realBuildDir);
             } else {
                 $fs->rename($realBuildDir, $oldBuildDir);
@@ -208,7 +202,7 @@ EOF
 
         if (null === $mounts) {
             $mounts = [];
-            if ('/' === \DIRECTORY_SEPARATOR && $files = @file('/proc/mounts')) {
+            if ('/' === \DIRECTORY_SEPARATOR && is_readable('/proc/mounts') && $files = @file('/proc/mounts')) {
                 foreach ($files as $mount) {
                     $mount = \array_slice(explode(' ', $mount), 1, -3);
                     if (!\in_array(array_pop($mount), ['vboxsf', 'nfs'])) {
@@ -247,15 +241,15 @@ EOF
         }
     }
 
-    private function warmupOptionals(string $realCacheDir): void
+    private function warmupOptionals(string $cacheDir, string $warmupDir): void
     {
         $kernel = $this->getApplication()->getKernel();
         $warmer = $kernel->getContainer()->get('cache_warmer');
         // non optional warmers already ran during container compilation
         $warmer->enableOnlyOptionalWarmers();
-        $preload = (array) $warmer->warmUp($realCacheDir);
+        $preload = (array) $warmer->warmUp($cacheDir);
 
-        if ($preload && file_exists($preloadFile = $realCacheDir.'/'.$kernel->getContainer()->getParameter('kernel.container_class').'.preload.php')) {
+        if ($preload && file_exists($preloadFile = $warmupDir.'/'.$kernel->getContainer()->getParameter('kernel.container_class').'.preload.php')) {
             Preloader::append($preloadFile, $preload);
         }
     }

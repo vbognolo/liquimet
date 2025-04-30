@@ -1,0 +1,140 @@
+<div class="modal fade" id="editPart-{{ p.id_partial }}" tabindex="-1" role="dialog" aria-labelledby="edit-partial" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header row">
+                <h2 class="modal-title mx-auto my-auto" id="edit-partial"> 
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                        MODIFICA
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                </h2>
+
+                    <h5 class="modal-subtitle mx-auto my-2"> 
+                        Modifica i dati esistenti del trasporto parziale <b style="color: #6d1741">#{{ t.seo }}</b>.
+                    </h5>
+            </div>
+        
+            <div class="modal-body">
+                <div class="container-fluid my-1">
+                
+                    <form id="part-form" method="POST" action="{{ doc_root }}partial-edit/{{ p.id_partial }}">
+                        <input type="hidden" name="id_partial" id="id_partial" value="{{ p.id_partial }}" />
+                        
+                        <div class="row form-group mx-auto">
+                            <div class="col-4 my-auto">
+                                <label class="form-control-label my-auto"> Destinazione: </label>
+                            </div>
+                            
+                            <div class="col-8 my-auto">
+                                <input type="text" class="form-control" name="destination" id="destination" value="{{ p.destination|upper }}" />
+                            </div>
+                        </div>
+                        
+                        <div class="row form-group mx-auto">
+                            <div class="col-4 my-auto">
+                                <label class="form-control-label my-auto"> EXW: </label>
+                            </div>
+                        
+                            <div class="col-8 my-auto">
+                                <select class="form-control" name="exw" id="exwPart">
+                                    <option class="opt-type" value="{{ p.exw|upper }}" id="exwOpt">
+                                        {{ p.exw|upper }}
+                                    </option>   
+                                
+                                    <option value="FOS" class="opt-type"> 
+                                        FOS
+                                    </option>
+                                    
+                                    <option value="DESTINO" class="opt-type"> 
+                                        DESTINO
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row form-group mx-auto">
+                            <div class="col-4 my-auto">
+                                <label class="form-control-label my-auto"> Data: </label>
+                            </div>
+                            
+                            <div class="col-8 my-auto">
+                                <input type="text" class="form-control date" name="date" id="datePart" value="{{ p.date|date("d/m/Y") }}" />
+                            </div>
+                        </div>
+                        
+                        <div class="row form-group mx-auto">
+                            <div class="col-4 my-auto">
+                                <label class="form-control-label my-auto"> Luogo: </label>
+                            </div>
+                            
+                            <div class="col-8 my-auto">
+                                <input type="text" class="form-control" name="place" id="placePart" value="{{ p.place|capitalize }}" />
+                            </div>
+                        </div>  
+                        
+                        <div class="row form-group mx-auto">
+                            <div class="col-4 my-auto">
+                                <label class="form-control-label my-auto"> Quantità scaricata: </label>
+                            </div>
+                            
+                            <div class="col-8 my-auto">
+                                <input type="text" class="form-control" name="q_unloaded" id="qtyPart" value="{{ p.q_unloaded }}" />
+                            </div>
+                        </div>  
+                          
+                        <div class="row form-group mx-auto">
+                            <div class="col-4 my-auto">
+                                <label class="form-control-label my-auto"> Fattura: </label>
+                            </div>
+                            
+                            <div class="col-8 my-auto">
+                                <input type="text" class="form-control" name="invoice" id="invoicePart" value="{{ p.invoice }}" />
+                            </div>
+                        </div>     
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default modal-cancel" data-bs-dismiss="modal" aria-label="Cancel">
+                                <span class="bi bi-x-circle">
+                                    CHIUDI 
+                                </span> 
+                                    
+                            </button>
+
+                            <button type="submit" class="btn btn-default modal-save updatePart" name="update_partial">
+                                <span class="bi bi-check-circle">
+                                    SALVA 
+                                </span> 
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+//  ===> SAVE BUTTON ON EDIT/DELETE MODAL   
+    $(".updatePart").click(function(){
+        $.ajax({
+            method: 'POST',
+            url: 'partial-edit.php',
+            data: $("#part-form").serialize(),
+                success: function(data){
+                    console.log(data);
+                }
+        })
+    });
+//  ===> END SAVE BUTTON ON EDIT/DELETE MODAL
+
+//  ===> DATEPICKER     
+    //use datepicker on the date inputs
+    $(".date").datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        language: 'it-IT', 
+    });
+//  ===> END DATEPICKER 
+});
+</script>

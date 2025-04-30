@@ -1,0 +1,33 @@
+<div class="modal fade" id="editNote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mx-auto" id="myModalLabel">
+                    <span class="bi bi-arrow-right-circle"></span> 
+                        Trasporto #{{ t.seo }}  
+                    <span class="bi bi-arrow-left-circle"></span>
+                </h5>
+            </div>
+                            
+            <div class="modal-body">
+                <form id="note-form" action="{{ doc_root }}transport-note/{{ t.id_transport }}" method="POST">
+                    <input type="hidden" name="id_transport" id="id_transport" value="{{ t.id_transport }}" />
+                    <input type="hidden" name="type" value="{{ t.type }}" />
+                        
+                    <div class="row form-group m-auto align-middle mb-3">
+                        <label class="form-control-label mb-0" for="note"> Nota: </label>
+                        <textarea name="note" id="note" class="form-control"
+                            style="height: 80px; text-align: center; text-transform: capitalize; white-space-collapse: collapse"
+                        >{{ t.note|trim }}</textarea>
+                    </div>
+                        
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default modal-cancel" data-dismiss="modal"><span class="bi bi-x-circle"></span> CHIUDI </button>
+                        <button type="button" class="btn btn-default modal-reset" name="delete_note"><span class="bi bi-trash"></span> CANCELLA </button>
+                        <button type="submit" class="btn btn-default modal-save" name="update_note"><span class="bi bi-check-circle"></span> SALVA </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

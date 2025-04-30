@@ -1,0 +1,280 @@
+{% extends 'layout.html' %}
+{% block title %} Piattaforma {{ 'now'|date('Y') }} {% endblock %}
+
+{% block search %}
+    <!--    ===>    SEARCH BAR    <===    -->
+    <section class="row my-auto mx-1 search-header" style="border: 2px solid red">
+        <div class="my-auto search-bar">
+            <form id="search-form">
+                <button type="button" class="my-1 search-btn">
+                    <i class="bi bi-search"></i>
+                </button>
+                <input type="text" class="my-1 search-input" id="search" placeholder="      Cerca.." />  
+            </form>
+        </div>
+    </section>
+    <!--    ===>    END SEARCH BAR    <===    -->
+{% endblock %}
+ 
+{% block browse %}
+    <!--    ===>    BROWSE FILE BAR    <===    -->
+    <section class="row my-auto mx-1 me-5 browse-header" style="border: 2px solid red">
+        <div class="my-auto browse-bar">
+            <form id="browse-form" enctype="multipart/form-data" method="POST">
+                <input type="file" accept=".csv" class="my-1 browse-input" name="browse" />
+                    <button class="my-1 browse-icon" name="upload">
+                        <i class="bi bi-upload"></i>
+                    </button>  
+            </form>
+        </div>
+    </section>
+    <!--    ===>    END BROWSE FILE BAR    <===    -->
+{% endblock %}
+
+{% block content %} 
+    {{ include('transports-navigation.html') }}
+    
+    <!--    =====>    PLATFORM - ALL TRANSPORTS    <=====    -->
+    <section class="col-12 mx-auto my-1">
+        <div class="panel panel-body">          
+            <div class="d-flex justify-content-center">
+                <table class="table table-sm platform">
+                    <thead>
+                        <tr class="border-bottom border-top border-light table-title">
+                            <th class="align-middle p-3"> # </th>
+                            <th class="align-middle p-2"> Tipo </th>
+                            <th class="align-middle p-2"> Slot ID </th>
+                            <th class="align-middle p-2"> Numero CMR </th>
+                            <th class="align-middle p-2"> Emittente </th>
+                            <th class="align-middle p-2"> Fornitore </th>
+                            <th class="align-middle p-2"> Trasporto </th>
+                            <th class="align-middle p-2"> Univoco </th>
+                            <th class="align-middle p-2"> Data carico </th>
+                            <th class="align-middle p-2"> Data scarico </th>
+                            <th class="align-middle p-2"> Mese carico </th>
+                            <th class="align-middle p-2"> Settimana scarico </th>
+                            <th class="align-middle p-2" colspan="2"> Mese scarico </th>
+                            <th class="align-middle p-2 px-3"> Container<br>ATB </th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="table-body">  
+                    {% set order = 1 %}    
+                    {% for i, t in quantities %}
+                            
+                        <!--    ===>    Transport Data    <===    -->
+                        <tr class="accordion-toggle align-middle expand" id="all-{{ i }}" data-bs-toggle="collapse" data-bs-target="#qty-{{ t.id_transport }}">
+                            <td scope="row all">
+                                {{ order }}
+                                {% set order = order + 1 %}
+                                    <br>
+                                <span class="text-dark note-icon" data-bs-toggle="tooltip" data-id="{{ t.id_transport }}"
+                                    {% if t.note %} title="{{ t.note|capitalize }}" {% else %} title="Nessuna nota" {% endif %}>
+                                        <i class="bi bi-exclamation-circle"></i>
+                                </span>
+                            </td>
+                            <td class="align-middle p-1" style="font-weight: 600"> {{ t.type|upper }} </td>
+                            <td class="align-middle p-1 search" style="word-break: break-all; text-wrap: balance"> {{ t.slot|upper }} </td>
+                            <td class="align-middle p-1 search" style="word-break: break-all; text-wrap: balance"> {{ t.cmr|upper }} </td>
+                            <td class="align-middle p-1 search"> {{ t.issuer|upper }} </td>
+                            <td class="align-middle p-1 search"> {{ t.supplier|upper }} </td>
+                            <td class="align-middle p-1 search"> {{ t.transport|upper }} </td>
+                            <td class="align-middle p-1 px-3"> {{ t.univoco|upper }} </td>
+                            <td class="align-middle p-1"> {{ t.date_load|date("d/m/Y") }} </td>
+                            <td class="align-middle p-1"> {{ t.date_unload|date("d/m/Y") }} </td>
+                            <td class="align-middle p-1"> {{ t.id_month_load }} </td>
+                            <td class="align-middle p-1"> {{ t.week_unload }} </td>
+                            <td class="align-middle p-1" colspan="2"> {{ t.id_month_unload }} - {{ t.month_unload }} </td>
+                            <td class="align-middle p-1" style="text-wrap: balance"> {{ t.container|upper }} </td>
+                        </tr>
+                        <!--    ===>    End Transport Data    <===    -->  
+     
+                        <!--    ===>    Quantity Data    <===    -->
+                        <tr class="accordion-toggle" style="background: rgba(61, 150, 130, 0.5)" id="qty-{{ i }}">        
+                            <td colspan="16" style="border: none">
+                                <div class="accordian-body collapse rowQty" id="qty-{{ t.id_transport }}"> 
+                                    <h4 class="mx-auto my-2"> 
+                                        <span class="btn my-auto collapse-title edit-data" style="cursor: default">
+                                            Quantità:
+                                        </span> 
+                                    </h4>
+
+                                    <table class="table table-bordered table-sm">
+                                        <tbody>    
+                                            <tr>
+                                                <th class="sub-title align-middle p-1"> Energia caricata [MWh] </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.mwh }} 
+                                                    </td>   
+                                                <th class="sub-title align-middle p-1"> Quantità nominale caricata [kg] </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.kg_load }} 
+                                                    </td>   
+                                                <th class="sub-title align-middle p-1"> Raffreddamento </th>            
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {% if (t.cooling == 600) %}
+                                                            600
+                                                        {% else %}
+                                                            No
+                                                        {% endif %} 
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> Tipologia costo extra </th>            
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {% if t.price_typology == 'yes' %}
+                                                            Sì
+                                                        {% else %}
+                                                            No
+                                                        {% endif %} 
+                                                    </td>            
+                                                <!--<th class="sub-title align-middle p-1"> Accisa <big>[</big>Sm<sup>3</sup><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle">  
+
+                                                    </td>        -->    
+                                            </tr>
+                                         
+                                            <tr>
+                                                <th class="sub-title align-middle p-1"> Valore costo extra </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                            {{ t.price_value }} 
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> Quantità scaricata PD [kg] </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                            {{ t.kg_unload }} 
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> Densità (liquido) [<sup>kg</sup>&frasl;<sub>m<sup>3</sup></sub>] </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                            {{ t.liquid_density }} 
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> Peso specifico (gas) <big>[</big><sup>kg</sup>&frasl;<sub>Nm<sup>3</sup></sub><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                            {{ t.gas_weight }} 
+                                                    </td>
+                                                <!--<th class="sub-title align-middle p-1"> Accisa totale </th>
+                                                    <td class="bg-light bg-gradient align-middle">  
+
+                                                    </td>-->
+                                            </tr>
+                                                     
+                                            <tr>
+                                                <th class="sub-title align-middle p-1"> PCS/GHV <big>[</big><sup>MJ</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.mj_kg }} 
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> PCS/GHV <big>[</big><sup>kWh</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.pcs_ghv }} 
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> Volume scaricato (liquido) <big>[</big>m<sup>3</sup><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.volume_mc }} 
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> Volume sviluppato <big>[</big><sup>Nm<sup>3</sup></sup>&frasl;<sub>m<sup>3</sup></sub><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.volume_nmc }} 
+                                                    </td>  
+                                                <!--<th class="sub-title align-middle p-1"> Incidenza </th> 
+                                                    <td class="bg-light bg-gradient align-middle">  
+
+                                                    </td> -->
+                                            </tr>
+                             
+                                            <tr>
+                                                <th class="sub-title align-middle p-1"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>m<sup>3</sup></sub> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.smc_mc }} 
+                                                    </td>   
+                                                <th class="sub-title align-middle p-1"> Gas sviluppato <big>[</big>Nm<sup>3</sup><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.gas_nmc }} 
+                                                    </td>   
+                                                <th class="sub-title align-middle p-1"> Gas sviluppato <big>[</big>Sm<sup>3</sup></sup><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.gas_smc}} 
+                                                    </td>   
+                                                <th class="sub-title align-middle p-1"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>kg</sub> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.smc_kg }} 
+                                                    </td>  
+                                                <!--<th class="sub-title align-middle p-1"> </th> 
+                                                    <td class="bg-light bg-gradient align-middle"> 
+
+                                                    </td>       -->   
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div> 
+                            </td> 
+                        </tr>
+                        <!--    ===>    End Quantity Data    <===    -->
+                    {% endfor %}
+                    </tbody>
+                     
+                    <!--    ===>    Table Footer    <===    -->
+                    <tfoot>
+                        <tr>
+                            <td colspan="16" class="text-light align-middle mb-2 p-2">
+                                <h5 class="align-middle my-auto">
+                                    TOTALE <i class="bi bi-fuel-pump-fill ms-1"></i> + <i class="bi bi-fuel-pump"></i>:
+                                        <span> {{ total }} </span>
+                                </h5> 
+                            </td>
+                        </tr>
+                    </tfoot>
+                    <!--    ===>    End Table Footer    <===    -->
+                </table>
+            </div> 
+        </div>
+    </section> 
+    <!--    =====>    END PLATFORM - ALL TRANSPORTS    <=====    --> 
+{% endblock %}
+
+{% block jsScript %}    
+<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">      <!-- Bootstrap 5 CSS -->
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css'>              <!-- Vanilla Datepicker CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/css/datepicker-bs5.min.css">          <!-- Vanilla Datepicker CSS -->
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker.min.js"></script>
+    
+<script>
+$(document).ready(function(){
+//  ===> TOOLTIP SPECS  
+    $("body").tooltip({ 
+        selector: '[data-bs-toggle = tooltip]',
+        placement: 'right' 
+    });
+//  ===> END TOOLTIP SPECS
+            
+//  ===> DATEPICKER     
+    //use datepicker on the date inputs
+    $(".date").datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        language: 'it-IT', 
+    });
+//  ===> END DATEPICKER   
+
+//  ===> TABLE ONCLICK FUNCTIONS
+    //toggle class for changing bg-color and showing/hiding table td border 
+    $(".all").click(function(){
+        $(this).toggleClass("active");
+    });
+        
+    $(".expand").click(function(){
+        $(this).closest("tr").toggleClass("table-bordered active");
+    });
+//  ===> END TABLE ONCLICK FUNCTIONS  
+
+
+});  
+</script>   
+        
+<!--    ===>    BOOTSTRAP DATEPICKER    <===    -->   
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/locales/bootstrap-datepicker.it.min.js" charset="UTF-8"></script>
+<!--    ===>    END BOOTSTRAP DATEPICKER    <===    --> 
+{% endblock %}

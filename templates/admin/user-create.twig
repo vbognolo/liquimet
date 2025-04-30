@@ -1,0 +1,225 @@
+<!-- Create User Modal -->
+<div class="modal fade" id="createUser" tabindex="-1" aria-labelledby="createUserLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row mx-auto">
+                    <h2 class="modal-title my-1" id="createUserLabel"> 
+                        <i class="bi bi-pencil-square my-auto mx-1"></i>
+                            REGISTRAZIONE
+                        <i class="bi bi-pencil-square my-auto mx-1"></i>
+                    </h2>
+                    
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+
+                    <h4 class="modal-subtitle mx-auto my-2"> 
+                        Inserire i dati richiesti per creare il nuovo <b style="color: #6d1741">utente</b>.
+                    </h4>
+                </div>
+            </div>
+      
+            <div class="modal-body">
+                <div class="container-fluid my-1">
+                <form id="user-form" action="{{ doc_root }}user" method="POST" autocomplete="off" >
+          
+                <!-- Step 1: Personal Information -->
+                <fieldset id="step1" class="step">
+                    <!-- Email -->
+                    <div class="row form-group mb-4">        
+                        <label for="email" class="col-5 form-control-label my-auto"> E-mail: </label>
+                                
+                        <div class="col-7">
+                            <input name="email" type="text" id="email" value="{{ member.email|default('') }}"
+                                class="form-control {% if errors.email %}is-invalid{% endif %}" />
+                                    
+                            {% if errors.email %}<label class="invalid-feedback my-0 py-0">{{ errors.email }}</label>{% endif %}
+                        </div>
+                    </div>
+
+                            <!-- Username -->
+                            <div class="row mb-4">
+                                <label for="newUsername" class="col-5 form-control-label my-auto"> Username: </label>
+                                
+                                <div class="col-6">
+                                    <input name="username" type="text" id="newUsername" value="{{ member.username|default('') }}"
+                                        class="form-control {% if errors.username %}is-invalid{% endif %}" />
+
+                                    {% if errors.username %}<label class="invalid-feedback">{{ errors.username }}</label>{% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="row mb-4">        
+                                <label for="newPassword" class="col-5 form-control-label my-auto"> Password: </label>
+                                            
+                                <div class="col-6">
+                                    <input name="password" type="password" id="newPassword" autocomplete="new-password" 
+                                        class="form-control {% if errors.password %}is-invalid{% endif %}"/>
+                                    
+                                    {% if errors.password %}<label class="invalid-feedback">{{ errors.password }}</label>{% endif %}
+                                </div>
+                            </div>   
+                                
+                            <!-- Confirm password -->
+                            <div class="row mb-4">
+                                <label for="confirm" class="col-5 form-control-label my-auto"> Conferma pass.: </label>
+                                        
+                                <div class="col-6">
+                                    <input name="confirm" type="password" id="confirm"
+                                        class="form-control {% if errors.confirm %}is-invalid{% endif %}" />
+
+                                    {% if errors.confirm %}<label class="invalid-feedback">{{ errors.confirm }}</label>{% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Name -->
+                            <div class="row mb-4">
+                                <label for="name" class="col-5 form-control-label my-auto"> Nome: </label>
+
+                                <div class="col-6">
+                                    <input name="name" type="text" id="name" value="{{ member.name|default('') }}"
+                                        class="form-control {% if errors.name %}is-invalid{% endif %}" />
+
+                                    {% if errors.name %}<label class="invalid-feedback">{{ errors.name }}</label>{% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Surname -->
+                            <div class="row mb-4">
+                                <label for="surname" class="col-5 form-control-label my-auto"> Cognome: </label>
+                                
+                                <div class="col-6">
+                                    <input name="surname" type="text" id="surname" value="{{ member.surname|default('') }}"
+                                        class="form-control {% if errors.name %}is-invalid{% endif %}" />
+                                    
+                                    {% if errors.name %}<label class="invalid-feedback">{{ errors.name }}</label>{% endif %}
+                                </div>
+                            </div>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default modal-cancel exit" data-bs-dismiss="modal">
+                                <span class="bi bi-x-circle">
+                                    CHIUDI 
+                                </span>    
+                            </button>
+                            
+                            <button type="submit" class="btn btn-default modal-save" name="create_user">
+                                <span class="bi bi-check-circle">
+                                    SALVA
+                                </span>   
+                            </button>
+                        </div>
+                   
+                </fieldset>
+
+          <!-- Step 2: Address Information -->
+          <fieldset id="step2" class="step" style="display: none;">
+<div class="row mb-4">
+                                <label for="bday" class="col-5 form-control-label my-auto"> Data di nascita: </label>
+                                
+                                <div class="col-6">
+                                    <input name="bday" type="text" id="bday" value="{{ member.birthday|default('') }}"
+                                        class="form-control date {% if errors.name %}is-invalid{% endif %}" />
+
+                                    {% if errors.bday %}<label class="invalid-feedback">{{ errors.bday }}</label>{% endif %}
+                                </div>
+                            </div>
+        
+                            <div class="row mb-4"> 
+                                <label for="city" class="col-5 form-control-label my-auto"> Luogo di nascita: </label>
+                                
+                                <div class="col-6">
+                                    <input name="city" type="text" id="city" value="{{ member.city|default('') }}"
+                                        class="form-control {% if errors.name %}is-invalid{% endif %}" />
+
+                                    {% if errors.name %}<label class="invalid-feedback">{{ errors.name }}</label>{% endif %}
+                                </div>
+                            </div>
+        
+                            <div class="row mb-4"> 
+                                <label for="country" class="col-5 form-control-label my-auto"> </label>
+                                {% if errors.confirm %}<div class="invalid-feedback">{{ errors.confirm }}</div>{% endif %}
+                                
+                                <div class="col-6">
+                                    <input name="country" type="text" id="country"
+                                        class="form-control {% if errors.name %}is-invalid{% endif %}" />
+
+                                    {% if errors.name %}<label class="invalid-feedback">{{ errors.name }}</label>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <label for="gender" class="col-5 form-control-label my-auto"> Genere: </label>
+        
+                                <div class="col-6">
+                                    <select name="gender" id="gender" class="form-control {% if errors.gender %}is-invalid{% endif %}"> 
+                                        <option class="opt-type" value="" style="color: lightgray;"> Scegliere un'opzione </option>
+
+                                        {% for g in gender %}
+                                            <option class="opt-type" value="{{ g.id_gender }}" style="color: #023365;"> 
+                                                {{ g.name|capitalize }} ({{ g.abbr|upper}})
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if errors.gender %}<label class="invalid-feedback">{{ errors.gender }}</label>{% endif %}
+                                </div>        
+                            </div> 
+        
+                            <div class="row mb-4">
+                                <label for="roles" class="col-5 form-control-label my-auto"> Accesso: </label>
+        
+                                <div class="col-6">
+                                    <select name="role" id="roles" class="form-control {% if errors.role %}is-invalid{% endif %}">  
+                                        <option class="opt-type" value="" style="color: lightgray;"> Scegliere un'opzione </option>
+                                        
+                                        {% for r in roles %}
+                                            <option class="opt-type" value="{{ r.id_role }}" class="opt-type"> 
+                                                {{ r.name|capitalize }} 
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if errors.role %}<label class="invalid-feedback">{{ errors.role }}</label>{% endif %}
+                                </div>   
+                            </div> 
+        
+                            <div class="row mb-4">
+                                <label for="titles" class="col-5 form-control-label my-auto"> Ruolo aziendale: </label>
+        
+                                <div class="col-6">
+                                    <select name="title" id="titles" class="form-control {% if errors.title %}is-invalid{% endif %}"> 
+                                        <option class="opt-type" value="" style="color: lightgray;"> Scegliere un'opzione </option>
+
+                                        {% for t in titles %}
+                                            <option class="opt-type" value="{{ t.id_title }}"> 
+                                                {{ t.name|capitalize }} 
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if errors.title %}<label class="invalid-feedback">{{ errors.title }}</label>{% endif %}
+                                </div>      
+                            </div> 
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default modal-cancel exit" data-bs-dismiss="modal">
+                                <span class="bi bi-x-circle">
+                                    CHIUDI 
+                                </span>    
+                            </button>
+                            
+                            <button type="submit" class="btn btn-default modal-save" name="update_user">
+                                <span class="bi bi-check-circle">
+                                    SALVA
+                                </span>   
+                            </button>
+                        </div>
+          </fieldset>
+
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

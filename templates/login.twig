@@ -1,0 +1,65 @@
+{% extends 'layout.twig' %}
+{% block title %} Login {% endblock %}
+
+{% block body %}
+<body id="login" class="d-flex justify-content-center align-items-center">
+    <div class="container d-flex justify-content-center h-100">
+        <div class="container col-4 my-auto user-card">
+            
+            <div class="container d-flex justify-content-center">
+                <div class="d-flex justify-content-center logo-box">
+                    <img src="/img/logo_liquimet.png" class="brand-logo" alt="Liquimet Logo">
+                </div>
+            </div>
+            
+            <div class="container form-box">
+                <form id="login-form" method="POST" action="login" class="col-9 justify-content-center mx-auto my-auto">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                    <div class="input-group mx-auto my-2 input-login">
+                        <label for="login-username" class="input-group-text">
+                            <i class="bi bi-person-fill"></i>
+                        </label>
+                        
+                        <input type="text" id="login-username" name="login-username" class="form-control" placeholder="username" autocomplete="off" />   
+                    </div>
+
+                    <div class="input-group mx-auto my-2 input-login">
+                        <label for="login-password" class="input-group-text">
+                            <i class="bi bi-lock-fill"></i>
+                        </label>
+                        
+                        <input type="password" id="login-password" name="login-password" class="form-control" placeholder="password" /> 
+                    </div>
+
+                    <!--<div class="form-group" id="login-form-group">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="remember">
+                            <label class="form-check-label" for="remember">Ricordami</label>
+                        </div>
+                    </div>-->
+                    
+
+                    <div class="col-8 mx-auto my-4 btn-box">
+                        <button type="submit" name="login" class="btn login-btn" id="login-btn" value="Accedi">
+                            ACCEDI
+                        </button>
+                    </div>
+                </form>
+
+                <div class="col-9 mx-auto {% if error %}alert alert-danger{% endif %}">
+                    {{ error }}
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <div class="d-flex justify-content-center links">
+                    <a href="password-lost" id="lost-password">
+                        Hai dimenticato la password?
+                    </a>
+                </div>
+            </div> 	
+        </div>
+    </div>
+</body>
+{% endblock %}

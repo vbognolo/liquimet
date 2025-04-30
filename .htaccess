@@ -10,7 +10,10 @@ php_flag   display_errors      on
 php_flag   log_errors          on
 
 RewriteEngine On
+RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . public/index.php [L]
+
+RewriteRule ^(.*)$ index.php?$1 [QSA,L]
+
 
 ErrorDocument 500 /liquimet/public/error.php

@@ -1,5 +1,14 @@
 <?php
-declare(strict_types = 1);                               
+declare(strict_types = 1);  
+use Liquimet\Controller\LoginController;
+use Liquimet\Session\Session;
+use Liquimet\Model\User;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
-$model->getSession()->delete();                  //call method to end session
-redirect('login/');                              //redirect to home page
+$twig = new Environment(new FilesystemLoader(APP_ROOT . '/templates'));
+$session = new Session(); 
+$userModel = new User( $database);  
+
+$loginController = new LoginController($twig, $session, $userModel);
+$loginController->logout();               

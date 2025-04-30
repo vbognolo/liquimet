@@ -1,0 +1,98 @@
+<div class="modal fade" id="deleteUser-{{ m.id_user }}" tabindex="-1" role="dialog" aria-labelledby="user-delete" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header row">
+                <h5 class="modal-title mx-auto my-auto" id="user-delete">
+                    <i class="bi bi-trash my-auto"></i> 
+                        RIMUOVI 
+                    <i class="bi bi-trash my-auto"></i>
+                </h5>
+            </div> 
+            
+            <div class="modal-body">
+                <form id="delete-user" action="{{ doc_root }}admin/user-delete/{{ m.id_user }}">
+                    <input type="hidden" name="id_user" id="id_user" value="{{ m.id_user }}" />
+
+                    <div class="container m-auto my-2">
+                        <div class="col-12 mx-auto my-1 py-2 delete-msg">
+                            Rimuovere l'utente <br>
+                                <span> 
+                                    {{ m.name|upper }} {{ m.surname|upper}}?
+                                </span>
+                        </div>
+
+                        <div class="col-12 mx-auto py-2 success-msg">
+
+                        </div>
+                    </div>
+            
+                    <div class="modal-footer mx-auto">
+                        <button type="button" class="btn btn-default mx-auto modal-cancel exit" data-bs-dismiss="modal">
+                            <span class="bi bi-x-circle">
+                                ANNULLA
+                            </span>  
+                        </button>
+
+                        <button type="submit" class="btn btn-default mx-auto modal-save btnDelete" data-id="{{ m.id_user }}" name="submit">
+                            <span class="bi bi-check-circle">
+                                CONFERMA
+                            </span> 
+                        </button>
+                    </div>
+                </form>
+			</div>
+        </div>
+    </div>
+</div>
+
+{% block jsScript %}
+<script>
+$(document).ready(function(){
+//  ===> FORM VALIDATION AND SUBMIT 
+    $('form#delete-user').on('submit', function(e){
+        e.preventDefault();                                                         //prevent form submission
+
+        //var id = $("#id_title").val();
+        var act = $(this).attr('action');
+        var user_delete = $(this).serialize();
+
+            $.ajax({
+                method: 'POST',
+                url: act,
+                data: user_delete,
+                dataType: 'json',
+                //cache: false,
+                //processData: false,
+                success: function(r){
+                    console.log(r);
+
+                    if(r.status == 1){
+                        $(".delete-msg, .btnDelete").css('display', 'none');
+                        $(".exit span").text(' ESCI');
+                        
+                        $(".success-msg")
+                            .css('display', 'block')
+                            .html('<span><i class="bi bi-check-circle"></i> '+ r.msg +' <i class="bi bi-check-circle"></i></span>');
+                        /*$(".successText")
+                            .html('<span>'+ data.msg +': <br>'+ data.name +' ('+ data.acronym +')</span>')
+                            .css('font-size', '1.8rem');*/
+
+                        $(".exit").on('click', function(){
+                            $('[data-id='+r.id_user+']').closest('tr').css('background','rgba(255, 255, 51, 0.4)');
+                            $('[data-id='+r.id_user+']').closest('tr').fadeOut(2500,function(){
+                                $(this).remove();
+                            });
+
+                            setTimeout(function(){ 
+                                parent.location.reload();
+                            }, 2500);
+                        });
+                    } 
+                }
+            });
+        
+        return false;
+    });
+});
+</script>
+{% endblock %}

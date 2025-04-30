@@ -1,0 +1,112 @@
+<div class="modal fade" id="modalTitle" tabindex="-1" role="dialog" aria-labelledby="modalTitleHeader" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header row">
+                <h2 class="modal-title my-1" id="modalTitleHeader"> 
+                    <i class="bi bi-person-workspace my-auto mx-1"></i>
+                        {{ title.id_title ? 'MODIFICA' : 'CREA NUOVO' }}
+                    <i class="bi bi-person-workspace my-auto mx-1"></i>
+                </h2>
+
+                    <h4 class="modal-subtitle mx-auto my-2"> 
+                        {{ title.id_title ? 'Modifica i dati esistenti del ruolo aziendale.' : 'Inserire i dati richiesti per creare il nuovo ruolo aziendale.' }} 
+                    </h4>
+            </div>
+
+            <div class="modal-body m-3">
+                <div class="container-fluid">
+                    
+                    <form id="title-form" action="{{ doc_root }}title{{ title.id_title }}" method="POST" autocomplete="off">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <input type="hidden" name="id_title" id="id_title" value="{{ title.id_title }}">
+                        
+                        <div class="row form-group mb-3">
+                            <label for="name" class="col-5 form-control-label my-auto"> Ruolo aziendale: </label>
+                            <div class="alert alert-danger" style="display: none"></div>
+                            
+                            <div class="col-6">
+                                <input name="name" type="text" class="form-control" id="name" value="{{ title.name ?? '' }}" />
+                            </div>   
+                        </div>
+
+                        <div class="row form-group mb-3">
+                            <label for="title" class="col-5 form-control-label my-auto"> Title (EN): </label>
+                            
+                            <div class="col-6"> 
+                                <input name="title" type="text" class="form-control" id="title" value="{{ title.title ?? '' }}" />
+                            </div>
+                        </div>
+
+                        <div class="row form-group mb-4">
+                            <label for="acronym" class="col-5 form-control-label my-auto"> Acronimo: </label>
+                            
+                            <div class="col-6">
+                                <input name="acronym" type="text" class="form-control" id="acronym" value="{{ title.acronym ?? '' }}" />
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default modal-cancel exit" data-bs-dismiss="modal">
+                                <span class="bi bi-x-circle">
+                                    CHIUDI 
+                                </span>    
+                            </button>
+                            
+                            <button type="submit" class="btn btn-default modal-save" name="save">
+                                <span class="bi bi-check-circle">
+                                    SALVA
+                                </span>   
+                            </button>
+                        </div>       
+                    </form>
+
+                </div>
+
+{% if errors is defined and errors|length > 0 %}
+    <div class="alert alert-danger">
+        {% for error in errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if success is defined %}
+    <div class="alert alert-success">
+        <p>{{ success }}</p>
+    </div>
+{% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+    // Script to fill modal with data from the clicked row
+    const editBtn = document.querySelectorAll('.editBtn');
+        editBtn.forEach(button => {
+            button.addEventListener('click', function() {
+                const id_title = this.getAttribute('data-id');
+                const name = this.getAttribute('data-name');
+                const title = this.getAttribute('data-title');
+                const acronym = this.getAttribute('data-acronym');
+
+                // Populate modal fields
+                document.getElementById('id_title').value = id_title;
+                document.getElementById('name').value = name;
+                document.getElementById('title').value = title;
+                document.getElementById('acronym').value = acronym;
+            });
+
+    // Reset modal to add mode when Add New button is clicked
+    const addBtn = document.querySelector('.addBtn');
+        addBtn.addEventListener('click', function() {
+            document.getElementById('id_title').value = '';
+            document.getElementById('name').value = '';
+            document.getElementById('title').value = '';
+            document.getElementById('acronym').value = '';
+        });
+    });
+});
+</script>
