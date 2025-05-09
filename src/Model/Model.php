@@ -43,6 +43,10 @@ class Model {
         public function getUser()  {
             return $this->getInstance(User::class);
         }
+
+        public function getLoginAttempt() {
+            return $this->getInstance(LoginAttempt::class);
+        }
     
         public function getRoleManager() {
             return $this->getInstance(RoleManager::class);

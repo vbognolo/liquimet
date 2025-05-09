@@ -1,0 +1,32 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+<div class="container my-4">
+    <h2 class="mb-4">Audit Log: Tentativi di accesso falliti</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Indirizzo IP</th>
+                    <th scope="col">Numero Tentativi</th>
+                    <th scope="col">Ultimo Tentativo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attempt in failures %}
+                    <tr>
+                        <td>{{ attempt.ip }}</td>
+                        <td>{{ attempt.fail_count }}</td>
+                        <td>{{ attempt.last_fail|date('d-m-Y H:i:s') }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center">Nessun tentativo fallito recente.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

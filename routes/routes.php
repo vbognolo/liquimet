@@ -10,11 +10,14 @@ use Liquimet\Controller\UserController;
     }
 
 // Login Controller
-$LoginController = new LoginController($twig, $session, $mUser);
-$router->get('login', [$LoginController, 'loginPage']);
+$LoginController = new LoginController($twig, $session, $mUser, $loginAttempt);
+$router->get('login', [$LoginController, 'renderLoginPage']);
 $router->post('login', [$LoginController, 'login']);
-$router->get('password-lost', [$LoginController, 'lostPasswordPage']);
+//$router->get('login', [$LoginController, 'lostPasswordPage']);
 $router->post('password-lost', [$LoginController, 'sendResetLink']);
+$router->get('password-reset', [$LoginController, 'renderResetPassword']);
+$router->post('password-reset', [$LoginController, 'updatePassword']);
+$router->get('admin/login-audit', [$LoginController, 'showLoginAudit']);
 $router->get('logout', [$LoginController, 'logout']);
 
 // Admin Controller
@@ -41,3 +44,5 @@ $router->post('check-username', [$UserController, 'checkUsername']);
 $router->post('check-email', [$UserController, 'checkEmail']);
 $router->post('profile-password', [$UserController, 'updatePassword']);
 $router->post('check-password', [$UserController, 'checkPassword']);
+
+// Platform Controller

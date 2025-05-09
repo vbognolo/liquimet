@@ -12,26 +12,46 @@
                 </div>
             </div>
             
-            <div class="container form-box">
-                <form id="login-form" method="POST" action="login" class="col-9 justify-content-center mx-auto my-auto">
+            <div class="container form-box pb-5">
+                {# Login Form #}
+                <form id="login-form" method="POST" action="login" 
+                    class="col-9 justify-content-center mx-auto my-auto {% if forgot_form is defined and forgot_form %}d-none{% endif %}" novalidate >
                     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
                     <div class="input-group mx-auto my-2 input-login">
-                        <label for="login-username" class="input-group-text">
+                        <label for="username" class="input-group-text">
                             <i class="bi bi-person-fill"></i>
                         </label>
                         
-                        <input type="text" id="login-username" name="login-username" class="form-control" placeholder="username" autocomplete="off" />   
+                        <input type="text" id="username" name="username" placeholder="username" autocomplete="off"
+                            class="form-control" />   
                     </div>
 
                     <div class="input-group mx-auto my-2 input-login">
-                        <label for="login-password" class="input-group-text">
+                        <label for="password" class="input-group-text">
                             <i class="bi bi-lock-fill"></i>
                         </label>
                         
-                        <input type="password" id="login-password" name="login-password" class="form-control" placeholder="password" /> 
+                        <input type="password" id="password" name="password" placeholder="password" autocomplete="off"
+                            class="form-control" /> 
                     </div>
 
+                    {# Error box with fixed height to prevent layout shift #}
+                    <div class="my-3" style="min-height: 6rem;">
+                        {% if errors is defined and errors is not empty and not forgot_form %}
+                            <div id="loginErrorBox" class="alert alert-danger py-2 px-3">
+                                {% for error in errors %}
+                                    <span class="my-auto" style="font-size: 1.2rem">
+                                        {{ error }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div id="loginErrorBox" class="alert alert-danger d-none py-2 px-3">
+                                <span class="mb-0"></span>
+                            </div>
+                        {% endif %}
+                    </div>
                     <!--<div class="form-group" id="login-form-group">
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="remember">
@@ -39,27 +59,189 @@
                         </div>
                     </div>-->
                     
-
                     <div class="col-8 mx-auto my-4 btn-box">
                         <button type="submit" name="login" class="btn login-btn" id="login-btn" value="Accedi">
                             ACCEDI
                         </button>
                     </div>
+
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-center links">
+                            <a href="?forgot_password" id="lost-password">
+                                Hai dimenticato la password?
+                            </a>
+                        </div>
+                    </div> 
                 </form>
+                {# End Login Form #}
 
-                <div class="col-9 mx-auto {% if error %}alert alert-danger{% endif %}">
-                    {{ error }}
-                </div>
+                {# Forgot Password Form #}
+                <form id="forgot-password-form" method="POST" action="password-lost" 
+                    class="col-9 justify-content-center mx-auto my-auto {% if forgot_form is not defined or not forgot_form %}d-none{% endif %}" novalidate >
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                    <div class="input-group mx-auto my-auto input-login">
+                        <label for="email" class="input-group-text">
+                            <i class="bi bi-envelope-at"></i>
+                        </label>
+                        
+                        <input type="text" id="email" name="email" placeholder="e-mail" autocomplete="off"
+                            class="form-control" />   
+                    </div>
+
+                    {# Error box with fixed height to prevent layout shift #}
+                    <div class="my-3" style="min-height: 6rem;">
+                        {% if errors is defined and errors is not empty and forgot_form %}
+                            <div id="forgotErrorBox" class="alert alert-danger py-2 px-3">
+                                {% for error in errors %}
+                                    <span class="my-auto" style="font-size: 1.2rem">
+                                        {{ error }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        {% elseif success %}
+                            <div id="forgotErrorBox" class="alert alert-success py-2 px-3">
+                                <span class="mb-0">
+                                    {{ success }}
+                                </span>
+                            </div>
+                        {% else %}
+                            <div id="forgotErrorBox" class="alert alert-danger d-none py-2 px-3">
+                                <span class="mb-0"></span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="col-8 mx-auto my-4 btn-box">
+                        <button type="submit" name="send" class="btn login-btn" id="send-btn" value="Invia">
+                            INVIA
+                        </button>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-center links">
+                            <a href="login" id="back-to-login">
+                                &#60;&#60; Torna alla pagina di login &#62;&#62;
+                            </a>
+                        </div>
+                    </div>
+                </form>
+                {# End Forgot Password Form #}
             </div>
-
-            <div class="mt-4">
-                <div class="d-flex justify-content-center links">
-                    <a href="password-lost" id="lost-password">
-                        Hai dimenticato la password?
-                    </a>
-                </div>
-            </div> 	
         </div>
     </div>
 </body>
+{% endblock %}
+
+{% block scripts %}
+    {# jQuery (must be first) #}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+        crossorigin="anonymous">
+</script>
+    {# jQuery Validation (depends on jQuery) #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js" 
+        integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer">
+</script>
+<script>
+$(document).ready(function() {
+    /*function resetForm() {
+        $("form").each(function (){
+            this.reset();
+        });
+        $('#loginErrorBox, #forgotErrorBox').addClass('d-none').find('span').empty();
+    }*/
+
+    $('#lost-password').on('click', function (e) {
+        e.preventDefault();
+        resetForm();
+        toggleForm(true);
+        /*$('#login-form').addClass('d-none');
+        $('#forgot-password-form').removeClass('d-none');*/
+    });
+
+    /*$('#back-to-login').on('click', function (e) {
+        e.preventDefault();
+        resetForm();
+        toggleForms(false);
+        /*$('#forgot-password-form').addClass('d-none');
+        $('#login-form').removeClass('d-none');*/
+    //});
+
+    // If the forgot form is pre-defined (server-side), automatically switch forms
+    {% if forgot_form is defined and forgot_form %}
+        toggleForms(true);  // Show forgot password form on initial load
+    {% endif %}
+/*
+    $("#login-form").validate({
+        /*showErrors: function(errorMap, errorList) {
+            if (errorList.lenght) {
+                $("#errorBox").removeClass("d-none").show();
+            } else {
+                $("#errorBox").addClass("d-none").hide();
+            }
+            this.defaultShowErrors();
+        },*/
+  /*      rules: {
+            username: { required: true },
+            password: { required: true }
+        },
+        messages: {
+            username: { "Inserire username e password per accedere al sito." }
+        }/*,
+        onfocusout: function(element) {
+            this.element(element);
+        },
+        errorPlacement: function(error, element) {
+            error.addClass("text-danger small");
+            element.addClass("is-invalid");                                             // Bootstrap error class
+            element.closest(".form-group").find(".login-error").html(error);      // Insert error inside the reserved space
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                type: "POST",
+                url: "login",
+                data: $(form).serialize(),
+                dataType: "json",
+                success: function(response) {
+                    if (response.success) {
+
+                    } else {
+                        $(".invalid-feedback").remove();                    
+                        $.each(response.errors, function(field, message) {
+                            let input = $("[name='" + field + "']");
+                            input.addClass("is-invalid");
+                            $(".login-error").text(message);
+                        });
+                    }
+                },
+                error: function() {
+                    $(".login-error").text("Errore di rete. Riprova.");
+                }
+            });
+        }*/
+    //});
+
+
+});
+
+function toggleForms(showForgotForm) {
+    if (showForgotForm) {
+        $('#login-form').addClass('d-none');  // Hide login form
+        $('#forgot-password-form').removeClass('d-none');  // Show forgot password form
+    } else {
+        $('#forgot-password-form').addClass('d-none');  // Hide forgot password form
+        $('#login-form').removeClass('d-none');  // Show login form
+    }
+}
+
+function resetForm() {
+    $('#login-form, #forgot-password-form').each(function () {
+        this.reset();
+        $(this).find('.alert').addClass('d-none').find('span').text('');
+    });
+}
+</script>
 {% endblock %}

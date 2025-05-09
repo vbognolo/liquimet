@@ -105,6 +105,7 @@ require_once __DIR__ . '/../src/setup.php';
 $router = new \Liquimet\Core\Router($session);
 
 // DEFINE your models here 
+$loginAttempt = new \Liquimet\Model\LoginAttempt($database);
 $mUser = new \Liquimet\Model\User($database);
 $mTitle = new \Liquimet\Model\Title($database);
 $mTrans = new \Liquimet\Model\Transport($database);

@@ -115,7 +115,7 @@ label.input-group-text > i {
 
 .input-login .form-control:focus {
     box-shadow: 0 0 8px rgba(0, 102, 204, 0.5);
-    outline: none;
+    outline: none; 
 }
 
 /* Login Button */
@@ -123,7 +123,9 @@ label.input-group-text > i {
     margin-top: 10rem;
 }
 
-#login-btn {
+#login-btn,
+#send-btn,
+#confirm-btn {
     width: 100%;
     font-size: 1.8rem;
     letter-spacing: 0.05rem;
@@ -135,13 +137,27 @@ label.input-group-text > i {
     transition: all 0.3s ease-in-out;
 }
 
-#login-btn:hover {
+#login-btn:hover,
+#send-btn:hover,
+#confirm-btn:hover {
     color: #0b7c09;
     font-weight: 600;
     border-color: #0b7c09;
     box-shadow: 0px 1px 5px rgba(11, 124, 9, 0.5);
 }
 
+.links #lost-password,    .links #lost-password:focus,    .links #lost-password:active,
+.links #back-to-login,    .links #back-to-login:focus,    .links #back-to-login:focus  {
+    font-size: 1.4rem;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.links #lost-password:hover,
+.links #back-to-login:hover {
+    font-weight: 600;
+    text-decoration: none;
+}
 /* LOGIN PAGE - Responsive Design */
 @media (max-width: 768px) {
     .user-card {
@@ -1317,13 +1333,6 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
 /* ==> End Form Footer with Form Buttons */
 
 /* ==> Error and Success Messages */
-.error-placeholder {
-    min-height: 1.65rem;    
-    line-height: 1.3rem;
-    font-size: 1rem;   
-    display: block;
-}
-
 #user-form .error-placeholder
 #profile-edit .error-placeholder {
     min-height: 1.65rem;                                                        /* Adjust this based on expected error message height */
@@ -1331,14 +1340,16 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
 
 #user-form .is-invalid,
 #profile-edit .is-invalid,
-#password-.is-invalid {
+#password-change .is-invalid,
+#reset-password-form .is-invalid {
     border: 1px solid rgb(220, 53, 69) !important;                            /* Red border */
     box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);                               /* Optional glow effect */
 }
 
 #user-form .is-valid,
 #profile-edit .is-valid,
-#password-change .is-valid {
+#password-change .is-valid,
+#reset-password-form .is-valid {
     border: 1px solid rgb(40, 167, 69) !important;                            /* Green border for valid inputs */
     box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
 }

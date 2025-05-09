@@ -79,7 +79,7 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
 ";
         // line 21
         yield from $this->unwrap()->yieldBlock('body', $context, $blocks);
-        // line 172
+        // line 183
         yield "</html>";
         yield from [];
     }
@@ -248,12 +248,28 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
                         </li>
 
                         <li>
-                            <a class=\"dropdown-item d-flex justify-content-center\" 
-                                href=\"/profile\">
-                                    <span> Profilo </span>
+                            <a class=\"dropdown-item d-flex justify-content-center\" href=\"/profile\">
+                                <span> Profilo </span>
                             </a>
                         </li>
             
+                        <li>
+                            <hr class=\"dropdown-divider\">
+                        </li>
+
+                        ";
+        // line 126
+        if ((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "role", [], "any", false, false, false, 126) == "admin")) {
+            // line 127
+            yield "                            <li>
+                                <a class=\"dropdown-item d-flex justify-content-center\" href=\"/admin/login-audit\">
+                                    <span> Revisione accesso utenti </span>
+                                </a>
+                            </li>
+                        ";
+        }
+        // line 133
+        yield "
                         <li>
                             <hr class=\"dropdown-divider\">
                         </li>
@@ -265,7 +281,7 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
                         </li>    
                     </ul>  
                     ";
-        // line 133
+        // line 144
         yield " 
                     
                 </li>               
@@ -282,8 +298,8 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
         <div class=\"offcanvas-body\">
             <ul class=\"nav flex-column\">
                 <li class=\"nav-item\"><a class=\"nav-link\" href=\"/";
-        // line 148
-        if ((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "access", [], "any", false, false, false, 148) == "admin")) {
+        // line 159
+        if ((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "access", [], "any", false, false, false, 159) == "admin")) {
             yield "admin/dashboard";
         } else {
             yield "index";
@@ -291,37 +307,37 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
         yield "\">Home</a></li>
                 <li class=\"nav-item\"><a class=\"nav-link\" href=\"#\">Tables</a></li>
                 ";
-        // line 150
-        if ((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "access", [], "any", false, false, false, 150) == "admin")) {
-            // line 151
+        // line 161
+        if ((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "access", [], "any", false, false, false, 161) == "admin")) {
+            // line 162
             yield "                    <li class=\"nav-item\"><a class=\"nav-link\" href=\"#\">Companies</a></li>
                 ";
         }
-        // line 153
+        // line 164
         yield "            </ul>
         </div>
     </div>
 
     <main>
         ";
-        // line 158
+        // line 169
         yield from $this->unwrap()->yieldBlock('content', $context, $blocks);
-        // line 159
+        // line 170
         yield "    </main>
 
     <footer class=\"footer mt-auto p-1\">
         <div class=\"container\">
             <span> Liquimet Italia ";
-        // line 163
+        // line 174
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate("now", "Y"), "html", null, true);
         yield "&copy; Tutti i diritti riservati. </span>
         </div>
     </footer>
 
     ";
-        // line 167
+        // line 178
         yield from $this->unwrap()->yieldBlock('scripts', $context, $blocks);
-        // line 168
+        // line 179
         yield "
     <script src=\"/js/main.js\"></script> 
 </body>
@@ -359,7 +375,7 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
         yield from [];
     }
 
-    // line 158
+    // line 169
     /**
      * @return iterable<null|scalar|\Stringable>
      */
@@ -369,7 +385,7 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
         yield from [];
     }
 
-    // line 167
+    // line 178
     /**
      * @return iterable<null|scalar|\Stringable>
      */
@@ -393,7 +409,7 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  373 => 167,  363 => 158,  355 => 90,  348 => 89,  340 => 43,  333 => 42,  325 => 168,  323 => 167,  316 => 163,  310 => 159,  308 => 158,  301 => 153,  297 => 151,  295 => 150,  286 => 148,  269 => 133,  242 => 109,  238 => 108,  233 => 105,  227 => 102,  222 => 99,  217 => 96,  214 => 94,  211 => 89,  208 => 87,  202 => 82,  196 => 78,  190 => 73,  188 => 72,  186 => 71,  180 => 67,  174 => 62,  162 => 56,  158 => 54,  151 => 49,  148 => 47,  145 => 42,  128 => 31,  125 => 30,  116 => 22,  109 => 21,  99 => 18,  88 => 4,  83 => 172,  81 => 21,  75 => 18,  72 => 17,  67 => 13,  62 => 9,  54 => 4,  49 => 1,);
+        return array (  389 => 178,  379 => 169,  371 => 90,  364 => 89,  356 => 43,  349 => 42,  341 => 179,  339 => 178,  332 => 174,  326 => 170,  324 => 169,  317 => 164,  313 => 162,  311 => 161,  302 => 159,  285 => 144,  272 => 133,  264 => 127,  262 => 126,  242 => 109,  238 => 108,  233 => 105,  227 => 102,  222 => 99,  217 => 96,  214 => 94,  211 => 89,  208 => 87,  202 => 82,  196 => 78,  190 => 73,  188 => 72,  186 => 71,  180 => 67,  174 => 62,  162 => 56,  158 => 54,  151 => 49,  148 => 47,  145 => 42,  128 => 31,  125 => 30,  116 => 22,  109 => 21,  99 => 18,  88 => 4,  83 => 183,  81 => 21,  75 => 18,  72 => 17,  67 => 13,  62 => 9,  54 => 4,  49 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -514,12 +530,23 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
                         </li>
 
                         <li>
-                            <a class=\"dropdown-item d-flex justify-content-center\" 
-                                href=\"/profile\">
-                                    <span> Profilo </span>
+                            <a class=\"dropdown-item d-flex justify-content-center\" href=\"/profile\">
+                                <span> Profilo </span>
                             </a>
                         </li>
             
+                        <li>
+                            <hr class=\"dropdown-divider\">
+                        </li>
+
+                        {% if session.role == 'admin' %}
+                            <li>
+                                <a class=\"dropdown-item d-flex justify-content-center\" href=\"/admin/login-audit\">
+                                    <span> Revisione accesso utenti </span>
+                                </a>
+                            </li>
+                        {% endif %}
+
                         <li>
                             <hr class=\"dropdown-divider\">
                         </li>

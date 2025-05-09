@@ -368,7 +368,7 @@ $(document).ready(function(){
                     $(this).closest('.form-group').find('.error-placeholder').html('');
                 }
         });
-        $('#profile-edit .is-invalid').removeClass('is-invalid');
+        $('#profile-edit').removeClass('is-invalid');
     }
 
 //  Detect changes and reset if changed
@@ -385,7 +385,7 @@ $(document).ready(function(){
     }
 
 //  When switching to overview tab
-    $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+    $('button[data-bs-toggle="pill"]').on('shown.bs.tab', function (e) {
         const targetId = $(e.target).attr('href');
             if (targetId === '#p-overview') {
                 if (formHasChanged()) {

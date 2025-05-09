@@ -283,43 +283,6 @@ class User {
         
         return $this->db->runSQL($sql)->fetchAll();         
     }
-  
-
-
-   /* 
-        // 🔹 Store password reset token
-        public function storePasswordResetToken(string $email, string $token, int $expires): bool {
-            $stmt = $this->db->prepare("UPDATE users SET reset_token = :token, token_expiry = :expires WHERE email = :email");
-            return $stmt->execute([
-                'token' => $token,
-                'expires' => $expires,
-                'email' => $email
-            ]);
-        }
-
-            // 🔹 Get user by reset token
-    public function getUserByToken(string $token): ?array {
-        $stmt = $this->db->prepare("SELECT * FROM users WHERE reset_token = :token LIMIT 1");
-        $stmt->execute(['token' => $token]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        return ($user && time() <= $user['token_expiry']) ? $user : null;
-    }
-
-    // 🔹 Update user password
-    public function updatePassword(string $email, string $hashed_password): bool {
-        $stmt = $this->db->prepare("UPDATE users SET password = :password, reset_token = NULL, token_expiry = NULL WHERE email = :email");
-        return $stmt->execute([
-            'password' => $hashed_password,
-            'email' => $email
-        ]);
-    }
-
-    // 🔹 Delete reset token after successful password reset
-    public function deleteResetToken(string $token): bool {
-        $stmt = $this->db->prepare("UPDATE users SET reset_token = NULL, token_expiry = NULL WHERE reset_token = :token");
-        return $stmt->execute(['token' => $token]);
-    }
-*/
     
 /**
  *  Update user profile
@@ -356,23 +319,27 @@ class User {
  *  Validate password 
  */ 
     public function validatePassword(string $newPass, string $confirm): array {
-        $error = [];
+        $errors = [];
 
-        //  Required fields check
-        foreach (['newPass, confirm'] as $field) {
-            if (empty($member[$field])) {
-                $error[$field] = "Campo obbligatorio.";
-            }
+        if(empty($newPass)) {
+            $errors['newPass'] = "Campo obbligatorio";
+        } 
+
+        if(empty($confirm)) {
+            $errors['confirmPass'] = "Campo obbligatorio";
         }
 
         if (!empty($newPass) && Validate::validate_password($newPass)) {
-            if (!empty($confirm) && $newPass !== $confirm)
-                $error['confirm'] = 'La nuova password e la conferma non coincidono.';
-        } else {
-            $error['newPass'] = 'La password deve contenere almeno 1 lettera maiuscola, 1 minuscola e 1 numero o carattere speciale.';
+            $errors['newPass'] = 'La password deve contenere almeno 1 lettera maiuscola, 1 minuscola e 1 numero o carattere speciale'; 
+        } elseif (!empty($newPass) && !Validate::chars_length($newPass, 8)) {
+            $errors['newPass'] = 'La password deve contenere almeno 8 caratteri';
         }
 
-        return $error;
+        if (!empty($confirm) && $newPass !== $confirm) {
+            $errors['confirmPass'] = 'La nuova password e la conferma non coincidono';
+        }
+
+        return $errors;
     }
 
 /**
@@ -409,16 +376,15 @@ class User {
 /**
  *  Password reset token
  */
-    public function savePasswordResetToken(int $id, string $token, string $expires): bool {
+    public function storePasswordResetToken(int $id, string $token): bool {
         $sql = "UPDATE `users`
                 SET reset_token = :token,
-                    reset_expires = :expires
+                    reset_expires = NOW() + INTERVAL 1 HOUR
                 WHERE id_user = :id_user
                 LIMIT 1";
     
         $stmt = $this->db->runSQL($sql, [
             'token'   => $token,
-            'expires' => $expires,
             'id_user' => $id
         ]);
     

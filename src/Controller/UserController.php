@@ -255,7 +255,7 @@ class UserController {
             $error = $this->mUser->validatePassword($newPass, $confirm);
 
                 if (!Validate::validate_password($newPass)) {
-                    $error['newPass'] = "La password deve contenere almeno 1 lettera maiuscola, una minuscola e un numero o carattere speciale."; 
+                    $error['newPass'] = "La password deve contenere almeno 1 lettera maiuscola, 1 minuscola e 1 numero o carattere speciale."; 
                 }
             
                 if ($newPass !== $confirm) {

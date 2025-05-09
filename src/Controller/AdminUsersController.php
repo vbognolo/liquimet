@@ -116,7 +116,7 @@ class AdminUsersController {
             }
 
             if (!Validate::validate_email($member['email'])) {
-                $errors['email'] = "Indirizzo e-mail invalido.";
+                $errors['email'] = "Indirizzo e-mail non valido.";
             }
 
             if (!Validate::validate_username($member['username'])) {
