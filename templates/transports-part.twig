@@ -1,0 +1,75 @@
+{% extends 'layout.twig' %}
+{% block title %} Trasporti Parziali - Piattaforma {{ 'now'|date('Y') }} {% endblock %}
+ 
+{% block search %}
+    {# Search Bar #}
+    <section class="row my-auto mx-auto search-header">
+        <div class="my-auto m-0 search-bar">
+            <form id="search-form">
+                <button type="button" class="my-1 search-btn">
+                    <i class="bi bi-search"></i>
+                </button>
+                <input type="text" class="my-1 search-input" id="search" placeholder="      Cerca.." />  
+            </form>
+        </div>
+    </section>
+{% endblock %}
+
+{% block browse %}
+    <!--    ===>    BROWSE FILE BAR    <===    -->
+    <section class="row my-auto mx-auto browse-header">
+        <div class="my-auto m-0 browse-bar">
+            <form id="browse-form" enctype="multipart/form-data" method="POST" action="{{ doc_root }}import-csv">
+                <label for="browse-input" class="my-1 browse-btn">
+                    <i class="bi bi-upload"></i>
+                </label>
+                
+                <input type="file" class="my-1 browse-input" id="browse-input" name="browse-input" onchange="$('.browse-label').val($(this).val()); $('.browse-group').css('display', 'block');" />
+                <input type="text" class="my-1 browse-label" readonly />
+                
+                <span class="my-1 browse-group"> 
+                    <button type="button" class="my-1 remove-btn">
+                        <i class="bi bi-x-circle"></i>
+                    </button>
+
+                    <button type="button" class="my-1 upload-btn">
+                        <i class="bi bi-check-circle"></i>
+                    </button>
+                </span>
+                
+                <!--<button type="button" class="my-1 browse-btn">
+                    <i class="bi bi-upload"></i>
+                </button>-->
+                
+                <!--<div class="input-group my-1 browse-group">
+                    <input type="text" class="my-1 browse-label" name="browse-label" readonly />  
+                        <button type="button" class="my-1 upload-btn">
+                            <span>
+                                <i class="bi bi-plus-circle"></i>
+                            </span>
+                        </button>
+
+                        <button type="button" class="my-1 remove-btn">
+                            <span>
+                                <i class="bi bi-x-circle"></i>
+                            </span>
+                        </button>
+                </div>-->
+            </form>
+        </div>
+    </section>
+    <!--    ===>    END BROWSE FILE BAR    <===    -->
+{% endblock %}
+
+{% block content %} 
+    {% include 'transports-navigation.twig' %}
+
+
+{% block scripts %}
+    {# Bootstrap JS bundle #}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha256-y3ibfOyBqlgBd+GzwFYQEVOZdNJD06HeDXihongBXKs=" 
+    crossorigin="anonymous">
+</script>
+
+{% endblock %}

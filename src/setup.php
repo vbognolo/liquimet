@@ -32,6 +32,13 @@ $twig->addGlobal('doc_root', DOC_ROOT);          // Document root
 $session = new \Liquimet\Session\Session;                     // Create session
 $twig->addGlobal('session', $session);           // Add session to Twig global
 
+$twig->addFilter(new \Twig\TwigFilter('truncate', function ($string, $length = 50) {
+    if (strlen($string) > $length) {
+        return substr($string, 0, $length) . '...';
+    }
+    return $string;
+}));
+
     if(DEV === true){                                                               // If in development
         $twig->addExtension(new \Twig\Extension\DebugExtension());       // Add Twig debug extension
     }

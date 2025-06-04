@@ -14,8 +14,8 @@ use Twig\Source;
 use Twig\Template;
 use Twig\TemplateWrapper;
 
-/* admin/users-navigation.twig */
-class __TwigTemplate_4e9c9fcbb96bc0822ebd79b91dfb59f0 extends Template
+/* transports-navigation.twig */
+class __TwigTemplate_acbdc0b2810fcf770eeffcb9048bfbed extends Template
 {
     private Source $source;
     /**
@@ -32,7 +32,8 @@ class __TwigTemplate_4e9c9fcbb96bc0822ebd79b91dfb59f0 extends Template
         $this->parent = false;
 
         $this->blocks = [
-            'scripts' => [$this, 'block_scripts'],
+            'jquery' => [$this, 'block_jquery'],
+            'page_script' => [$this, 'block_page_script'],
         ];
     }
 
@@ -44,9 +45,9 @@ class __TwigTemplate_4e9c9fcbb96bc0822ebd79b91dfb59f0 extends Template
     <div class=\"d-flex flex-column align-items-center submenu\">
             
         <div class=\"text-center mx-auto\">
-            <a class=\"mx-1\" href=\"/admin/users\">
+            <a class=\"mx-1\" href=\"/platform\">
                 <h1 class=\"submenu-title\"> 
-                    Utenti
+                    Costo LNG
                 </h1>
             </a>
         </div>    
@@ -55,8 +56,9 @@ class __TwigTemplate_4e9c9fcbb96bc0822ebd79b91dfb59f0 extends Template
             <ul class=\"navbar d-flex align-items-center\">
 
                 <li class=\"nav-item px-1\">
-                    <a class=\"nav-link align-middle\" href=\"/admin/user\">
-                        REGISTRAZIONE
+                    <a class=\"nav-link align-middle\" href=\"/transports-full\">
+                        <abbr title=\"Transport Management System\">TMS</abbr> 
+                            - PIENI
                     </a>
                 </li>
 
@@ -65,8 +67,19 @@ class __TwigTemplate_4e9c9fcbb96bc0822ebd79b91dfb59f0 extends Template
                 </li>
                     
                 <li class=\"nav-item px-1\">
-                    <a class=\"nav-link align-middle\" href=\"/admin/titles\">
-                        RUOLI AZIENDALI
+                    <a class=\"nav-link align-middle\" href=\"/transports-part\">
+                        <abbr title=\"Transport Management System\">TMS</abbr> 
+                           - PARZIALI
+                    </a>
+                </li>
+
+                <li class=\"nav-item\"> 
+                    <i class=\"bi bi-circle-fill\"></i>
+                </li>
+
+                <li class=\"nav-item px-1\">
+                    <a class=\"nav-link align-middle\" href=\"/transport\">
+                        CREA TRASPORTO
                     </a>
                 </li>
 
@@ -76,31 +89,41 @@ class __TwigTemplate_4e9c9fcbb96bc0822ebd79b91dfb59f0 extends Template
 </section>
 
 ";
-        // line 37
-        yield from $this->unwrap()->yieldBlock('scripts', $context, $blocks);
+        // line 49
+        yield from $this->unwrap()->yieldBlock('jquery', $context, $blocks);
+        // line 55
+        yield "
+";
+        // line 56
+        yield from $this->unwrap()->yieldBlock('page_script', $context, $blocks);
         yield from [];
     }
 
+    // line 49
     /**
      * @return iterable<null|scalar|\Stringable>
      */
-    public function block_scripts(array $context, array $blocks = []): iterable
+    public function block_jquery(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 38
-        yield "    ";
-        // line 39
+        // line 50
         yield "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
         integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
         crossorigin=\"anonymous\">
 </script>
-    ";
-        // line 44
-        yield "<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js\" 
-        integrity=\"sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz\" 
-        crossorigin=\"anonymous\">
-</script>
-<script>
+";
+        yield from [];
+    }
+
+    // line 56
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_page_script(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        // line 57
+        yield "<script>
 \$(document).ready(function(){
     jQuery(function(\$){
         \$(\"ul a\").click(function(e){
@@ -141,7 +164,7 @@ class __TwigTemplate_4e9c9fcbb96bc0822ebd79b91dfb59f0 extends Template
      */
     public function getTemplateName(): string
     {
-        return "admin/users-navigation.twig";
+        return "transports-navigation.twig";
     }
 
     /**
@@ -149,19 +172,19 @@ class __TwigTemplate_4e9c9fcbb96bc0822ebd79b91dfb59f0 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  99 => 44,  93 => 39,  91 => 38,  80 => 37,  43 => 2,);
+        return array (  126 => 57,  119 => 56,  110 => 50,  103 => 49,  98 => 56,  95 => 55,  93 => 49,  44 => 2,);
     }
 
     public function getSourceContext(): Source
     {
-        return new Source("{# Users Page Navigation #}
+        return new Source("{# Platform Page Navigation #}
 <section class=\"col-12 my-1\">
     <div class=\"d-flex flex-column align-items-center submenu\">
             
         <div class=\"text-center mx-auto\">
-            <a class=\"mx-1\" href=\"/admin/users\">
+            <a class=\"mx-1\" href=\"/platform\">
                 <h1 class=\"submenu-title\"> 
-                    Utenti
+                    Costo LNG
                 </h1>
             </a>
         </div>    
@@ -170,8 +193,9 @@ class __TwigTemplate_4e9c9fcbb96bc0822ebd79b91dfb59f0 extends Template
             <ul class=\"navbar d-flex align-items-center\">
 
                 <li class=\"nav-item px-1\">
-                    <a class=\"nav-link align-middle\" href=\"/admin/user\">
-                        REGISTRAZIONE
+                    <a class=\"nav-link align-middle\" href=\"/transports-full\">
+                        <abbr title=\"Transport Management System\">TMS</abbr> 
+                            - PIENI
                     </a>
                 </li>
 
@@ -180,8 +204,19 @@ class __TwigTemplate_4e9c9fcbb96bc0822ebd79b91dfb59f0 extends Template
                 </li>
                     
                 <li class=\"nav-item px-1\">
-                    <a class=\"nav-link align-middle\" href=\"/admin/titles\">
-                        RUOLI AZIENDALI
+                    <a class=\"nav-link align-middle\" href=\"/transports-part\">
+                        <abbr title=\"Transport Management System\">TMS</abbr> 
+                           - PARZIALI
+                    </a>
+                </li>
+
+                <li class=\"nav-item\"> 
+                    <i class=\"bi bi-circle-fill\"></i>
+                </li>
+
+                <li class=\"nav-item px-1\">
+                    <a class=\"nav-link align-middle\" href=\"/transport\">
+                        CREA TRASPORTO
                     </a>
                 </li>
 
@@ -190,17 +225,14 @@ class __TwigTemplate_4e9c9fcbb96bc0822ebd79b91dfb59f0 extends Template
     </div>
 </section>
 
-{% block scripts %}
-    {# JQuery #}
+{% block jquery %}
 <script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
         integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
         crossorigin=\"anonymous\">
 </script>
-    {# Bootstrap JS bundle (includes modal) #}
-<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js\" 
-        integrity=\"sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz\" 
-        crossorigin=\"anonymous\">
-</script>
+{% endblock %}
+
+{% block page_script %}
 <script>
 \$(document).ready(function(){
     jQuery(function(\$){
@@ -233,6 +265,6 @@ class __TwigTemplate_4e9c9fcbb96bc0822ebd79b91dfb59f0 extends Template
     });
 });
 </script>
-{% endblock %}", "admin/users-navigation.twig", "C:\\wamp64\\www\\liquimet\\templates\\admin\\users-navigation.twig");
+{% endblock %}", "transports-navigation.twig", "C:\\wamp64\\www\\liquimet\\templates\\transports-navigation.twig");
     }
 }

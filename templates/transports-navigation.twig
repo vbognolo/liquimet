@@ -1,10 +1,10 @@
-<!--    Transports Title Navigation   -->
+{# Platform Page Navigation #}
 <section class="col-12 my-1">
     <div class="d-flex flex-column align-items-center submenu">
             
         <div class="text-center mx-auto">
-            <a class="px-3" href="{{ doc_root }}platform">
-                <h1 class="p-5 submenu-title"> 
+            <a class="mx-1" href="/platform">
+                <h1 class="submenu-title"> 
                     Costo LNG
                 </h1>
             </a>
@@ -14,7 +14,7 @@
             <ul class="navbar d-flex align-items-center">
 
                 <li class="nav-item px-1">
-                    <a class="nav-link align-middle" href="{{ doc_root }}transports-full">
+                    <a class="nav-link align-middle" href="/transports-full">
                         <abbr title="Transport Management System">TMS</abbr> 
                             - PIENI
                     </a>
@@ -25,7 +25,7 @@
                 </li>
                     
                 <li class="nav-item px-1">
-                    <a class="nav-link align-middle" href="{{ doc_root }}transports-part">
+                    <a class="nav-link align-middle" href="/transports-part">
                         <abbr title="Transport Management System">TMS</abbr> 
                            - PARZIALI
                     </a>
@@ -36,7 +36,7 @@
                 </li>
 
                 <li class="nav-item px-1">
-                    <a class="nav-link align-middle" href="transport">
+                    <a class="nav-link align-middle" href="/transport">
                         CREA TRASPORTO
                     </a>
                 </li>
@@ -45,52 +45,45 @@
         </div>
     </div>
 </section>
-<!--    End Transports Title Navigation    -->
 
-{% block scripts %}
-    {# jQuery (must be first) #}
+{% block jquery %}
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
         crossorigin="anonymous">
 </script>
-    {# jQuery Validation (depends on jQuery) #}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js" 
-        integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ==" 
-        crossorigin="anonymous" 
-        referrerpolicy="no-referrer">
-</script>
+{% endblock %}
 
+{% block page_script %}
 <script>
-    $(document).ready(function(){
-        jQuery(function($){
-            $("ul a").click(function(e){
-                var link = $(this);
-                var item = link.parent("li");
-                
-                if(item.hasClass("active")){
-                    item.removeClass("active").children("a").removeClass("active");
-                } else{
-                    item.addClass("active").children("a").addClass("active");
-                }
-
-                if(item.children("ul").length > 0){
-                    var href = link.attr("href");
-                    link.attr("href");
-                        setTimeout(function(){ 
-                            link.attr("href", href);
-                        }, 300);
-                    e.preventDefault();
-                }
-            })
-            .each(function(){
-                var link = $(this);
-                if(link.get(0).href === location.href){
-                    link.addClass("active").parents("li").addClass("active");
-                        return false;
-                }
-            });
+$(document).ready(function(){
+    jQuery(function($){
+        $("ul a").click(function(e){
+            var link = $(this);
+            var item = link.parent("li");
+                    
+            if(item.hasClass("active")){
+                item.removeClass("active").children("a").removeClass("active");
+            } else{
+                item.addClass("active").children("a").addClass("active");
+            }
+    
+            if(item.children("ul").length > 0){
+                var href = link.attr("href");
+                link.attr("href");
+                    setTimeout(function(){ 
+                        link.attr("href", href);
+                    }, 300);
+                e.preventDefault();
+            }
+         })
+        .each(function(){
+            var link = $(this);
+            if(link.get(0).href === location.href){
+                link.addClass("active").parents("li").addClass("active");
+                    return false;
+            }
         });
-
     });
+});
 </script>
 {% endblock %}

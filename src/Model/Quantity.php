@@ -10,15 +10,18 @@ class Quantity{
 
 //  ** [S E L E C T]     S T A T E M E N T S **    
 //  ===> GET QUANTITY BY TRANSPORT ID    [select single]  
-    public function get(int $id){    
-        $sql = "SELECT q.*,
-                       t.id_transport AS id_transport  
+    public function get(int $id): array {    
+        $sql = "SELECT q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.mwh, q.liquid_density, 
+                       q.gas_weight, q.mj_kg, q.pcs_ghv, q.volume_mc, q.volume_nmc, q.smc_mc, q.gas_nmc, q.gas_smc, q.smc_kg, 
+                       q.id_transport
                 FROM quantities AS q
                 JOIN transports AS t 
-                    ON q.id_transport = t.id_transport
-                WHERE q.id_transport = :id_transport;";
-                
-        return $this->db->runSQL($sql, [$id])->fetch();  
+                ON q.id_transport = t.id_transport 
+                WHERE q.id_transport = :id_transport
+                LIMIT 1"; 
+        
+        $quantity = $this->db->runSQL($sql, ['id_transport' => $id])->fetch();  
+            return $quantity ?: [];
     }
 
 //  ===> GET ALL QUANTITIES BY TRANSPORT ID    [select all]        

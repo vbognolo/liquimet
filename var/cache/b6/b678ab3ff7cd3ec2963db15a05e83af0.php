@@ -32,7 +32,6 @@ class __TwigTemplate_84b41dcb5b9290dc3153282ab884ff9f extends Template
         $this->blocks = [
             'title' => [$this, 'block_title'],
             'content' => [$this, 'block_content'],
-            'scripts' => [$this, 'block_scripts'],
         ];
     }
 
@@ -698,24 +697,6 @@ class __TwigTemplate_84b41dcb5b9290dc3153282ab884ff9f extends Template
         yield from [];
     }
 
-    // line 454
-    /**
-     * @return iterable<null|scalar|\Stringable>
-     */
-    public function block_scripts(array $context, array $blocks = []): iterable
-    {
-        $macros = $this->macros;
-        // line 455
-        yield "    ";
-        // line 456
-        yield "<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js\" 
-        integrity=\"sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz\" 
-        crossorigin=\"anonymous\">
-</script>
-";
-        yield from [];
-    }
-
     /**
      * @codeCoverageIgnore
      */
@@ -737,7 +718,7 @@ class __TwigTemplate_84b41dcb5b9290dc3153282ab884ff9f extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  711 => 456,  709 => 455,  702 => 454,  602 => 357,  596 => 355,  590 => 353,  588 => 352,  580 => 346,  574 => 344,  568 => 342,  566 => 341,  558 => 335,  552 => 333,  546 => 331,  544 => 330,  539 => 327,  536 => 326,  533 => 325,  531 => 324,  506 => 301,  502 => 299,  498 => 297,  496 => 296,  491 => 294,  485 => 290,  481 => 288,  477 => 286,  475 => 285,  470 => 283,  460 => 276,  450 => 269,  424 => 245,  410 => 234,  400 => 227,  390 => 220,  378 => 213,  365 => 203,  361 => 201,  359 => 200,  338 => 181,  328 => 177,  324 => 176,  319 => 174,  314 => 172,  309 => 170,  305 => 169,  301 => 168,  297 => 167,  294 => 166,  292 => 165,  288 => 164,  278 => 160,  276 => 159,  236 => 122,  232 => 120,  229 => 119,  226 => 118,  223 => 117,  220 => 116,  218 => 115,  213 => 113,  183 => 86,  179 => 84,  176 => 83,  173 => 82,  170 => 81,  167 => 80,  165 => 79,  160 => 77,  130 => 50,  124 => 47,  86 => 13,  82 => 11,  78 => 9,  76 => 8,  71 => 5,  64 => 4,  53 => 2,  42 => 1,);
+        return array (  601 => 357,  595 => 355,  589 => 353,  587 => 352,  579 => 346,  573 => 344,  567 => 342,  565 => 341,  557 => 335,  551 => 333,  545 => 331,  543 => 330,  538 => 327,  535 => 326,  532 => 325,  530 => 324,  505 => 301,  501 => 299,  497 => 297,  495 => 296,  490 => 294,  484 => 290,  480 => 288,  476 => 286,  474 => 285,  469 => 283,  459 => 276,  449 => 269,  423 => 245,  409 => 234,  399 => 227,  389 => 220,  377 => 213,  364 => 203,  360 => 201,  358 => 200,  337 => 181,  327 => 177,  323 => 176,  318 => 174,  313 => 172,  308 => 170,  304 => 169,  300 => 168,  296 => 167,  293 => 166,  291 => 165,  287 => 164,  277 => 160,  275 => 159,  235 => 122,  231 => 120,  228 => 119,  225 => 118,  222 => 117,  219 => 116,  217 => 115,  212 => 113,  182 => 86,  178 => 84,  175 => 83,  172 => 82,  169 => 81,  166 => 80,  164 => 79,  159 => 77,  129 => 50,  123 => 47,  85 => 13,  81 => 11,  77 => 9,  75 => 8,  70 => 5,  63 => 4,  52 => 2,  41 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -1193,14 +1174,6 @@ class __TwigTemplate_84b41dcb5b9290dc3153282ab884ff9f extends Template
             <!-- End Right Side Columns -->
         </div>
     </section>
-{% endblock %}
-
-{% block scripts %}
-    {# Bootstrap JS bundle (includes modal) #}
-<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js\" 
-        integrity=\"sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz\" 
-        crossorigin=\"anonymous\">
-</script>
 {% endblock %}", "admin/dashboard.twig", "C:\\wamp64\\www\\liquimet\\templates\\admin\\dashboard.twig");
     }
 }

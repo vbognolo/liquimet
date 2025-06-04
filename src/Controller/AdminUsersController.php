@@ -10,20 +10,20 @@ use Liquimet\Validate\Validate;
 class AdminUsersController {
     private $twig;
     private $session;
-    private $userModel;
+    private $mUser;
     private $titleModel;
 
-    public function __construct(Environment $twig, Session $session, User $userModel, Title $titleModel) {
+    public function __construct(Environment $twig, Session $session, User $mUser, Title $titleModel) {
         $this->twig = $twig;
         $this->session = $session;
-        $this->userModel = $userModel;
+        $this->mUser = $mUser;
         $this->titleModel = $titleModel;
     }
 
     public function renderUsersPage() {
         $this->session->requireAdmin();
         $csrfToken = $this->session->generateCsrfToken();
-        $users = $this->userModel->getAll();
+        $users = $this->mUser->getAll();
 
             $sessionData = [
                 'id_user' => $this->session->getID(),
@@ -35,13 +35,13 @@ class AdminUsersController {
         $data = [
                 // Fetch Login And Session Data
             'session' => $sessionData,
-            //'user' => $this->userModel->get($this->session->getID()),
+            //'user' => $this->mUser->get($this->session->getID()),
                 // Fetch Users Table Data
             'users' => $users,
-            'activeUsers' => $this->userModel->totalUsers(),
+            'activeUsers' => $this->mUser->totalUsers(),
                 // Fetch Select Options Table
-            'gender' => $this->userModel->getGender(),
-            'roles' => $this->userModel->getRoles(),
+            'gender' => $this->mUser->getGender(),
+            'roles' => $this->mUser->getRoles(),
             'titles' => $this->titleModel->getAll(),
                 // Fetch Highlighted New Row
             'added' => $_GET['added'] ?? null,        // Get url_id from URL query (if exists)
@@ -68,11 +68,11 @@ class AdminUsersController {
                 'title' => $this->session->getTitle(),
             ],
             'isLoggedIn' => $this->session->isLoggedIn(),
-            'user' => $this->userModel->get($this->session->getID()),
+            'user' => $this->mUser->get($this->session->getID()),
             'csrf_token' => $csrfToken,
                 // Fetch Select Option Data
-            'gender' => $this->userModel->getGender(),
-            'roles' => $this->userModel->getRoles(),
+            'gender' => $this->mUser->getGender(),
+            'roles' => $this->mUser->getRoles(),
             'titles' => $this->titleModel->getAll()
         ];
 
@@ -106,11 +106,11 @@ class AdminUsersController {
                 'joined' => date('Y-m-d')
             ]; 
 
-            $errors = $this->userModel->validateData($member);
-            $error = $this->userModel->validatePassword($member['password'], $_POST['confirm'] );
+            $errors = $this->mUser->validateData($member);
+            $error = $this->mUser->validatePassword($member['password'], $_POST['confirm'] );
 
             // Check if username or email exists
-            if ($this->userModel->checkIfExists($member['email'], $member['username'])) {
+            if ($this->mUser->checkIfExists($member['email'], $member['username'])) {
                 $errors['email'] = "Indirizzo e-mail già in uso.";
                 $errors['username'] = "Username già in uso.";
             }
@@ -156,8 +156,8 @@ class AdminUsersController {
 
             // If no errors, proceed with user creation
             if (empty($errors)) {
-                $this->userModel->create($member);
-                $added = $this->userModel->getLastInsertId();  // Get the ID of the newly inserted user
+                $this->mUser->create($member);
+                $added = $this->mUser->getLastInsertId();  // Get the ID of the newly inserted user
                     echo json_encode(['success' => true, 'added' => $added]);
             } else {
                 echo json_encode(['success' => false, 'errors' => $errors]);
@@ -167,11 +167,11 @@ class AdminUsersController {
 
         $data = [
                 // Fetch Login And Session Data
-            'user' => $this->userModel->get($this->session->getID()),
+            'user' => $this->mUser->get($this->session->getID()),
             'csrf_token' => $csrfToken,
                 // Fetch Update Select Options
-            'gender' => $this->userModel->getGender(),
-            'roles' => $this->userModel->getRoles(),
+            'gender' => $this->mUser->getGender(),
+            'roles' => $this->mUser->getRoles(),
             'titles' => $this->titleModel->getAll(),
         ];
 
@@ -202,7 +202,7 @@ class AdminUsersController {
                 exit;
             }
 
-        $member = $this->userModel->get($id);
+        $member = $this->mUser->get($id);
     
             if ($member) {
                 // Format the birthday field to d-m-Y
@@ -256,9 +256,9 @@ class AdminUsersController {
             'id_user' => $id
         ]; 
     
-        $errors = $this->userModel->validateData($member);
+        $errors = $this->mUser->validateData($member);
 
-            if ($this->userModel->checkIfExists('email', $member['email'], $id)) {
+            if ($this->mUser->checkIfExists('email', $member['email'], $id)) {
                 $errors['email'] = "Indirizzo e-mail già in uso."; 
             }
         
@@ -266,7 +266,7 @@ class AdminUsersController {
                 $errors['email'] = "Formato e-mail non valido.";
             }
         
-            if ($this->userModel->checkIfExists('username', $member['username'], $id)) {
+            if ($this->mUser->checkIfExists('username', $member['username'], $id)) {
                 $errors['username'] = "Username già in uso."; 
             }
         
@@ -296,10 +296,10 @@ class AdminUsersController {
       
         // If no errors, proceed with user update
         if (empty($errors)) {
-            $saved = $this->userModel->update($id, $member);
+            $saved = $this->mUser->update($id, $member);
     
             if ($saved) {
-                $updated = $this->userModel->get($id);          // Re-fetch updated user
+                $updated = $this->mUser->get($id);          // Re-fetch updated user
                 $bday = Validate::formatDateForView($updated['birthday']);
 
                     echo json_encode([
@@ -325,7 +325,7 @@ class AdminUsersController {
 
         $id = (int)($_POST['id_user'] ?? 0);
             if ($id) {
-                $delete_user = $this->userModel->getUserDelete($id);
+                $delete_user = $this->mUser->getUserDelete($id);
 
                 if ($delete_user) {
                     echo json_encode([
@@ -356,7 +356,7 @@ class AdminUsersController {
                 exit;
             }
 
-        $this->userModel->moveUserToDeleted($id);
+        $this->mUser->moveUserToDeleted($id);
         
             echo json_encode([
                 'success' => true,

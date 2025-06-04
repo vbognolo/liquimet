@@ -172,7 +172,7 @@ class User {
                 
         return (bool) $this->db->runSQL($sql, $args);
     }
-
+ 
 /**
  *  Validate data for inserting or editting 
  */

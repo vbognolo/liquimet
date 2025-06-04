@@ -467,7 +467,7 @@ footer {
 
 
 /*--------------------------------------------------------------
-# =====>                   INDEX PAGE                          #
+# =====>                 DASHBOARD PAGE                        #
 --------------------------------------------------------------*/
 main {
     width: 97vw; 
@@ -653,7 +653,7 @@ main {
         }
     }
 /*--------------------------------------------------------------
-# =====>                  END INDEX PAGE                       #
+# =====>              END DASHBOARD PAGE                       #
 --------------------------------------------------------------*/
 
 
@@ -755,79 +755,115 @@ main {
 /*--------------------------------------------------------------
 # =====>                  TABLE DESIGN                         #    // FOR PAGES: PLATFORM, USERS, TITLES, TRANSPORTS-FULL, TRANSPORTS-PART
 --------------------------------------------------------------*/
-/* Platform Table */
-table * {
+/* Table Platform */
+table th, table td {
     white-space: normal;
 }
 
-.panel .platform {
-    border: 1px solid rgb(250, 235, 215);
-    /*text-align: center;*/
-    /*margin: 25px 0;*/
-    box-shadow: rgba(255, 255, 255, 0.35) 0 0.35rem 0.35rem;
-    /*box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);*/
-    overflow-x: auto;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    /*width: 100%; */
+.text-shadow-dark {
+    text-shadow: 0px 0px 2px #000000;
 }
-/*
-table.platform tr > th {
-    background: rgba(0, 102, 204, 0.1);
-}*/
 
-table.platform tr th, table.platform tfoot td,
-.platform th button i,       
-.platform th button i:focus, .platform th button i:active {
-    /*background-color: rgba(0, 102, 204, 10%);*/
-    /*background:
-        radial-gradient(ellipse at top, #e66465, transparent),
-        radial-gradient(ellipse at bottom, #4d9f0c, transparent);*/
-    background: rgba(98, 97, 97, 0.3);
-    background-image: radial-gradient(ellipse, rgba(50, 55, 60, 0.4) 80%, rgba(50, 55, 60, 0.5) 35%);
-    /*background: rgba(255, 255, 255, 0.8);
-    background-image: radial-gradient(ellipse, rgba(0, 102, 204, 40%) 80%, rgba(0, 102, 204, 50%) 35%);*/
-    /*background: rgb(48, 139, 145);*/
-    /*background: linear-gradient(circle, rgba(0, 102, 204, 0.4) 35%, rgba(0, 102, 204, 0.7) 100%);*/
+.platform {
+    border: 2px solid rgba(250, 235, 215, 0.8);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    overflow: auto;
+    scrollbar-width: thin;
+}
+
+.platform caption span {
+    letter-spacing: 0.1rem;
     color: #ffffff;
     text-shadow: 1px 1px 2px #000000;
-    font-size: 1.7rem;
+    background-color: transparent;
+    padding: 5px 15px;
+    border-top: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    border-radius: 1.2rem;
+    box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
+}
+
+.platform thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     text-transform: uppercase;
+    border: 1px solid rgb(11, 50, 90);
+}
+
+.platform thead th, 
+.platform tfoot td {
+    background-color: #e8f5e0;
+    color: 	rgb(11, 50, 90);
+    font-size: 1.5rem;
     outline: none;
 }
 
-.platform th {
-    border: 2px solid rgba(250, 235, 215, 0.5);
+.platform thead td {
+    font-size: 1.6rem;
+    /*border-right: none;*/
+    color: #003300;
 }
 
-.platform tbody {
-    /*background: rgba(250, 235, 215, 0.6);*/
-    background-color: rgba(255, 255, 255, 0.9);
+.platform .table-group-divider {
+    color: rgb(11, 50, 90);
+}
+
+.platform tbody td {
+    background: rgb(237, 240, 235);
+    font-size: 1.5rem;
+}
+
+.platform tbody button {
+    /*background: none;*/
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: transparent;
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    border-right: 1px solid #000000;
+    border-left: 1px solid #000000; 
+    border-radius: 1.2rem;
+    box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
+    transition: all 0.1s ease-in-out;
+}
+
+.platform tbody td button:hover,     .platform tbody td button[aria-expanded="true"] {
+    transform: scale(0.98);
+    background-color: rgba(88, 86, 86, 0.5);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.platform tbody button i {
+    font-size: 1.3rem;
+}
+
+.platform tbody td:first-child {
+    border-right: 1px solid rgb(11, 50, 90);
+}
+
+.platform tbody td:last-child {
+    border-left: 1px solid rgb(11, 50, 90);
+}
+
+.platform tbody td:last-child i {
+    font-size: 1.4rem;
 }
 /*
-.platform .table-title > th:first-child {
-    border-left: none !important;
-}
+.platform tbody td.last-border {
+    word-break: break-word;
+    border-left: none;
+}*/
 
-.platform .table-title > th:last-child {
-    border-right: none !important;
-}
-*/
-.platform td {
-    font-size: 1.6rem;
-    border-right: none;
-}
-
-.platform td i {
-    font-size: 1.6rem;
-}
-
-.platform td:first-child {
-    border-right: 2px solid rgba(250, 235, 215, 0.5);
-}
-
-.platform td:last-child {
-    border-left: 2px solid rgba(250, 235, 215, 0.5);
+.word-wrap-container {
+    word-break: break-all;
+    text-align: center;
+    hyphens: auto;
 }
 
 .platform tfoot h5,
@@ -836,77 +872,23 @@ table.platform tr th, table.platform tfoot td,
     font-weight: 600;
     letter-spacing: 0.2rem;
     text-transform: uppercase;
-    text-shadow: 2px 2px 4px #02172c;
+    text-shadow: 1px 1px 2px #02172c;
 }
 
 .platform tfoot h5 i {
     font-size: 2.3rem;
 }
 
-/*
-.platform .all td {
-    border-right: 2px solid transparent;
-}
-
-.panel .platform .all:hover {
-    background-color: #faebd7;
-}
-
-.panel .platform .active {
-    background-color: rgba(250, 235, 215, 0.7);
-    border-right: 2px solid rgba(24, 24, 24, 0.5);
-}
-
-.panel .platform .active-button {
-    background-color: rgba(238, 178, 101, 0.7);
-    border-right: 2px solid rgba(24, 24, 24, 0.5);
-}
-
-@keyframes fadeEffect {
-    0% { background-color: rgba(46, 110, 33, 1); }
-    100% { background-color: rgba(46, 110, 33, 0.7); }
-}
-
-.modified {
-    animation: fadeEffect 3s linear alternate 2;
-}*/
-
-/*.panel .platform .table-title > th:first-child,*/
-.panel .platform .all > td:first-child,
-.panel .platform .all > td:first-child:hover,
-.panel .platform .all.active {
-    border-left: none !important;
-}
-
-/*.panel .platform .table-title > th:last-child,*/
-.panel .platform .all > td:last-child,
-.panel .platform .all > td:last-child:hover,
-.panel .platform .all.active {
-    border-right: none !important;
-}
-
-.panel .platform .active > td:last-child {
-    background-color: transparent;
-}
-
-.panel .platform .all > td:first-child {
+.platform .all > td:first-child {
     border-right: 2px solid rgba(250, 235, 215, 0.5);
 }
 
-.panel .platform .all > td:first-child:hover {
+.platform .all > td:first-child:hover {
     border-right: 2px solid transparent;
 }
-/*
-.panel .platform td {
-    font-size: 1.6rem;
-}
 
-.panel .platform td i {
-    font-size: 1.6rem;
-}*/
-
-.panel .platform .note-icon {
-    background: transparent;
+.platform .note-icon {
+    /*background: transparent;*/
     color: #000000;
     outline: none;
     border: none;
@@ -917,10 +899,16 @@ table.platform tr th, table.platform tfoot td,
     text-align: center;
     vertical-align: middle;
 }
-/* ===> ALL TRANSPORTS PLATFORM <=== */
+/* End Table Platform */
 
-/* ===> QUANTITY PLATFORM <=== */
-.platform .rowQty h4, 
+/* Collapse Table Platform */
+.platform tbody tr.collapse.show {
+    box-shadow: inset 0 1px 2px rgba(11, 50, 90, 1), -1px 0 2px rgba(11, 50, 90, 1);
+    background: rgba(237, 240, 235, 0.9);
+    transform: scaleY(0.98);
+    transition: all 0.1s ease-in-out;
+}
+/*.platform .rowQty h4, 
 .platform .rowQty span.collapse-title,
 .platform .rowQty i {
     text-transform: uppercase;
@@ -930,29 +918,45 @@ table.platform tr th, table.platform tfoot td,
     letter-spacing: 0.2rem;
     text-shadow: 2px 2px 4px #000000;
     vertical-align: middle;
+}*/
+.collapse-platform h4 {
+    padding: 3px 5px;
+    border-top: 1px solid rgba(11, 50, 90, 0.5);
+    border-bottom: 1px solid rgb(11, 50, 90, 0.5);
+    border-radius: 1.2rem;
+    width: fit-content;
 }
 
-.table-bordered > td {
-    border-right: 2px solid rgba(24, 24, 24, 0.2) !important;
-    background-color: rgb(250, 235, 215, 0.7) !important;
+.collapse-platform h4 .collapse-title,     .collapse-platform h4 .collapse-title:hover,
+.collapse-platform h4 i {
+    text-transform: uppercase;
+    color: #0b325a; 
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 0.2rem;
+    text-shadow: 1px 1px 0 #ffffff;
 }
 
-.table-bordered > td:last-child {
+.collapse-platform tbody th {
+    color: rgb(2, 51, 101);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.collapse-platform tbody td {
+    font-size: 1.6rem;
+}
+
+.collapse-platform > td:last-child {
     border-right: none !important;
     background-color: rgb(250, 235, 215, 0.7) !important;
 }
 
-.table-bordered > td:not(:last-child) .btns {
+.collapse-platform > td:not(:last-child) .btns {
     border-right: none !important;
     background-color: none;
 }
-
-.platform .sub-title {
-    background: rgb(48, 139, 145);
-    background: radial-gradient(circle, rgba(48, 139, 145, 0.7) 35%, rgba(42, 135, 153, 0.7) 100%);
-    font-size: 1.5rem;
-}
-/* ===> END QUANTITY PLATFORM <=== */
+/* End Collapse Platform */
 
 /* ===> FULL, PART TRANSPORTS PLATFORM <=== */
 .platform .trans-data .btns {
@@ -994,21 +998,6 @@ table.platform tr th, table.platform tfoot td,
     border-bottom: 1px solid rgba(255, 255, 255, 0.6);
 }
 /* ===> END FULL, PART TRANSPORTS PLATFORM <=== */
-
-/* ===> TABLE FOOTER <=== 
-.platform tfoot h5,
-.platform tfoot span {
-    font-size: 2rem;
-    font-weight: 600;
-    letter-spacing: 0.2rem;
-    text-transform: uppercase;
-    text-shadow: 2px 2px 4px #000000;
-}
-
-.platform tfoot h5 i {
-    font-size: 2rem;
-}
-/* ===> END TABLE FOOTER <=== */
 /*--------------------------------------------------------------
 # =====>                END TABLE DESIGN                       #    // FOR PAGES: PLATFORM, USERS, TITLES, TRANSPORTS-FULL, TRANSPORTS-PART
 --------------------------------------------------------------*/
@@ -1385,7 +1374,7 @@ tr.highlight {
         -webkit-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.6);
 }
 
-/* ===> MODAL HEADER */
+/* Modal Header */
 .modal .modal-header {
     width: 100%;
     margin: auto;
@@ -1409,9 +1398,9 @@ tr.highlight {
     color: #023365;
     text-align: center;
 }
-/* ===> END MODAL HEADER
+/* End Modal Header */
 
-/* ===> MODAL BODY */
+/* Modal Body */
 .modal .modal-body .form-control-label {
     font-size: 1.8rem;
     font-weight: 400;
@@ -1436,33 +1425,19 @@ tr.highlight {
     resize: none;
     line-height: 2.5rem;
 }
-/*
-.modal .modal-body input,
-.modal .modal-body select {
-    text-transform: uppercase;
-}
-*/
+
 .modal .modal-body textarea {
     resize: none;
     outline: none;
 }
 
-.modal .modal-body input:focus,     .modal .modal-body input[readonly="readonly"]:focus,
+.modal .modal-body .form-control:focus,     .modal .modal-body input[readonly="readonly"]:focus,
 .modal .modal-body select:focus,
 .modal .modal-body textarea:focus {
-    /*border: 1px solid rgba(14, 115, 215, 0.5);
-    box-shadow: 0 0 0 1px rgba(14, 115, 215, 0.2)   !important;
-        -moz-box-shadow: 0 0 0 1px rgba(14, 115, 215, 20%)  !important;
-        -webkit-box-shadow: 0 0 0 1px rgba(14, 115, 215, 20%)   !important;
-    outline-width: 0;
-    transition: all 0.2s ease-out;
-        -moz-transition: all 0.2s ease-out;
-        -webkit-transition: all 0.2s ease-out;
-        -o-transition: all 0.2s ease-out;    */
-
-        border: 3px solid transparent; /* rgb(0, 102, 204);*/
-        /*box-shadow: 0 0 5px rgba(0, 102, 204, 0.5)   !important;*/
+        border: 1px solid rgb(0, 102, 204);
+        box-shadow: none;
         outline-width: 0;
+        outline: none ;
         transition: all 0.2s ease-out;
             -moz-transition: all 0.2s ease-out;
             -webkit-transition: all 0.2s ease-out;
@@ -1520,9 +1495,17 @@ tr.highlight {
     font-size: 2rem;
     font-weight: 600;
 }
-/* ===> END MODAL BODY */
 
-/* ===> MODAL FOOTER */
+.form-control.text-upper {
+    text-transform: uppercase;
+}
+
+.form-control.text-capitalize {
+    text-transform: capitalize;
+}
+/* End Modal Body */
+
+/* Modal Footer */
 .modal .modal-footer .btn {
     border: none;
     outline: none;
@@ -1571,22 +1554,24 @@ tr.highlight {
 .modal .modal-footer .modal-reset span:active {
     color: #525eb7;
 }
-/* ===> END MODAL FOOTER */
-#user-edit .error-placeholder {
+/* End Modal Footer */
+
+#user-edit .error-placeholder,
+#transport-edit .error-placeholder,
+#quantity-edit .error-placeholder {
     min-height: 1.65rem;    
     line-height: 1.3rem;
-    font-size: 1rem;                                                    /* Adjust this based on expected error message height */
+    font-size: 1rem;                                                   /* Adjust this based on expected error message height */
 }
 
-
-.is-invalid {
+.form-control.is-invalid, .form-control.is-invalid:focus {
     border: 1px solid rgb(220, 53, 69) !important;                            /* Red border */
-    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);                               /* Optional glow effect */
+    box-shadow: 0 0 4px rgba(220, 53, 69, 0.5) !important;                               /* Optional glow effect */
 }
 
-.is-valid {
+.form-control.is-valid, .form-control.is-valid:focus {
     border: 1px solid rgb(40, 167, 69) !important;                            /* Green border for valid inputs */
-    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+    box-shadow: 0 0 4px rgba(40, 167, 69, 0.5) !important;
 }
 
 /*--------------------------------------------------------------

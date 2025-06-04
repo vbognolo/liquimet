@@ -2,8 +2,8 @@
 {% block title %} Piattaforma {{ 'now'|date('Y') }} {% endblock %}
 
 {% block search %}
-    <!--    ===>    SEARCH BAR    <===    -->
-    <section class="row my-auto mx-auto search-header" style="border: 1px solid red">
+    {# Search Bar #}
+    <section class="row my-auto mx-auto search-header">
         <div class="my-auto m-0 search-bar">
             <form id="search-form">
                 <button type="button" class="my-1 search-btn">
@@ -13,12 +13,11 @@
             </form>
         </div>
     </section>
-    <!--    ===>    END SEARCH BAR    <===    -->
 {% endblock %}
  
 {% block browse %}
     <!--    ===>    BROWSE FILE BAR    <===    -->
-    <section class="row my-auto mx-auto browse-header" style="border: 1px solid red">
+    <section class="row my-auto mx-auto browse-header">
         <div class="my-auto m-0 browse-bar">
             <form id="browse-form" enctype="multipart/form-data" method="POST" action="{{ doc_root }}import-csv">
                 <label for="browse-input" class="my-1 browse-btn">
@@ -64,15 +63,14 @@
 {% endblock %}
 
 {% block content %} 
-    {{ include('transports-navigation.twig') }}
+    {% include 'transports-navigation.twig' %}
     
-    <!--    =====>    PLATFORM - ALL TRANSPORTS    <=====    -->
     <section class="col-12 mx-auto my-1">
-        <div class="panel panel-body">          
+                 
             <div class="d-flex justify-content-center">
-                <table class="table table-sm platform">
+                <table class="table table-sm table-hover table-striped text-center"> 
                     <thead>
-                        <tr class="border-bottom border-top border-light table-title">
+                        <tr class="border-bottom border-top border-light">
                             <th class="align-middle p-3"> # </th>
                             <th class="align-middle p-2"> Tipo </th>
                             <th class="align-middle p-2"> Slot ID </th>
@@ -86,77 +84,78 @@
                             <th class="align-middle p-2"> Mese carico </th>
                             <th class="align-middle p-2"> Settimana scarico </th>
                             <th class="align-middle p-2" colspan="2"> Mese scarico </th>
-                            <th class="align-middle p-2 px-3"> Container<br>ATB </th>
+                            <th class="align-middle p-2"> Container<br>ATB </th>
+                            <th class="align-middle p-2"> <i class="bi bi-gear"></i> </th>
                         </tr>
                     </thead>
 
-                    <tbody class="table-body">  
-                    {% set order = 1 %}    
-                    {% for i, t in quantities %}
-                            
-                        <!--    ===>    Transport Data    <===    -->
-                        <tr class="accordion-toggle align-middle expand" id="all-{{ i }}" data-bs-toggle="collapse" data-bs-target="#qty-{{ t.id_transport }}">
+                    <tbody class="table-body">   
+                    {% if transports is not empty %}
+                        {% for t in transports %}
+
+                        {# Transport Data #}
+                        <tr class="align-middle expand">
                             <td scope="row all">
-                                {{ order }}
-                                {% set order = order + 1 %}
-                                    <br>
+                                {{ loop.index }}
+                                <br>
                                 <span class="text-dark note-icon" data-bs-toggle="tooltip" data-id="{{ t.id_transport }}"
-                                    {% if t.note %} title="{{ t.note|capitalize }}" {% else %} title="Nessuna nota" {% endif %}>
+                                    title="{{ t.note ? t.note|capitalize|truncate(50) : 'N/A' }}">
                                         <i class="bi bi-exclamation-circle"></i>
                                 </span>
                             </td>
-                            <td class="align-middle p-1" style="font-weight: 600"> {{ t.type|upper }} </td>
-                            <td class="align-middle p-1 search" style="word-break: break-all; text-wrap: balance"> {{ t.slot|upper }} </td>
-                            <td class="align-middle p-1 search" style="word-break: break-all; text-wrap: balance"> {{ t.cmr|upper }} </td>
+                            <td class="align-middle p-1 fw-600"> {{ t.type|upper }} </td>
+                            <td class="align-middle p-1 search word-wrap-container"> {{ t.slot|upper }} </td>
+                            <td class="align-middle p-1 search word-wrap-container"> {{ t.cmr|upper }} </td>
                             <td class="align-middle p-1 search"> {{ t.issuer|upper }} </td>
                             <td class="align-middle p-1 search"> {{ t.supplier|upper }} </td>
                             <td class="align-middle p-1 search"> {{ t.transport|upper }} </td>
-                            <td class="align-middle p-1 px-3"> {{ t.univoco|upper }} </td>
+                            <td class="align-middle p-1"> {{ t.univoco|upper }} </td>
                             <td class="align-middle p-1"> {{ t.date_load|date("d/m/Y") }} </td>
                             <td class="align-middle p-1"> {{ t.date_unload|date("d/m/Y") }} </td>
                             <td class="align-middle p-1"> {{ t.id_month_load }} </td>
                             <td class="align-middle p-1"> {{ t.week_unload }} </td>
                             <td class="align-middle p-1" colspan="2"> {{ t.id_month_unload }} - {{ t.month_unload }} </td>
-                            <td class="align-middle p-1" style="text-wrap: balance"> {{ t.container|upper }} </td>
+                            <td class="align-middle p-1 last-border"> {{ t.container|upper }} </td>
+                            <td class="align-middle p-1 text-center">
+                                <button class="btn btn-sm" type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#qty-{{ t.id_transport }}"
+                                        aria-expanded="false"
+                                        aria-controls="qty-{{ t.id_transport }}">
+                                    <i class="bi bi-arrows-expand"></i>
+                                </button>
+                            </td>
                         </tr>
-                        <!--    ===>    End Transport Data    <===    -->  
+                        {# End Transport Data #}  
      
-                        <!--    ===>    Quantity Data    <===    -->
-                        <tr class="accordion-toggle" style="background: rgba(61, 150, 130, 0.5)" id="qty-{{ i }}">        
-                            <td colspan="16" style="border: none">
-                                <div class="accordian-body collapse rowQty" id="qty-{{ t.id_transport }}"> 
-                                    <h4 class="mx-auto my-2"> 
+                        {# Quantity Data #}
+                        <tr class="accordion-toggle" id="{{ loop.index }}">        
+                            <td colspan="17" class="border-0">
+                                <div class="accordion-body collapse rowQty" id="qty-{{ t.id_transport }}"> 
+                                    <h4 class="mx-auto my-2 text-center"> 
                                         <span class="btn my-auto collapse-title edit-data" style="cursor: default">
                                             Quantità:
                                         </span> 
                                     </h4>
 
-                                    <table class="table table-bordered table-sm">
+                                    <table class="table table-bordered table-sm mb-2">
                                         <tbody>    
                                             <tr>
                                                 <th class="sub-title align-middle p-1"> Energia caricata [MWh] </th>
-                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                <td class="bg-light bg-gradient align-middle"> 
                                                         {{ t.mwh }} 
                                                     </td>   
                                                 <th class="sub-title align-middle p-1"> Quantità nominale caricata [kg] </th>
-                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                <td class="bg-light bg-gradient align-middle"> 
                                                         {{ t.kg_load }} 
                                                     </td>   
                                                 <th class="sub-title align-middle p-1"> Raffreddamento </th>            
-                                                    <td class="bg-light bg-gradient align-middle"> 
-                                                        {% if (t.cooling == 600) %}
-                                                            600
-                                                        {% else %}
-                                                            No
-                                                        {% endif %} 
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.cooling == 600 ? '600' : 'No' }}
                                                     </td>
                                                 <th class="sub-title align-middle p-1"> Tipologia costo extra </th>            
-                                                    <td class="bg-light bg-gradient align-middle"> 
-                                                        {% if t.price_typology == 'yes' %}
-                                                            Sì
-                                                        {% else %}
-                                                            No
-                                                        {% endif %} 
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.price_typology == 'yes'? 'Sì' : 'No' }}
                                                     </td>            
                                                 <!--<th class="sub-title align-middle p-1"> Accisa <big>[</big>Sm<sup>3</sup><big>]</big> </th>
                                                     <td class="bg-light bg-gradient align-middle">  
@@ -239,10 +238,17 @@
                             </td> 
                         </tr>
                         <!--    ===>    End Quantity Data    <===    -->
-                    {% endfor %}
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="16" class="text-center text-light p-3">
+                                <strong> Nessun utente trovato. </strong>
+                            </td>
+                        </tr>
+                    {% endif %}
                     </tbody>
                      
-                    <!--    ===>    Table Footer    <===    -->
+                    {# Table Footer #}
                     <tfoot>
                         <tr>
                             <td colspan="16" class="text-light align-middle mb-2 p-2">
@@ -253,59 +259,34 @@
                             </td>
                         </tr>
                     </tfoot>
-                    <!--    ===>    End Table Footer    <===    -->
                 </table>
             </div> 
-        </div>
+       
     </section> 
-    <!--    =====>    END PLATFORM - ALL TRANSPORTS    <=====    --> 
+{% endblock %}
+   
+{% block jquery %}
+    {# JQuery #}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+        crossorigin="anonymous">
+</script>
 {% endblock %}
 
-{% block jsScript %}    
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
-    
+{% block page_script %}
 <script>
 $(document).ready(function(){
-//  ===> TOOLTIP SPECS  
+//  Tooltip  
     $("body").tooltip({ 
         selector: '[data-bs-toggle = tooltip]',
         placement: 'right' 
     });
-//  ===> END TOOLTIP SPECS 
 
-    $(".upload").on('click', function(){
-        //e.preventDefault();
-        $.ajax({
-            method: 'POST',
-            url: 'import_csv.php',
-            data: new FormData(this),
-            dataType: 'json',
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(data){
-                console.log(data);
-            }
-        })
-    });
-
-//  ===> TABLE ONCLICK FUNCTIONS
-    //toggle class for changing bg-color and showing/hiding table td border 
-    $(".all").click(function(){
-        $(this).toggleClass("active");
-    });
-        
-    $(".expand").click(function(){
-        $(this).closest("tr").toggleClass("table-bordered active");
-    });
-//  ===> END TABLE ONCLICK FUNCTIONS  
-
-//  ===> SEARCH BAR
+//  Search Bar
     $("#search").keyup(function(){
         var value = this.value.toLowerCase().trim();
 
-        $(".platform .expand").each(function(index){
+        $(".platform").each(function(index){
             if(index !== -1){
 
                 $(this).find("td").each(function(){
@@ -325,34 +306,6 @@ $(document).ready(function(){
                 return false;
         }
     });
-//  ===> END SEARCH BAR
-
-//  ===> BROWSE BAR
-
-//<input type="file" class="my-1 browse-input" id="browse-input" name="browse-input" onchange="this.form.filename.value = this.value" />
-    /*$('input[type="file"]').on('change', function(e){
-        var fileName = e.target.files[0].name;
-        $('.browse-label').val(fileName.replace(/C:\\fakepath\\/i, ''));
-    });*/
-//  put file name into label with fakepath
-    /*$('input[type="file"]').on('change', function(){
-        $('.browse-label').val($(this).val());
-    });
-
-    $('.browse-btn').on('click', function(){
-        $('.browse-label').val($('input[type="file"]').val());
-    });
-*/
-//  ===> END BROWSE BAR
 });  
 </script>   
-        
-<!--    ===>    BOOTSTRAP DATEPICKER    <===    -->   
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/locales/bootstrap-datepicker.it.min.js" charset="UTF-8"></script>
-<!--    ===>    END BOOTSTRAP DATEPICKER    <===    --> 
 {% endblock %}
