@@ -121,6 +121,9 @@ class Validate {
 
     public static function validate_string(string $value, string $allowed): bool {
         switch ($allowed) {
+            case 'letters':
+                $pattern = '/^[A-Za-z]+$/';
+                break;
             case 'letters_numbers':
                 $pattern = '/^[A-Za-z0-9_]+$/';
                 break;
@@ -146,5 +149,56 @@ class Validate {
         }
 
         return (bool) (preg_match($pattern, $value));         
+    }
+
+    public static function validate_number(string $value, string $type, int $min = 0, int $max = PHP_INT_MAX): bool {
+        switch ($type) {
+            case 'digits':          // Only digits, no dots or signs
+                if (!ctype_digit($value)) {
+                    return false;
+                }
+                break;
+
+            case 'number':          // Integer or float, optional sign
+                if (!is_numeric($value)) {
+                    return false;
+                }
+                break;
+
+            case 'min':             // Must be numeric and >= min
+                if (!is_numeric($value) || (float)$value < $min) {
+                    return false;
+                }
+                break;
+
+            case 'range':           // Must be numeric and in range between min and max
+                if (!is_numeric($value)) {
+                    return false;
+                }
+
+                $num = (float)$value;
+
+                if ($num < $min || $num > $max) {
+                    return false;
+                }
+                break;
+
+            case 'negative':        // Negative numbers only
+                if (!is_numeric($value) || (float)$value >= 0) {
+                    return false;
+                }
+                break;
+
+            case 'precision_2':     // Max 2 decimal places
+                if (!is_numeric($value) || !preg_match('/^-?\d+(\.\d{1,2})?$/', $value)) {
+                    return false;
+                }
+                break;
+
+            default:
+                return false;
+        }
+
+        return true;         
     }
 }

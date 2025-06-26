@@ -304,8 +304,8 @@ header {
 footer {
     text-align: center;
     font-size: 1.5rem;
-    background-color: lightgreen;
-    color: black;
+    background-color: white;/* rgb(2, 51, 101); /*11, 50, 90);*/
+    color: #0066cc;
     width: 100%;
 }
 
@@ -359,108 +359,6 @@ footer {
         padding: 4px 10px;
     }
 }
-
-
-/* LAYOUT PAGE - Mobile and Tablet Adjustments */
-    /* Mobile Devices (320px and above) */
- /*   @media (max-width: 768px) {
-        header {
-            height: 4rem; 
-            padding: 0 10px; 
-        }
-
-        .logo img {
-            max-height: 2rem; 
-        }
-
-        #layout-title {
-            font-size: 1.6rem;
-        }
-
-        .nav-tabs-bordered .nav-link {
-            font-size: 1.5rem; 
-            padding: 6px 12px; 
-            border-radius: 30%; 
-        }
-
-        .nav-tabs-bordered .nav-link:hover {
-            font-size: 1.6rem; 
-        }
-
-        .header-nav .nav-profile img {
-            max-height: 30px;
-        }
-
-        .header-nav .nav-profile span {
-            font-size: 1.6rem; 
-        }
-
-        .profile .dropdown-header h5 {
-            font-size: 1.6rem; 
-        }
-
-        .profile .dropdown-header span {
-            font-size: 1.4rem;
-        }
-
-        .profile .dropdown-item {
-            font-size: 1.4rem; 
-        }
-
-        footer {
-            font-size: 1.4rem; 
-            padding: 1rem 0;
-        }
-    }*/
-
-    /* Small Mobile Devices (320px and below) */
- /*   @media (max-width: 480px) {
-        header {
-            height: 3.5rem; 
-        }
-
-        .logo img {
-            max-height: 1.8rem; 
-        }
-
-        #layout-title {
-            font-size: 1.4rem; 
-        }
-
-        .nav-tabs-bordered .nav-link {
-            font-size: 1.4rem; 
-            padding: 4px 10px; 
-        }
-
-        .nav-tabs-bordered .nav-link:hover {
-            font-size: 1.5rem; 
-        }
-
-        .header-nav .nav-profile img {
-            max-height: 28px; 
-        }
-
-        .header-nav .nav-profile span {
-            font-size: 1.4rem; 
-        }
-
-        .profile .dropdown-header h5 {
-            font-size: 1.5rem; 
-        }
-
-        .profile .dropdown-header span {
-            font-size: 1.3rem; 
-        }
-
-        .profile .dropdown-item {
-            font-size: 1.3rem; 
-        }
-
-        footer {
-            font-size: 1.3rem; 
-            padding: 1rem 0;
-        }
-    }*/
 /*--------------------------------------------------------------
 # =====>                 END LAYOUT PAGE                       #
 --------------------------------------------------------------*/    
@@ -659,7 +557,7 @@ main {
 
 
 /*--------------------------------------------------------------
-# =====>                SUBMENU NAVIGATION                     #    // FOR USERS, TRANSPORTS, PROFILE, TITLES NAVIGATION - NOT LAYOUT NAVIGATION
+# =====>               SUBMENU NAVIGATION                      #    // FOR USERS, TRANSPORTS, PROFILE, TITLES NAVIGATION - NOT LAYOUT NAVIGATION
 --------------------------------------------------------------*/                              
 .submenu {
     display: block;
@@ -753,7 +651,7 @@ main {
 
 
 /*--------------------------------------------------------------
-# =====>                  TABLE DESIGN                         #    // FOR PAGES: PLATFORM, USERS, TITLES, TRANSPORTS-FULL, TRANSPORTS-PART
+# =====>                  TABLE DESIGN                         #    // FOR PAGES: platform, users, titles, transports-full, transports-part
 --------------------------------------------------------------*/
 /* Table Platform */
 table th, table td {
@@ -788,13 +686,13 @@ table th, table td {
     top: 0;
     z-index: 2;
     text-transform: uppercase;
-    border: 1px solid rgb(11, 50, 90);
+    border: 1px solid rgba(255, 255, 255, 0.4); /*rgb(11, 50, 90);*/
 }
 
 .platform thead th, 
 .platform tfoot td {
-    background-color: #e8f5e0;
-    color: 	rgb(11, 50, 90);
+    background-color: rgba(2, 51, 101, 0.8); /*#e8f5e0;*/
+    color: rgb(255, 255, 255);	/*rgb(11, 50, 90);*/
     font-size: 1.5rem;
     outline: none;
 }

@@ -332,10 +332,10 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
 
     <footer class=\"footer mt-auto p-1\">
         <div class=\"container\">
-            <span> Liquimet Italia ";
+            <span class=\"fw-bold\"> Liquimet Italia ";
         // line 175
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate("now", "Y"), "html", null, true);
-        yield "&copy; Tutti i diritti riservati. </span>
+        yield "&copy; </span> <span> Tutti i diritti riservati. </span>
         </div>
     </footer>
 
@@ -666,7 +666,7 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
 
     <footer class=\"footer mt-auto p-1\">
         <div class=\"container\">
-            <span> Liquimet Italia {{ 'now'|date('Y')}}&copy; Tutti i diritti riservati. </span>
+            <span class=\"fw-bold\"> Liquimet Italia {{ 'now'|date('Y')}}&copy; </span> <span> Tutti i diritti riservati. </span>
         </div>
     </footer>
 

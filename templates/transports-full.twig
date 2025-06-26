@@ -4,10 +4,6 @@
     {# Bootstrap Datepicker - CSS #}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" 
         integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous">
-
-    {# DataTables Bootstrap 5 CSS 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" 
-        integrity="sha384-5oFfLntNy8kuC2TaebWZbaHTqdh3Q+7PwYbB490gupK0YtTAB7mBJGv4bQl9g9rK" crossorigin="anonymous">#}
 {% endblock %}
  
 {% block content %} 
@@ -179,10 +175,10 @@
                                         </tbody>
                                     </table>
 
-                                    <div class="container-fluid my-3">
+                                    <div class="container-fluid ">
                                         <div class="note-container">
                                             <h4 class="mx-auto my-2"> 
-                                                <button type="button" class="btn my-auto edit-data" data-bs-toggle="modal" data-bs-target="#editNote"
+                                                <button type="button" class="btn my-auto edit-data updateNote" data-bs-toggle="modal" data-bs-target="#editNoteModal"
                                                     data-id="{{ t.id_transport }}">   
                                                         <i class="bi bi-pencil-square mx-1"></i> 
                                                             <span class="collapse-title">
@@ -192,13 +188,8 @@
                                             </h4>
 
                                             <div class="container-fluid my-0">
-                                                <p>
-                                                {% if t.note is empty %}
-                                                    Nessuna nota 
-                                                {% else %}
-                                                    {{ t.note }}
-                                                {% endif %}
-                                                </p>
+                                                <div id="notes-{{ t.id_transport }}" data-ids="{{ t.id_transport }}" class="notes">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -266,16 +257,16 @@ $(document).ready(function () {
 
                     $('#editTransModal #id_transport').val(transport.id_transport);
                     $('#editTransModal #slot').val(transport.slot.toUpperCase());
-                    $('#editTransModal #cmr').val(transport.cmr);
-                    $('#editTransModal #issuer').val(transport.issuer);
-                    $('#editTransModal #supplier').val(transport.supplier);
-                    $('#editTransModal #transport').val(transport.transport);
+                    $('#editTransModal #cmr').val(transport.cmr.toUpperCase());
+                    $('#editTransModal #issuer').val(transport.issuer.toUpperCase());
+                    $('#editTransModal #supplier').val(transport.supplier.toUpperCase());
+                    $('#editTransModal #transport').val(transport.transport.toUpperCase());
                     $('#editTransModal #date_load').val(transport.date_load);
                     $('#editTransModal #date_unload').val(transport.date_unload);
-                    $('#editTransModal #container').val(transport.container);
+                    $('#editTransModal #container').val(transport.container.toUpperCase());
 
-                    $('#editTransModal #original_slot').val(transport.slot);
-                    $('#editTransModal #original_cmr').val(transport.cmr);
+                    /*$('#editTransModal #original_slot').val(transport.slot);
+                    $('#editTransModal #original_cmr').val(transport.cmr);*/
 
                     $('#editTransModal').modal('show');
             } else {
@@ -294,6 +285,7 @@ $(document).ready(function () {
                 const quantity = response.quantity;
 
                     $('#editQtyModal #id_transport').val(quantity.id_transport);
+                    $('#editQtyModal #id_quantity').val(quantity.id_quantity);
                     $('#editQtyModal #kg_load').val(quantity.kg_load);
                     $('#editQtyModal #cooling').val(quantity.cooling);
                     $('#editQtyModal #price_typology').val(quantity.price_typology);
@@ -304,6 +296,48 @@ $(document).ready(function () {
                     $('#editQtyModal #pcs_ghv').val(quantity.pcs_ghv);
 
                     $('#editQtyModal').modal('show');
+            } else {
+                alert(response.message || 'Errore durante il caricamento dei dati.');
+            }
+        }, 'json');
+    });
+
+//  Note edit button
+    $('.notes').each(function () {
+        const container = $(this);
+        const id = container.data('ids');
+        const csrfToken = $('input[name="csrf_token"]').val(); 
+
+        $.post('get-note', { action: 'getTransportNotes', id_transport: id, csrf_token: csrfToken }, function (response) {
+            if (response.success && response.notes.length > 0) {
+                let html = '';
+                response.notes.forEach(n => {
+                    html += `<span class="d-inline-block me-2" data-bs-toggle="tooltip" title="Scritto da ${n.author} il ${n.created}">
+                                ${n.content}
+                            </span> <br>`;
+                });
+                container.html(html);
+                container.find('[data-bs-toggle="tooltip"]').tooltip();
+            } else {
+                container.html('<div class="text-muted">Nessuna nota.</div>');
+            }
+        }, 'json');
+    });
+
+//  Notes edit button, open modal with populated quantity's data
+    $(document).on('click', '.updateNote', function () {
+        const id = $(this).data('id');
+        const csrfToken = $('input[name="csrf_token"]').val(); 
+
+        $.post('get-note', { action: 'getTransportNotes', id_transport: id, csrf_token: csrfToken }, function (response) {
+            if (response.success) {
+                const notes = response.notes;
+
+                $('#editNoteModal #id_transport').val(id);
+                $('#editNoteModal #id_note').val(notes.id_note);
+                $('#editNoteModal #note').val(notes.map(n => n.content).join(' '));
+
+                $('#editNoteModal').modal('show');
             } else {
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }

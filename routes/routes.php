@@ -47,13 +47,15 @@ $router->post('check-password', [$UserController, 'checkPassword']);
 
 // Platform Controller
 $PlatformController = new PlatformController($twig, $session, $mUser, $mTrans, $mQty);
-$router->get('platform', [$PlatformController, 'renderPlatformPage']);              // Render platform data
-$router->get('transports-full', [$PlatformController, 'renderFullTransportsPage']); // Render full transports data
-$router->get('transports-part', [$PlatformController, 'renderPartTransportsPage']); // Render partial transports data
-$router->get('transport-modal', [$PlatformController, 'renderTransportModal']);     // Render transport modal
-$router->get('quantity-modal', [$PlatformController, 'renderQuantityModal']);       // Render transport modal
+$router->get('platform', [$PlatformController, 'renderPlatformPage']);               // Render platform data
+$router->get('transports-full', [$PlatformController, 'renderFullTransportsPage']);  // Render full transports data
+$router->get('transports-part', [$PlatformController, 'renderPartTransportsPage']);  // Render partial transports data
+$router->get('transport-modal', [$PlatformController, 'renderTransportModals']);     // Render transport modal
+//$router->get('quantity-modal', [$PlatformController, 'renderQuantityModal']);       // Render transport modal
 
 $router->post('get-transport', [$PlatformController, 'getTransportData']);          // Get transport data for edit
 $router->post('transport-edit', [$PlatformController, 'handleEditTransport']);      // Handler for transport edit
 $router->post('get-quantity', [$PlatformController, 'getQuantityData']);            // Get transport data for edit
-//$router->post('quantity-edit', [$PlatformController, 'handleEditTransport']);       // Handler for transport edit
+$router->post('quantity-edit', [$PlatformController, 'handleEditQuantity']);        // Handler for transport edit
+$router->post('get-note', [$PlatformController, 'getTransportNotes']);               // Get transport note for edit
+$router->post('transport-note', [$PlatformController, 'handleEditNote']);           // Handler for transport note edit

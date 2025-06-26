@@ -1,5 +1,6 @@
 <?php
 namespace Liquimet\Model;
+use Liquimet\Validate\Validate;
 
 class Quantity{
     private $db;
@@ -8,20 +9,102 @@ class Quantity{
         $this->db = $db;                                 
     }
 
-//  ** [S E L E C T]     S T A T E M E N T S **    
-//  ===> GET QUANTITY BY TRANSPORT ID    [select single]  
+/********************************************
+ *  Select Statements For Getting Transports 
+ *      Get Quantity By ID:    get($id)
+ *      
+ *      
+ *      
+ ********************************************/  
     public function get(int $id): array {    
-        $sql = "SELECT q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.mwh, q.liquid_density, 
-                       q.gas_weight, q.mj_kg, q.pcs_ghv, q.volume_mc, q.volume_nmc, q.smc_mc, q.gas_nmc, q.gas_smc, q.smc_kg, 
-                       q.id_transport
-                FROM quantities AS q
-                JOIN transports AS t 
-                ON q.id_transport = t.id_transport 
-                WHERE q.id_transport = :id_transport
+        $sql = "SELECT id_quantity, kg_load, cooling, price_typology, price_value, kg_unload, mwh, liquid_density, 
+                       gas_weight, mj_kg, pcs_ghv, volume_mc, volume_nmc, smc_mc, gas_nmc, gas_smc, smc_kg, id_transport
+                FROM `quantities`
+                WHERE id_transport = :id_transport
                 LIMIT 1"; 
         
         $quantity = $this->db->runSQL($sql, ['id_transport' => $id])->fetch();  
-            return $quantity ?: [];
+            return $quantity ?: false;
+    }
+
+/********************************************************************
+ *  Validate Data Statements
+ *      Quantity insert and update:     validate_quantity($quantity)
+ ********************************************************************/
+    public function validate_quantity(array $quantity): array {
+        $errors = [];
+
+        // Required fields check
+        foreach (['kg_load', 'cooling', 'price_typology', 'kg_unload', 'liquid_density', 'gas_weight', 'pcs_ghv'] as $field) {
+            if (!isset($quantity[$field]) || $quantity[$field] === '') {
+                $errors[$field] = "Campo obbligatorio.";
+            } 
+        }
+
+        //  Kg Load validation
+            if (!Validate::validate_number($quantity['kg_load'], 'number') || 
+                !Validate::validate_number($quantity['kg_load'], 'min')) {
+                $errors['kg_load'] = "Quantità caricata deve essere un numero positivo (intero o decimale).";
+            }/* elseif (!empty($quantity['kg_load']) && Validate::validate_number($quantity['kg_load'], 'min')) {
+                $errors['kg_load'] = "Il valore minimo deve essere maggiore o uguale a .";
+            }*/
+
+        //  Cooling validation
+            if (!Validate::validate_number($quantity['cooling'], 'digits')) {
+                $errors['cooling'] = "Raffredamento deve essere un numero intero positivo, senza segni o decimali.";
+            } 
+
+        //  Price Typology validation
+            if (!Validate::validate_string($quantity['price_typology'], 'letters')) {
+                $errors['price_typology'] = "Tipologia costo può contenere solo lettere.";
+            } elseif ($quantity['price_typology'] === 'yes') {
+            //  Price Value validation
+                if (!Validate::validate_number($quantity['price_value'], 'digits') ||
+                    !Validate::validate_number($quantity['price_value'], 'min', 1)) {
+                        $errors['price_value'] = "Valore costo extra deve essere un numero intero positivo maggiore o uguale a 1, senza segni o decimali.";
+                } elseif (!isset($quantity['price_value']) || empty($quantity['price_value'])) {
+                    $errors['price_value'] = "Campo obbligatorio.";
+                }
+                    /*elseif (!isset($quantity['price_value']) || !Validate::validate_number($quantity['price_value'], 'min', 1)) {
+                        $errors['price_value'] = "Il valore minimo deve essere maggiore o uguale a 1.";
+                    } 
+                } else {
+                    $quantity['price_value'] = 0;*/
+            }
+
+        //  Kg Unload validation
+            if (!Validate::validate_number($quantity['kg_unload'], 'number') ||
+                !Validate::validate_number($quantity['kg_unload'], 'min')) {
+                    $errors['kg_unload'] = "Quantità scaricata deve essere un numero positivo (intero o decimale).";
+            } /*elseif (!empty($quantity['kg_unload']) && !Validate::validate_number($quantity['kg_unload'], 'min')) {
+                $errors['kg_unload'] = "Il valore minimo deve essere maggiore o uguale a 0.";
+            }*/
+
+        //  Liquid Density validation
+            if (!Validate::validate_number($quantity['liquid_density'], 'number') ||
+                !Validate::validate_number($quantity['liquid_density'], 'min')) {
+                    $errors['liquid_density'] = "Densità liquido deve essere un numero positivo (intero o decimale).";
+            } /*elseif (!empty($quantity['liquid_density']) && !Validate::validate_number($quantity['liquid_density'], 'min')) {
+                $errors['liquid_density'] = "Il valore minimo deve essere maggiore o uguale a 0.";
+            }*/
+
+        //  Gas Weight validation
+            if (!Validate::validate_number($quantity['gas_weight'], 'number') ||
+                !Validate::validate_number($quantity['gas_weight'], 'min')) {
+                    $errors['gas_weight'] = "Peso specifico (gas) deve essere un numero positivo (intero o decimale).";
+            } /*elseif (!empty($quantity['gas_weight']) && !Validate::validate_number($quantity['gas_weight'], 'min')) {
+                $errors['gas_weight'] = "Il valore minimo deve essere maggiore o uguale a 0.";
+            }*/
+
+        //  PCS GHV validation
+            if (!Validate::validate_number($quantity['pcs_ghv'], 'number') ||
+                !Validate::validate_number($quantity['pcs_ghv'], 'min')) {
+                    $errors['pcs_ghv'] = "PCS/GHV deve essere un numero positivo (intero o decimale).";
+            } /*elseif (!empty($quantity['pcs_ghv']) && !Validate::validate_number($quantity['pcs_ghv'], 'min')) {
+                $errors['pcs_ghv'] = "Il valore minimo deve essere maggiore o uguale a 0.";
+            }*/
+
+        return $errors;
     }
 
 //  ===> GET ALL QUANTITIES BY TRANSPORT ID    [select all]        
@@ -72,17 +155,39 @@ class Quantity{
         return $this->db->runSQL($sql)->fetchAll(); 
     }
 
-//  ** [U P D A T E] - [D E L E T E]     S T A T E M E N T S **
-//  ===> UPDATE QUANTITY BY ID    [update single]
-    public function update(array $quantity): bool{                                          
-        $sql = "UPDATE quantities
-                SET kg_load = :kg_load, cooling = :cooling, price_typology = :price_typology, price_value = :price_value, 
-                    kg_unload = :kg_unload, liquid_density = :liquid_density, gas_weight = :gas_weight, pcs_ghv = :pcs_ghv,
-                    modified = :modified, modified_by = :modified_by
-                WHERE id_transport = :id_transport;";                               
-            
-        $this->db->runSQL($sql, $quantity);                        
-            return true;                                             
+/***************
+ *  Update data
+ ***************/
+    public function update(array $data, int $user): bool {                                          
+        $sql = "UPDATE `quantities`
+                SET kg_load = :kg_load, 
+                    cooling = :cooling, 
+                    price_typology = :price_typology, 
+                    price_value = :price_value, 
+                    kg_unload = :kg_unload, 
+                    liquid_density = :liquid_density, 
+                    gas_weight = :gas_weight, 
+                    pcs_ghv = :pcs_ghv,
+                    modified = :modified, 
+                    modified_by = :modified_by
+                WHERE id_quantity = :id_quantity"; 
+
+        $args = [
+            'id_quantity' => $data['id_quantity'],
+            'kg_load' => $data['kg_load'],        
+            'cooling' => $data['cooling'],              
+            'price_typology' => $data['price_typology'], 
+            'price_value' => $data['price_value'], 
+            'kg_unload' => $data['kg_unload'],
+            'liquid_density' => $data['liquid_density'], 
+            'gas_weight' => $data['gas_weight'], 
+            'pcs_ghv' => $data['pcs_ghv'], 
+            'modified' => date('Y-m-d'), 
+            'modified_by' => $user
+        ];     
+
+        $update = $this->db->runSQL($sql, $args);   
+            return $update->rowCount() > 0;                                                
     }
     
 //  ===> DELETE TRANSPORT BY ID    [delete single - only admin]

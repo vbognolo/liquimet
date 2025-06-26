@@ -15,17 +15,16 @@
                     <i class="bi bi-pencil-square my-auto mx-1"></i>
                 </h2>
 
-                    <h4 class="modal-subtitle my-2"> 
-                        Modifica i dati esistenti del trasporto.
-                    </h4>
+                <h4 class="modal-subtitle my-2"> 
+                    Modifica i dati esistenti del trasporto.
+                </h4>
             </div>
         
             <div class="modal-body">
                 <div class="container-fluid">
-                    
                     <form id="transport-edit" method="POST" action="transport-edit" autocomplete="off" novalidate>
                         <input type="hidden" name="id_transport" id="id_transport" value="{{ transport.id_transport }}" />
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />   
 
                         {# Slot ID #}
                         <div class="row form-group mx-auto my-3">
@@ -148,7 +147,7 @@
                                 </span>    
                             </button>
                             
-                            <button type="submit" class="btn btn-default modal-save updateTrans" name="update_transport">
+                            <button type="submit" class="btn btn-default modal-save" name="update_transport">
                                 <span class="bi bi-check-circle">
                                     SALVA
                                 </span>   
@@ -180,9 +179,9 @@
         
             <div class="modal-body">
                 <div class="container-fluid">
-                    
                     <form id="quantity-edit" method="POST" action="quantity-edit" autocomplete="off" novalidate>
-                        <input type="hidden" name="id_transport" id="id_transport" value="{{ quantity.id_transport }}" />
+                        <input type="hidden" name="id_transport" id="id_transport" />
+                        <input type="hidden" name="id_quantity" id="id_quantity" />
                         <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
 
                         {# Kg Load #}
@@ -206,13 +205,13 @@
                             <div class="col-8">
                                 <select name="cooling" id="cooling" class="form-control 
                                     {% if errors.cooling %}is-invalid{% endif %}">
-                                    <option class="opt-type" value="{{ quantity.cooling}}">
+                                    {#<option class="opt-type">
                                         {% if (quantity.cooling == 0) %}
                                             NO = 0
                                         {% else %}
                                             SÌ = 600
                                         {% endif %}
-                                    </option> 
+                                    </option> #}
 
                                     <option value="600" class="opt-type"> 
                                         SÌ = 600
@@ -236,13 +235,13 @@
                             <div class="col-8">
                                 <select name="price_typology" id="price_typology" class="form-control 
                                     {% if errors.price_typology %}is-invalid{% endif %}">
-                                    <option class="opt-type" value="{{ quantity.price_typology }}">
+                                    {#<option class="opt-type">
                                         {% if (quantity.price_typology == 'yes') %}
                                             SÌ
                                         {% else %}
                                             NO
                                         {% endif %}
-                                    </option>   
+                                    </option>   #}
                                     
                                     <option value="yes" class="opt-type"> 
                                         SÌ
@@ -266,6 +265,8 @@
                             <div class="col-8">
                                 <input type="text" name="price_value" id="price_value"
                                     class="form-control {% if errors.price_value %}is-invalid{% endif %}" />
+                                {#<input type="hidden" name="price_value" id="price_value_hidden">#}
+
 
                                 <div class="error-placeholder">
                                     {% if errors.price_value %}<div class="invalid-feedback">{{ errors.price_value }}</div>{% endif %}
@@ -283,6 +284,20 @@
 
                                 <div class="error-placeholder">
                                     {% if errors.kg_unload %}<div class="invalid-feedback">{{ errors.kg_unload }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+
+                        {# Liquid Density #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label class="col-4 form-control-label my-1"> Densità liquido: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="liquid_density" id="liquid_density" 
+                                    class="form-control {% if errors.liquid_density %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.liquid_density %}<div class="invalid-feedback">{{ errors.liquid_density }}</div>{% endif %}
                                 </div> 
                             </div>
                         </div>
@@ -322,7 +337,7 @@
                                 </span>    
                             </button>
                             
-                            <button type="submit" class="btn btn-default modal-save updateTrans" name="update_quantity">
+                            <button type="submit" class="btn btn-default modal-save" name="update_quantity">
                                 <span class="bi bi-check-circle">
                                     SALVA
                                 </span>   
@@ -330,60 +345,66 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> 
         </div>
     </div>
 </div>
 {# End Edit Quantity Modal #}
 
 {# Transport Note Modal #}
-<div class="modal fade" id="editNote" tabindex="-1" role="dialog" aria-labelledby="edit-note" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="editNoteModal" tabindex="-1" role="dialog" aria-labelledby="editNoteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header row">
-                <h2 class="modal-title mx-auto my-auto" id="edit-note"> 
+            <div class="modal-header mx-auto row">
+                <h2 class="modal-title" id="editNoteLabel"> 
                     <i class="bi bi-pencil-square my-auto mx-1"></i>
                         MODIFICA
                     <i class="bi bi-pencil-square my-auto mx-1"></i>
                 </h2>
 
-                    <h4 class="modal-subtitle mx-auto my-2"> 
-                        Modifica la nota del trasporto <b style="color: #6d1741">#{{ t.seo }}</b>.
+                    <h4 class="modal-subtitle my-2"> 
+                        Modifica la nota del trasporto.
                     </h4>
-            </div> 
-                            
+            </div>
+        
             <div class="modal-body">
                 <div class="container-fluid">
+                    <form id="transport-note" method="POST" action="transport-note" autocomplete="off" novalidate>
+                        <input type="hidden" name="id_transport" id="id_transport" />
+                        <input type="hidden" name="id_note" id="id_note" />
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
 
-                    <form id="note-form" method="POST" action="{{ doc_root }}transport-note/{{ t.id_transport }}">
-                        <input type="hidden" name="id_transport" id="id_transport" value="{{ t.id_transport }}" />
-                        <input type="hidden" name="type" value="{{ t.type }}" />
-
-                        <div class="row form-group mx-auto">
-                            <label class="form-control-label my-auto"> Nota: </label>
+                        <div class="row form-group mx-auto mb-3">
+                            <label class="form-control-label my-1"> Nota: </label>
                             
-                            <textarea class="form-control edit-note" name="note" id="note" 
-                                style="height: 80px; text-align: center; white-space-collapse: collapse"
-                            >{{ t.note|trim }}</textarea>
-                        </div>
+                            <div class="">
+                                <textarea name="note" id="note" maxlength="2000"
+                                    class="form-control {% if errors.content %}is-invalid{% endif %}"
+                                    style="height: 80px; text-align: center; white-space-collapse: collapse"></textarea>
+
+                                <div class="error-placeholder">
+                                    {% if errors.content %}<div class="invalid-feedback">{{ errors.content }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>                        
                         
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default modal-cancel" data-bs-dismiss="modal">
                                 <span class="bi bi-x-circle">
-                                    CHIUDI
-                                </span>  
+                                    CHIUDI 
+                                </span>    
                             </button>
-    
+
                             <button type="button" class="btn btn-default modal-reset">
                                 <span class="bi bi-trash">
                                     CANCELLA 
                                 </span> 
                             </button>
-    
-                            <button type="submit" class="btn btn-default modal-save updateNote" id="updateNote" name="update_note">
+                            
+                            <button type="submit" class="btn btn-default modal-save" name="update_note">
                                 <span class="bi bi-check-circle">
-                                    SALVA 
-                                </span> 
+                                    SALVA
+                                </span>   
                             </button>
                         </div>
                     </form>
@@ -419,7 +440,7 @@
 {% block page_script %}
 <script>
 $(document).ready(function () {
-//  Datepicker 
+//  DATEPICKER 
     $('.datepicker').datepicker({
         format: 'dd-mm-yyyy',
         endDate: new Date(),
@@ -448,7 +469,7 @@ $(document).ready(function () {
         }
     });
 
-//  Validator method for defining current date as max
+//  VALIDATOR METHOD FOR DEFINING CURRENT DATE AS MAX
     $.validator.addMethod("noFutureDate", function (value, element) {
         if (!value) return true; // allow empty if not required
 
@@ -460,7 +481,7 @@ $(document).ready(function () {
         return inputDate <= today;
     });
 
-//  Validator method for defining that unload's date must be after or equal to load's date
+//  VALIDATOR METHOD FOR DEFINING THAT UNLOAD'S DATE MUST BE AFTER OR EQUAL TO LOAD'S DATE
     $.validator.addMethod("dateAfterOrEqual", function(value, element, params) {
         const dateLoadVal = $(params).val();
             if (!value || !dateLoadVal) return true;
@@ -474,7 +495,7 @@ $(document).ready(function () {
             return this.optional(element) || dateUnload >= dateLoad;
     });
 
-//  Form validation
+//  FORM VALIDATION
     $("#transport-edit").validate({
         onfocusout: function(element) {
             $(element).valid();     // validate the field when it loses focus
@@ -604,60 +625,100 @@ $(document).ready(function () {
         }
     });
 
+//  Quantity Price Value Toggle Field
+    let switched = false;
+
+    function togglePriceValueField() {
+        const $pv = $('#price_value');
+        const $pt = $('#price_typology');
+        const typology = $pt.val();
+
+        if (typology === 'no') {
+            switched = true;
+            $pv
+                .val(0)
+                .prop('disabled', true)
+                .removeClass('is-valid is-invalid')
+                .closest('.form-group')
+                .find('.error-placeholder').html('');
+        } else {
+            $pv
+                .prop('disabled', false)
+                .removeClass('is-valid is-invalid')
+                .closest('.form-group')
+                .find('.error-placeholder').html('');
+
+            if (switched) {
+                $pv.val('');    // Clear value only if switched from no to yes
+            }
+
+            $pv.trigger('input'); // ensure initial sync
+            switched = false;       // Reset flag after processing
+        }
+    }
+
+    $('#price_typology').on('change', togglePriceValueField);
+
 //  Quantity Form Validation
-     $("#transport-edit").validate({
+    $("#quantity-edit").validate({
         onfocusout: function(element) {
             $(element).valid();     // validate the field when it loses focus
         },
         rules: {
-            slot: { required: true, rangelength: [15, 35], pattern: "^[A-Za-z0-9_]+$" },
-            cmr: { required: true, rangelength: [7, 35], pattern: "^[A-Za-z0-9\-]+$" },
-            issuer: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
-            supplier: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
-            transport: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
-            date_load: { required: true, noFutureDate: true },
-            date_unload: { required: true, noFutureDate: true, dateAfterOrEqual: "#date_load" },
-            container: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" }
+            kg_load: { required: true, number: true, min: 0 },
+            cooling: { required: true, digits: true },
+            price_typology: { required: true },
+            price_value: { 
+                required: {
+                    depends: function() {
+                        return $('#price_typology').val() === 'yes';
+                    }
+                },
+                digits: true,
+                min: 1
+            },
+            kg_unload: { required: true, number: true, min: 0 },
+            liquid_density: { required: true, number: true, min: 0 },
+            gas_weight: { required: true, number: true, min: 0 },
+            pcs_ghv: { required: true, number: true, min: 0 }
         },
         messages: {
-            slot: {
+            kg_load: {
                 required: "Campo obbligatorio.",
-                rangelength: "Usare almeno 11 e al massimo 35 caratteri.",
-                pattern: "Slot ID può contenere lettere, numeri e underscore (_). Spazi non consentiti."
+                number: "Quantità caricata deve essere un numero positivo (intero o decimale).",
+                min: "Il valore minimo deve essere maggiore o uguale a 0."
             },
-            cmr: {
+            cooling: {
                 required: "Campo obbligatorio.",
-                rangelength: "Usare almeno 7 e al massimo 35 caratteri.",
-                pattern: "CMR può contenere lettere, numeri e trattini (-). Spazi non consentiti."
+                digits: "Raffredamento deve essere un numero intero positivo, senza segni o decimali."
             },
-            issuer: {
-                required: "Campo obbligatorio.",
-                rangelength: "Usare almeno 3 e al massimo 50 caratteri.",
-                pattern: "Emittente può contenere solo lettere e spazi (senza spazio iniziale)."
+            price_typology: {
+                required: "Campo obbligatorio."
             }, 
-            supplier: {
+            price_value: {
                 required: "Campo obbligatorio.",
-                rangelength: "Usare almeno 3 e al massimo 50 caratteri.",
-                pattern: "Fornitore può contenere solo lettere e spazi (senza spazio iniziale)."
+                digits: "Valore costo extra deve essere un numero intero positivo maggiore o uguale a 1, senza segni o decimali.",
+                min: "Il valore minimo deve essere maggiore o uguale a 1."
             }, 
-            transport: {
+            kg_unload: {
                 required: "Campo obbligatorio.",
-                rangelength: "Usare almeno 3 e al massimo 50 caratteri.",
-                pattern: "Trasporto può contenere solo lettere e spazi (senza spazio iniziale)."
+                number: "Quantità scaricata deve essere un numero positivo (intero o decimale).",
+                min: "Il valore minimo deve essere maggiore o uguale a 0."
             },
-            date_load: {
+            liquid_density: {
                 required: "Campo obbligatorio.",
-                noFutureDate: "Inserire una data valida. Non sono permesse date future."
+                number: "Densità liquido deve essere un numero positivo (intero o decimale).",
+                min: "Il valore minimo deve essere maggiore o uguale a 0.",
             }, 
-            date_unload: {
+            gas_weight: {
                 required: "Campo obbligatorio.",
-                noFutureDate: "Inserire una data valida. Non sono permesse date future.",
-                dateAfterOrEqual: "La data di scarico non può essere precedente alla data di carico."
+                number: "Peso specifico (gas) deve essere un numero positivo (intero o decimale).",
+                min: "Il valore minimo deve essere maggiore o uguale a 0."
             }, 
-            container: {
+            pcs_ghv: {
                 required: "Campo obbligatorio.",
-                rangelength: "Usare almeno 3 e al massimo 50 caratteri.",
-                pattern: "Container può contenere solo lettere e spazi (senza spazio iniziale)."
+                number: "PCS/GHV deve essere un numero positivo (intero o decimale).",
+                min: "Il valore minimo deve essere maggiore o uguale a 0."
             }
         },
         errorPlacement: function(error, element) {
@@ -674,41 +735,47 @@ $(document).ready(function () {
         },
         submitHandler: function (form) {
             const $form = $(form);
-            const oSlot = $("#slot").data("original");
-            const oCmr = $("#cmr").data("original");
 
             $.ajax({
-                url: 'transport-edit',
+                url: 'quantity-edit',
                 type: 'POST',
-                data: $(form).serialize() + '&original_slot=' + encodeURIComponent(oSlot) + '&original_cmr=' + encodeURIComponent(oCmr),
+                data: $form.serialize(), 
                 dataType: 'json',
                 success: function (response) {
                     if (response.success) {
-                        updateOriginalDataFromResponse(response.edited);
-                        $('#editTransModal').modal('hide');
+                        updateOriginalDataFromResponse(response.updated);
+                        //$('#editQtyModal').modal('hide');
 
-                        const edited = response.edited;
-                        const row = $('#id-' + edited.id_transport);
+                        const updated = response.updated;
+                        const row = $('#qty-table-' + updated.id_transport);
 
                         // Update row cells manually
-                        row.find('.col-slot').text(edited.slot);
-                        row.find('.col-cmr').text(edited.cmr);
-                        row.find('.col-issuer').text(edited.issuer);
-                        row.find('.col-supplier').text(edited.supplier);
-                        row.find('.col-transport').text(edited.transport);
-                        row.find('.col-load').text(edited.date_load);
-                        row.find('.col-unload').text(edited.date_unload);
-                        row.find('.col-container').text(edited.container);
+                        row.find('.col-kg-load').text(updated.kg_load);
+                        row.find('.col-cooling').text(updated.cooling);
+                        row.find('.col-price-typology').text(updated.price_typology);
+                        row.find('.col-price-value').text(updated.price_value);
+                        row.find('.col-kg-unload').text(updated.kg_unload);
+                        row.find('.col-liquid-density').text(updated.liquid_density);
+                        row.find('.col-gas-weight').text(updated.gas_weight);
+                        row.find('.col-pcs-ghv').text(updated.pcs_ghv);
 
-                        row.find('.col-univoco').text(edited.univoco);
-                        row.find('.col-month-load').text(edited.id_month_load);
-                        row.find('.col-week-unload').text(edited.week_unload);
-                        row.find('.col-month-unload').text(`${edited.id_month_unload} - ${edited.month_unload}`);
+                        row.find('.col-mwh').text(updated.mwh);
+                        row.find('.col-mj-kg').text(updated.mj_kg);
+                        row.find('.col-volume-mc').text(updated.volume_mc);
+                        row.find('.col-volume-nmc').text(updated.volume_nmc);
+                        row.find('.col-smc-mc').text(updated.smc_mc);
+                        row.find('.col-gas-nmc').text(updated.gas_nmc);
+                        row.find('.col-gas-smc').text(updated.gas_smc);
+                        row.find('.col-smc-kg').text(updated.smc_kg);
 
                         // Highlight and scroll
                         row.addClass('table-success');
                         $('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
                             setTimeout(() => row.removeClass('table-success'), 2500);
+
+                        setTimeout(() => {
+                            $("#editQtyModal").modal('hide');
+                        }, 400);
                     } else {
                         // Display PHP validation errors
                         //$(".invalid-feedback").remove();                    // Clear previous errors
@@ -734,6 +801,92 @@ $(document).ready(function () {
         }
     });
 
+//  NOTE FORM VALIDATION
+    $("#transport-note").validate({
+        onfocusout: function(element) {
+            $(element).valid();     // validate the field when it loses focus
+        },
+        rules: {
+            content: { maxlength: 2000 }
+        },
+        messages: {
+            content: {
+                maxlength: "Massimo 2000 caratteri."
+            }
+        },
+        errorPlacement: function(error, element) {
+            error.addClass("text-danger small");
+            element.removeClass("is-valid").addClass("is-invalid");                                             // Bootstrap error class
+            element.closest(".form-group").find(".error-placeholder").html(error);      // Insert error inside the reserved space
+        },
+        highlight: function (element) {
+            $(element).removeClass('is-valid').addClass('is-invalid');
+        },
+        unhighlight: function (element) {
+            $(element).removeClass('is-invalid');
+            $(element).closest('.form-group').find('.error-placeholder').html('');
+        },
+        submitHandler: function (form) {
+            const $form = $(form);
+
+            $.ajax({
+                url: 'transport-note',
+                type: 'POST',
+                data: $form.serialize(), 
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        updateOriginalDataFromResponse(response.notes);
+                        //$('#editQtyModal').modal('hide');
+
+                        const modified = response.notes;
+                        const row = $('#notes-' + modified.id_transport);
+
+                        // Update row cells manually
+                        modified.forEach(n => {
+                            row.find('#note').html(`<span class="d-inline-block me-2" data-bs-toggle="tooltip" title="Scritto da ${n.author} il ${n.created}">
+                                ${n.content}
+                            </span> <br>`);
+                        });
+
+                        // Highlight and scroll
+                        row.addClass('table-success');
+                        $('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
+                            setTimeout(() => row.removeClass('table-success'), 2500);
+
+                        setTimeout(() => {
+                            $("#editNoteModal").modal('hide');
+                        }, 400);
+                    } else {
+                        // Display PHP validation errors
+                        //$(".invalid-feedback").remove();                    // Clear previous errors
+                        if (response.errors) {
+                            $.each(response.errors, function(field, message) {
+                                const input = $("[name='" + field + "']");
+                                input.removeClass("is-valid").addClass("is-invalid");
+                                input.closest(".form-group").find(".error-placeholder")
+                                    .html('<div class="invalid-feedback">' + message + '</div>');
+                            });
+                        }
+                    }
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                }
+            });
+            return false;
+        },
+        success: function(label, element) {
+            $(element).removeClass("is-invalid").addClass("is-valid");
+            $(element).closest(".form-group").find(".error-placeholder").html("");
+        }
+    }); 
+
+    $('#editQtyModal').on('shown.bs.modal', function () {
+        switched = false;
+        togglePriceValueField(); // apply correct enabled/disabled state
+    });
+
 //  Reset modal datepicker on cancel
     $('#editTransModal').on('hidden.bs.modal', function () {
         const dp = $(this).find('.datepicker');
@@ -751,6 +904,20 @@ $(document).ready(function () {
         
         dp.datepicker('clearDates'); // safely clear dates
         dp.val(''); // clear input value if needed
+    });
+
+    $('#editQtyModal').on('hidden.bs.modal', function () {
+        const $form = $(this).find('#quantity-edit');
+
+        // Reset the form fields
+        $form[0].reset();
+
+        // Clear jQuery Validation errors
+        $form.validate().resetForm();
+
+        // Remove error classes
+        $form.find('.is-invalid').removeClass('is-invalid');
+        $form.find('.is-valid').removeClass('is-valid');
     });
 
 //  Dates validation on focus in and focus out
@@ -777,6 +944,12 @@ $(document).ready(function () {
         }
     });
 
+    $('#editQtyModal').on('hide.bs.modal', function() {
+        if (formHasChanged()) {
+            resetFormToOriginal();
+        }
+    });
+
 //  Reset form to original values
     function resetFormToOriginal() {
         $('#transport-edit').find(':input').each(function() {
@@ -787,12 +960,29 @@ $(document).ready(function () {
                 }
         });
         $('#transport-edit').removeClass('is-invalid');
+
+        $('#quantity-edit').find(':input').each(function() {
+            const name = $(this).attr('name');
+                if (name && originalData.hasOwnProperty(name)) {
+                    $(this).val(originalData[name]).trigger('change').removeClass('is-invalid');
+                    $(this).closest('.form-group').find('.error-placeholder').html('');
+                }
+        });
+        $('#quantity-edit').removeClass('is-invalid');
     }
 
 //  Detect changes and reset if changed
     function formHasChanged() {
         let changed = false;
         $('#transport-edit').find(':input').each(function () {
+            const name = $(this).attr('name');
+                if (name && originalData[name] !== $(this).val()) {
+                    changed = true;
+                    return false; // exit early
+                }
+        });
+
+        $('#quantity-edit').find(':input').each(function () {
             const name = $(this).attr('name');
                 if (name && originalData[name] !== $(this).val()) {
                     changed = true;
@@ -806,12 +996,20 @@ $(document).ready(function () {
 //  (Put this inside your AJAX success response when update is successful)
     function updateOriginalDataFromResponse(data) {
         if (!data || !data.edited) return;
-        $('#transport-edit').find(':input').each(function () {
-            const name = $(this).attr('name');
-                if (name && data.edited.hasOwnProperty(name)) {
-                    originalData[name] = data.edited[name];
-                }
-        });
+            $('#transport-edit').find(':input').each(function () {
+                const name = $(this).attr('name');
+                    if (name && data.edited.hasOwnProperty(name)) {
+                        originalData[name] = data.edited[name];
+                    }
+            });
+
+        if (!data || !data.updated) return;
+            $('#quantity-edit').find(':input').each(function () {
+                const name = $(this).attr('name');
+                    if (name && data.updated.hasOwnProperty(name)) {
+                        originalData[name] = data.updated[name];
+                    }
+            });
     }
 });
 </script>
