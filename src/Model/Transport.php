@@ -9,13 +9,13 @@ class Transport{
         $this->db = $db;                                 
     }
     
-/*******************************************
+/**************************************************
  * Select Statements For Getting Transports 
- *    Get Transport By ID                      get($id)
- *    Get Note By Transport ID                 getNote($id)
+ *    Get Transport By ID          => get($id)
+ *    Get Note By Transport ID     => getNote($id)
+ *    Get All Transports  
  *      
- *      
- *******************************************/  
+ **************************************************/  
     public function get(int $id): array {
         $sql = "SELECT t.id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, t.date_unload, 
                        t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, t.seo,
@@ -42,11 +42,15 @@ class Transport{
 
     public function getAllTransports(): array {
         $sql = "SELECT t.id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, 
-                    t.date_unload, t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, 
-                    q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.mwh, q.liquid_density, q.gas_weight, 
-                    q.mj_kg, q.pcs_ghv, q.volume_mc, q.volume_nmc, q.smc_mc, q.gas_nmc, q.gas_smc, q.smc_kg
+                       t.date_unload, t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, 
+                       q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.mwh, q.liquid_density, q.gas_weight, 
+                       q.mj_kg, q.pcs_ghv, q.volume_mc, q.volume_nmc, q.smc_mc, q.gas_nmc, q.gas_smc, q.smc_kg,
+                       n.content, n.created,
+                       u.username AS author
                 FROM `transports`       AS t
                 LEFT JOIN `quantities`  AS q ON t.id_transport = q.id_transport
+                LEFT JOIN `notes`       AS n ON t.id_transport = n.id_transport
+                LEFT JOIN `users`       AS u ON t.id_user = u.id_user
                     ORDER BY t.id_transport DESC";
 
         return $this->db->runSQL($sql)->fetchAll();
@@ -73,16 +77,19 @@ class Transport{
     }
     
 //  ===> GET ALL FULL TRANSPORTS    [select all fulls]
-    public function getFull(): array{
+    public function getFull(): array {
         $sql = "SELECT t.id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, 
                        t.date_unload, t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, t.seo, 
                        q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.mwh, q.liquid_density, q.gas_weight, 
-                       q.mj_kg, q.pcs_ghv, q.volume_mc, q.volume_nmc, q.smc_mc, q.gas_nmc, q.gas_smc, q.smc_kg
+                       q.mj_kg, q.pcs_ghv, q.volume_mc, q.volume_nmc, q.smc_mc, q.gas_nmc, q.gas_smc, q.smc_kg,
+                       n.content, n.created,
+                       u.username AS author
                 FROM `transports` AS t
                 LEFT JOIN `quantities` AS q ON t.id_transport = q.id_transport
                 JOIN `users` AS u ON t.id_user = u.id_user
+                LEFT JOIN `notes` AS n ON t.id_transport = n.id_transport
                 WHERE t.type = :type
-                ORDER BY t.id_transport DESC"; 
+                    ORDER BY t.id_transport DESC"; 
         
         return $this->db->runSQL($sql, ['type' => 'F'])->fetchAll();  
     }    
@@ -119,54 +126,59 @@ class Transport{
         return $this->db->runSQL($sql, $args)->fetchAll();  
     }
 
-/*****************************************************
- *  Validate transport data for inserting or editting 
- *****************************************************/
+/***************************************************************************
+ * Validation And Availability Checks
+ *    Validate Transport    => validate_transport($transport)
+ *    Validate Dates        => validate_dates($dateLoadStr, $dateUnloadStr)
+ *      
+ *      
+ ***************************************************************************/
     public function validate_transport(array $transport): array {
         $errors = [];
 
-        // Required fields check
+        //  Required fields check
         foreach (['slot', 'cmr', 'issuer', 'supplier', 'date_load', 'date_unload', 'transport', 'container'] as $field) {
             if (empty($transport[$field])) {
                 $errors[$field] = "Campo obbligatorio.";
             }
         }
-            // Slot validation
+
+            //  Slot validation
             if (!empty($transport['slot']) && !Validate::validate_string($transport['slot'], 'letters_numbers')) {
                 $errors['slot'] = "Slot ID può contenere lettere, numeri e underscore (_). Spazi non consentiti.";
             } elseif (!empty($transport['slot']) && !Validate::chars_length($transport['slot'], 11, 35)) {
                 $errors['slot'] = "Usare almeno 11 e al massimo 35 caratteri.";
             }
 
-            // Cmr validation
+            //  Cmr validation
             if (!empty($transport['cmr']) && !Validate::validate_string($transport['cmr'], 'letters-numbers')) {
                 $errors['cmr'] = "CMR può contenere lettere, numeri e trattini (-). Spazi non consentiti.";
             } elseif (!empty($transport['cmr']) && !Validate::chars_length($transport['cmr'], 7, 35)) {
                 $errors['cmr'] = "Usare almeno 7 e al massimo 35 caratteri.";
             }
 
-            // Issuer validation
+            //  Issuer validation
             if (!empty($transport['issuer']) && !Validate::validate_string($transport['issuer'], 'lettersSpaces')) {
                 $errors['issuer'] = "Emittente può contenere solo lettere e spazi (senza spazio iniziale).";
             } elseif (!empty($transport['issuer']) && !Validate::chars_length($transport['issuer'], 3, 50)) {
                 $errors['issuer'] = "Usare almeno 3 e al massimo 50 caratteri.";
             }
 
-            // Supplier validation
+            //  Supplier validation
             if (!empty($transport['supplier']) && !Validate::validate_string($transport['supplier'], 'lettersSpaces')) {
                 $errors['supplier'] = "Fornitore può contenere solo lettere e spazi (senza spazio iniziale).";
             } elseif (!empty($transport['supplier']) && !Validate::chars_length($transport['supplier'], 3, 50)) {
                 $errors['supplier'] = "Usare almeno 3 e al massimo 50 caratteri.";
             }
 
-            // Transport validation
+            //  Transport validation
             if (!empty($transport['transport']) && !Validate::validate_string($transport['transport'], 'lettersSpaces')) {
                 $errors['transport'] = "Trasporto può contenere solo lettere e spazi (senza spazio iniziale).";
             } elseif (!empty($transport['transport']) && !Validate::chars_length($transport['transport'], 3, 50)) {
                 $errors['transport'] = "Usare almeno 3 e al massimo 50 caratteri.";
             }
 
-            // Container validation
+            //  Container validation
             if (!empty($transport['container']) && !Validate::validate_string($transport['container'], 'lettersSpaces')) {
                 $errors['container'] = "Container può contenere solo lettere e spazi (senza spazio iniziale).";
             } elseif (!empty($transport['container']) && !Validate::chars_length($transport['container'], 3, 50)) {
@@ -176,9 +188,6 @@ class Transport{
         return $errors;
     }
 
-/******************************************************
- *  Validate transport dates for inserting or editting 
- ******************************************************/
     public function validate_dates($dateLoadStr, $dateUnloadStr): array {
         $errors = [];
 
@@ -210,7 +219,7 @@ class Transport{
 /************************************
  *  Check if data exists in database 
  ************************************/
-    public function check_existance(string $field, string $value, ?int $id = null): bool {
+    public function check_transport(string $field, string $value, ?int $id = null): bool {
         $allowed = ['slot', 'cmr'];
 
             if (!in_array($field, $allowed)) return false;
@@ -228,9 +237,47 @@ class Transport{
         return (bool) $this->db->runSQL($sql, $params)->fetchColumn();
     }
 
-/***************
- *  Update data
- ***************/
+    
+
+/**********************************************************
+ *  Transport CRUD Operations:
+ *      Create Transport        => createTransport()
+ *      Update Transport        => updateTransport()
+ *      
+ *      Partial Transports
+ *      Transport Modals
+ *      
+ **********************************************************/
+    public function createTransport(array $data, int $user): bool {
+        if (self::check_transport($data['slot'], $data['cmr'])) {       
+            return false;           
+        }  
+
+        $sql = "INSERT INTO `transports` 
+                    (type, slot, cmr, issuer, supplier, transport, date_load, 
+                        date_unload, container, seo, created, id_user)
+                VALUES 
+                    (:type, :slot, :cmr, :issuer, :supplier, :transport, :date_load, 
+                        :date_unload, :container, :seo, :created, :id_user);";
+
+        $args = [
+            'type' => $data['type'],        
+            'slot' => $data['slot'],  
+            'cmr' => $data['cmr'],           
+            'issuer' => $data['issuer'],
+            'supplier' => $data['supplier'],
+            'transport' => $data['transport'], 
+            'date_load' => $data['date_load'],
+            'date_unload' => $data['date_unload'],
+            'container' => $data['container'],
+            'seo' => substr($data['slot'], -4),
+            'created' => date('Y-m-d'),
+            'id_user' => $user
+        ];        
+                
+        return (bool) $this->db->runSQL($sql, $args);
+    }
+
     public function update(int $id, array $data, int $user): bool {                                          
         $sql = "UPDATE `transports`
                 SET slot = :slot, 
@@ -302,17 +349,17 @@ class Transport{
 }
 
 //  ===> DELETE TRANSPORT BY ID    [delete single - only admin]
-    public function delete(int $id): bool{
-        $sql = "DELETE FROM transports 
-                WHERE id_transport = :id_transport;";    
+    public function deleteTransport(int $id): bool {
+        $sql = "DELETE FROM `transports` 
+                WHERE id_transport = :id_transport";    
         
-        $this->db->runSQL($sql, [$id]);                  
+        $this->db->runSQL($sql, ['id_transport' => $id]);                  
             return true;                                     
     }
 
 //  ** [C H E C K]     S T A T E M E N T S **
 //  ===> CHECK IF ID EXISTS    [select single]
-    public function available(string $term): int{   
+    public function available(string $term): int {   
         $args['term1'] = $args['term2'] = "%$term%";  
 
         $sql = "SELECT COUNT(id_transport)
@@ -323,11 +370,11 @@ class Transport{
         return $this->db->runSQL($sql, $args)->fetchColumn();  
     }
 
-/***************************************************************
+/*******************************************************************
  *  Count Statements For Transports 
- *      Count All Transports:            totalTransport())
- *      Count All Transports By Type:    totalTransports($type)
- ***************************************************************/
+ *      Count All Transports:            => totalTransport())
+ *      Count All Transports By Type:    => totalTransports($type)
+ *******************************************************************/
     public function totalTransport(): int {
         $sql = "SELECT COUNT(id_transport) 
                 FROM `transports`";    
@@ -343,11 +390,11 @@ class Transport{
         return (int) $this->db->runSQL($sql, ['type' => $type])->fetchColumn();                      
     }
 
-/***********************************************************
+/***************************************************************
  *  Search Statements For Transports 
- *      Get Number of Search Matches:    searchCount($term)
- *      Get Data From Search Matches:    search($term)
- ***********************************************************/
+ *      Get Number of Search Matches:    => searchCount($term)
+ *      Get Data From Search Matches:    => search($term)
+ ***************************************************************/
     public function searchCount(string $term): int{
         $args['term1'] = $args['term2'] = "%$term%";        // add wildcards to search term
         
@@ -375,5 +422,28 @@ class Transport{
                 ORDER BY t.id_transport DESC;";
 
         return $this->db->runSQL($sql, $args)->fetchAll(); 
+    }
+
+/************************************
+ *  Transaction Calls Encapsulation 
+ *      lastInsertId
+ *      beginTransaction
+ *      commit
+ *      rollback
+ ************************************/
+    public function getLastInsertId() {
+        return $this->db->lastInsertId(); 
+    }
+
+    public function begin(): void {
+        $this->db->beginTransaction();
+    }
+
+    public function commit(): void {
+        $this->db->commit();
+    }
+
+    public function rollback(): void {
+        $this->db->rollBack();
     }
 }

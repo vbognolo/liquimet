@@ -32,7 +32,68 @@ class Quantity{
  *      Quantity insert and update:     validate_quantity($quantity)
  ********************************************************************/
     public function validate_quantity(array $quantity): array {
+        $labels = [
+            'kg_load'        => 'Quantità caricata',
+            'cooling'        => 'Raffreddamento',
+            'price_typology' => 'Tipologia costo',
+            'price_value'    => 'Valore costo extra',
+            'kg_unload'      => 'Quantità scaricata',
+            'liquid_density' => 'Densità liquido',
+            'gas_weight'     => 'Peso specifico (gas)',
+            'pcs_ghv'        => 'PCS/GHV',
+        ];
+
+        $rules = Validate::quantity_rules();
         $errors = [];
+
+        foreach ($rules as $field => $ruleSet) {
+            $value = $quantity[$field] ?? '';
+
+            //  Required
+            if (!empty($ruleSet['required']) && $value === '') {
+                $errors[$field] = "Campo obbligatorio.";
+                continue;
+            }
+
+            //  Required if condition
+            if (isset($ruleSet['required_if'])) {
+                [$depField, $expected] = $ruleSet['required_if'];
+                
+                if (($quantity[$depField] ?? '') === $expected && $value === '') {
+                    $errors[$field] = "Campo obbligatorio.";
+                    continue;
+                }
+            }
+
+            //  Type check
+            $label = $labels[$field] ?? $field;     // fallback to $field if not mapped
+            switch ($ruleSet['type'] ?? null) {
+                case 'digits':
+                    if (!Validate::validate_number($value, 'digits')) {
+                        $errors[$field] = "$label deve essere un numero intero positivo.";
+                    }
+                    break;
+                case 'number':
+                    if (!Validate::validate_number($value, 'number')) {
+                        $errors[$field] = "$label deve essere un numero positivo (intero o decimale).";
+                    }
+                    break;
+                case 'letters':
+                    if (!Validate::validate_string($value, 'letters')) {
+                        $errors[$field] = "$label può contenere solo lettere.";
+                    }
+                    break;
+            }
+
+            //  Minimum value
+            if (isset($ruleSet['min']) && is_numeric($value)) {
+                if (!Validate::validate_number($value, 'min', $ruleSet['min'])) {
+                    $errors[$field] = "Il valore minimo per $label deve essere maggiore o uguale a {$ruleSet['min']}.";
+                }
+            }
+    }
+
+    return $errors;
 
         // Required fields check
         foreach (['kg_load', 'cooling', 'price_typology', 'kg_unload', 'liquid_density', 'gas_weight', 'pcs_ghv'] as $field) {
@@ -155,9 +216,40 @@ class Quantity{
         return $this->db->runSQL($sql)->fetchAll(); 
     }
 
-/***************
- *  Update data
- ***************/
+/*****************************************************
+ *  Quantity CRUD Operations:
+ *      Create Quantity        => createQuantity()
+ *      Update Transport       => updateTransport()
+ *      
+ *      Partial Transports
+ *      Transport Modals
+ *      
+ *****************************************************/
+    public function createQuantity(int $id, array $data, int $user): bool {
+        $sql = "INSERT INTO `quantities` 
+                    (kg_load, cooling, price_typology, price_value, kg_unload, liquid_density, 
+                        gas_weight, pcs_ghv, created, id_transport, id_user)
+                VALUES 
+                    (:kg_load, :cooling, :price_typology, :price_value, :kg_unload, :liquid_density, 
+                        :gas_weight, :pcs_ghv, :created, :id_transport, :id_user);";
+
+        $args = [
+            'kg_load' => $data['kg_load'],        
+            'cooling' => $data['cooling'],              
+            'price_typology' => $data['price_typology'], 
+            'price_value' => $data['price_value'], 
+            'kg_unload' => $data['kg_unload'],
+            'liquid_density' => $data['liquid_density'], 
+            'gas_weight' => $data['gas_weight'], 
+            'pcs_ghv' => $data['pcs_ghv'], 
+            'created' => date('Y-m-d'), 
+            'id_transport' => $id,
+            'id_user' => $user
+        ];       
+                
+        return (bool) $this->db->runSQL($sql, $args);
+    }
+
     public function update(array $data, int $user): bool {                                          
         $sql = "UPDATE `quantities`
                 SET kg_load = :kg_load, 

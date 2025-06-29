@@ -74,8 +74,8 @@
                                 {% endif %}
                                 
                                 {% if (user.role == 'admin') %}
-                                    <button type="button" class="edit-data" data-bs-toggle="modal" data-bs-target="#deleteTrans"
-                                        data-id="{{ t.id_transport }}">
+                                    <button type="button" class="edit-data deleteTrans" data-bs-toggle="modal" data-bs-target="#deleteTransModal"
+                                        data-id="{{ t.id_transport }}" data-slot="{{ t.slot }}">
                                             <i class="bi bi-trash" title="Elimina"></i> 
                                     </button>  
                                 {% endif %}
@@ -189,6 +189,7 @@
 
                                             <div class="container-fluid my-0">
                                                 <div id="notes-{{ t.id_transport }}" data-ids="{{ t.id_transport }}" class="notes">
+                                                    {{ t.content }}
                                                 </div>
                                             </div>
                                         </div>
@@ -300,6 +301,24 @@ $(document).ready(function () {
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
         }, 'json');
+    });
+
+//  Delete transport button
+    $(document).on('click', '.deleteTrans', function () {
+        const id = $(this).data('id');
+        const slot = $(this).data('slot');
+        const csrfToken = $('input[name="csrf_token"]').val(); 
+
+        $("#deleteTransModal #id_transport").val(id);
+        $("#deleteTransModal #slot-placeholder").text(slot);
+
+        /*$.post('transport-delete', { action: '', id_transport: id, csrf_token: csrfToken }, function (response) {
+            if (response.success) {
+
+            } else {
+                alert(response.message || 'Errore durante il caricamento dei dati.');
+            }
+        }, 'json');*/
     });
 
 //  Note edit button

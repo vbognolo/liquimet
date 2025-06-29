@@ -28,8 +28,8 @@ class PlatformController {
  *      Platform
  *      Full Transports
  *      Partial Transports
- *      Transport Modal
- *      Quantity Modal
+ *      Transport Modals
+ *      New Transport
  ******************************************************/
     public function renderPlatformPage() {
         $this->session->requireLogin();
@@ -38,11 +38,13 @@ class PlatformController {
             $sessionData = [ 'id_user'  => $this->session->getID(),
                              'username' => $this->session->getUsername(),
                              'name'     => $this->session->getName(),
-                             'role'     => $this->session->getRole()];
+                             'role'     => $this->session->getRole()
+                            ];
 
         $data = [ 'session'     => $sessionData,
                   'transports'  => $transports,
-                  'total'       => $this->mTrans->totalTransport()];
+                  'total'       => $this->mTrans->totalTransport()
+                ];
 
         echo $this->twig->render('platform.twig', $data);
     }
@@ -53,22 +55,17 @@ class PlatformController {
         $fulls = $this->mTrans->getFull();
         $type = 'F';
 
-            $sessionData = [
-                'username' => $this->session->getUsername(),
-                'name' => $this->session->getName(),
-                'role' => $this->session->getRole()
-            ];
+            $sessionData = [ 'username' => $this->session->getUsername(),
+                             'name'     => $this->session->getName(),
+                             'role'     => $this->session->getRole()
+                            ];
 
-        $data = [
-                // Fetch Login And Session Data
-            'session' => $sessionData,
-            'user' => $this->mUser->get($this->session->getID()),
-                // Fetch Platform Table Data
-            'transports' => $fulls,
-            'total' => $this->mTrans->totalTransports($type),
-                // CSRF Token
-            'csrf_token' => $csrfToken
-        ];
+        $data = [ 'session'     => $sessionData,
+                  'user'        => $this->mUser->get($this->session->getID()),
+                  'transports'  => $fulls,
+                  'total'       => $this->mTrans->totalTransports($type),
+                  'csrf_token'  => $csrfToken
+                ];
 
         echo $this->twig->render('transports-full.twig', $data);
     }
@@ -103,24 +100,35 @@ class PlatformController {
         echo $this->twig->render('transport-modal.twig', ['csrf_token' => $csrfToken]);
     }
 
-    /*public function renderQuantityModal(){
+    public function renderNewTransportPage() {
         $this->session->requireLogin();
         $csrfToken = $this->session->generateCsrfToken();
 
-        echo $this->twig->render('transport-modal.twig', ['csrf_token' => $csrfToken]);
+            $sessionData = [ 'id_user'  => $this->session->getID(),
+                             'username' => $this->session->getUsername(),
+                             'name'     => $this->session->getName(),
+                             'role'     => $this->session->getRole()
+                            ];
+
+        $data = [ 'session'     => $sessionData,
+                  'csrf_token'  => $csrfToken
+                ];
+
+        echo $this->twig->render('transport.twig', $data);
     }
 
-    public function renderTransportNote() {
-        $this->session->requireLogin();
-        $csrfToken = $this->session->generateCsrfToken();
-
-        echo $this->twig->render('transport-modal.twig', ['csrf_token' => $csrfToken]);
-    }*/
- 
+/*************************************************************
+ *  Get Data For Transport Pages:
+ *      Get Transport By ID             => getTransportData()
+ *      Get Quantity By Transport ID    => getQuantityData()
+ *      Partial Transports
+ *      Transport Modals
+ *      
+ *************************************************************/
     public function getTransportData(){
         $this->session->requireLogin();
         $csrfToken = $_POST['csrf_token'] ?? '';
-            // Ensure CSRF token exists before validation
+        
             if (empty($csrfToken) || !$this->session->verifyCsrfToken($csrfToken)) {
                 echo json_encode(['success' => false, 'message' => 'Si è verificato un problema. Aggiornare la pagina e riprovare.']);
                 exit;
@@ -134,25 +142,26 @@ class PlatformController {
             }
 
         $transport = $this->mTrans->get($id);
+
             if ($transport) {
                 header('Content-Type: application/json');
-                    echo json_encode([
-                        'success' => true,
-                        'transport' => [
-                            'id_transport' => $transport['id_transport'],
-                            'slot' => $transport['slot'],
-                            'cmr' => $transport['cmr'],
-                            'issuer' => $transport['issuer'],
-                            'supplier' => $transport['supplier'],
-                            'transport' => $transport['transport'],
-                            'date_load' => Validate::formatDateForView($transport['date_load'], 'd-m-Y'),
-                            'date_unload' => Validate::formatDateForView($transport['date_unload'], 'd-m-Y'), 
-                            'container' => $transport['container'],
-                            'modified' => Validate::formatDateForView(date('Y-m-d'), 'd-m-Y')
-                        ],
-                        'csrf_token' => $csrfToken
-                    ]);
-                    exit;
+                echo json_encode([
+                    'success'   => true,
+                    'transport' => [
+                        'id_transport' => $transport['id_transport'],
+                        'slot'         => $transport['slot'],
+                        'cmr'          => $transport['cmr'],
+                        'issuer'       => $transport['issuer'],
+                        'supplier'     => $transport['supplier'],
+                        'transport'    => $transport['transport'],
+                        'date_load'    => Validate::formatDateForView($transport['date_load'], 'd-m-Y'),
+                        'date_unload'  => Validate::formatDateForView($transport['date_unload'], 'd-m-Y'), 
+                        'container'    => $transport['container'],
+                        'modified'     => Validate::formatDateForView(date('Y-m-d'), 'd-m-Y')
+                    ],
+                    'csrf_token' => $csrfToken
+                ]);
+                exit;
             } else {
                 echo json_encode(['success' => false, 'message' => 'Trasporto non trovato.']);
                 exit;
@@ -163,22 +172,21 @@ class PlatformController {
         $this->session->requireLogin();
         $csrfToken = $_POST['csrf_token'] ?? '';
 
-            // Ensure CSRF token exists before validation
             if (empty($csrfToken) || !$this->session->verifyCsrfToken($csrfToken)) {
                 echo json_encode(['success' => false, 'message' => 'Si è verificato un problema. Aggiornare la pagina e riprovare.']);
                 exit;
             }
                 
         $id = isset($_POST['id_transport']) ? (int) $_POST['id_transport'] : 0;
-            // Validate the ID
+
             if ($id <= 0) {
                 echo json_encode(['success' => false, 'message' => 'Quantita non trovata.']);
                 exit;
             }
 
         $quantity = $this->mQty->get($id);
+
             if ($quantity) {
-                // Format the date load field to d-m-Y
                 header('Content-Type: application/json');
                     echo json_encode([
                         'success' => true,
@@ -242,11 +250,108 @@ class PlatformController {
             } 
     }
 
+/**********************************************************
+ *  Handlers For CRUD Operations:
+ *      Create New Transport    => handleCreateTransport()
+ *      Edit Transport          => handleEditTransport()
+ *      
+ *      Partial Transports
+ *      Transport Modals
+ *      
+ **********************************************************/
+    public function handleCreateTransport() {
+        $this->session->requireLogin();
+        
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $csrfToken = $_POST['csrf_token'] ?? '';
+
+                    if (empty($csrfToken) || !$this->session->verifyCsrfToken($csrfToken)) {
+                        echo json_encode(['success' => false, 'message' => 'Si è verificato un problema. Aggiornare la pagina e riprovare.']);
+                        exit;
+                    }
+
+                //  Prepare transport data
+                $transport = [
+                    'type'          => Validate::validate_input($_POST['type']),
+                    'slot'          => Validate::validate_input($_POST['slot']),
+                    'cmr'           => Validate::validate_input($_POST['cmr']),
+                    'issuer'        => Validate::validate_input($_POST['issuer']),               
+                    'supplier'      => Validate::validate_input($_POST['supplier']),
+                    'transport'     => Validate::validate_input($_POST['transport']),
+                    'date_load'     => Validate::validate_input($_POST['date_load']),
+                    'date_unload'   => Validate::validate_input($_POST['date_unload']),
+                    'container'     => Validate::validate_input($_POST['container'])
+                ]; 
+
+                //  Validate dates
+                $dateErrors = $this->mTrans->validate_dates($transport['date_load'], $transport['date_unload']);
+                    if (!empty($dateErrors)) {
+                        echo json_encode(['success' => false, 'errors' => $dateErrors]);
+                        exit;
+                    }
+
+                //  Overwrite transport dates with formatted versions (converts to SQL format)
+                $dateLoadObj = \DateTime::createFromFormat('d-m-Y', $transport['date_load']);
+                $dateUnloadObj = \DateTime::createFromFormat('d-m-Y', $transport['date_unload']);
+
+                $transport['date_load'] = $dateLoadObj->format('Y-m-d');
+                $transport['date_unload'] = $dateUnloadObj->format('Y-m-d');
+                
+                //  Field validation
+                $errors = $this->mTrans->validate_transport($transport);
+
+                    if ($this->mTrans->check_transport('slot', $transport['slot'])) {
+                        $errors['slot'] = "Slot ID già in uso."; 
+                    }
+        
+                    if ($this->mTrans->check_transport('cmr', $transport['cmr'])) {
+                        $errors['cmr'] = "Numero CMR già in uso."; 
+                    }
+
+                    //  If validation errors, proceed with error messages 
+                    if (!empty($errors)) {
+                        echo json_encode(['success' => false, 'errors' => $errors]);
+                        exit;
+                    }  
+
+                //  Prepare quantity data
+                $quantity = [
+                    'kg_load'         => Validate::validate_input($_POST['kg_load']),
+                    'cooling'         => Validate::validate_input($_POST['cooling']),
+                    'price_typology'  => Validate::validate_input($_POST['price_typology']),
+                    'price_value'     => Validate::validate_input($_POST['price_value']),
+                    'kg_unload'       => Validate::validate_input($_POST['kg_unload']),
+                    'liquid_density'  => Validate::validate_input($_POST['liquid_density']),
+                    'gas_weight'      => Validate::validate_input($_POST['gas_weight']),
+                    'pcs_ghv'         => Validate::validate_input($_POST['pcs_ghv'])
+                ];
+
+                //  Save transport + quantity in transaction
+                try {
+                    $this->mTrans->begin();
+                    
+                        $this->mTrans->createTransport($transport, $this->session->getID());
+                        $lastID = $this->mTrans->getLastInsertId();
+
+                        $this->mQty->createQuantity($lastID, $quantity, $this->session->getID());
+
+                    $this->mTrans->commit();
+                    echo json_encode(['success' => true, 'created' => $lastID]);
+                } catch (\PDOException $e) {
+                    $this->mTrans->rollBack();
+                    echo json_encode([
+                        'success' => false, 
+                        'message' => 'An unexpected error occurred while saving the transport. Please try again.'
+                    ]);
+                }
+                exit;
+            }
+    }
+
     public function handleEditTransport(){
         $this->session->requireLogin();
-
-        $csrfToken = $_POST['csrf_token'] ?? '';
-            // Ensure CSRF token exists before validation
+            $csrfToken = $_POST['csrf_token'] ?? '';
+            
             if (empty($csrfToken) || !$this->session->verifyCsrfToken($csrfToken)) {
                 echo json_encode(['success' => false, 'message' => 'Si è verificato un problema. Aggiornare la pagina e riprovare.']);
                 exit;
@@ -269,14 +374,14 @@ class PlatformController {
             'container' => Validate::validate_input($_POST['container'])
         ]; 
 
-        // Merge in date-speciic validation errors
+        //  Merge in date-speciic validation errors
         $dateErrors = $this->mTrans->validate_dates($transport['date_load'], $transport['date_unload']);
             if (!empty($dateErrors)) {
                 echo json_encode(['success' => false, 'errors' => $dateErrors]);
                 exit;
             }
 
-        // Overwrite transport dates with formatted versions
+        //  Overwrite transport dates with formatted versions
         $dateLoadObj = \DateTime::createFromFormat('d-m-Y', $transport['date_load']);
         $dateUnloadObj = \DateTime::createFromFormat('d-m-Y', $transport['date_unload']);
 
@@ -288,11 +393,11 @@ class PlatformController {
         $slot = Validate::validate_input($_POST['original_slot']);
         $cmr = Validate::validate_input($_POST['original_cmr']);
 
-            if ($transport['slot'] !== $slot && $this->mTrans->check_existance('slot', $transport['slot'], $id)) {
+            if ($transport['slot'] !== $slot && $this->mTrans->check_transport('slot', $transport['slot'], $id)) {
                 $errors['slot'] = "Slot ID già in uso."; 
             }
         
-            if ($transport['cmr'] !== $cmr && $this->mTrans->check_existance('cmr', $transport['cmr'], $id)) {
+            if ($transport['cmr'] !== $cmr && $this->mTrans->check_transport('cmr', $transport['cmr'], $id)) {
                 $errors['cmr'] = "Numero CMR già in uso."; 
             }
         
@@ -499,4 +604,34 @@ class PlatformController {
             }
             exit;
     }    
+
+    public function handleDeleteTransport() {
+        $this->session->requireAdmin();
+        $csrfToken = $_POST['csrf_token'] ?? '';
+        
+            if (empty($csrfToken) || !$this->session->verifyCsrfToken($csrfToken)) {
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode(['success' => false, 'message' => 'Si è verificato un problema. Aggiornare la pagina e riprovare.']);
+                exit;
+            }
+    
+        $id = (int) Validate::validate_input($_POST['id_transport'] ?? 0); 
+        
+            if (!$id) {
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode(['success' => false, 'message' => 'Trasporto non trovato.']);
+                exit;
+            }   
+
+        $delete = $this->mTrans->deleteTransport($id);
+
+            if ($delete) {
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode(['success' => true]);
+            } else {
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode(['success' => false, 'message' => "Errore nell'aggiornamento dei dati."]);
+            }
+            exit;
+    }   
 }

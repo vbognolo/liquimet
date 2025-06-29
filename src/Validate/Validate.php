@@ -1,6 +1,5 @@
 <?php  
 namespace Liquimet\Validate;
-
 use function mbstrlen; 
 
 class Validate {   
@@ -200,5 +199,31 @@ class Validate {
         }
 
         return true;         
+    }
+
+    public static function transport_rules(): array {
+        return [
+            'kg_load'           => ['required'    => true,                      'type' => 'number', 'min' => 0],
+            'cooling'           => ['required'    => true,                      'type' => 'digits'],
+            'price_typology'    => ['required'    => true,                      'type' => 'letters'],
+            'price_value'       => ['required_if' => ['price_typology', 'yes'], 'type' => 'digits', 'min' => 1],
+            'kg_unload'         => ['required'    => true,                      'type' => 'number', 'min' => 0],
+            'liquid_density'    => ['required'    => true,                      'type' => 'number', 'min' => 0],
+            'gas_weight'        => ['required'    => true,                      'type' => 'number', 'min' => 0],
+            'pcs_ghv'           => ['required'    => true,                      'type' => 'number', 'min' => 0],
+        ];
+    }
+
+    public static function quantity_rules(): array {
+        return [
+            'kg_load'           => ['required'    => true,                      'type' => 'number', 'min' => 0],
+            'cooling'           => ['required'    => true,                      'type' => 'digits'],
+            'price_typology'    => ['required'    => true,                      'type' => 'letters'],
+            'price_value'       => ['required_if' => ['price_typology', 'yes'], 'type' => 'digits', 'min' => 1],
+            'kg_unload'         => ['required'    => true,                      'type' => 'number', 'min' => 0],
+            'liquid_density'    => ['required'    => true,                      'type' => 'number', 'min' => 0],
+            'gas_weight'        => ['required'    => true,                      'type' => 'number', 'min' => 0],
+            'pcs_ghv'           => ['required'    => true,                      'type' => 'number', 'min' => 0],
+        ];
     }
 }

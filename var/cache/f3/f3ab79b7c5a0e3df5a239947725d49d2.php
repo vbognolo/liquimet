@@ -544,7 +544,7 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
         $macros = $this->macros;
         // line 277
         yield "<script>
-\$(document).ready(function(){
+\$(document).ready(function() {
 //  Tooltip  
     \$(\"body\").tooltip({ 
         selector: '[data-bs-toggle = tooltip]',
@@ -884,7 +884,7 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
 
 {% block page_script %}
 <script>
-\$(document).ready(function(){
+\$(document).ready(function() {
 //  Tooltip  
     \$(\"body\").tooltip({ 
         selector: '[data-bs-toggle = tooltip]',

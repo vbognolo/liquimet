@@ -1095,6 +1095,7 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
 
 /* ==> Form Inputs */
 #user-form .card-body input,    #user-form .card-body select,   #user-form .card-body select option,
+#transport-form .card-body input,    #transport-form .card-body select,   #transport-form .card-body select option,
 #profile-edit input,
 #password-change input {
     font-size: 1.7rem;
@@ -1130,6 +1131,7 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
 
 /* ==> Form Footer with Form Buttons */
 #user-form .card-footer,
+#transport-form .card-footer,
 #profile-edit .card-footer,
 #password-change .card-footer {
     background: inherit;
@@ -1142,6 +1144,7 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
 }
 
 #user-form .action-button,
+#transport-form .card-footer .action-button,
 #profile-edit .action-button,
 #password-change .action-button {
     width: 15rem;
@@ -1159,17 +1162,20 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
 }
 
 #user-form .action-button span,
+#transport-form .action-button span,
 #password-change .action-button span {
     text-align: center;
 }
 
 #user-form .action-button i,
+#transport-form .action-button i,
 #password-change .action-button i {
     font-size: 1.7rem;
     font-weight: 600;
 }
 
-#user-form .next {
+#user-form .next,
+#transport-form .next {
     background: radial-gradient(circle, rgba(82, 94, 183, 0.5) 35%, rgba(82, 100, 185, 0.5) 100%);
     float: right;
     /*position: absolute;
@@ -1177,7 +1183,8 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
     right: 5%;*/
 }
 
-#user-form .next:hover {
+#user-form .next:hover,
+#transport-form .next:hover {
     background: radial-gradient(circle, rgba(82, 94, 183, 1) 35%, rgba(82, 100, 185, 1) 100%);
     font-weight: 600;
     box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #525eb7;
@@ -1185,7 +1192,8 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
         -webkit-box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #525eb7;
 }
 
-#user-form .back {
+#user-form .back,
+#transport-form .back {
     background: radial-gradient(circle, rgba(151, 32, 89, 0.5) 35%, rgba(157, 41, 91, 0.5) 100%);
     float: left;
     /*position: absolute;
@@ -1193,7 +1201,8 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
     left: 5%;*/
 }
 
-#user-form .back:hover {
+#user-form .back:hover,
+#transport-form .back:hover {
     background: radial-gradient(circle, rgba(151, 32, 89, 1) 35%, rgba(157, 41, 91, 1) 100%);
     font-weight: 600;
     box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #972059;
@@ -1202,6 +1211,7 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
 }
 
 #user-form .save,
+#transport-form .save,
 #profile-edit .save,
 #password-change .save {
     background: radial-gradient(circle, rgba(93, 175, 92, 0.5) 35%, rgba(93, 175, 92, 0.5) 100%);
@@ -1209,6 +1219,7 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
 }
 
 #user-form .save:hover,
+#transport-form .save:hover,
 #profile-edit .save:hover,
 #password-change .save:hover {
     background: radial-gradient(circle, rgba(93, 175, 92, 1) 35%, rgba(93, 175, 92, 1) 100%);
@@ -1220,12 +1231,14 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
 /* ==> End Form Footer with Form Buttons */
 
 /* ==> Error and Success Messages */
-#user-form .error-placeholder
+#user-form .error-placeholder,
+#transport-form .error-placeholder,
 #profile-edit .error-placeholder {
     min-height: 1.65rem;                                                        /* Adjust this based on expected error message height */
 }
 
 #user-form .is-invalid,
+#transport-form .is-invalid,
 #profile-edit .is-invalid,
 #password-change .is-invalid,
 #reset-password-form .is-invalid {
@@ -1234,6 +1247,7 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
 }
 
 #user-form .is-valid,
+#transport-form .is-valid,
 #profile-edit .is-valid,
 #password-change .is-valid,
 #reset-password-form .is-valid {
@@ -1702,12 +1716,12 @@ tr.highlight {
     text-align: center;
 }
 
-#trans-form input.success,    #trans-form select.success {
+#transport-form input.success,    #transport-form select.success {
     border: 1px solid rgba(93, 175, 92, 0.5);
     box-shadow: 0 0 0 2px rgba(93, 175, 92, 20%);
 }
 
-#trans-form input.error,    #trans-form select.error {
+#transport-form input.error,    #transport-form select.error {
     /*background: radial-gradient(circle, rgba(109, 23, 65, 1) 35%, rgba(109, 23, 65, 1) 100%);*/
     color: rgb(109, 23, 65);
     border: 1px solid rgba(109, 23, 65, 0.5); 
@@ -1716,7 +1730,7 @@ tr.highlight {
     /*outline-width: 0;*/
 }
 
-#trans-form label.error {
+#transport-form label.error {
     color: rgb(109, 23, 65);
     font-size: 1rem;
 }

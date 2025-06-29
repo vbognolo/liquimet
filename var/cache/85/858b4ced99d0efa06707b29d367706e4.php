@@ -699,17 +699,70 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
         // line 417
         yield "
 ";
-        // line 418
+        // line 419
+        yield "<div class=\"modal fade\" id=\"deleteTransModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"deleteTransLabel\" aria-hidden=\"true\">
+    <div class=\"modal-dialog modal-lg modal-dialog-centered\">
+        <div class=\"modal-content\">
+            <div class=\"modal-header mx-auto row\">
+                <h2 class=\"modal-title\" id=\"deleteTransLabel\"> 
+                    <i class=\"bi bi-pencil-square my-auto mx-1\"></i>
+                        RIMUOVI
+                    <i class=\"bi bi-pencil-square my-auto mx-1\"></i>
+                </h2>
+
+                    <h4 class=\"modal-subtitle my-2\"> 
+                        Rimuovi il trasporto scelto.
+                    </h4>
+            </div>
+        
+            <div class=\"modal-body\">
+                <div class=\"container-fluid\">
+                    <form id=\"transport-delete\" method=\"POST\" action=\"transport-delete\" autocomplete=\"off\" novalidate>
+                        <input type=\"hidden\" name=\"id_transport\" id=\"id_transport\" />
+                        <input type=\"hidden\" name=\"csrf_token\" value=\"";
+        // line 438
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["csrf_token"] ?? null), "html", null, true);
+        yield "\" />
+
+                        <p class=\"container delete-msg\">
+                            Rimuovere il trasporto (SLOT ID)? <br>
+                                <span id=\"slot-placeholder\"></span>
+                        </p>                     
+                        
+                        <div class=\"modal-footer\">
+                            <button type=\"button\" class=\"btn btn-default modal-cancel\" data-bs-dismiss=\"modal\">
+                                <span class=\"bi bi-x-circle\">
+                                    ANNULLA
+                                </span>    
+                            </button>
+                            
+                            <button type=\"submit\" class=\"btn btn-default modal-save\" name=\"delete_trans\">
+                                <span class=\"bi bi-check-circle\">
+                                    CONFERMA
+                                </span>   
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+";
+        // line 465
+        yield "
+";
+        // line 466
         yield from $this->unwrap()->yieldBlock('jquery', $context, $blocks);
-        // line 432
+        // line 480
         yield "
 ";
-        // line 433
+        // line 481
         yield from $this->unwrap()->yieldBlock('datepicker', $context, $blocks);
-        // line 439
+        // line 487
         yield "
 ";
-        // line 440
+        // line 488
         yield from $this->unwrap()->yieldBlock('page_script', $context, $blocks);
         yield from [];
     }
@@ -730,14 +783,14 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
         yield from [];
     }
 
-    // line 418
+    // line 466
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_jquery(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 419
+        // line 467
         yield "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
         integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
         crossorigin=\"anonymous\">
@@ -754,14 +807,14 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
         yield from [];
     }
 
-    // line 433
+    // line 481
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_datepicker(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 434
+        // line 482
         yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js\" 
         integrity=\"sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=\" 
         crossorigin=\"anonymous\">
@@ -770,14 +823,14 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
         yield from [];
     }
 
-    // line 440
+    // line 488
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_page_script(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 441
+        // line 489
         yield "<script>
 \$(document).ready(function () {
 //  DATEPICKER 
@@ -911,7 +964,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
             \$.ajax({
                 url: 'transport-edit',
                 type: 'POST',
-                data: \$(form).serialize() + '&original_slot=' + encodeURIComponent(oSlot) + '&original_cmr=' + encodeURIComponent(oCmr),
+                data: \$form.serialize() + '&original_slot=' + encodeURIComponent(oSlot) + '&original_cmr=' + encodeURIComponent(oCmr),
                 dataType: 'json',
                 success: function (response) {
                     if (response.success) {
@@ -999,7 +1052,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
 
     \$('#price_typology').on('change', togglePriceValueField);
 
-//  Quantity Form Validation
+//  QUANTITY FORM VALIDATION
     \$(\"#quantity-edit\").validate({
         onfocusout: function(element) {
             \$(element).valid();     // validate the field when it loses focus
@@ -1177,7 +1230,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                 success: function (response) {
                     if (response.success) {
                         updateOriginalDataFromResponse(response.notes);
-                        //\$('#editQtyModal').modal('hide');
+                        \$('#editNoteModal').modal('hide');
 
                         const modified = response.notes;
                         const row = \$('#notes-' + modified.id_transport);
@@ -1351,6 +1404,36 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                     }
             });
     }
+
+    \$(\"#transport-delete\").validate({
+        rules: {
+            id_transport: { required: true }
+        },
+        submitHandler: function (form) {
+            const formData = \$(form).serialize();
+
+        \$.ajax({
+            url: 'transport-delete',
+            method: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function (response) {
+                if (response.success) {
+                    // Hide modal, remove transport row
+                    \$('#deleteTransModal').modal('hide');
+                    \$('#transport-table #id-' + \$('#id_transport').val()).remove();
+                } else {
+                    alert(response.message || 'Errore durante l\\'eliminazione.');
+                }
+            },
+            error: function () {
+                alert('Errore server. Riprova.');
+            }
+        });
+
+        return false;
+        }
+    });
 });
 </script>
 ";
@@ -1378,7 +1461,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  781 => 441,  774 => 440,  765 => 434,  758 => 433,  741 => 419,  734 => 418,  727 => 3,  725 => 2,  718 => 1,  713 => 440,  710 => 439,  708 => 433,  705 => 432,  703 => 418,  700 => 417,  669 => 387,  663 => 386,  654 => 382,  644 => 375,  622 => 355,  619 => 353,  594 => 329,  588 => 328,  580 => 325,  573 => 320,  567 => 315,  561 => 314,  553 => 311,  546 => 306,  540 => 301,  534 => 300,  526 => 297,  519 => 292,  513 => 287,  507 => 286,  499 => 283,  492 => 278,  486 => 273,  480 => 272,  475 => 269,  469 => 267,  462 => 262,  456 => 257,  450 => 256,  437 => 245,  431 => 237,  424 => 232,  418 => 227,  412 => 226,  399 => 215,  393 => 207,  386 => 202,  380 => 197,  374 => 196,  366 => 193,  359 => 188,  354 => 185,  332 => 165,  329 => 163,  304 => 139,  298 => 138,  290 => 135,  283 => 130,  277 => 125,  271 => 124,  263 => 121,  259 => 120,  252 => 115,  246 => 110,  240 => 109,  232 => 106,  228 => 105,  221 => 100,  215 => 95,  209 => 94,  201 => 91,  194 => 86,  188 => 81,  182 => 80,  174 => 77,  167 => 72,  161 => 67,  155 => 66,  147 => 63,  140 => 58,  134 => 53,  128 => 52,  120 => 49,  116 => 48,  110 => 44,  104 => 39,  98 => 38,  90 => 35,  86 => 34,  80 => 30,  75 => 27,  71 => 26,  51 => 8,  48 => 6,  46 => 1,);
+        return array (  834 => 489,  827 => 488,  818 => 482,  811 => 481,  794 => 467,  787 => 466,  780 => 3,  778 => 2,  771 => 1,  766 => 488,  763 => 487,  761 => 481,  758 => 480,  756 => 466,  753 => 465,  724 => 438,  703 => 419,  700 => 417,  669 => 387,  663 => 386,  654 => 382,  644 => 375,  622 => 355,  619 => 353,  594 => 329,  588 => 328,  580 => 325,  573 => 320,  567 => 315,  561 => 314,  553 => 311,  546 => 306,  540 => 301,  534 => 300,  526 => 297,  519 => 292,  513 => 287,  507 => 286,  499 => 283,  492 => 278,  486 => 273,  480 => 272,  475 => 269,  469 => 267,  462 => 262,  456 => 257,  450 => 256,  437 => 245,  431 => 237,  424 => 232,  418 => 227,  412 => 226,  399 => 215,  393 => 207,  386 => 202,  380 => 197,  374 => 196,  366 => 193,  359 => 188,  354 => 185,  332 => 165,  329 => 163,  304 => 139,  298 => 138,  290 => 135,  283 => 130,  277 => 125,  271 => 124,  263 => 121,  259 => 120,  252 => 115,  246 => 110,  240 => 109,  232 => 106,  228 => 105,  221 => 100,  215 => 95,  209 => 94,  201 => 91,  194 => 86,  188 => 81,  182 => 80,  174 => 77,  167 => 72,  161 => 67,  155 => 66,  147 => 63,  140 => 58,  134 => 53,  128 => 52,  120 => 49,  116 => 48,  110 => 44,  104 => 39,  98 => 38,  90 => 35,  86 => 34,  80 => 30,  75 => 27,  71 => 26,  51 => 8,  48 => 6,  46 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -1800,6 +1883,54 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
 </div>
 {# End Transport Note Modal #}
 
+{# Transport Delete Modal #}
+<div class=\"modal fade\" id=\"deleteTransModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"deleteTransLabel\" aria-hidden=\"true\">
+    <div class=\"modal-dialog modal-lg modal-dialog-centered\">
+        <div class=\"modal-content\">
+            <div class=\"modal-header mx-auto row\">
+                <h2 class=\"modal-title\" id=\"deleteTransLabel\"> 
+                    <i class=\"bi bi-pencil-square my-auto mx-1\"></i>
+                        RIMUOVI
+                    <i class=\"bi bi-pencil-square my-auto mx-1\"></i>
+                </h2>
+
+                    <h4 class=\"modal-subtitle my-2\"> 
+                        Rimuovi il trasporto scelto.
+                    </h4>
+            </div>
+        
+            <div class=\"modal-body\">
+                <div class=\"container-fluid\">
+                    <form id=\"transport-delete\" method=\"POST\" action=\"transport-delete\" autocomplete=\"off\" novalidate>
+                        <input type=\"hidden\" name=\"id_transport\" id=\"id_transport\" />
+                        <input type=\"hidden\" name=\"csrf_token\" value=\"{{ csrf_token }}\" />
+
+                        <p class=\"container delete-msg\">
+                            Rimuovere il trasporto (SLOT ID)? <br>
+                                <span id=\"slot-placeholder\"></span>
+                        </p>                     
+                        
+                        <div class=\"modal-footer\">
+                            <button type=\"button\" class=\"btn btn-default modal-cancel\" data-bs-dismiss=\"modal\">
+                                <span class=\"bi bi-x-circle\">
+                                    ANNULLA
+                                </span>    
+                            </button>
+                            
+                            <button type=\"submit\" class=\"btn btn-default modal-save\" name=\"delete_trans\">
+                                <span class=\"bi bi-check-circle\">
+                                    CONFERMA
+                                </span>   
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{# End Transport Delete Modal #}
+
 {% block jquery %}
 <script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
         integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
@@ -1956,7 +2087,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
             \$.ajax({
                 url: 'transport-edit',
                 type: 'POST',
-                data: \$(form).serialize() + '&original_slot=' + encodeURIComponent(oSlot) + '&original_cmr=' + encodeURIComponent(oCmr),
+                data: \$form.serialize() + '&original_slot=' + encodeURIComponent(oSlot) + '&original_cmr=' + encodeURIComponent(oCmr),
                 dataType: 'json',
                 success: function (response) {
                     if (response.success) {
@@ -2044,7 +2175,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
 
     \$('#price_typology').on('change', togglePriceValueField);
 
-//  Quantity Form Validation
+//  QUANTITY FORM VALIDATION
     \$(\"#quantity-edit\").validate({
         onfocusout: function(element) {
             \$(element).valid();     // validate the field when it loses focus
@@ -2222,7 +2353,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                 success: function (response) {
                     if (response.success) {
                         updateOriginalDataFromResponse(response.notes);
-                        //\$('#editQtyModal').modal('hide');
+                        \$('#editNoteModal').modal('hide');
 
                         const modified = response.notes;
                         const row = \$('#notes-' + modified.id_transport);
@@ -2396,6 +2527,36 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                     }
             });
     }
+
+    \$(\"#transport-delete\").validate({
+        rules: {
+            id_transport: { required: true }
+        },
+        submitHandler: function (form) {
+            const formData = \$(form).serialize();
+
+        \$.ajax({
+            url: 'transport-delete',
+            method: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function (response) {
+                if (response.success) {
+                    // Hide modal, remove transport row
+                    \$('#deleteTransModal').modal('hide');
+                    \$('#transport-table #id-' + \$('#id_transport').val()).remove();
+                } else {
+                    alert(response.message || 'Errore durante l\\'eliminazione.');
+                }
+            },
+            error: function () {
+                alert('Errore server. Riprova.');
+            }
+        });
+
+        return false;
+        }
+    });
 });
 </script>
 {% endblock %}", "transport-modal.twig", "C:\\wamp64\\www\\liquimet\\templates\\transport-modal.twig");

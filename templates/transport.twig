@@ -1,299 +1,307 @@
 {% extends 'layout.twig' %}
 {% block title %} Crea Trasporto {% endblock %}
-
-{% block search %}
-    <!--    ===>    SEARCH BAR    <===    -->
-    <section class="row my-auto mx-auto search-header" style="border: 1px solid red">
-        <div class="my-auto m-0 search-bar">
-            <form id="search-form">
-                <button type="button" class="my-1 search-btn">
-                    <i class="bi bi-search"></i>
-                </button>
-                <input type="text" class="my-1 search-input" id="search" placeholder="      Cerca.." />  
-            </form>
-        </div>
-    </section>
-    <!--    ===>    END SEARCH BAR    <===    -->
+{% block head %}
+    {# Bootstrap Datepicker - CSS #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" 
+        integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous">
 {% endblock %}
-
+ 
 {% block content %} 
-    {{ include('transports-navigation.twig') }}
+    {% include 'transports-navigation.twig' %}
 
-    <section class="col-9 mx-auto my-0 new-form">
-        <form id="trans-form" name="trans-form" action="{{ doc_root }}transport-new" method="POST" autocomplete="off"
-            onkeydown="return event.key != 'Enter';">
-            <!--    =====>    PROGRESS BAR    <=====    -->
-            <!--<div class="container col-8 mx-auto my-1">
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>-->
-            <!--    =====>    END PROGRESS BAR    <=====    -->
+    <section class="col-9 mx-auto register-form"> {# new-form class #}
+        <div class="card">
+            <div class="card-header row mx-auto pt-3">
+                <h2 class="form-title mx-auto my-3"> 
+                    <i class="bi bi-truck-front"></i> 
+                        CREA NUOVO
+                    <i class="bi bi-truck-front"></i> 
+                </h2>
 
-            <!--    =====>    FIELDSET 1 [ADD/EDIT TRANSPORT]    <=====    -->
-            <fieldset class="mx-auto my-3" data-step="1">
-                <div class="card">
-                    <div class="card-header row mx-auto pt-3">
-                        <h2 class="form-title mx-auto my-2"> 
-                            <i class="bi bi-truck-front"></i> 
-                                CREA NUOVO
-                            <i class="bi bi-truck-front"></i> 
-                        </h2>
-                    
-                            <h4 class="form-subtitle mx-auto my-2"> 
-                                Inserire i dati richiesti per creare il nuovo <b style="color: #6d1741">trasporto</b>.
-                            </h4>
-                    </div>
-                    
-                    <div class="card-body row">
-                        <div class="col-12 mx-auto">     
-                            <div class="row mx-auto my-1">
-                                <div class="col-6 py-1">
-                                    <label for="slot" class="form-control-label"> Slot ID </label>
-                                    <input type="text" class="form-control" name="slot" id="slot" />
-                                </div>
-                                                
-                                <div class="col-6 py-1">
-                                    <label for="cmr" class="form-control-label"> Numero CMR </label>
-                                    <input type="text" class="form-control" name="cmr" id="cmr" />
-                                </div>
-                            </div>
 
-                            <div class="row mx-auto py-1">
-                                <div class="col-3 my-1">
-                                    <label for="type" class="form-control-label"> Tipo </label>
-                                        <select class="form-control " name="type" id="type">
-                                            <option class="opt-type"></option>   
+                <h4 id="step-subtitle" class="form-subtitle mx-auto my-2"> 
+                    Inserire i dati richiesti per creare il nuovo <b style="color: #6d1741">trasporto</b>.
+                </h4>
+              
+            </div>
+
+            <form id="transport-form" method="POST" action="transport" autocomplete="off" novalidate>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                {# Fieldset 1 => Insert Transport #}   
+                <fieldset class="mx-auto my-3 active" data-step="1">         
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="type" class="form-control-label"> Tipo: </label>
+                                <select name="type" id="type" 
+                                    class="form-control {% if errors.type %}is-invalid{% endif %}">
+                                        <option value="" class="opt-type" style="color: rgb(184,184,184);"> 
+                                            Scegliere un'opzione
+                                        </option>
+
+                                        <option value="F" class="opt-type"> 
+                                            PIENO
+                                        </option>
                                             
-                                            <option value="F" class="opt-type"> 
-                                                PIENO
-                                            </option>
-                                                
-                                            <option value="P" class="opt-type"> 
-                                                PARZIALE
-                                            </option>
-                                        </select>
-                                </div>
-                                                
-                                <div class="col-3 py-1">
-                                    <label for="issuer" class="form-control-label"> Ditta emittente </label>
-                                    <input type="text" class="form-control" name="issuer" id="issuer" />
-                                </div>
-                                            
-                                <div class="col-3 my-1">
-                                    <label for="supplier" class="form-control-label"> Fornitore </label>
-                                    <input type="text" class="form-control" name="supplier" id="supplier" />
-                                </div>
+                                        <option value="P" class="opt-type"> 
+                                            PARZIALE
+                                        </option>
+                                </select>
 
-                                <div class="col-3 my-1">
-                                    <label for="transport" class="form-control-label"> Trasporto </label>
-                                    <input type="text" class="form-control" name="transport" id="transport" />
+                                <div class="error-placeholder">
+                                    {% if errors.type %}<div class="invalid-feedback">{{ errors.type }}</div>{% endif %}
                                 </div>
                             </div>
 
-                            <div class="row mx-auto my-1">
-                                <div class="col-4 my-1">
-                                    <label for="date_load" class="form-control-label" data-toggle="tooltip" title="--> Terminale"> Data carico </label>
-                                    <input type="text" class="form-control date" name="date_load" id="date_load" />
-                                </div>
-                                                
-                                <div class="col-4 my-1">
-                                    <label for="date_unload" class="form-control-label" data-toggle="tooltip" title="--> Padova"> Data scarico </label>
-                                    <input type="text" class="form-control date" name="date_unload" id="date_unload" />
-                                </div>
+                            <div class="col-md-4 mb-3">        
+                                <label for="slot" class="form-control-label"> Slot ID: </label>
+                                <input name="slot" type="text" id="slot"
+                                    class="form-control {% if errors.slot %}is-invalid{% endif %}" />
 
-                                <div class="col-4 my-1">
-                                    <label for="container" class="form-control-label"> Container </label>
-                                    <input type="text" class="form-control" name="container" id="container" />
+                                <div class="error-placeholder">
+                                    {% if errors.slot %}<div class="invalid-feedback">{{ errors.slot }}</div>{% endif %}
                                 </div>
                             </div>
 
-                            <div class="row mx-auto my-1">
-                                <div class="col-12 my-1">
-                                    <label for="note" class="form-control-label"> Nota </label>
-                                    <textarea rows="2" class="form-control" name="note" id="note"></textarea>
+                            <div class="col-md-4 mb-3">        
+                                <label for="cmr" class="form-control-label"> Numero CMR: </label>
+                                <input name="cmr" type="text" id="cmr"
+                                    class="form-control {% if errors.cmr %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.cmr %}<div class="invalid-feedback">{{ errors.cmr }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">         
+                                <label for="issuer" class="form-control-label"> Ditta emittente: </label>
+                                <input name="issuer" type="text" id="issuer"
+                                    class="form-control {% if errors.issuer %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.issuer %}<div class="invalid-feedback">{{ errors.issuer }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">         
+                                <label for="supplier" class="form-control-label"> Fornitore: </label>
+                                <input name="supplier" type="text" id="supplier"
+                                    class="form-control {% if errors.email %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.supplier %}<div class="invalid-feedback">{{ errors.supplier }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">         
+                                <label for="transport" class="form-control-label"> Trasporto: </label>
+                                <input name="transport" type="text" id="transport"
+                                    class="form-control {% if errors.email %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.transport %}<div class="invalid-feedback">{{ errors.transport }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3"> 
+                                <label for="date_load" class="form-control-label" data-toggle="tooltip" title="--> Terminale"> Data carico: </label>
+                                <input name="date_load" type="text" id="date_load" 
+                                    class="form-control datepicker {% if errors.date_load %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.date_load %}<div class="invalid-feedback">{{ errors.date_load }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3"> 
+                                <label for="date_unload" class="form-control-label" data-toggle="tooltip" title="--> Padova"> Data scarico: </label>
+                                <input name="date_unload" type="text" id="date_unload" 
+                                    class="form-control datepicker {% if errors.date_unload %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.date_unload %}<div class="invalid-feedback">{{ errors.date_unload }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-3">         
+                                <label for="container" class="form-control-label"> Container: </label>
+                                <input name="container" type="text" id="container"
+                                    class="form-control {% if errors.container %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.container %}<div class="invalid-feedback">{{ errors.container }}</div>{% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                        
+                    <div class="card-footer mx-auto">      
+                        <button type="button" class="my-2 action-button back" onclick="history.back();">
+                            <span class="m-auto">
+                                <i class="bi bi-chevron-double-left"></i> INDIETRO
+                            </span>
+                        </button>
+                            
+                        <button type="button" class="my-2 action-button next">
+                            <span class="m-auto">
+                                AVANTI <i class="bi bi-chevron-double-right"></i>
+                            </span>
+                        </button>
+                    </div>           
+                </fieldset>
+                {# END Fieldset 1 => Insert Transport #}
 
-                <input type="button" class="action-button back" onclick="history.back();" value="INDIETRO">
-                    <!--<span>
-                        <i class="bi bi-chevron-double-left"></i> INDIETRO
-                    </span>-->
+                {# Fieldset 2 => Insert Quantity #}
+                <fieldset class="mx-auto my-3" data-step="2">         
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">    
+                                <label for="kg_load" data-bs-toggle="tooltip" title="--> Quantità nominale [ kg ]"
+                                    class="form-control-label"> Quantità caricata: </label>
+                                <input name="kg_load" type="text" id="kg_load"
+                                    class="form-control {% if errors.kg_load %}is-invalid{% endif %}" />
 
-                <input type="button" class="action-button next" name="trans-next" value="AVANTI">
-                    <!--<span class="m-auto">
-                        AVANTI <i class="bi bi-chevron-double-right"></i>
-                    </span>-->
-            </fieldset>
-            <!--    =====>    END FIELDSET 1 [ADD/EDIT TRANSPORT]    <=====    -->
-
-            <!--    =====>    FIELDSET 2 [ADD/EDIT QUANTITY]    <=====    -->
-            <fieldset class="mx-auto my-3 steps" data-step="2">
-                <div class="card">
-                    <div class="card-header row mx-auto pt-3">
-                        <h2 class="form-title mx-auto my-2"> 
-                            <i class="bi bi-truck"></i> 
-                                CREA NUOVO
-                            <i class="bi bi-truck"></i> 
-                        </h2>
-                    
-                            <h4 class="form-subtitle mx-auto my-2"> 
-                                Inserire le <b style="color: #6d1741">quantità</b> del nuovo trasporto. 
-                            </h4>
-                    </div>
-
-                    <div class="card-body row">
-                        <div class="col-12 mx-auto my-2">     
-                            <div class="row mx-auto my-1">
-                                <div class="col-6 my-1">
-                                    <label for="kg_load" class="form-control-label my-1" data-toggle="tooltip" title="--> Quantità nominale [ kg ]"> 
-                                        Quantità caricata 
-                                    </label>
-                                        <input type="text" class="form-control" name="kg_load" id="kg_load"/>
-                                </div>  
-
-                                <div class="col-6 my-1">
-                                    <label for="cooling" class="form-control-label my-1"> Raffreddamento </label>
-                                        <select class="form-control" name="cooling" id="cooling">
-                                            <option class="opt-type" value=""></option>   
-                                        
-                                            <option value="600" class="opt-type"> 
-                                                SÌ = 600
-                                            </option>
-                                            
-                                            <option value="0" class="opt-type"> 
-                                                NO = 0
-                                            </option>
-                                        </select>
-                                </div>  
-                            </div>
-
-                            <div class="row mx-auto my-1">
-                                <div class="col-6 my-1">
-                                    <label class="form-control-label my-1" for="price_typology"> Tipologia costo </label>
-                                        <select class="form-control" name="price_typology" id="price_typology">
-                                            <option class="opt-type" value=""></option>
-                                            
-                                            <option class="opt-type" value="yes">
-                                                SÌ
-                                            </option>
-                                            
-                                            <option class="opt-type" value="no">
-                                                NO
-                                            </option>
-                                        </select>
-                                </div> 
-    
-                                <div class="col-6 my-1">
-                                    <label for="price_value" class="form-control-label my-1 price_value"> 
-                                        Valore costo 
-                                    </label>
-                                        <input type="text" class="form-control" name="price_value" id="price_value" />
+                                <div class="error-placeholder">
+                                    {% if errors.kg_load %}<div class="invalid-feedback">{{ errors.kg_load }}</div>{% endif %}
                                 </div>
                             </div>
 
-                            <div class="row mx-auto my-1">
-                                <div class="col-6 my-1">
-                                    <label for="kg_unload" class="form-control-label my-1" data-toggle="tooltip" title="-- [ kg ]"> 
-                                        Quantità scaricata PD 
-                                    </label>
-                                        <input type="text" class="form-control" name="kg_unload" id="kg_unload" />
-                                </div>
-    
-                                <div class="col-6 my-1">
-                                    <label for="liquid_density" class="form-control-label my-1" data-toggle="tooltip" title="-- [ kg &frasl; m³ ]"> 
-                                        Densità (liquido) 
-                                    </label>
-                                        <input type="text" class="form-control" name="liquid_density" id="liquid_density" />
+                            <div class="col-md-6 mb-3">
+                                <label for="cooling" class="form-control-label"> Raffreddamento: </label>
+                                <select name="cooling" id="cooling" 
+                                    class="form-control {% if errors.cooling %}is-invalid{% endif %}">
+                                        <option class="opt-type" style="color: lightgray;"> 
+                                            Scegliere un'opzione
+                                        </option>
+
+                                        <option value="600" class="opt-type"> 
+                                            SÌ = 600
+                                        </option>
+                                                
+                                        <option value="0" class="opt-type"> 
+                                            NO = 0
+                                        </option>
+                                </select>
+
+                                <div class="error-placeholder">
+                                    {% if errors.cooling %}<div class="invalid-feedback">{{ errors.cooling }}</div>{% endif %}
                                 </div>
                             </div>
 
-                            <div class="row mx-auto my-1">
-                                <div class="col-6 my-1">
-                                    <label for="gas_weight" class="form-control-label my-1" data-toggle="tooltip" title="-- [ kg &frasl; Nm³ ]"> 
-                                        Peso specifico (gas)
-                                    </label>
-                                        <input type="text" class="form-control" name="gas_weight" id="gas_weight" />
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="price_typology" class="form-control-label"> Tipologia costo: </label>
+                                <select name="price_typology" id="price_typology" 
+                                    class="form-control {% if errors.price_typology %}is-invalid{% endif %}">
+                                        <option value="" class="opt-type" style="color: lightgray;"> 
+                                            Scegliere un'opzione
+                                        </option>
 
-                                <div class="col-6 my-1">
-                                    <label for="pcs_ghv" class="form-control-label my-1"> 
-                                        PCS/GHV 
-                                    </label>
-                                        <input type="text" class="form-control" name="pcs_ghv" id="pcs_ghv" />
+                                        <option value="yes" class="opt-type"> 
+                                            SÌ
+                                        </option>
+                                                
+                                        <option value="no" class="opt-type"> 
+                                            NO
+                                        </option>
+                                </select>
+
+                                <div class="error-placeholder">
+                                    {% if errors.price_typology %}<div class="invalid-feedback">{{ errors.price_typology }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">        
+                                <label for="price_value" class="form-control-label"> Valore costo: </label>
+                                <input name="price_value" type="text" id="price_value"
+                                    class="form-control {% if errors.price_value %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.price_value %}<div class="invalid-feedback">{{ errors.price_value }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">        
+                                <label for="kg_unload" data-bs-toggle="tooltip" title="--> [ kg ]"
+                                    class="form-control-label"> Quantità scaricata: </label>
+                                <input name="kg_unload" type="text" id="kg_unload"
+                                    class="form-control {% if errors.kg_unload %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.kg_unload %}<div class="invalid-feedback">{{ errors.kg_unload }}</div>{% endif %}
+                                </div>
+                            </div>
+                      
+                            <div class="col-md-6 mb-3">        
+                                <label for="liquid_density" data-bs-toggle="tooltip" title="--> [ kg &frasl; m³ ]"
+                                    class="form-control-label"> Densità (liquido): </label>
+                                <input name="liquid_density" type="text" id="liquid_density"
+                                    class="form-control {% if errors.liquid_density %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.liquid_density %}<div class="invalid-feedback">{{ errors.liquid_density }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">        
+                                <label for="gas_weight" data-bs-toggle="tooltip" title="--> [ kg &frasl; Nm³ ]"
+                                       class="form-control-label"> Peso specifico (gas): </label>
+                                <input name="gas_weight" type="text" id="gas_weight"
+                                       class="form-control {% if errors.gas_weight %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.gas_weight %}<div class="invalid-feedback">{{ errors.gas_weight }}</div>{% endif %}
+                                </div>
+                            </div>
+   
+                            <div class="col-md-6 mb-3">        
+                                <label for="pcs_ghv" data-bs-toggle="tooltip" title="--> [ kg &frasl; m³ ]"
+                                       class="form-control-label"> PCS/GHV: </label>
+                                <input name="pcs_ghv" type="text" id="pcs_ghv"
+                                       class="form-control {% if errors.pcs_ghv %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.pcs_ghv %}<div class="invalid-feedback">{{ errors.pcs_ghv }}</div>{% endif %}
                                 </div>
                             </div>
                         </div>
+
+                        <div class="card-footer mx-auto">      
+                            <button type="button" class="my-2 action-button back">
+                                <span class="m-auto">
+                                    <i class="bi bi-chevron-double-left"></i> INDIETRO
+                                </span>
+                            </button>
+
+                            <button type="button" class="my-2 action-button next">
+                                <span class="m-auto">
+                                    AVANTI <i class="bi bi-chevron-double-right"></i>
+                                </span>
+                            </button>
+                                
+                            <button type="submit" class="my-2 action-button save" name="save">
+                                <span class="m-auto">
+                                    SALVA <i class="bi bi-chevron-double-right"></i>
+                                </span>
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </fieldset>
+                {# END Fieldset 2 => Insert Quantity #}
 
-                <input type="button" class="action-button back" name="trans-back" value="INDIETRO">
-                    <!--<span>
-                        <i class="bi bi-chevron-double-left"></i> INDIETRO
-                    </span>-->
-
-                <input type="button" class="action-button next" name="trans-next" value="AVANTI" id="next">
-                    <!--<span class="m-auto">
-                        AVANTI <i class="bi bi-chevron-double-right"></i>
-                    </span>-->
-
-                <input type="button" class="action-button save" name="trans-save" value="SALVA" id="save">
-                    <!--<span class="m-auto">
-                        AVANTI <i class="bi bi-chevron-double-right"></i>
-                    </span>-->
-                
-                <!--<button type="button" class="action-button back" name="back" onclick="ButtonClick(-1);" id="btnPrevious">
-                    <input type="hidden" id="btnPrevious" value="Previous" class="btn btn-secondary" onclick="ButtonClick(-1)" name="Previous" />
-                    <span class="m-auto">
-                        <i class="bi bi-chevron-double-left"></i> INDIETRO
-                    </span>
-                </button>
-    
-                <button type="button" class="action-button next trans-next" name="trans-next" onclick="ButtonClick(1);" id="qty-next">-->
-                    <!--<input type="hidden" id="btnNext" value="Next" class="btn btn-primary" onclick="ButtonClick(1)" name="Next" />-->
-                   <!--<span class="m-auto">
-                        AVANTI <i class="bi bi-chevron-double-right"></i>
-                    </span>
-                </button>
-    
-                <button type="submit" class="action-button save" name="save" id="qty-save" onclick="ButtonClick(0);">
-                    <span class="m-auto">
-                        SALVA <i class="bi bi-check-circle"></i>
-                    </span>
-                </button>-->
-            </fieldset>
-            <!--    =====>    END FIELDSET 2 [ADD/EDIT QUANTITY]    <=====    -->
-
-             <!--    =====>    FIELDSET 3 [ADD/EDIT PARTIAL IF TYPE = 1]    <=====    -->
-       
-            <fieldset class="mx-auto my-3 steps" data-step="3">
-                <div class="card">
-                    <div class="card-header row mx-auto pt-3">
-                        <h2 class="form-title mx-auto my-2"> 
-                            <i class="bi bi-truck-flatbed"></i>
-                                CREA NUOVO
-                            <i class="bi bi-truck-flatbed"></i>
-                        </h2>
-                    
-                            <h4 class="form-subtitle mx-auto my-2"> 
-                                Inserire gli <b style="color: #6d1741">scarichi parziali</b> del nuovo trasporto. 
-                            </h4>
-                    </div>
-
-                    <div class="card-body my-3">
+                {# Fieldset 3 => Insert Partial #}
+                <fieldset class="mx-auto my-3" data-step="3">
+                    <div class="card-body">
                         <div class="row table-responsive mx-auto my-2">     
                             <table class="table table-sm table-borderless" id="partials">
                                 <tr class="mx-auto my-2">
                                     <th class="mx-auto"> <i class="bi bi-gear my-auto"></i> </th>
-                                    <th class="mx-auto" data-toggle="tooltip" title="--> Dest. cliente"> Destinazione </th>
+                                    <th class="mx-auto" data-bs-toggle="tooltip" title="--> Dest. cliente"> Destinazione </th>
                                     <th class="mx-auto"> EXW </th>
-                                    <th class="mx-auto" data-toggle="tooltip" title="--> Data scarico"> Data </th>
-                                    <th class="mx-auto" data-toggle="tooltip" title="--> Luogo scarico"> Luogo </th>
-                                    <th class="mx-auto" data-toggle="tooltip" title="--> Quantità scaricata [ kg ]"> Quantità </th>
-                                    <th class="mx-auto" data-toggle="tooltip" title="--> Fattura Rif."> Fattura </th>  
+                                    <th class="mx-auto" data-bs-toggle="tooltip" title="--> Data scarico"> Data </th>
+                                    <th class="mx-auto" data-bs-toggle="tooltip" title="--> Luogo scarico"> Luogo </th>
+                                    <th class="mx-auto" data-bs-toggle="tooltip" title="--> Quantità scaricata [ kg ]"> Quantità </th>
+                                    <th class="mx-auto" data-bs-toggle="tooltip" title="--> Fattura Rif."> Fattura </th>  
                                     <th class="mx-auto"></th>             
                                 </tr>
                                   
@@ -342,560 +350,413 @@
                             </table>
                         </div>
                     </div>
-                </div>
-
-                <input type="button" class="action-button back" name="trans-back" value="INDIETRO" />
-                <!--<span>
-                    <i class="bi bi-chevron-double-left"></i> INDIETRO
-                </span>-->
-                <input type="button">
-
-                <input type="button" class="action-button add" name="add-part" value="AGGIUNGI" />
-                <!--<span class="m-auto">
-                    AVANTI <i class="bi bi-chevron-double-right"></i>
-                </span>-->
-
-                <input type="button" class="action-button save" name="trans-save" value="SALVA" />
-
-                <!--<button type="button" class="action-button add" id="add-part">
-                    <span class="m-auto">
-                        AGGIUNGI <i class="bi bi-plus-circle"></i>
-                    </span>
-                </button>
     
-                <button type="submit" class="action-button save" name="save" onclick="ButtonClick(0);">
-                    <span class="m-auto">
-                        SALVA <i class="bi bi-check-circle"></i>
-                    </span>
-                </button>-->
-            </fieldset>
+                    <div class="card-footer mx-auto">      
+                        <button type="button" class="my-2 action-button back">
+                            <span class="m-auto">
+                                <i class="bi bi-chevron-double-left"></i> INDIETRO
+                            </span>
+                        </button>
 
-            <!--    =====>    END FIELDSET 3 [ADD/EDIT PARTIAL IF TYPE = 1]    <=====    -->
+                        <button type="button" class="my-2 action-button add" name="add" id="add-part">
+                            <span class="m-auto">
+                                AGGIUNGI <i class="bi bi-plus-circle"></i>
+                            </span>
+                        </button>
+                        
+                        <button type="button" class="my-2 action-button next">
+                            <span class="m-auto">
+                                AVANTI <i class="bi bi-chevron-double-right"></i>
+                            </span>
+                        </button>
+                    </div>
+                </fieldset>
+                {# END Fieldset 3 => Insert Partial #}
 
-            <!--    =====>    FIELDSET 4 [CONFIRM NEW TRANSPORT]    <=====    -->
+                {# Fieldset 4 => Insert Note (Optional) #}
+                <fieldset class="mx-auto my-3" data-step="4">         
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">    
+                                <label for="note" class="form-control-label"> Nota: </label>
+                                <textarea name="note" id="note" rows="1" 
+                                          class="form-control {% if errors.note %}is-invalid{% endif %}"></textarea>
 
-            <!--    =====>    END FIELDSET 4 [CONFIRM NEW TRANSPORT]    <=====    -->
-        </form>
+                                <div class="error-placeholder">
+                                    {% if errors.kg_load %}<div class="invalid-feedback">{{ errors.kg_load }}</div>{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label for="note" class="form-control-label my-1"> Nota </label>
+                                <textarea name="note" id="note" class="form-control edit-note"  
+                                          style="height: 80px; text-align: center; white-space-collapse: collapse"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                {# END Fieldset 4 => Insert Note (Optional) #}
+            </form>
+        </div>
     </section>
 {% endblock %}    
 
-{% block jsScript %}
+{% block jquery %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+        crossorigin="anonymous">
+</script>
+    {# JQuery Validation #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js" 
+        integrity="sha256-umbTaFxP31Fv6O1itpLS/3+v5fOAWDLOUzlmvOGaKV4=" 
+        crossorigin="anonymous">
+</script>
+    {# JQuery Validation Additional Methods #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js" 
+        integrity="sha256-MtEA819Zls6dtLt5S5BpEMOhifPyz7gfzfgtNtY75lE=" 
+        crossorigin="anonymous">
+</script>
+{% endblock %}
 
-<script>
-    var current, next, previous;                //fieldsets
-    var left, opacity, scale;                   //fieldset properties which we will animate
-    var animating;                              //flag to prevent quick multi-click glitches
-    var formValidation;      
+{% block datepicker %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" 
+        integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" 
+        crossorigin="anonymous">
+</script>
+{% endblock %}
 
-$(document).ready(function(){
-    var count = 1; // used to increment the name for the inputs
-    var partAdd;
+{% block page_script %}
+<script> 
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
 
-    function addInput(){
-        partAdd = '<tr class="mx-auto my-1" id="' +count+ '"><td class="part-btns"><input type="hidden" name="id_' +count+ '" value="' +count+ '" /></td><td class="col-3">'
-        partAdd += '<input type="text" name="destination_' +count+ '" class="form-control destination" id="destination_' +count+ '" /></td><td class="col-2">'
-        partAdd += '<select class="form-control exw" name="exw_' +count+ '"><option value=""></option><option value="fos"> FOS </option><option value="destino"> DESTINO </option></select></td><td class="col-2">'
-        partAdd += '<input type="text" name="date_' +count+ '" class="form-control date" autocomplete="off" /></td><td class="col-2">'
-        partAdd += '<input type="text" name="place_' +count+ '" class="form-control place" /></td><td class="col-2">'
-        partAdd += '<input type="text" name="q_unloaded_' +count+ '" class="form-control mx-auto q_unloaded" /></td><td class="col mx-auto">'    
-        partAdd += '<input type="text" name="invoice_' +count+ '" class="form-control mx-auto invoice" /></td><td class="part-btns">'                
-        partAdd += '<button type="button" class="my-auto px-1 delete-btn" onclick="partRows.delRow(this)">'                
-        partAdd += '<span class="my-auto"><i class="bi bi-x-square"></i></span></button></td></tr>'
-        
-        $("#partials tr:last").after(partAdd);
-            count++;
+//  Update header subtitle with fieldset change
+    function updateSubtitle() {
+        const step = $('fieldset:visible').data('step');
+        let subtitle = '';
 
-        $('.part-btns').each(function(index, item) {
-            ($(item).find('input[type=hidden]').val());
-        });
+            switch (step) {
+                case 1: subtitle = 'Inserire i dati richiesti per creare il nuovo <b style="color: #6d1741">trasporto</b>.';
+                        break;
+                case 2: subtitle = 'Inserire le <b style="color: #6d1741">quantità</b> del nuovo trasporto.';
+                        break;
+                case 3: subtitle = 'Inserire gli <b style="color: #6d1741">scarichi parziali</b> del nuovo trasporto.';
+                        break;
+                case 4: subtitle = 'Inserire la nota per il nuovo trasporto. (Non obbligatorio)';
+                        break;
+                default: subtitle = '';
+            }
+
+        $('#step-subtitle').html(subtitle);
     }
 
-// adding rules for inputs with class 'comment'
-$('input.destination').each(function() {
-    $.validator.addClassRules( 
-                    {
-                        required: true,
-            rangelength: [3, 50],
-            regexp: /^[A-Za-z\s]*$/,
-            messages: {
-                required: "Campo obbligatrio",
-                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 50 caratteri",
-                regexp: "Sono consentiti solo lettere e spazi bianchi."
-            }
-                    })
-            });  
-    /*$(".add").click(function(){
-        partAdd = '<tr class="mx-auto my-1 partials-wrap" id="' +count+ '"><td class="part-btns"><input type="hidden" name="id_' +count+ '" /></td><td class="col-3">'
-        partAdd += '<input type="text" name="destination_' +count+ '" class="form-control destination" id="destination_' +count+ '" /></td><td class="col-2">'
-        partAdd += '<select class="form-control exw" name="exw_' +count+ '"><option value=""></option><option value="fos"> FOS </option><option value="destino"> DESTINO </option></select></td><td class="col-2">'
-        partAdd += '<input type="text" name="date_' +count+ '" class="form-control date" autocomplete="off" /></td><td class="col-2">'
-        partAdd += '<input type="text" name="place_' +count+ '" class="form-control place" /></td><td class="col-2">'
-        partAdd += '<input type="text" name="q_unloaded_' +count+ '" class="form-control mx-auto q_unloaded" /></td><td class="col mx-auto">'    
-        partAdd += '<input type="text" name="invoice_' +count+ '" class="form-control mx-auto invoice" /></td><td class="part-btns">'                
-        partAdd += '<button type="button" class="my-auto px-1 delete-btn" onclick="partRows.delRow(this)">'                
-        partAdd += '<span class="my-auto"><i class="bi bi-x-square"></i></span></button></td></tr>'  
-            
-            $("#partials tr:last").after(partAdd);
-                count++;
-    });*/
+//  Initial subtitle load
+    updateSubtitle();
 
-    // set handler for addInput button click
-    $(".add").on('click', addInput);
+//  Bind next button to navigation
+    $(".next").on('click', function () {
+        let currentStep = $(this).closest("fieldset");
 
-//  ===> JQUERY VALIDATION RULES AND METHODS
-    jQuery.validator.addMethod("regexp",
-        function(value, element, regexp) {
-            if(regexp.constructor != RegExp)
-                regexp = new RegExp(regexp);
-            else if(regexp.global)
-                regexp.lastIndex = 0;
-                    return this.optional(element) || regexp.test(value);
-        }
-    );
+        if ($("#transport-form").valid()) {
+            currentStep.removeClass("active").next().addClass("active");
+            $("fieldset").hide();
+            $("fieldset.active").show();
+            updateSubtitle();
+        } 
+    });
 
-    // Define custom validation rules based on class names
-    /*$.validator.addClassRules({
-        destination: {
-            required: true,
-            rangelength: [3, 50],
-            regexp: /^[A-Za-z\s]*$/
-        },
-        exw: {
-            required: true
-        },
-        date: {
-            required: true,
-            date: true
-        },
-        place: {
-            required: true,
-            rangelength: [3, 50],
-            regexp: /^[A-Za-z\s]*$/
-        },
-        q_unloaded: {
-            required: true,
-            number: true
-        },
-        invoice: {
-            required: true,
-            number: true
-        }
-    });*/
+//  Bind previous button to navigation
+    $(".prev").on('click', function () {
+        let currentStep = $(this).closest("fieldset");
 
-    //instantiate the jquery validation plugin on the form and define the validation rules 
-    //the key name on the left side is the name attribute of an input field. validation rules are defined on the right side
-    formValidation = $('#trans-form').validate({
-  	    submitHandler: function(){},                //prevent traditional form submission
-        rules: {
-            //transport validation rules
-            'slot': {
-                required: true,
-                rangelength: [3, 40],
-                regexp: /^[a-zA-Z0-9_-]*$/
+        currentStep.removeClass("active").prev().addClass("active");
+        $("fieldset").hide();
+        $("fieldset.active").show();
+        updateSubtitle();
+    });
+
+//  Function to check transport availability by slot and cmr
+    function checkAvailability(field, value, id = null) {
+        $.ajax({
+            url: "/check-transport",
+            type: "POST",
+            data: { 
+                [field]: value, 
+                id_transport: id 
             },
-            'cmr': {
-                required: true,
-                rangelength: [3, 40],
-                regexp: /^[a-zA-Z0-9_-]*$/
-            },
-            'issuer': {
-                required: true,
-                rangelength: [3, 50],
-                regexp: /^[a-zA-Z\s]*$/
-            },
-            'supplier': {
-                required: true,
-                rangelength: [3, 50],
-                regexp: /^[a-zA-Z\s]*$/
-            },
-            'transport': {
-                required: true,
-                rangelength: [2, 10],
-                regexp: /^[a-zA-Z\s]*$/
-            },
-            'type': {
-                required: true
-            },
-            'date_load': {
-                required: true,
-                date: true
-            },
-            'date_unload': {
-                required: true,
-                date: true
-            },
-            'container': {
-                required: true,
-                rangelength: [3, 25],
-                regexp: /^[a-zA-Z\s]*$/
-            },
-            'note': {
-                maxlength: 250
-            },
-            //quantity validation rules
-            'kg_load': {
-                required: true,
-                number: true
-            },
-            'cooling': {
-                required: true
-            },
-            'price_typology': {
-                required: true
-            },
-            'price_value': {
-                required: true,
-                number: true
-            },
-            'kg_unload': {
-                required: true,
-                number: true
-            },
-            'liquid_density': {
-                required: true,
-                number: true
-            },
-            'gas_weight': {
-                required: true,
-                number: true
-            },
-            'pcs_ghv': {
-                required: true,
-                number: true
-            }/*,
-            //partials validation rules
-            'destination': {
-                required: true,
-                rangelength: [3, 50],
-                regexp: /^[A-Za-z\s]+$/
-            },
-            'exw': {
-                required: function(element){
-                    return $("#type").val() == "P";
+            dataType: "json",
+            success: function (response) {
+                let inputField = $("#" + field);
+                let errorPlaceholder = inputField.closest(".form-group").find(".error-placeholder");
+
+                if (response[field]) {
+                    inputField.removeClass("is-valid").addClass("is-invalid");
+                    errorPlaceholder.addClass("invalid-feedback").html(response[field]).show();
+                } else {
+                    inputField.removeClass("is-invalid").addClass("is-valid");
+                    errorPlaceholder.removeClass("invalid-feedback").hide();
                 }
             },
-            'date': {
-                required: function(element){
-                    return $("#type").val() == "P";
-                },
-                date: true
-            },
-            'place': {
-                required: function(element){
-                    return $("#type").val() == "P";
-                },
-                rangelength: [3, 50],
-                regexp: /^[A-Za-z\s]+$/
-            },
-            'q_unloaded': {
-                required: function(element){
-                    return $("#type").val() == "P";
-                },
-                number: true
-            },
-            'invoice': {
-                required: function(element){
-                    return $("#type").val() == "P";
-                },
-                number: true
-            }*/
-        },
-        //specify validation error messages
-        messages: {
-            //transport error messages
-            slot: {
-                required: "Campo obbligatorio",
-                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 40 caratteri",
-                regexp: "Sono consentiti solo lettere, numeri e i simboli: - e _"
-            },
-            cmr: {
-                required: "Campo obbligatorio",
-                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 40 caratteri",
-                regexp: "Sono consentiti solo lettere, numeri e i simboli: - e _"
-            },
-            issuer: {
-                required: "Campo obbligatorio",
-                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 50 caratteri",
-                regexp: "Sono consentiti solo lettere e spazi bianchi"
-            },
-            supplier: {
-                required: "Campo obbligatorio",
-                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 50 caratteri",
-                regexp: "Sono consentiti solo lettere e spazi bianchi"
-            },
-            transport: {
-                required: "Campo obbligatorio",
-                rangelength: "La lunghezza minima consentita è di 2 e la lunghezza massima di 10 caratteri",
-                regexp: "Sono consentiti solo lettere e spazi bianchi"
-            },
-            type: {
-                required: "Campo obbligatorio"
-            },
-            date_load: {
-                required: "Campo obbligatorio"//,
-                //date: "Data invalida."
-                //minDate: "Non è possibile inserire una data precedente all'anno 2016.",
-                //maxDate: "Non è possibile inserire una data successiva alla data presente."
-            },
-            date_unload: {
-                required: "Campo obbligatorio"//,
-                //dateITA: "Data invalida."
-                //format: "Non è possibile inserire una data precedente all'anno 2016.",
-                //maxDate: "Non è possibile inserire una data successiva alla data presente."
-            },
-            container: {
-                required: "Campo obbligatorio",
-                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 25 caratteri",
-                regexp: "Sono consentiti solo lettere e spazi bianchi"
-            },
-            note: {
-                maxlength: "La lunghezza massima consentita è di 250 caratteri"
-            },
-            //quantity error messages
-            kg_load: {
-                required: "Campo obbligatorio",
-                number: "Sono consentiti solo numeri interi e numeri decimali"
-            },
-            cooling: {
-                required: "Campo obbligatorio"
-            },
-            price_typology: {
-                required: "Campo obbligatorio"
-            },
-            price_value: {
-                required: "Campo obbligatorio",
-                number: "Sono consentiti solo numeri interi e numeri decimali"
-            },
-            kg_unload: {
-                required: "Campo obbligatorio",
-                number: "Sono consentiti solo numeri interi e numeri decimali"
-            },
-            liquid_density: {
-                required: "Campo obbligatorio",
-                number: "Sono consentiti solo numeri interi e numeri decimali"
-            },
-            gas_weight: {
-                required: "Campo obbligatorio",
-                number: "Sono consentiti solo numeri interi e numeri decimali"
-            },
-            pcs_ghv: {
-                required: "Campo obbligatorio",
-                number: "Sono consentiti solo numeri interi e numeri decimali"
-            },
-            //partials error messages
-            /*destination: {
-                required: "Campo obbligatrio",
-                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 50 caratteri",
-                regexp: "Sono consentiti solo lettere e spazi bianchi."
-            },
-            exw: {
-                required: "Campo obbligatorio",
-            },
-            date: {
-                required: "Campo obbligatorio",
-                date: "Data invalida"
-            },
-            place: {
-                required: "Campo obbligatorio",
-                rangelength: "La lunghezza minima consentita è di 3 e la lunghezza massima di 50 caratteri",
-                regexp: "Sono consentiti solo lettere e spazi bianchi"
-            },
-            q_unloaded: {
-                required: "Campo obbligatorio",
-                number: "Sono consentiti solo numeri"
-            },
-            invoice: {
-                required: "Campo obbligatorio",
-                number: "Sono consentiti solo numeri"
-            },*/
-        },
-        errorClass: "error",
-        validClass: "success",
-        errorPlacement: function(error, element){
-            error.appendTo( "span[class='mistake']" );
-            /*error.insertAfter(element);*/
-        }
-    });
-
-    $(".next, .save").click(function(){
-        if(animating) return false;
-        animating = true;
-    
-        current = $(this).parent();
-    
-        //run the validations on the input for the current step    
-        var validation = false;
-
-            if(current.data('step') == 1){    	  
-                validation = $('#slot, #cmr, #type, #issuer, #supplier, #transport, #date_load, #date_unload, #container, #note').valid();
-                    if($("#type option:selected").val() == 'F'){
-                        $("#next").css("display", "none");
-                        $("#save").css("display", "block");
-                    } else{
-                        $("#save").css("display", "none");
-                        $("#next").css("display", "block");
-                    }
-            } else if(current.data('step') == 2){
-                validation = $('#kg_load, #cooling, #price_typology, #price_value, #kg_unload, #liquid_density, #gas_weight, #pcs_ghv').valid();
-            } else if(current.data('step') == 3){
-                validation = $('.destination, .exw, .date, .place, .q_unloaded, .invoice').valid();
-            }
-
-            if(validation == false){
-                //do not proceed!
-                animating = false;
-                    return;
-            }        
-        
-        next = $(this).parent().next();
-        next.show();        //show the next fieldset
-
-        //hide the current fieldset with style
-        current.hide();
-        animating = false;
-    });
-
-    $(".back").click(function(){
-        if(animating) return false;
-        animating = true;
-
-        current = $(this).parent();
-        previous = $(this).parent().prev();
-        
-        previous.show();        //show the previous fieldset
-        current.animate({
-            opacity: 0
-        }, {
-            step: function(now, mx){                    //as the opacity of current fieldset reduces to 0 - stored in "now"
-                scale = 0.8 + (1 - now) * 0.2;          //1. scale previous fieldset from 80% to 100%
-                left = ((1 - now) * 50) + "%";          //2. take current fieldset to the right(50%) - from 0%
-                opacity = 1 - now;                      //3. increase opacity of previous fieldset to 1 as it moves in
-
-                current.css({
-                    'left': left
-                });
-                previous.css({
-                    'transform': 'scale(' + scale + ')',
-                    'opacity': opacity
-                });
-            },
-            duration: 800,
-            complete: function(){
-                current.hide();
-                animating = false;
-            },
-            easing: 'easeInOutBack'
         });
-    });
-
-    formValidation.validate();
-
-    /*$(".save").click(function(){
-        return false;
-    })*/
-//});
-//});
-
-//});
-
-//  ===> TOOLTIP CHARACTERISTICS   
-    $("body").tooltip({ 
-        selector: '[data-toggle = tooltip]',
-        placement: 'right' 
-    });
-//  ===> END TOOLTIP CHARACTERISTICS
-
-//  ===> DATEPICKER     
-    //use datepicker on the date inputs
-
-//  ===> END DATEPICKER   
-
-//  ===> SELECT CHANGE
-    $('#price_typology').on('change', function(){
-        if($('#price_typology option:selected').val() == 'no'){
-            //$('#price_typology option[value=no]').attr('selected', true);
-            $('#price_value').attr('disabled', true);
-            $('#price_value').css({
-                'background': 'none',
-                'border': '1px solid rgba(76, 103, 130, 0.35)',
-                'border-radius': '0.5rem'               
-            });
-            $('#price_value').val('0') == 0;
-        } else{
-            //$('#price_typology option[value=yes]').attr('selected', true);
-            $('#price_value').attr('disabled', false);
-            $('#price_value').css({
-                'background': '#ffffff',
-                'border': '1px solid rgba(76, 103, 130, 0.35)',
-                'border-radius': '0.5rem'
-            });
-            $('#price_value').val('');
-            $("#price_value").focus(function(){
-                $("#price_value").css({
-                    '-moz-box-shadow': '0 0 0 1px rgba(113,191,68) !important',
-                    '-webkit-box-shadow': '0 0 0 1px rgba(113,191,68) !important',
-                    'box-shadow': '0 0 0 1px rgba(113,191,68) !important',
-                    'border': '1px solid #71bf44',
-                    'outline-width': '0',
-                    'transition': 'all 0.2s ease-out',
-                    '-webkit-transition': 'all 0.2s ease-out',
-                    '-moz-transition': 'all 0.2s ease-out',
-                    '-o-transition': 'all 0.2s ease-out'
-                });
-            });
-        };
-    });
-//  ===> END PRICE_TYPOLOGY SELECT DISABLED CHANGE
-}); 
-
-//  ===> METHOD TO CREATE NEW ROW IN TABLE     
-    //receives table id
-    function addRowsTable(id){
-        var table = document.getElementById(id);
-        var me = this;
-        
-        if(document.getElementById(id)){
-            var row1 = table.rows[1].outerHTML;
-                
-            //adds index-id in cols with name tbl_id
-            function setIds(){
-                var tbl_id = document.querySelectorAll('#'+ id +' tbl_id');
-                        
-                for(var i=0; i < tbl_id.length; i++) 
-                    tbl_id[i].innerHTML = i+1;
-
-                    $(".date").datepicker({
-                        format: 'dd-mm-yyyy',
-                        autoclose: true,
-                        todayHighlight: true
-                    });
-            }
-                
-            //add row after clicked row; receives clicked button in row
-            me.addRow = function(btn){
-                btn ? btn.parentNode.parentNode.insertAdjacentHTML('afterend', row1): table.insertAdjacentHTML('beforeend', row1);
-                setIds();
-            }
-                
-            //delete clicked row; receives clicked button in row
-            me.delRow = function(btn){
-                btn.parentNode.parentNode.outerHTML = '';
-                setIds();
-            }
-        }
     }
 
-    //create object of addRowsTable(), pass the table id
-    var partRows = new addRowsTable('partials');    
-//  ===> END METHOD TO CREATE NEW ROW IN TABLE  
+//  Trigger validation when typing slot and cmr input fields
+    let debounceTimer;
 
-//  ===> MULTI-STEP FIELDSET CHANGE AND FORM VALIDATION 
-   
+    $("#slot, #cmr").on("input", function () {
+        clearTimeout(debounceTimer);
+        let field = $(this).attr("id");
+        let value = $(this).val();
+        const id = $("#id_transport").val();
 
-//  ===> END MULTI-STEP FIELDSET CHANGE AND FORM VALIDATION 
-</script> 
+            if (value.length >= 7) {
+                debounceTimer = setTimeout(() => {
+                    checkAvailability(field, value, id);
+                }, 250); 
+            }
+    });
+
+//  Datepicker setup
+    $('.datepicker').datepicker({
+        format: 'dd-mm-yyyy',
+        endDate: new Date(),
+        autoclose: true,
+        clearBtn: false
+    }).on('changeDate', function (e) {
+        $(this).trigger('change');                              // validator catches the value
+            if (this.id === 'date_load') {
+                $('#date_unload').datepicker('setStartDate', e.date)
+                                 .datepicker('update', e.date);
+            }
+        $(this).valid();
+    }).on('show', function () {
+        $(this).data('selectedDate', $(this).val());            // store current value when datepicker opens
+    }).on('hide', function () {
+        const currentVal = $(this).val();   
+        if (!currentVal) {                                      // if the user didn't select anything and just clicked out, preserve current value
+            const storedDate = $(this).data('selectedDate');
+            if (storedDate) {
+                $(this).val(storedDate); // restore value
+            }
+        }
+    });
+
+//  Validation method for defining current date as max date
+    $.validator.addMethod("noFutureDate", function (value, element) {
+        if (!value) return true;                                            // allow empty if not required
+
+        const parts = value.split("-");
+        const inputDate = new Date(parts[2], parts[1] - 1, parts[0]);       // assuming dd-mm-yyyy
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);                                         // remove time part
+
+        return inputDate <= today;
+    });
+
+//  Validation method for defining that date_unload must be greater than or equal to date_load
+    $.validator.addMethod("dateAfterOrEqual", function(value, element, params) {
+        const dateLoadVal = $(params).val();
+            if (!value || !dateLoadVal) return true;
+
+        // Parse dates as dd-mm-yyyy
+        const partsUnload = value.split("-");
+        const partsLoad = dateLoadVal.split("-");
+
+        const dateUnload = new Date(partsUnload[2], partsUnload[1] - 1, partsUnload[0]);
+        const dateLoad = new Date(partsLoad[2], partsLoad[1] - 1, partsLoad[0]);
+            return this.optional(element) || dateUnload >= dateLoad;
+    });
+
+//  Validator 
+    const validator = $('#transport-form').validate({
+        ignore: [],
+        rules: {
+            slot: { required: true, rangelength: [15, 35], pattern: "^[A-Za-z0-9_]+$" },
+            cmr: { required: true, rangelength: [7, 35], pattern: "^[A-Za-z0-9\-]+$" },
+            type: { required: true },
+            issuer: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
+            supplier: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
+            transport: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
+            date_load: { required: true, noFutureDate: true },
+            date_unload: { required: true, noFutureDate: true, dateAfterOrEqual: "#date_load" },
+            container: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
+            kg_load: { required: true, number: true, min: 0 },
+            cooling: { required: true, digits: true },
+            price_typology: { required: true },
+            price_value: { 
+                required: {
+                    depends: function() {
+                        return $('#price_typology').val() === 'yes';
+                    }
+                },
+                digits: true,
+                min: 1
+            },
+            kg_unload: { required: true, number: true, min: 0 },
+            liquid_density: { required: true, number: true, min: 0 },
+            gas_weight: { required: true, number: true, min: 0 },
+            pcs_ghv: { required: true, number: true, min: 0 }
+        },
+        messages: {
+            slot: {
+                required: "Campo obbligatorio.",
+                rangelength: "Usare almeno 11 e al massimo 35 caratteri.",
+                pattern: "Slot ID può contenere lettere, numeri e underscore (_). Spazi non consentiti."
+            },
+            cmr: {
+                required: "Campo obbligatorio.",
+                rangelength: "Usare almeno 7 e al massimo 35 caratteri.",
+                pattern: "CMR può contenere lettere, numeri e trattini (-). Spazi non consentiti."
+            },
+            type: {
+                required: "Campo obbligatorio."
+            },
+            issuer: {
+                required: "Campo obbligatorio.",
+                rangelength: "Usare almeno 3 e al massimo 50 caratteri.",
+                pattern: "Emittente può contenere solo lettere e spazi (senza spazio iniziale)."
+            }, 
+            supplier: {
+                required: "Campo obbligatorio.",
+                rangelength: "Usare almeno 3 e al massimo 50 caratteri.",
+                pattern: "Fornitore può contenere solo lettere e spazi (senza spazio iniziale)."
+            }, 
+            transport: {
+                required: "Campo obbligatorio.",
+                rangelength: "Usare almeno 3 e al massimo 50 caratteri.",
+                pattern: "Trasporto può contenere solo lettere e spazi (senza spazio iniziale)."
+            },
+            date_load: {
+                required: "Campo obbligatorio.",
+                noFutureDate: "Inserire una data valida. Non sono permesse date future."
+            }, 
+            date_unload: {
+                required: "Campo obbligatorio.",
+                noFutureDate: "Inserire una data valida. Non sono permesse date future.",
+                dateAfterOrEqual: "La data di scarico non può essere precedente alla data di carico."
+            }, 
+            container: {
+                required: "Campo obbligatorio.",
+                rangelength: "Usare almeno 3 e al massimo 50 caratteri.",
+                pattern: "Container può contenere solo lettere e spazi (senza spazio iniziale)."
+            },
+            kg_load: {
+                required: "Campo obbligatorio.",
+                number: "Quantità caricata deve essere un numero positivo (intero o decimale).",
+                min: "Il valore minimo deve essere maggiore o uguale a 0."
+            },
+            cooling: {
+                required: "Campo obbligatorio.",
+                digits: "Raffredamento deve essere un numero intero positivo, senza segni o decimali."
+            },
+            price_typology: {
+                required: "Campo obbligatorio."
+            }, 
+            price_value: {
+                required: "Campo obbligatorio.",
+                digits: "Valore costo extra deve essere un numero intero positivo maggiore o uguale a 1, senza segni o decimali.",
+                min: "Il valore minimo deve essere maggiore o uguale a 1."
+            }, 
+            kg_unload: {
+                required: "Campo obbligatorio.",
+                number: "Quantità scaricata deve essere un numero positivo (intero o decimale).",
+                min: "Il valore minimo deve essere maggiore o uguale a 0."
+            },
+            liquid_density: {
+                required: "Campo obbligatorio.",
+                number: "Densità liquido deve essere un numero positivo (intero o decimale).",
+                min: "Il valore minimo deve essere maggiore o uguale a 0.",
+            }, 
+            gas_weight: {
+                required: "Campo obbligatorio.",
+                number: "Peso specifico (gas) deve essere un numero positivo (intero o decimale).",
+                min: "Il valore minimo deve essere maggiore o uguale a 0."
+            }, 
+            pcs_ghv: {
+                required: "Campo obbligatorio.",
+                number: "PCS/GHV deve essere un numero positivo (intero o decimale).",
+                min: "Il valore minimo deve essere maggiore o uguale a 0."
+            }
+        },
+        errorPlacement: function(error, element) {
+            error.addClass("text-danger small");
+            element.removeClass("is-valid").addClass("is-invalid");                                             
+            element.closest(".form-group").find(".error-placeholder").html(error);      
+        },
+        highlight: function (element) {
+            $(element).removeClass('is-valid').addClass('is-invalid');
+        },
+        unhighlight: function (element) {
+            $(element).removeClass('is-invalid');
+            $(element).closest('.form-group').find('.error-placeholder').html('');
+        },
+        invalidHandler: function (form, validator) {            // Only validate visible fieldset
+            if (validator.errorList.length) {
+                const firstError = validator.errorList[0].element;
+                const errorStep = $(firstError).closest('fieldset').data('step');
+
+                $('fieldset').removeClass('active').hide();
+                const targetStep = $('fieldset[data-step="' + errorStep + '"]');
+                targetStep.addClass('active').show();
+                updateSubtitle();
+
+                $('html, body').animate({
+                    scrollTop: $(firstError).offset().top - 100
+                }, 500);
+            }
+        }
+    });
+
+//  Handle next/previous button clicks with validation
+    window.ButtonClick = function (step) {
+        const current = $('fieldset:visible');
+        const currentStep = current.data('step');
+        const nextStep = currentStep + step;
+
+            if (step === 1 && !validator.form()) {
+                return false;   
+            }
+
+        $('fieldset').removeClass('active').hide();
+        const next = $('fieldset[data-step="' + nextStep + '"]').addClass('active').fadeIn();
+        updateSubtitle();
+    };
+
+//  On submit validate form and AJAX form submission
+    $("#transport-form").submit(function (e) {
+        e.preventDefault();                             // Prevent the default form submission
+
+        if ($(this).valid()) {
+            var formData = $(this).serialize();         // Serialize form data
+
+            $.ajax({
+                url: $(this).attr("action"),            // PHP file to handle the submission
+                type: 'POST',
+                data: formData,
+                dataType: "json",
+                success: function(response) {
+                    if (response.success) {        
+                        // Encode the new ID
+                        const created = encodeURIComponent(response.created);
         
-<!--    ===>    BOOTSTRAP DATEPICKER    <===    -->   
-
-<!--    ===>    END BOOTSTRAP DATEPICKER    <===    --> 
+                        // Redirect to users page with newId in the query string
+                        window.location.href = '/platform?created=' + created + '#id-' + created;
+                        document.getElementById('id-' + response.created)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } else {
+                        $(".invalid-feedback").remove();                    
+                        $.each(response.errors, function (field, message) {
+                            const input = $("[name='" + field + "']");
+                            input.addClass("is-invalid");
+                            input.after('<div class="invalid-feedback">' + message + '</div>');
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    alert('Error: ' + xhr.responseText);
+                }
+            });
+        }
+    });
+});
+</script> 
 {% endblock %}

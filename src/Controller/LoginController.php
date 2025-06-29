@@ -23,15 +23,15 @@ class LoginController {
     }
 
     public function renderLoginPage() {
-        // Generate CSRF token when rendering the form
+        //  Generate CSRF token when rendering the form
         $csrfToken = $this->session->generateCsrfToken();
 
-        // Determine if the forgot password form should be displayed
+        //  Determine if the forgot password form should be displayed
         $forgotForm = isset($_GET['forgot_password']);  // Example: /login?forgot=true
 
-        // Render the login page, passing CSRF token and whether to show the forgot password form
+        //  Render the login page, passing CSRF token and whether to show the forgot password form
         echo $this->twig->render('login.twig', [
-            'csrf_token' => $csrfToken,
+            'csrf_token'  => $csrfToken,
             'forgot_form' => $forgotForm  // Pass this variable to the template
         ]);
     }

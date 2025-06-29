@@ -13,32 +13,32 @@ class Transaction {
         try{                                                                                        
             $this->db->beginTransaction();
             
-                //try to insert transport data
-                $sql = "INSERT INTO transports 
-                            (type, slot, cmr, issuer, supplier, transport, date_load, date_unload, 
-                            container, note, seo, created, id_user)
+                //  Try to insert transport data
+                $sql = "INSERT INTO `transports` 
+                            (type, slot, cmr, issuer, supplier, transport, date_load, 
+                                date_unload, container, seo, created, id_user)
                         VALUES 
-                            (:type, :slot, :cmr, :issuer, :supplier, :transport, :date_load, :date_unload, 
-                            :container, :note, :seo, :created, :id_user);";
+                            (:type, :slot, :cmr, :issuer, :supplier, :transport, :date_load, 
+                                :date_unload, :container, :seo, :created, :id_user)";
                             
                 $this->db->runSQL($sql, $transport);
                 $id = $this->db->lastInsertId();            
             
-                //try to insert quantity data           
-                $sql = "INSERT INTO quantities 
+                //  Try to insert quantity data           
+                $sql = "INSERT INTO `quantities` 
                             (kg_load, cooling, price_typology, price_value, kg_unload, liquid_density, 
-                            gas_weight, pcs_ghv, created, id_transport, id_user)
+                                gas_weight, pcs_ghv, created, id_transport, id_user)
                         VALUES 
                             (:kg_load, :cooling, :price_typology, :price_value, :kg_unload, :liquid_density, 
-                            :gas_weight, :pcs_ghv, :created, $id, :id_user);";
+                                :gas_weight, :pcs_ghv, :created, $id, :id_user);";
         
                 $this->db->runSQL($sql, $quantity);           
             
-            //commit inserted data [saved]
+            //  Commit inserted data [saved]
             $this->db->commit();                                      
                 return true;                                 
         } catch(\PDOException $e){
-            //rollback inserted data [not saved]
+            //  Rollback inserted data [not saved]
             $this->db->rollBack();
                 
                 if($e->errorInfo[1] === 1062){              //if an integrity constraint

@@ -243,10 +243,12 @@ class __TwigTemplate_8aba332c37635c338713dd6945b8eabc extends Template
                 // line 76
                 if ((CoreExtension::getAttribute($this->env, $this->source, ($context["user"] ?? null), "role", [], "any", false, false, false, 76) == "admin")) {
                     // line 77
-                    yield "                                    <button type=\"button\" class=\"edit-data\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteTrans\"
+                    yield "                                    <button type=\"button\" class=\"edit-data deleteTrans\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteTransModal\"
                                         data-id=\"";
                     // line 78
                     yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 78), "html", null, true);
+                    yield "\" data-slot=\"";
+                    yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "slot", [], "any", false, false, false, 78), "html", null, true);
                     yield "\">
                                             <i class=\"bi bi-trash\" title=\"Elimina\"></i> 
                                     </button>  
@@ -439,6 +441,10 @@ class __TwigTemplate_8aba332c37635c338713dd6945b8eabc extends Template
                 yield "\" data-ids=\"";
                 yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 191), "html", null, true);
                 yield "\" class=\"notes\">
+                                                    ";
+                // line 192
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "content", [], "any", false, false, false, 192), "html", null, true);
+                yield "
                                                 </div>
                                             </div>
                                         </div>
@@ -460,10 +466,10 @@ class __TwigTemplate_8aba332c37635c338713dd6945b8eabc extends Template
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_key'], $context['t'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 201
+            // line 202
             yield "                ";
         }
-        // line 202
+        // line 203
         yield "                </tbody>
                         
                     <!--    ===>    TABLE FOOTER    <===    -->    
@@ -473,7 +479,7 @@ class __TwigTemplate_8aba332c37635c338713dd6945b8eabc extends Template
                             <h5 class=\"align-middle my-auto\">
                                 TOTALE <i class=\"bi bi-fuel-pump-fill ms-1\"></i>:
                                     <span> ";
-        // line 210
+        // line 211
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["total"] ?? null), "html", null, true);
         yield " </span>
                             </h5> 
@@ -485,31 +491,31 @@ class __TwigTemplate_8aba332c37635c338713dd6945b8eabc extends Template
     </div>  
 </section>  
     ";
-        // line 219
-        yield from $this->loadTemplate("transport-modal.twig", "transports-full.twig", 219)->unwrap()->yield($context);
+        // line 220
+        yield from $this->loadTemplate("transport-modal.twig", "transports-full.twig", 220)->unwrap()->yield($context);
         yield from [];
     }
 
-    // line 222
+    // line 223
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_jquery(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 223
+        // line 224
         yield "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
         integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
         crossorigin=\"anonymous\">
 </script>
     ";
-        // line 228
+        // line 229
         yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js\" 
         integrity=\"sha256-umbTaFxP31Fv6O1itpLS/3+v5fOAWDLOUzlmvOGaKV4=\" 
         crossorigin=\"anonymous\">
 </script>
     ";
-        // line 233
+        // line 234
         yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js\" 
         integrity=\"sha256-MtEA819Zls6dtLt5S5BpEMOhifPyz7gfzfgtNtY75lE=\" 
         crossorigin=\"anonymous\">
@@ -518,14 +524,14 @@ class __TwigTemplate_8aba332c37635c338713dd6945b8eabc extends Template
         yield from [];
     }
 
-    // line 239
+    // line 240
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_datepicker(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 240
+        // line 241
         yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js\" 
         integrity=\"sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=\" 
         crossorigin=\"anonymous\">
@@ -534,14 +540,14 @@ class __TwigTemplate_8aba332c37635c338713dd6945b8eabc extends Template
         yield from [];
     }
 
-    // line 246
+    // line 247
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_page_script(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 247
+        // line 248
         yield "<script>
 \$(document).ready(function () {
 //  Transport edit button, open modal with populated transports's data
@@ -598,6 +604,24 @@ class __TwigTemplate_8aba332c37635c338713dd6945b8eabc extends Template
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
         }, 'json');
+    });
+
+//  Delete transport button
+    \$(document).on('click', '.deleteTrans', function () {
+        const id = \$(this).data('id');
+        const slot = \$(this).data('slot');
+        const csrfToken = \$('input[name=\"csrf_token\"]').val(); 
+
+        \$(\"#deleteTransModal #id_transport\").val(id);
+        \$(\"#deleteTransModal #slot-placeholder\").text(slot);
+
+        /*\$.post('transport-delete', { action: '', id_transport: id, csrf_token: csrfToken }, function (response) {
+            if (response.success) {
+
+            } else {
+                alert(response.message || 'Errore durante il caricamento dei dati.');
+            }
+        }, 'json');*/
     });
 
 //  Note edit button
@@ -668,7 +692,7 @@ class __TwigTemplate_8aba332c37635c338713dd6945b8eabc extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  545 => 247,  538 => 246,  529 => 240,  522 => 239,  513 => 233,  507 => 228,  501 => 223,  494 => 222,  489 => 219,  477 => 210,  467 => 202,  464 => 201,  438 => 191,  426 => 182,  415 => 173,  410 => 170,  404 => 167,  398 => 164,  392 => 161,  386 => 157,  381 => 153,  375 => 150,  369 => 147,  363 => 144,  357 => 140,  352 => 136,  346 => 133,  340 => 130,  334 => 127,  327 => 122,  322 => 119,  316 => 116,  310 => 113,  304 => 110,  297 => 106,  293 => 104,  287 => 100,  277 => 93,  274 => 92,  272 => 91,  269 => 90,  263 => 87,  260 => 85,  256 => 82,  249 => 78,  246 => 77,  244 => 76,  241 => 75,  234 => 70,  227 => 67,  224 => 66,  222 => 65,  217 => 63,  211 => 62,  207 => 61,  203 => 60,  199 => 59,  195 => 58,  191 => 57,  187 => 56,  183 => 55,  179 => 54,  175 => 53,  171 => 52,  164 => 48,  160 => 47,  156 => 46,  150 => 44,  148 => 43,  130 => 42,  128 => 41,  96 => 11,  94 => 10,  85 => 9,  78 => 5,  76 => 4,  69 => 3,  56 => 2,  45 => 1,);
+        return array (  551 => 248,  544 => 247,  535 => 241,  528 => 240,  519 => 234,  513 => 229,  507 => 224,  500 => 223,  495 => 220,  483 => 211,  473 => 203,  470 => 202,  446 => 192,  440 => 191,  428 => 182,  417 => 173,  412 => 170,  406 => 167,  400 => 164,  394 => 161,  388 => 157,  383 => 153,  377 => 150,  371 => 147,  365 => 144,  359 => 140,  354 => 136,  348 => 133,  342 => 130,  336 => 127,  329 => 122,  324 => 119,  318 => 116,  312 => 113,  306 => 110,  299 => 106,  295 => 104,  289 => 100,  279 => 93,  276 => 92,  274 => 91,  271 => 90,  265 => 87,  262 => 85,  258 => 82,  249 => 78,  246 => 77,  244 => 76,  241 => 75,  234 => 70,  227 => 67,  224 => 66,  222 => 65,  217 => 63,  211 => 62,  207 => 61,  203 => 60,  199 => 59,  195 => 58,  191 => 57,  187 => 56,  183 => 55,  179 => 54,  175 => 53,  171 => 52,  164 => 48,  160 => 47,  156 => 46,  150 => 44,  148 => 43,  130 => 42,  128 => 41,  96 => 11,  94 => 10,  85 => 9,  78 => 5,  76 => 4,  69 => 3,  56 => 2,  45 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -749,8 +773,8 @@ class __TwigTemplate_8aba332c37635c338713dd6945b8eabc extends Template
                                 {% endif %}
                                 
                                 {% if (user.role == 'admin') %}
-                                    <button type=\"button\" class=\"edit-data\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteTrans\"
-                                        data-id=\"{{ t.id_transport }}\">
+                                    <button type=\"button\" class=\"edit-data deleteTrans\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteTransModal\"
+                                        data-id=\"{{ t.id_transport }}\" data-slot=\"{{ t.slot }}\">
                                             <i class=\"bi bi-trash\" title=\"Elimina\"></i> 
                                     </button>  
                                 {% endif %}
@@ -864,6 +888,7 @@ class __TwigTemplate_8aba332c37635c338713dd6945b8eabc extends Template
 
                                             <div class=\"container-fluid my-0\">
                                                 <div id=\"notes-{{ t.id_transport }}\" data-ids=\"{{ t.id_transport }}\" class=\"notes\">
+                                                    {{ t.content }}
                                                 </div>
                                             </div>
                                         </div>
@@ -975,6 +1000,24 @@ class __TwigTemplate_8aba332c37635c338713dd6945b8eabc extends Template
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
         }, 'json');
+    });
+
+//  Delete transport button
+    \$(document).on('click', '.deleteTrans', function () {
+        const id = \$(this).data('id');
+        const slot = \$(this).data('slot');
+        const csrfToken = \$('input[name=\"csrf_token\"]').val(); 
+
+        \$(\"#deleteTransModal #id_transport\").val(id);
+        \$(\"#deleteTransModal #slot-placeholder\").text(slot);
+
+        /*\$.post('transport-delete', { action: '', id_transport: id, csrf_token: csrfToken }, function (response) {
+            if (response.success) {
+
+            } else {
+                alert(response.message || 'Errore durante il caricamento dei dati.');
+            }
+        }, 'json');*/
     });
 
 //  Note edit button

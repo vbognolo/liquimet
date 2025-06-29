@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 
 $response = ['exists' => false, 'message' => ''];
 
-    // Check if email or username exist in the database
+    //  Check if email or username exists in the database
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['field'], $_POST['value'])) {
         $field = $_POST['field'];
         $value = $_POST['value']; 
