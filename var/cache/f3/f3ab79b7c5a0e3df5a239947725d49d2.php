@@ -160,37 +160,43 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
         // line 66
         yield from $this->loadTemplate("transports-navigation.twig", "platform.twig", 66)->unwrap()->yield($context);
         // line 67
-        yield "    
-    <section class=\"col-12 mx-auto my-1\">
-                 
-            <div class=\"d-flex justify-content-center\">
-                <table class=\"table table-sm table-hover table-striped text-center\"> 
-                    <thead>
-                        <tr class=\"border-bottom border-top border-light\">
-                            <th class=\"align-middle p-3\"> # </th>
-                            <th class=\"align-middle p-2\"> Tipo </th>
-                            <th class=\"align-middle p-2\"> Slot ID </th>
-                            <th class=\"align-middle p-2\"> Numero CMR </th>
-                            <th class=\"align-middle p-2\"> Emittente </th>
-                            <th class=\"align-middle p-2\"> Fornitore </th>
-                            <th class=\"align-middle p-2\"> Trasporto </th>
-                            <th class=\"align-middle p-2\"> Univoco </th>
-                            <th class=\"align-middle p-2\"> Data carico </th>
-                            <th class=\"align-middle p-2\"> Data scarico </th>
-                            <th class=\"align-middle p-2\"> Mese carico </th>
-                            <th class=\"align-middle p-2\"> Settimana scarico </th>
-                            <th class=\"align-middle p-2\" colspan=\"2\"> Mese scarico </th>
-                            <th class=\"align-middle p-2\"> Container<br>ATB </th>
-                            <th class=\"align-middle p-2\"> <i class=\"bi bi-gear\"></i> </th>
-                        </tr>
-                    </thead>
+        yield "
+<section class=\"col-12 m-auto\">
+    <div class=\"d-flex justify-content-center table-responsive\">          
+        <table class=\"table table-hover table-light table-stripped caption-top text-center platform\" id=\"transport-table\">
+            <caption class=\"px-3 mb-2 text-white text-shadow-dark\" style=\"font-size: 1.9rem\"> 
+                <span>
+                    <i class=\"bi bi-arrow-bar-right my-1 fs-3\"></i> 
+                        Piattaforma 2025
+                </span>
+            </caption>   
 
-                    <tbody class=\"table-body\">   
-                    ";
-        // line 93
+            <thead>
+                <tr class=\"border-top border-light bg-primary bg-gradient table-title\">
+                    <th scope=\"col\" class=\"align-middle px-3\"> # </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> Tipo </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> Slot ID </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> Numero CMR </th>
+                    <th scope=\"col\" class=\"align-middle px-3\"> Emittente </th>
+                    <th scope=\"col\" class=\"align-middle px-3\"> Fornitore </th>
+                    <th scope=\"col\" class=\"align-middle px-3\"> Trasporto </th>
+                    <th scope=\"col\" class=\"align-middle px-3\"> Univoco </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> Data carico </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> Data scarico </th>
+                    <th scope=\"col\" class=\"align-middle\"> Mese carico </th>
+                    <th scope=\"col\" class=\"align-middle\"> Settimana scarico </th>
+                    <th scope=\"col\" class=\"align-middle\" colspan=\"2\"> Mese scarico </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> Container<br>ATB </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> <i class=\"bi bi-gear\"></i> </th>
+                </tr>
+            </thead>
+
+            <tbody class=\"table-group-divider\">   
+            ";
+        // line 99
         if ( !Twig\Extension\CoreExtension::testEmpty(($context["transports"] ?? null))) {
-            // line 94
-            yield "                        ";
+            // line 100
+            yield "                ";
             $context['_parent'] = $context;
             $context['_seq'] = CoreExtension::ensureTraversable(($context["transports"] ?? null));
             $context['loop'] = [
@@ -207,111 +213,111 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
                 $context['loop']['last'] = 1 === $length;
             }
             foreach ($context['_seq'] as $context["_key"] => $context["t"]) {
-                // line 95
-                yield "
-                        ";
-                // line 97
-                yield "                        <tr class=\"align-middle expand\">
-                            <td scope=\"row all\">
-                                ";
-                // line 99
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["loop"], "index", [], "any", false, false, false, 99), "html", null, true);
-                yield "
-                                <br>
-                                <span class=\"text-dark note-icon\" data-bs-toggle=\"tooltip\" data-id=\"";
                 // line 101
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 101), "html", null, true);
-                yield "\"
-                                    title=\"";
+                yield "                    ";
                 // line 102
-                yield ((CoreExtension::getAttribute($this->env, $this->source, $context["t"], "note", [], "any", false, false, false, 102)) ? ($this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->env->getFilter('truncate')->getCallable()(Twig\Extension\CoreExtension::capitalize($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "note", [], "any", false, false, false, 102)), 50), "html", null, true)) : ("N/A"));
+                yield "                    <tr class=\"align-middle expand\" id=\"id-";
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 102), "html", null, true);
                 yield "\">
-                                        <i class=\"bi bi-exclamation-circle\"></i>
-                                </span>
-                            </td>
-                            <td class=\"align-middle p-1 fw-600\"> ";
-                // line 106
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "type", [], "any", false, false, false, 106)), "html", null, true);
-                yield " </td>
-                            <td class=\"align-middle p-1 search word-wrap-container\"> ";
-                // line 107
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "slot", [], "any", false, false, false, 107)), "html", null, true);
-                yield " </td>
-                            <td class=\"align-middle p-1 search word-wrap-container\"> ";
-                // line 108
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "cmr", [], "any", false, false, false, 108)), "html", null, true);
-                yield " </td>
-                            <td class=\"align-middle p-1 search\"> ";
-                // line 109
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "issuer", [], "any", false, false, false, 109)), "html", null, true);
-                yield " </td>
-                            <td class=\"align-middle p-1 search\"> ";
-                // line 110
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "supplier", [], "any", false, false, false, 110)), "html", null, true);
-                yield " </td>
-                            <td class=\"align-middle p-1 search\"> ";
-                // line 111
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "transport", [], "any", false, false, false, 111)), "html", null, true);
-                yield " </td>
-                            <td class=\"align-middle p-1\"> ";
-                // line 112
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "univoco", [], "any", false, false, false, 112)), "html", null, true);
-                yield " </td>
-                            <td class=\"align-middle p-1\"> ";
-                // line 113
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "date_load", [], "any", false, false, false, 113), "d/m/Y"), "html", null, true);
-                yield " </td>
-                            <td class=\"align-middle p-1\"> ";
-                // line 114
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "date_unload", [], "any", false, false, false, 114), "d/m/Y"), "html", null, true);
-                yield " </td>
-                            <td class=\"align-middle p-1\"> ";
-                // line 115
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_month_load", [], "any", false, false, false, 115), "html", null, true);
-                yield " </td>
-                            <td class=\"align-middle p-1\"> ";
-                // line 116
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "week_unload", [], "any", false, false, false, 116), "html", null, true);
-                yield " </td>
-                            <td class=\"align-middle p-1\" colspan=\"2\"> ";
-                // line 117
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_month_unload", [], "any", false, false, false, 117), "html", null, true);
-                yield " - ";
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "month_unload", [], "any", false, false, false, 117), "html", null, true);
-                yield " </td>
-                            <td class=\"align-middle p-1 last-border\"> ";
-                // line 118
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "container", [], "any", false, false, false, 118)), "html", null, true);
-                yield " </td>
-                            <td class=\"align-middle p-1 text-center\">
-                                <button class=\"btn btn-sm\" type=\"button\"
-                                        data-bs-toggle=\"collapse\"
-                                        data-bs-target=\"#qty-";
-                // line 122
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 122), "html", null, true);
+                        <td scope=\"row all\">
+                            ";
+                // line 104
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["loop"], "index", [], "any", false, false, false, 104), "html", null, true);
+                yield " <br>
+                            <span class=\"text-dark note-icon\" data-bs-toggle=\"tooltip\" data-id=\"";
+                // line 105
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 105), "html", null, true);
                 yield "\"
-                                        aria-expanded=\"false\"
-                                        aria-controls=\"qty-";
+                                title=\"";
+                // line 106
+                yield ((CoreExtension::getAttribute($this->env, $this->source, $context["t"], "note", [], "any", false, false, false, 106)) ? ($this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->env->getFilter('truncate')->getCallable()(Twig\Extension\CoreExtension::capitalize($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "note", [], "any", false, false, false, 106)), 50), "html", null, true)) : ("N/A"));
+                yield "\">
+                                    <i class=\"bi bi-exclamation-circle\"></i>
+                            </span>
+
+                            ";
+                // line 114
+                yield "                        </td>
+                        <td class=\"align-middle p-1 fw-600\"> ";
+                // line 115
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "type", [], "any", false, false, false, 115)), "html", null, true);
+                yield " </td>
+                        <td class=\"align-middle p-1 search word-wrap-container\"> ";
+                // line 116
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "slot", [], "any", false, false, false, 116)), "html", null, true);
+                yield " </td>
+                        <td class=\"align-middle p-1 search word-wrap-container\"> ";
+                // line 117
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "cmr", [], "any", false, false, false, 117)), "html", null, true);
+                yield " </td>
+                        <td class=\"align-middle p-1 search\"> ";
+                // line 118
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "issuer", [], "any", false, false, false, 118)), "html", null, true);
+                yield " </td>
+                        <td class=\"align-middle p-1 search\"> ";
+                // line 119
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "supplier", [], "any", false, false, false, 119)), "html", null, true);
+                yield " </td>
+                        <td class=\"align-middle p-1 search\"> ";
+                // line 120
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "transport", [], "any", false, false, false, 120)), "html", null, true);
+                yield " </td>
+                        <td class=\"align-middle p-1\"> ";
+                // line 121
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "univoco", [], "any", false, false, false, 121)), "html", null, true);
+                yield " </td>
+                        <td class=\"align-middle p-1\"> ";
+                // line 122
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "date_load", [], "any", false, false, false, 122), "d/m/Y"), "html", null, true);
+                yield " </td>
+                        <td class=\"align-middle p-1\"> ";
+                // line 123
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "date_unload", [], "any", false, false, false, 123), "d/m/Y"), "html", null, true);
+                yield " </td>
+                        <td class=\"align-middle p-1\"> ";
                 // line 124
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 124), "html", null, true);
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_month_load", [], "any", false, false, false, 124), "html", null, true);
+                yield " </td>
+                        <td class=\"align-middle p-1\"> ";
+                // line 125
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "week_unload", [], "any", false, false, false, 125), "html", null, true);
+                yield " </td>
+                        <td class=\"align-middle p-1\" colspan=\"2\"> ";
+                // line 126
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_month_unload", [], "any", false, false, false, 126), "html", null, true);
+                yield " - ";
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "month_unload", [], "any", false, false, false, 126), "html", null, true);
+                yield " </td>
+                        <td class=\"align-middle p-1 last-border\"> ";
+                // line 127
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "container", [], "any", false, false, false, 127)), "html", null, true);
+                yield " </td>
+                        <td class=\"align-middle p-1 text-center\">
+                            <button class=\"btn btn-sm\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#qty-";
+                // line 129
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 129), "html", null, true);
+                yield "\"
+                                aria-expanded=\"false\" aria-controls=\"qty-";
+                // line 130
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 130), "html", null, true);
                 yield "\">
                                     <i class=\"bi bi-arrows-expand\"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        ";
-                // line 129
+                            </button>
+                        </td>
+                    </tr>
+                    ";
+                // line 135
                 yield "  
      
                         ";
-                // line 132
+                // line 138
                 yield "                        <tr class=\"accordion-toggle\" id=\"";
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["loop"], "index", [], "any", false, false, false, 132), "html", null, true);
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["loop"], "index", [], "any", false, false, false, 138), "html", null, true);
                 yield "\">        
                             <td colspan=\"17\" class=\"border-0\">
                                 <div class=\"accordion-body collapse rowQty\" id=\"qty-";
-                // line 134
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 134), "html", null, true);
+                // line 140
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 140), "html", null, true);
                 yield "\"> 
                                     <h4 class=\"mx-auto my-2 text-center\"> 
                                         <span class=\"btn my-auto collapse-title edit-data\" style=\"cursor: default\">
@@ -325,29 +331,29 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
                                                 <th class=\"sub-title align-middle p-1\"> Energia caricata [MWh] </th>
                                                 <td class=\"bg-light bg-gradient align-middle\"> 
                                                         ";
-                // line 146
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "mwh", [], "any", false, false, false, 146), "html", null, true);
+                // line 152
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "mwh", [], "any", false, false, false, 152), "html", null, true);
                 yield " 
                                                     </td>   
                                                 <th class=\"sub-title align-middle p-1\"> Quantità nominale caricata [kg] </th>
                                                 <td class=\"bg-light bg-gradient align-middle\"> 
                                                         ";
-                // line 150
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "kg_load", [], "any", false, false, false, 150), "html", null, true);
+                // line 156
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "kg_load", [], "any", false, false, false, 156), "html", null, true);
                 yield " 
                                                     </td>   
                                                 <th class=\"sub-title align-middle p-1\"> Raffreddamento </th>            
                                                 <td class=\"bg-light bg-gradient align-middle\"> 
                                                         ";
-                // line 154
-                yield (((CoreExtension::getAttribute($this->env, $this->source, $context["t"], "cooling", [], "any", false, false, false, 154) == 600)) ? ("600") : ("No"));
+                // line 160
+                yield (((CoreExtension::getAttribute($this->env, $this->source, $context["t"], "cooling", [], "any", false, false, false, 160) == 600)) ? ("600") : ("No"));
                 yield "
                                                     </td>
                                                 <th class=\"sub-title align-middle p-1\"> Tipologia costo extra </th>            
                                                 <td class=\"bg-light bg-gradient align-middle\"> 
                                                         ";
-                // line 158
-                yield (((CoreExtension::getAttribute($this->env, $this->source, $context["t"], "price_typology", [], "any", false, false, false, 158) == "yes")) ? ("Sì") : ("No"));
+                // line 164
+                yield (((CoreExtension::getAttribute($this->env, $this->source, $context["t"], "price_typology", [], "any", false, false, false, 164) == "yes")) ? ("Sì") : ("No"));
                 yield "
                                                     </td>            
                                                 <!--<th class=\"sub-title align-middle p-1\"> Accisa <big>[</big>Sm<sup>3</sup><big>]</big> </th>
@@ -360,29 +366,29 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
                                                 <th class=\"sub-title align-middle p-1\"> Valore costo extra </th>
                                                     <td class=\"bg-light bg-gradient align-middle\"> 
                                                             ";
-                // line 169
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "price_value", [], "any", false, false, false, 169), "html", null, true);
+                // line 175
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "price_value", [], "any", false, false, false, 175), "html", null, true);
                 yield " 
                                                     </td>
                                                 <th class=\"sub-title align-middle p-1\"> Quantità scaricata PD [kg] </th>
                                                     <td class=\"bg-light bg-gradient align-middle\"> 
                                                             ";
-                // line 173
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "kg_unload", [], "any", false, false, false, 173), "html", null, true);
+                // line 179
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "kg_unload", [], "any", false, false, false, 179), "html", null, true);
                 yield " 
                                                     </td>
                                                 <th class=\"sub-title align-middle p-1\"> Densità (liquido) [<sup>kg</sup>&frasl;<sub>m<sup>3</sup></sub>] </th>
                                                     <td class=\"bg-light bg-gradient align-middle\"> 
                                                             ";
-                // line 177
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "liquid_density", [], "any", false, false, false, 177), "html", null, true);
+                // line 183
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "liquid_density", [], "any", false, false, false, 183), "html", null, true);
                 yield " 
                                                     </td>
                                                 <th class=\"sub-title align-middle p-1\"> Peso specifico (gas) <big>[</big><sup>kg</sup>&frasl;<sub>Nm<sup>3</sup></sub><big>]</big> </th>
                                                     <td class=\"bg-light bg-gradient align-middle\"> 
                                                             ";
-                // line 181
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "gas_weight", [], "any", false, false, false, 181), "html", null, true);
+                // line 187
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "gas_weight", [], "any", false, false, false, 187), "html", null, true);
                 yield " 
                                                     </td>
                                                 <!--<th class=\"sub-title align-middle p-1\"> Accisa totale </th>
@@ -395,29 +401,29 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
                                                 <th class=\"sub-title align-middle p-1\"> PCS/GHV <big>[</big><sup>MJ</sup>&frasl;<sub>kg</sub><big>]</big> </th>
                                                     <td class=\"bg-light bg-gradient align-middle\"> 
                                                         ";
-                // line 192
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "mj_kg", [], "any", false, false, false, 192), "html", null, true);
+                // line 198
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "mj_kg", [], "any", false, false, false, 198), "html", null, true);
                 yield " 
                                                     </td>
                                                 <th class=\"sub-title align-middle p-1\"> PCS/GHV <big>[</big><sup>kWh</sup>&frasl;<sub>kg</sub><big>]</big> </th>
                                                     <td class=\"bg-light bg-gradient align-middle\"> 
                                                         ";
-                // line 196
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "pcs_ghv", [], "any", false, false, false, 196), "html", null, true);
+                // line 202
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "pcs_ghv", [], "any", false, false, false, 202), "html", null, true);
                 yield " 
                                                     </td>
                                                 <th class=\"sub-title align-middle p-1\"> Volume scaricato (liquido) <big>[</big>m<sup>3</sup><big>]</big> </th>
                                                     <td class=\"bg-light bg-gradient align-middle\"> 
                                                         ";
-                // line 200
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "volume_mc", [], "any", false, false, false, 200), "html", null, true);
+                // line 206
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "volume_mc", [], "any", false, false, false, 206), "html", null, true);
                 yield " 
                                                     </td>
                                                 <th class=\"sub-title align-middle p-1\"> Volume sviluppato <big>[</big><sup>Nm<sup>3</sup></sup>&frasl;<sub>m<sup>3</sup></sub><big>]</big> </th>
                                                     <td class=\"bg-light bg-gradient align-middle\"> 
                                                         ";
-                // line 204
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "volume_nmc", [], "any", false, false, false, 204), "html", null, true);
+                // line 210
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "volume_nmc", [], "any", false, false, false, 210), "html", null, true);
                 yield " 
                                                     </td>  
                                                 <!--<th class=\"sub-title align-middle p-1\"> Incidenza </th> 
@@ -430,29 +436,29 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
                                                 <th class=\"sub-title align-middle p-1\"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>m<sup>3</sup></sub> </th>
                                                     <td class=\"bg-light bg-gradient align-middle\"> 
                                                         ";
-                // line 215
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "smc_mc", [], "any", false, false, false, 215), "html", null, true);
+                // line 221
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "smc_mc", [], "any", false, false, false, 221), "html", null, true);
                 yield " 
                                                     </td>   
                                                 <th class=\"sub-title align-middle p-1\"> Gas sviluppato <big>[</big>Nm<sup>3</sup><big>]</big> </th>
                                                     <td class=\"bg-light bg-gradient align-middle\"> 
                                                         ";
-                // line 219
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "gas_nmc", [], "any", false, false, false, 219), "html", null, true);
+                // line 225
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "gas_nmc", [], "any", false, false, false, 225), "html", null, true);
                 yield " 
                                                     </td>   
                                                 <th class=\"sub-title align-middle p-1\"> Gas sviluppato <big>[</big>Sm<sup>3</sup></sup><big>]</big> </th>
                                                     <td class=\"bg-light bg-gradient align-middle\"> 
                                                         ";
-                // line 223
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "gas_smc", [], "any", false, false, false, 223), "html", null, true);
+                // line 229
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "gas_smc", [], "any", false, false, false, 229), "html", null, true);
                 yield " 
                                                     </td>   
                                                 <th class=\"sub-title align-middle p-1\"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>kg</sub> </th>
                                                     <td class=\"bg-light bg-gradient align-middle\"> 
                                                         ";
-                // line 227
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "smc_kg", [], "any", false, false, false, 227), "html", null, true);
+                // line 233
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "smc_kg", [], "any", false, false, false, 233), "html", null, true);
                 yield " 
                                                     </td>  
                                                 <!--<th class=\"sub-title align-middle p-1\"> </th> 
@@ -480,10 +486,10 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_key'], $context['t'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 242
+            // line 248
             yield "                    ";
         } else {
-            // line 243
+            // line 249
             yield "                        <tr>
                             <td colspan=\"16\" class=\"text-center text-light p-3\">
                                 <strong> Nessun utente trovato. </strong>
@@ -491,18 +497,18 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
                         </tr>
                     ";
         }
-        // line 249
+        // line 255
         yield "                    </tbody>
                      
                     ";
-        // line 252
+        // line 258
         yield "                    <tfoot>
                         <tr>
                             <td colspan=\"16\" class=\"text-light align-middle mb-2 p-2\">
                                 <h5 class=\"align-middle my-auto\">
                                     TOTALE <i class=\"bi bi-fuel-pump-fill ms-1\"></i> + <i class=\"bi bi-fuel-pump\"></i>:
                                         <span> ";
-        // line 257
+        // line 263
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["total"] ?? null), "html", null, true);
         yield " </span>
                                 </h5> 
@@ -517,16 +523,16 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
         yield from [];
     }
 
-    // line 268
+    // line 274
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_jquery(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 269
+        // line 275
         yield "    ";
-        // line 270
+        // line 276
         yield "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
         integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
         crossorigin=\"anonymous\">
@@ -535,14 +541,14 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
         yield from [];
     }
 
-    // line 276
+    // line 282
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_page_script(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 277
+        // line 283
         yield "<script>
 \$(document).ready(function() {
 //  Tooltip  
@@ -602,7 +608,7 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  546 => 277,  539 => 276,  530 => 270,  528 => 269,  521 => 268,  506 => 257,  499 => 252,  495 => 249,  487 => 243,  484 => 242,  455 => 227,  448 => 223,  441 => 219,  434 => 215,  420 => 204,  413 => 200,  406 => 196,  399 => 192,  385 => 181,  378 => 177,  371 => 173,  364 => 169,  350 => 158,  343 => 154,  336 => 150,  329 => 146,  314 => 134,  308 => 132,  304 => 129,  296 => 124,  291 => 122,  284 => 118,  278 => 117,  274 => 116,  270 => 115,  266 => 114,  262 => 113,  258 => 112,  254 => 111,  250 => 110,  246 => 109,  242 => 108,  238 => 107,  234 => 106,  227 => 102,  223 => 101,  218 => 99,  214 => 97,  211 => 95,  193 => 94,  191 => 93,  163 => 67,  161 => 66,  152 => 65,  105 => 22,  100 => 19,  93 => 18,  78 => 6,  76 => 5,  69 => 4,  56 => 2,  45 => 1,);
+        return array (  552 => 283,  545 => 282,  536 => 276,  534 => 275,  527 => 274,  512 => 263,  505 => 258,  501 => 255,  493 => 249,  490 => 248,  461 => 233,  454 => 229,  447 => 225,  440 => 221,  426 => 210,  419 => 206,  412 => 202,  405 => 198,  391 => 187,  384 => 183,  377 => 179,  370 => 175,  356 => 164,  349 => 160,  342 => 156,  335 => 152,  320 => 140,  314 => 138,  310 => 135,  302 => 130,  298 => 129,  293 => 127,  287 => 126,  283 => 125,  279 => 124,  275 => 123,  271 => 122,  267 => 121,  263 => 120,  259 => 119,  255 => 118,  251 => 117,  247 => 116,  243 => 115,  240 => 114,  233 => 106,  229 => 105,  225 => 104,  219 => 102,  217 => 101,  199 => 100,  197 => 99,  163 => 67,  161 => 66,  152 => 65,  105 => 22,  100 => 19,  93 => 18,  78 => 6,  76 => 5,  69 => 4,  56 => 2,  45 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -673,69 +679,75 @@ class __TwigTemplate_3f060efe50ca1837a2ec3342e710702a extends Template
 
 {% block content %} 
     {% include 'transports-navigation.twig' %}
-    
-    <section class=\"col-12 mx-auto my-1\">
-                 
-            <div class=\"d-flex justify-content-center\">
-                <table class=\"table table-sm table-hover table-striped text-center\"> 
-                    <thead>
-                        <tr class=\"border-bottom border-top border-light\">
-                            <th class=\"align-middle p-3\"> # </th>
-                            <th class=\"align-middle p-2\"> Tipo </th>
-                            <th class=\"align-middle p-2\"> Slot ID </th>
-                            <th class=\"align-middle p-2\"> Numero CMR </th>
-                            <th class=\"align-middle p-2\"> Emittente </th>
-                            <th class=\"align-middle p-2\"> Fornitore </th>
-                            <th class=\"align-middle p-2\"> Trasporto </th>
-                            <th class=\"align-middle p-2\"> Univoco </th>
-                            <th class=\"align-middle p-2\"> Data carico </th>
-                            <th class=\"align-middle p-2\"> Data scarico </th>
-                            <th class=\"align-middle p-2\"> Mese carico </th>
-                            <th class=\"align-middle p-2\"> Settimana scarico </th>
-                            <th class=\"align-middle p-2\" colspan=\"2\"> Mese scarico </th>
-                            <th class=\"align-middle p-2\"> Container<br>ATB </th>
-                            <th class=\"align-middle p-2\"> <i class=\"bi bi-gear\"></i> </th>
-                        </tr>
-                    </thead>
 
-                    <tbody class=\"table-body\">   
-                    {% if transports is not empty %}
-                        {% for t in transports %}
+<section class=\"col-12 m-auto\">
+    <div class=\"d-flex justify-content-center table-responsive\">          
+        <table class=\"table table-hover table-light table-stripped caption-top text-center platform\" id=\"transport-table\">
+            <caption class=\"px-3 mb-2 text-white text-shadow-dark\" style=\"font-size: 1.9rem\"> 
+                <span>
+                    <i class=\"bi bi-arrow-bar-right my-1 fs-3\"></i> 
+                        Piattaforma 2025
+                </span>
+            </caption>   
 
-                        {# Transport Data #}
-                        <tr class=\"align-middle expand\">
-                            <td scope=\"row all\">
-                                {{ loop.index }}
-                                <br>
-                                <span class=\"text-dark note-icon\" data-bs-toggle=\"tooltip\" data-id=\"{{ t.id_transport }}\"
-                                    title=\"{{ t.note ? t.note|capitalize|truncate(50) : 'N/A' }}\">
-                                        <i class=\"bi bi-exclamation-circle\"></i>
-                                </span>
-                            </td>
-                            <td class=\"align-middle p-1 fw-600\"> {{ t.type|upper }} </td>
-                            <td class=\"align-middle p-1 search word-wrap-container\"> {{ t.slot|upper }} </td>
-                            <td class=\"align-middle p-1 search word-wrap-container\"> {{ t.cmr|upper }} </td>
-                            <td class=\"align-middle p-1 search\"> {{ t.issuer|upper }} </td>
-                            <td class=\"align-middle p-1 search\"> {{ t.supplier|upper }} </td>
-                            <td class=\"align-middle p-1 search\"> {{ t.transport|upper }} </td>
-                            <td class=\"align-middle p-1\"> {{ t.univoco|upper }} </td>
-                            <td class=\"align-middle p-1\"> {{ t.date_load|date(\"d/m/Y\") }} </td>
-                            <td class=\"align-middle p-1\"> {{ t.date_unload|date(\"d/m/Y\") }} </td>
-                            <td class=\"align-middle p-1\"> {{ t.id_month_load }} </td>
-                            <td class=\"align-middle p-1\"> {{ t.week_unload }} </td>
-                            <td class=\"align-middle p-1\" colspan=\"2\"> {{ t.id_month_unload }} - {{ t.month_unload }} </td>
-                            <td class=\"align-middle p-1 last-border\"> {{ t.container|upper }} </td>
-                            <td class=\"align-middle p-1 text-center\">
-                                <button class=\"btn btn-sm\" type=\"button\"
-                                        data-bs-toggle=\"collapse\"
-                                        data-bs-target=\"#qty-{{ t.id_transport }}\"
-                                        aria-expanded=\"false\"
-                                        aria-controls=\"qty-{{ t.id_transport }}\">
+            <thead>
+                <tr class=\"border-top border-light bg-primary bg-gradient table-title\">
+                    <th scope=\"col\" class=\"align-middle px-3\"> # </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> Tipo </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> Slot ID </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> Numero CMR </th>
+                    <th scope=\"col\" class=\"align-middle px-3\"> Emittente </th>
+                    <th scope=\"col\" class=\"align-middle px-3\"> Fornitore </th>
+                    <th scope=\"col\" class=\"align-middle px-3\"> Trasporto </th>
+                    <th scope=\"col\" class=\"align-middle px-3\"> Univoco </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> Data carico </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> Data scarico </th>
+                    <th scope=\"col\" class=\"align-middle\"> Mese carico </th>
+                    <th scope=\"col\" class=\"align-middle\"> Settimana scarico </th>
+                    <th scope=\"col\" class=\"align-middle\" colspan=\"2\"> Mese scarico </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> Container<br>ATB </th>
+                    <th scope=\"col\" class=\"align-middle px-2\"> <i class=\"bi bi-gear\"></i> </th>
+                </tr>
+            </thead>
+
+            <tbody class=\"table-group-divider\">   
+            {% if transports is not empty %}
+                {% for t in transports %}
+                    {# Transport Data #}
+                    <tr class=\"align-middle expand\" id=\"id-{{ t.id_transport }}\">
+                        <td scope=\"row all\">
+                            {{ loop.index }} <br>
+                            <span class=\"text-dark note-icon\" data-bs-toggle=\"tooltip\" data-id=\"{{ t.id_transport }}\"
+                                title=\"{{ t.note ? t.note|capitalize|truncate(50) : 'N/A' }}\">
+                                    <i class=\"bi bi-exclamation-circle\"></i>
+                            </span>
+
+                            {#<button data-bs-toggle=\"collapse\" data-bs-target=\"#qty-{{ t.id_transport }}\"
+                                aria-expanded=\"false\" aria-controls=\"qty-{{ t.id_transport }}\" aria-label=\"Expand quantities\">
                                     <i class=\"bi bi-arrows-expand\"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        {# End Transport Data #}  
+                            </button>#}
+                        </td>
+                        <td class=\"align-middle p-1 fw-600\"> {{ t.type|upper }} </td>
+                        <td class=\"align-middle p-1 search word-wrap-container\"> {{ t.slot|upper }} </td>
+                        <td class=\"align-middle p-1 search word-wrap-container\"> {{ t.cmr|upper }} </td>
+                        <td class=\"align-middle p-1 search\"> {{ t.issuer|upper }} </td>
+                        <td class=\"align-middle p-1 search\"> {{ t.supplier|upper }} </td>
+                        <td class=\"align-middle p-1 search\"> {{ t.transport|upper }} </td>
+                        <td class=\"align-middle p-1\"> {{ t.univoco|upper }} </td>
+                        <td class=\"align-middle p-1\"> {{ t.date_load|date(\"d/m/Y\") }} </td>
+                        <td class=\"align-middle p-1\"> {{ t.date_unload|date(\"d/m/Y\") }} </td>
+                        <td class=\"align-middle p-1\"> {{ t.id_month_load }} </td>
+                        <td class=\"align-middle p-1\"> {{ t.week_unload }} </td>
+                        <td class=\"align-middle p-1\" colspan=\"2\"> {{ t.id_month_unload }} - {{ t.month_unload }} </td>
+                        <td class=\"align-middle p-1 last-border\"> {{ t.container|upper }} </td>
+                        <td class=\"align-middle p-1 text-center\">
+                            <button class=\"btn btn-sm\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#qty-{{ t.id_transport }}\"
+                                aria-expanded=\"false\" aria-controls=\"qty-{{ t.id_transport }}\">
+                                    <i class=\"bi bi-arrows-expand\"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {# End Transport Data #}  
      
                         {# Quantity Data #}
                         <tr class=\"accordion-toggle\" id=\"{{ loop.index }}\">        

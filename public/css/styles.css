@@ -1193,7 +1193,7 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
 }
 
 #user-form .back,
-#transport-form .back {
+#transport-form .prev {
     background: radial-gradient(circle, rgba(151, 32, 89, 0.5) 35%, rgba(157, 41, 91, 0.5) 100%);
     float: left;
     /*position: absolute;
@@ -1202,7 +1202,7 @@ fieldset:not(:first-of-type) {      /*Hide all except the first fieldset*/
 }
 
 #user-form .back:hover,
-#transport-form .back:hover {
+#transport-form .prev:hover {
     background: radial-gradient(circle, rgba(151, 32, 89, 1) 35%, rgba(157, 41, 91, 1) 100%);
     font-weight: 600;
     box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #972059;

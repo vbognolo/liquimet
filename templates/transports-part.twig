@@ -1,5 +1,13 @@
 {% extends 'layout.twig' %}
-{% block title %} Trasporti Parziali - Piattaforma {{ 'now'|date('Y') }} {% endblock %}
+{% block title %} Piattaforma {{ 'now'|date('Y') }} {% endblock %}
+{% block head %}
+    {# Bootstrap Datepicker - CSS #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" 
+        integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous">
+{% endblock %}
+ 
+{% block content %} 
+    {% include 'transports-navigation.twig' %}
  
 {% block search %}
     {# Search Bar #}
@@ -61,8 +69,7 @@
     <!--    ===>    END BROWSE FILE BAR    <===    -->
 {% endblock %}
 
-{% block content %} 
-    {% include 'transports-navigation.twig' %}
+
 
 
 {% block scripts %}

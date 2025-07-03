@@ -64,69 +64,75 @@
 
 {% block content %} 
     {% include 'transports-navigation.twig' %}
-    
-    <section class="col-12 mx-auto my-1">
-                 
-            <div class="d-flex justify-content-center">
-                <table class="table table-sm table-hover table-striped text-center"> 
-                    <thead>
-                        <tr class="border-bottom border-top border-light">
-                            <th class="align-middle p-3"> # </th>
-                            <th class="align-middle p-2"> Tipo </th>
-                            <th class="align-middle p-2"> Slot ID </th>
-                            <th class="align-middle p-2"> Numero CMR </th>
-                            <th class="align-middle p-2"> Emittente </th>
-                            <th class="align-middle p-2"> Fornitore </th>
-                            <th class="align-middle p-2"> Trasporto </th>
-                            <th class="align-middle p-2"> Univoco </th>
-                            <th class="align-middle p-2"> Data carico </th>
-                            <th class="align-middle p-2"> Data scarico </th>
-                            <th class="align-middle p-2"> Mese carico </th>
-                            <th class="align-middle p-2"> Settimana scarico </th>
-                            <th class="align-middle p-2" colspan="2"> Mese scarico </th>
-                            <th class="align-middle p-2"> Container<br>ATB </th>
-                            <th class="align-middle p-2"> <i class="bi bi-gear"></i> </th>
-                        </tr>
-                    </thead>
 
-                    <tbody class="table-body">   
-                    {% if transports is not empty %}
-                        {% for t in transports %}
+<section class="col-12 m-auto">
+    <div class="d-flex justify-content-center table-responsive">          
+        <table class="table table-hover table-light table-stripped caption-top text-center platform" id="transport-table">
+            <caption class="px-3 mb-2 text-white text-shadow-dark" style="font-size: 1.9rem"> 
+                <span>
+                    <i class="bi bi-arrow-bar-right my-1 fs-3"></i> 
+                        Piattaforma 2025
+                </span>
+            </caption>   
 
-                        {# Transport Data #}
-                        <tr class="align-middle expand">
-                            <td scope="row all">
-                                {{ loop.index }}
-                                <br>
-                                <span class="text-dark note-icon" data-bs-toggle="tooltip" data-id="{{ t.id_transport }}"
-                                    title="{{ t.note ? t.note|capitalize|truncate(50) : 'N/A' }}">
-                                        <i class="bi bi-exclamation-circle"></i>
-                                </span>
-                            </td>
-                            <td class="align-middle p-1 fw-600"> {{ t.type|upper }} </td>
-                            <td class="align-middle p-1 search word-wrap-container"> {{ t.slot|upper }} </td>
-                            <td class="align-middle p-1 search word-wrap-container"> {{ t.cmr|upper }} </td>
-                            <td class="align-middle p-1 search"> {{ t.issuer|upper }} </td>
-                            <td class="align-middle p-1 search"> {{ t.supplier|upper }} </td>
-                            <td class="align-middle p-1 search"> {{ t.transport|upper }} </td>
-                            <td class="align-middle p-1"> {{ t.univoco|upper }} </td>
-                            <td class="align-middle p-1"> {{ t.date_load|date("d/m/Y") }} </td>
-                            <td class="align-middle p-1"> {{ t.date_unload|date("d/m/Y") }} </td>
-                            <td class="align-middle p-1"> {{ t.id_month_load }} </td>
-                            <td class="align-middle p-1"> {{ t.week_unload }} </td>
-                            <td class="align-middle p-1" colspan="2"> {{ t.id_month_unload }} - {{ t.month_unload }} </td>
-                            <td class="align-middle p-1 last-border"> {{ t.container|upper }} </td>
-                            <td class="align-middle p-1 text-center">
-                                <button class="btn btn-sm" type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#qty-{{ t.id_transport }}"
-                                        aria-expanded="false"
-                                        aria-controls="qty-{{ t.id_transport }}">
+            <thead>
+                <tr class="border-top border-light bg-primary bg-gradient table-title">
+                    <th scope="col" class="align-middle px-3"> # </th>
+                    <th scope="col" class="align-middle px-2"> Tipo </th>
+                    <th scope="col" class="align-middle px-2"> Slot ID </th>
+                    <th scope="col" class="align-middle px-2"> Numero CMR </th>
+                    <th scope="col" class="align-middle px-3"> Emittente </th>
+                    <th scope="col" class="align-middle px-3"> Fornitore </th>
+                    <th scope="col" class="align-middle px-3"> Trasporto </th>
+                    <th scope="col" class="align-middle px-3"> Univoco </th>
+                    <th scope="col" class="align-middle px-2"> Data carico </th>
+                    <th scope="col" class="align-middle px-2"> Data scarico </th>
+                    <th scope="col" class="align-middle"> Mese carico </th>
+                    <th scope="col" class="align-middle"> Settimana scarico </th>
+                    <th scope="col" class="align-middle" colspan="2"> Mese scarico </th>
+                    <th scope="col" class="align-middle px-2"> Container<br>ATB </th>
+                    <th scope="col" class="align-middle px-2"> <i class="bi bi-gear"></i> </th>
+                </tr>
+            </thead>
+
+            <tbody class="table-group-divider">   
+            {% if transports is not empty %}
+                {% for t in transports %}
+                    {# Transport Data #}
+                    <tr class="align-middle expand" id="id-{{ t.id_transport }}">
+                        <td scope="row all">
+                            {{ loop.index }} <br>
+                            <span class="text-dark note-icon" data-bs-toggle="tooltip" data-id="{{ t.id_transport }}"
+                                title="{{ t.note ? t.note|capitalize|truncate(50) : 'N/A' }}">
+                                    <i class="bi bi-exclamation-circle"></i>
+                            </span>
+
+                            {#<button data-bs-toggle="collapse" data-bs-target="#qty-{{ t.id_transport }}"
+                                aria-expanded="false" aria-controls="qty-{{ t.id_transport }}" aria-label="Expand quantities">
                                     <i class="bi bi-arrows-expand"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        {# End Transport Data #}  
+                            </button>#}
+                        </td>
+                        <td class="align-middle p-1 fw-600"> {{ t.type|upper }} </td>
+                        <td class="align-middle p-1 search word-wrap-container"> {{ t.slot|upper }} </td>
+                        <td class="align-middle p-1 search word-wrap-container"> {{ t.cmr|upper }} </td>
+                        <td class="align-middle p-1 search"> {{ t.issuer|upper }} </td>
+                        <td class="align-middle p-1 search"> {{ t.supplier|upper }} </td>
+                        <td class="align-middle p-1 search"> {{ t.transport|upper }} </td>
+                        <td class="align-middle p-1"> {{ t.univoco|upper }} </td>
+                        <td class="align-middle p-1"> {{ t.date_load|date("d/m/Y") }} </td>
+                        <td class="align-middle p-1"> {{ t.date_unload|date("d/m/Y") }} </td>
+                        <td class="align-middle p-1"> {{ t.id_month_load }} </td>
+                        <td class="align-middle p-1"> {{ t.week_unload }} </td>
+                        <td class="align-middle p-1" colspan="2"> {{ t.id_month_unload }} - {{ t.month_unload }} </td>
+                        <td class="align-middle p-1 last-border"> {{ t.container|upper }} </td>
+                        <td class="align-middle p-1 text-center">
+                            <button class="btn btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#qty-{{ t.id_transport }}"
+                                aria-expanded="false" aria-controls="qty-{{ t.id_transport }}">
+                                    <i class="bi bi-arrows-expand"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {# End Transport Data #}  
      
                         {# Quantity Data #}
                         <tr class="accordion-toggle" id="{{ loop.index }}">        

@@ -261,7 +261,7 @@ class PlatformController {
  **********************************************************/
     public function handleCreateTransport() {
         $this->session->requireLogin();
-        
+
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $csrfToken = $_POST['csrf_token'] ?? '';
 
@@ -270,7 +270,7 @@ class PlatformController {
                         exit;
                     }
 
-                //  Prepare transport data
+                //  Sanitize transport input data
                 $transport = [
                     'type'          => Validate::validate_input($_POST['type']),
                     'slot'          => Validate::validate_input($_POST['slot']),
@@ -284,28 +284,22 @@ class PlatformController {
                 ]; 
 
                 //  Validate dates
-                $dateErrors = $this->mTrans->validate_dates($transport['date_load'], $transport['date_unload']);
+                /*$dateErrors = $this->mTrans->validate_dates($transport['date_load'], $transport['date_unload']);
                     if (!empty($dateErrors)) {
                         echo json_encode(['success' => false, 'errors' => $dateErrors]);
                         exit;
-                    }
-
-                //  Overwrite transport dates with formatted versions (converts to SQL format)
-                $dateLoadObj = \DateTime::createFromFormat('d-m-Y', $transport['date_load']);
-                $dateUnloadObj = \DateTime::createFromFormat('d-m-Y', $transport['date_unload']);
-
-                $transport['date_load'] = $dateLoadObj->format('Y-m-d');
-                $transport['date_unload'] = $dateUnloadObj->format('Y-m-d');
+                    }*/
                 
                 //  Field validation
                 $errors = $this->mTrans->validate_transport($transport);
 
-                    if ($this->mTrans->check_transport('slot', $transport['slot'])) {
-                        $errors['slot'] = "Slot ID già in uso."; 
-                    }
-        
-                    if ($this->mTrans->check_transport('cmr', $transport['cmr'])) {
-                        $errors['cmr'] = "Numero CMR già in uso."; 
+                    if (empty($errors['date_load']) && empty($errors['date_unload'])) {
+                        //  Overwrite transport dates with formatted versions (converts to SQL format)
+                        $dateLoadObj = \DateTime::createFromFormat('d-m-Y', $transport['date_load']);
+                        $dateUnloadObj = \DateTime::createFromFormat('d-m-Y', $transport['date_unload']);
+
+                        $transport['date_load'] = $dateLoadObj->format('Y-m-d');
+                        $transport['date_unload'] = $dateUnloadObj->format('Y-m-d');
                     }
 
                     //  If validation errors, proceed with error messages 
@@ -314,7 +308,7 @@ class PlatformController {
                         exit;
                     }  
 
-                //  Prepare quantity data
+                //  Sanitize quantity input data
                 $quantity = [
                     'kg_load'         => Validate::validate_input($_POST['kg_load']),
                     'cooling'         => Validate::validate_input($_POST['cooling']),
@@ -325,6 +319,14 @@ class PlatformController {
                     'gas_weight'      => Validate::validate_input($_POST['gas_weight']),
                     'pcs_ghv'         => Validate::validate_input($_POST['pcs_ghv'])
                 ];
+
+                $errors = $this->mQty->validate_quantity($quantity);
+
+                    //  If validation errors, proceed with error messages 
+                    if (!empty($errors)) {
+                        echo json_encode(['success' => false, 'errors' => $errors]);
+                        exit;
+                    }  
 
                 //  Save transport + quantity in transaction
                 try {
@@ -393,11 +395,11 @@ class PlatformController {
         $slot = Validate::validate_input($_POST['original_slot']);
         $cmr = Validate::validate_input($_POST['original_cmr']);
 
-            if ($transport['slot'] !== $slot && $this->mTrans->check_transport('slot', $transport['slot'], $id)) {
+            if ($transport['slot'] !== $slot && $this->mTrans->duplicate_transport('slot', $transport['slot'], $id)) {
                 $errors['slot'] = "Slot ID già in uso."; 
             }
         
-            if ($transport['cmr'] !== $cmr && $this->mTrans->check_transport('cmr', $transport['cmr'], $id)) {
+            if ($transport['cmr'] !== $cmr && $this->mTrans->duplicate_transport('cmr', $transport['cmr'], $id)) {
                 $errors['cmr'] = "Numero CMR già in uso."; 
             }
         
@@ -443,7 +445,7 @@ class PlatformController {
                 $errors['container'] = "Usare almeno 3 e al massimo 50 caratteri.";
             }
       
-        // If no errors, proceed with user update
+        //  If no errors, proceed with user update
         if (empty($errors)) {
             $transport['id_transport'] = $id;
             $updated = $this->mTrans->update($id,$transport, $this->session->getID());

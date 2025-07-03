@@ -110,7 +110,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
             </div>
 
             <form id=\"transport-form\" method=\"POST\" action=\"transport\" autocomplete=\"off\" novalidate>
-                <input type=\"hidden\" name=\"csrf_token\" value=\"";
+                <input type=\"hidden\" name=\"csrf_token\" class=\"always-validate\" value=\"";
         // line 29
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["csrf_token"] ?? null), "html", null, true);
         yield "\">
@@ -121,7 +121,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                 <fieldset class=\"mx-auto my-3 active\" data-step=\"1\">         
                     <div class=\"card-body\">
                         <div class=\"row\">
-                            <div class=\"col-md-4 mb-3\">
+                            <div class=\"form-group col-md-4 mb-3\">
                                 <label for=\"type\" class=\"form-control-label\"> Tipo: </label>
                                 <select name=\"type\" id=\"type\" 
                                     class=\"form-control ";
@@ -155,7 +155,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
         yield "                                </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\">        
+                            <div class=\"form-group col-md-4 mb-3\">        
                                 <label for=\"slot\" class=\"form-control-label\"> Slot ID: </label>
                                 <input name=\"slot\" type=\"text\" id=\"slot\"
                                     class=\"form-control ";
@@ -177,7 +177,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
         yield "                                </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\">        
+                            <div class=\"form-group col-md-4 mb-3\">        
                                 <label for=\"cmr\" class=\"form-control-label\"> Numero CMR: </label>
                                 <input name=\"cmr\" type=\"text\" id=\"cmr\"
                                     class=\"form-control ";
@@ -199,7 +199,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
         yield "                                </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\">         
+                            <div class=\"form-group col-md-4 mb-3\">         
                                 <label for=\"issuer\" class=\"form-control-label\"> Ditta emittente: </label>
                                 <input name=\"issuer\" type=\"text\" id=\"issuer\"
                                     class=\"form-control ";
@@ -221,7 +221,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
         yield "                                </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\">         
+                            <div class=\"form-group col-md-4 mb-3\">         
                                 <label for=\"supplier\" class=\"form-control-label\"> Fornitore: </label>
                                 <input name=\"supplier\" type=\"text\" id=\"supplier\"
                                     class=\"form-control ";
@@ -243,7 +243,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
         yield "                                </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\">         
+                            <div class=\"form-group col-md-4 mb-3\">         
                                 <label for=\"transport\" class=\"form-control-label\"> Trasporto: </label>
                                 <input name=\"transport\" type=\"text\" id=\"transport\"
                                     class=\"form-control ";
@@ -265,7 +265,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
         yield "                                </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\"> 
+                            <div class=\"form-group col-md-4 mb-3\"> 
                                 <label for=\"date_load\" class=\"form-control-label\" data-toggle=\"tooltip\" title=\"--> Terminale\"> Data carico: </label>
                                 <input name=\"date_load\" type=\"text\" id=\"date_load\" 
                                     class=\"form-control datepicker ";
@@ -287,7 +287,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
         yield "                                </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\"> 
+                            <div class=\"form-group col-md-4 mb-3\"> 
                                 <label for=\"date_unload\" class=\"form-control-label\" data-toggle=\"tooltip\" title=\"--> Padova\"> Data scarico: </label>
                                 <input name=\"date_unload\" type=\"text\" id=\"date_unload\" 
                                     class=\"form-control datepicker ";
@@ -309,7 +309,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
         yield "                                </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\">         
+                            <div class=\"form-group col-md-4 mb-3\">         
                                 <label for=\"container\" class=\"form-control-label\"> Container: </label>
                                 <input name=\"container\" type=\"text\" id=\"container\"
                                     class=\"form-control ";
@@ -331,196 +331,208 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
         yield "                                </div>
                             </div>
                         </div>
-                    </div>
-                        
-                    <div class=\"card-footer mx-auto\">      
-                        <button type=\"button\" class=\"my-2 action-button back\" onclick=\"history.back();\">
-                            <span class=\"m-auto\">
-                                <i class=\"bi bi-chevron-double-left\"></i> INDIETRO
-                            </span>
-                        </button>
-                            
-                        <button type=\"button\" class=\"my-2 action-button next\">
-                            <span class=\"m-auto\">
-                                AVANTI <i class=\"bi bi-chevron-double-right\"></i>
-                            </span>
-                        </button>
-                    </div>           
+                    </div>          
                 </fieldset>
                 ";
-        // line 154
+        // line 140
         yield "
                 ";
-        // line 156
+        // line 142
         yield "                <fieldset class=\"mx-auto my-3\" data-step=\"2\">         
                     <div class=\"card-body\">
                         <div class=\"row\">
-                            <div class=\"col-md-6 mb-3\">    
-                                <label for=\"kg_load\" data-bs-toggle=\"tooltip\" title=\"--> Quantità nominale [ kg ]\"
-                                    class=\"form-control-label\"> Quantità caricata: </label>
+                            <div class=\"form-group col-md-6 mb-3\">    
+                                <label for=\"kg_load\" data-bs-toggle=\"tooltip\" title=\"--> Quantità nominale [ kg ]\" class=\"form-control-label\"> 
+                                    Quantità caricata: 
+                                </label>
                                 <input name=\"kg_load\" type=\"text\" id=\"kg_load\"
-                                    class=\"form-control ";
-        // line 163
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 163)) {
+                                       class=\"form-control ";
+        // line 150
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 150)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 166
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 166)) {
+        // line 153
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 153)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 166), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 153), "html", null, true);
             yield "</div>";
         }
-        // line 167
+        // line 154
         yield "                                </div>
                             </div>
 
-                            <div class=\"col-md-6 mb-3\">
+                            <div class=\"form-group col-md-6 mb-3\">
                                 <label for=\"cooling\" class=\"form-control-label\"> Raffreddamento: </label>
-                                <select name=\"cooling\" id=\"cooling\" 
-                                    class=\"form-control ";
-        // line 173
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cooling", [], "any", false, false, false, 173)) {
+                                <select name=\"cooling\" id=\"cooling\" class=\"form-control ";
+        // line 159
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cooling", [], "any", false, false, false, 159)) {
             yield "is-invalid";
         }
         yield "\">
-                                        <option class=\"opt-type\" style=\"color: lightgray;\"> 
-                                            Scegliere un'opzione
-                                        </option>
+                                    <option class=\"opt-type\" style=\"color: lightgray;\"> 
+                                        Scegliere un'opzione
+                                    </option>
 
-                                        <option value=\"600\" class=\"opt-type\"> 
-                                            SÌ = 600
-                                        </option>
+                                    <option value=\"600\" class=\"opt-type\"> 
+                                        SÌ = 600
+                                    </option>
                                                 
-                                        <option value=\"0\" class=\"opt-type\"> 
-                                            NO = 0
-                                        </option>
+                                    <option value=\"0\" class=\"opt-type\"> 
+                                        NO = 0
+                                    </option>
                                 </select>
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 188
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cooling", [], "any", false, false, false, 188)) {
+        // line 174
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cooling", [], "any", false, false, false, 174)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cooling", [], "any", false, false, false, 188), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cooling", [], "any", false, false, false, 174), "html", null, true);
             yield "</div>";
         }
-        // line 189
+        // line 175
         yield "                                </div>
                             </div>
 
-                            <div class=\"col-md-6 mb-3\">
+                            <div class=\"form-group col-md-6 mb-3\">
                                 <label for=\"price_typology\" class=\"form-control-label\"> Tipologia costo: </label>
-                                <select name=\"price_typology\" id=\"price_typology\" 
-                                    class=\"form-control ";
+                                <select name=\"price_typology\" id=\"price_typology\" class=\"form-control ";
+        // line 180
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_typology", [], "any", false, false, false, 180)) {
+            yield "is-invalid";
+        }
+        yield "\">
+                                    <option value=\"\" class=\"opt-type\" style=\"color: lightgray;\"> 
+                                        Scegliere un'opzione
+                                    </option>
+
+                                    <option value=\"yes\" class=\"opt-type\"> 
+                                        SÌ
+                                    </option>
+                                                
+                                    <option value=\"no\" class=\"opt-type\"> 
+                                        NO
+                                    </option>
+                                </select>
+
+                                <div class=\"error-placeholder\">
+                                    ";
         // line 195
         if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_typology", [], "any", false, false, false, 195)) {
-            yield "is-invalid";
-        }
-        yield "\">
-                                        <option value=\"\" class=\"opt-type\" style=\"color: lightgray;\"> 
-                                            Scegliere un'opzione
-                                        </option>
-
-                                        <option value=\"yes\" class=\"opt-type\"> 
-                                            SÌ
-                                        </option>
-                                                
-                                        <option value=\"no\" class=\"opt-type\"> 
-                                            NO
-                                        </option>
-                                </select>
-
-                                <div class=\"error-placeholder\">
-                                    ";
-        // line 210
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_typology", [], "any", false, false, false, 210)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_typology", [], "any", false, false, false, 210), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_typology", [], "any", false, false, false, 195), "html", null, true);
             yield "</div>";
         }
-        // line 211
+        // line 196
         yield "                                </div>
                             </div>
 
-                            <div class=\"col-md-6 mb-3\">        
+                            <div class=\"form-group col-md-6 mb-3\">        
                                 <label for=\"price_value\" class=\"form-control-label\"> Valore costo: </label>
                                 <input name=\"price_value\" type=\"text\" id=\"price_value\"
-                                    class=\"form-control ";
-        // line 217
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_value", [], "any", false, false, false, 217)) {
+                                       class=\"form-control ";
+        // line 202
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_value", [], "any", false, false, false, 202)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 220
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_value", [], "any", false, false, false, 220)) {
+        // line 205
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_value", [], "any", false, false, false, 205)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_value", [], "any", false, false, false, 220), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_value", [], "any", false, false, false, 205), "html", null, true);
             yield "</div>";
         }
-        // line 221
+        // line 206
         yield "                                </div>
                             </div>
 
-                            <div class=\"col-md-6 mb-3\">        
-                                <label for=\"kg_unload\" data-bs-toggle=\"tooltip\" title=\"--> [ kg ]\"
-                                    class=\"form-control-label\"> Quantità scaricata: </label>
+                            <div class=\"form-group col-md-6 mb-3\">        
+                                <label for=\"kg_unload\" data-bs-toggle=\"tooltip\" title=\"--> [ kg ]\" class=\"form-control-label\"> 
+                                    Quantità scaricata: 
+                                </label>
                                 <input name=\"kg_unload\" type=\"text\" id=\"kg_unload\"
-                                    class=\"form-control ";
-        // line 228
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_unload", [], "any", false, false, false, 228)) {
+                                       class=\"form-control ";
+        // line 214
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_unload", [], "any", false, false, false, 214)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 231
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_unload", [], "any", false, false, false, 231)) {
+        // line 217
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_unload", [], "any", false, false, false, 217)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_unload", [], "any", false, false, false, 231), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_unload", [], "any", false, false, false, 217), "html", null, true);
             yield "</div>";
         }
-        // line 232
+        // line 218
         yield "                                </div>
                             </div>
                       
-                            <div class=\"col-md-6 mb-3\">        
-                                <label for=\"liquid_density\" data-bs-toggle=\"tooltip\" title=\"--> [ kg &frasl; m³ ]\"
-                                    class=\"form-control-label\"> Densità (liquido): </label>
+                            <div class=\"form-group col-md-6 mb-3\">        
+                                <label for=\"liquid_density\" data-bs-toggle=\"tooltip\" title=\"--> [ kg &frasl; m³ ]\" class=\"form-control-label\"> 
+                                    Densità (liquido): 
+                                </label>
                                 <input name=\"liquid_density\" type=\"text\" id=\"liquid_density\"
-                                    class=\"form-control ";
-        // line 239
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "liquid_density", [], "any", false, false, false, 239)) {
+                                       class=\"form-control ";
+        // line 226
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "liquid_density", [], "any", false, false, false, 226)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 242
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "liquid_density", [], "any", false, false, false, 242)) {
+        // line 229
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "liquid_density", [], "any", false, false, false, 229)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "liquid_density", [], "any", false, false, false, 242), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "liquid_density", [], "any", false, false, false, 229), "html", null, true);
             yield "</div>";
         }
-        // line 243
+        // line 230
         yield "                                </div>
                             </div>
 
-                            <div class=\"col-md-6 mb-3\">        
-                                <label for=\"gas_weight\" data-bs-toggle=\"tooltip\" title=\"--> [ kg &frasl; Nm³ ]\"
-                                       class=\"form-control-label\"> Peso specifico (gas): </label>
+                            <div class=\"form-group col-md-6 mb-3\">        
+                                <label for=\"gas_weight\" data-bs-toggle=\"tooltip\" title=\"--> [ kg &frasl; Nm³ ]\" class=\"form-control-label\"> 
+                                    Peso specifico (gas): 
+                                </label>
                                 <input name=\"gas_weight\" type=\"text\" id=\"gas_weight\"
                                        class=\"form-control ";
+        // line 238
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "gas_weight", [], "any", false, false, false, 238)) {
+            yield "is-invalid";
+        }
+        yield "\" />
+
+                                <div class=\"error-placeholder\">
+                                    ";
+        // line 241
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "gas_weight", [], "any", false, false, false, 241)) {
+            yield "<div class=\"invalid-feedback\">";
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "gas_weight", [], "any", false, false, false, 241), "html", null, true);
+            yield "</div>";
+        }
+        // line 242
+        yield "                                </div>
+                            </div>
+   
+                            <div class=\"form-group col-md-6 mb-3\">        
+                                <label for=\"pcs_ghv\" data-bs-toggle=\"tooltip\" title=\"--> [ kg &frasl; m³ ]\" class=\"form-control-label\"> 
+                                    PCS/GHV: 
+                                </label>
+                                <input name=\"pcs_ghv\" type=\"text\" id=\"pcs_ghv\"
+                                       class=\"form-control ";
         // line 250
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "gas_weight", [], "any", false, false, false, 250)) {
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "pcs_ghv", [], "any", false, false, false, 250)) {
             yield "is-invalid";
         }
         yield "\" />
@@ -528,65 +540,25 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 <div class=\"error-placeholder\">
                                     ";
         // line 253
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "gas_weight", [], "any", false, false, false, 253)) {
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "pcs_ghv", [], "any", false, false, false, 253)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "gas_weight", [], "any", false, false, false, 253), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "pcs_ghv", [], "any", false, false, false, 253), "html", null, true);
             yield "</div>";
         }
         // line 254
         yield "                                </div>
                             </div>
-   
-                            <div class=\"col-md-6 mb-3\">        
-                                <label for=\"pcs_ghv\" data-bs-toggle=\"tooltip\" title=\"--> [ kg &frasl; m³ ]\"
-                                       class=\"form-control-label\"> PCS/GHV: </label>
-                                <input name=\"pcs_ghv\" type=\"text\" id=\"pcs_ghv\"
-                                       class=\"form-control ";
-        // line 261
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "pcs_ghv", [], "any", false, false, false, 261)) {
-            yield "is-invalid";
-        }
-        yield "\" />
-
-                                <div class=\"error-placeholder\">
-                                    ";
-        // line 264
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "pcs_ghv", [], "any", false, false, false, 264)) {
-            yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "pcs_ghv", [], "any", false, false, false, 264), "html", null, true);
-            yield "</div>";
-        }
-        // line 265
-        yield "                                </div>
-                            </div>
                         </div>
 
-                        <div class=\"card-footer mx-auto\">      
-                            <button type=\"button\" class=\"my-2 action-button back\">
-                                <span class=\"m-auto\">
-                                    <i class=\"bi bi-chevron-double-left\"></i> INDIETRO
-                                </span>
-                            </button>
-
-                            <button type=\"button\" class=\"my-2 action-button next\">
-                                <span class=\"m-auto\">
-                                    AVANTI <i class=\"bi bi-chevron-double-right\"></i>
-                                </span>
-                            </button>
-                                
-                            <button type=\"submit\" class=\"my-2 action-button save\" name=\"save\">
-                                <span class=\"m-auto\">
-                                    SALVA <i class=\"bi bi-chevron-double-right\"></i>
-                                </span>
-                            </button>
-                        </div>
-                    </div>
+                        ";
+        // line 277
+        yield "                    </div>
                 </fieldset>
                 ";
-        // line 291
+        // line 280
         yield "
                 ";
-        // line 293
+        // line 282
         yield "                <fieldset class=\"mx-auto my-3\" data-step=\"3\">
                     <div class=\"card-body\">
                         <div class=\"row table-responsive mx-auto my-2\">     
@@ -648,31 +620,14 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                         </div>
                     </div>
     
-                    <div class=\"card-footer mx-auto\">      
-                        <button type=\"button\" class=\"my-2 action-button back\">
-                            <span class=\"m-auto\">
-                                <i class=\"bi bi-chevron-double-left\"></i> INDIETRO
-                            </span>
-                        </button>
-
-                        <button type=\"button\" class=\"my-2 action-button add\" name=\"add\" id=\"add-part\">
-                            <span class=\"m-auto\">
-                                AGGIUNGI <i class=\"bi bi-plus-circle\"></i>
-                            </span>
-                        </button>
-                        
-                        <button type=\"button\" class=\"my-2 action-button next\">
-                            <span class=\"m-auto\">
-                                AVANTI <i class=\"bi bi-chevron-double-right\"></i>
-                            </span>
-                        </button>
-                    </div>
-                </fieldset>
+                    ";
+        // line 362
+        yield "                </fieldset>
                 ";
-        // line 375
+        // line 364
         yield "
                 ";
-        // line 377
+        // line 366
         yield "                <fieldset class=\"mx-auto my-3\" data-step=\"4\">         
                     <div class=\"card-body\">
                         <div class=\"row\">
@@ -680,21 +635,21 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 <label for=\"note\" class=\"form-control-label\"> Nota: </label>
                                 <textarea name=\"note\" id=\"note\" rows=\"1\" 
                                           class=\"form-control ";
-        // line 383
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "note", [], "any", false, false, false, 383)) {
+        // line 372
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "note", [], "any", false, false, false, 372)) {
             yield "is-invalid";
         }
         yield "\"></textarea>
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 386
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 386)) {
+        // line 375
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 375)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 386), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 375), "html", null, true);
             yield "</div>";
         }
-        // line 387
+        // line 376
         yield "                                </div>
                             </div>
 
@@ -707,38 +662,41 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                     </div>
                 </fieldset>
                 ";
-        // line 399
+        // line 388
+        yield "
+                ";
+        // line 389
+        yield "                      
+                <div class=\"card-footer mx-auto\">      
+                    <button type=\"button\" class=\"my-2 action-button prev\" onclick=\"history.back();\">
+                        <span class=\"m-auto\">
+                            <i class=\"bi bi-chevron-double-left\"></i> INDIETRO
+                        </span>
+                    </button>
+                            
+                    <button type=\"button\" class=\"my-2 action-button next\">
+                        <span class=\"m-auto\">
+                            AVANTI <i class=\"bi bi-chevron-double-right\"></i>
+                        </span>
+                    </button>
+
+                    <button type=\"submit\" class=\"my-2 action-button save\" name=\"save\">
+                        <span class=\"m-auto\">
+                            SALVA <i class=\"bi bi-chevron-double-right\"></i>
+                        </span>
+                    </button>
+
+                    <button type=\"button\" class=\"my-2 action-button add\" name=\"add\" id=\"add-part\">
+                        <span class=\"m-auto\">
+                            AGGIUNGI <i class=\"bi bi-plus-circle\"></i>
+                        </span>
+                    </button>
+                </div> 
+                ";
+        // line 416
         yield "            </form>
         </div>
     </section>
-";
-        yield from [];
-    }
-
-    // line 404
-    /**
-     * @return iterable<null|scalar|\Stringable>
-     */
-    public function block_jquery(array $context, array $blocks = []): iterable
-    {
-        $macros = $this->macros;
-        // line 405
-        yield "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
-        integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
-        crossorigin=\"anonymous\">
-</script>
-    ";
-        // line 410
-        yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js\" 
-        integrity=\"sha256-umbTaFxP31Fv6O1itpLS/3+v5fOAWDLOUzlmvOGaKV4=\" 
-        crossorigin=\"anonymous\">
-</script>
-    ";
-        // line 415
-        yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js\" 
-        integrity=\"sha256-MtEA819Zls6dtLt5S5BpEMOhifPyz7gfzfgtNtY75lE=\" 
-        crossorigin=\"anonymous\">
-</script>
 ";
         yield from [];
     }
@@ -747,96 +705,129 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
     /**
      * @return iterable<null|scalar|\Stringable>
      */
-    public function block_datepicker(array $context, array $blocks = []): iterable
+    public function block_jquery(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
         // line 422
-        yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js\" 
-        integrity=\"sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=\" 
-        crossorigin=\"anonymous\">
-</script>
+        yield "    <script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
+            integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
+            crossorigin=\"anonymous\">
+    </script>
+        ";
+        // line 427
+        yield "    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js\" 
+            integrity=\"sha256-umbTaFxP31Fv6O1itpLS/3+v5fOAWDLOUzlmvOGaKV4=\" 
+            crossorigin=\"anonymous\">
+    </script>
+        ";
+        // line 432
+        yield "    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js\" 
+            integrity=\"sha256-MtEA819Zls6dtLt5S5BpEMOhifPyz7gfzfgtNtY75lE=\" 
+            crossorigin=\"anonymous\">
+    </script>
 ";
         yield from [];
     }
 
-    // line 428
+    // line 438
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_datepicker(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        // line 439
+        yield "    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js\" 
+            integrity=\"sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=\" 
+            crossorigin=\"anonymous\">
+    </script>
+";
+        yield from [];
+    }
+
+    // line 445
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_page_script(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 429
+        // line 446
         yield "<script> 
 \$(document).ready(function () {
-    \$('[data-toggle=\"tooltip\"]').tooltip();
+    \$('[data-bs-toggle=\"tooltip\"]').tooltip();
 
-//  Update header subtitle with fieldset change
-    function updateSubtitle() {
-        const step = \$('fieldset:visible').data('step');
+/***  Update header subtitle with fieldset change  ***/
+    function formSubtitle() {
+        const step = \$('fieldset.active').data('step');
         let subtitle = '';
 
             switch (step) {
-                case 1: subtitle = 'Inserire i dati richiesti per creare il nuovo <b style=\"color: #6d1741\">trasporto</b>.';
-                        break;
-                case 2: subtitle = 'Inserire le <b style=\"color: #6d1741\">quantità</b> del nuovo trasporto.';
-                        break;
-                case 3: subtitle = 'Inserire gli <b style=\"color: #6d1741\">scarichi parziali</b> del nuovo trasporto.';
-                        break;
-                case 4: subtitle = 'Inserire la nota per il nuovo trasporto. (Non obbligatorio)';
-                        break;
-                default: subtitle = '';
+                case 1: subtitle = 'Inserire i dati richiesti per creare il nuovo <b style=\"color: #6d1741\">trasporto</b>.'; break;
+                case 2: subtitle = 'Inserire le <b style=\"color: #6d1741\">quantità</b> del nuovo trasporto.'; break;
+                case 3: subtitle = 'Inserire gli <b style=\"color: #6d1741\">scarichi parziali</b> del nuovo trasporto.'; break;
+                case 4: subtitle = 'Inserire la nota per il nuovo trasporto. (Non obbligatorio)'; break;
             }
 
         \$('#step-subtitle').html(subtitle);
     }
 
-//  Initial subtitle load
-    updateSubtitle();
+/***  Initial subtitle load  ***/
+    formSubtitle();
 
-//  Bind next button to navigation
+/***  Bind next button to navigation  ***/
     \$(\".next\").on('click', function () {
-        let currentStep = \$(this).closest(\"fieldset\");
+        const currentStep = \$('fieldset.active');
+        const nextStep = \$('fieldset[data-step=\"' + (currentStep.data('step') + 1) + '\"]');
 
-        if (\$(\"#transport-form\").valid()) {
-            currentStep.removeClass(\"active\").next().addClass(\"active\");
-            \$(\"fieldset\").hide();
-            \$(\"fieldset.active\").show();
-            updateSubtitle();
-        } 
+            currentStep.find(':input').prop('disabled', false);
+            \$('fieldset:not(.active) :input:not(.always-validate)').prop('disabled', true);
+
+                if (\$('#transport-form').valid()) {
+                    currentStep.removeClass('active').hide();
+                    nextStep.addClass('active').show();
+                    formSubtitle();
+                    
+                    \$('html, body').animate({ scrollTop: 0 }, 300);
+                } else {
+                    const firstError = validator.errorList[0]?.element;
+                        if (firstError) {
+                            \$('html, body').animate({ scrollTop: \$(firstError).offset().top - 100 }, 300);
+                        }
+                }
+
+            \$('fieldset :input').prop('disabled', false); 
     });
 
-//  Bind previous button to navigation
+/***  Bind previous button to navigation  ***/
     \$(\".prev\").on('click', function () {
-        let currentStep = \$(this).closest(\"fieldset\");
+        const current = \$(\"fieldset.active\");
+        const step = current.data('step');
+        const prevStep = \$('fieldset[data-step=\"' + (step - 1) + '\"]');
 
-        currentStep.removeClass(\"active\").prev().addClass(\"active\");
-        \$(\"fieldset\").hide();
-        \$(\"fieldset.active\").show();
-        updateSubtitle();
+            current.removeClass('active').hide();
+            prevStep.addClass('active').show();
+            formSubtitle();
     });
 
-//  Function to check transport availability by slot and cmr
+/***  Function to check transport availability by Slot ID and CMR Number  ***/
     function checkAvailability(field, value, id = null) {
         \$.ajax({
             url: \"/check-transport\",
             type: \"POST\",
-            data: { 
-                [field]: value, 
-                id_transport: id 
-            },
+            data: { [field]: value, id_transport: id },
             dataType: \"json\",
             success: function (response) {
-                let inputField = \$(\"#\" + field);
-                let errorPlaceholder = inputField.closest(\".form-group\").find(\".error-placeholder\");
+                const inputField = \$(\"#\" + field);
+                const errorPlaceholder = inputField.closest(\".form-group\").find(\".error-placeholder\");
 
-                if (response[field]) {
-                    inputField.removeClass(\"is-valid\").addClass(\"is-invalid\");
-                    errorPlaceholder.addClass(\"invalid-feedback\").html(response[field]).show();
-                } else {
-                    inputField.removeClass(\"is-invalid\").addClass(\"is-valid\");
-                    errorPlaceholder.removeClass(\"invalid-feedback\").hide();
-                }
+                    if (response[field]) {
+                        inputField.removeClass(\"is-valid\").addClass(\"is-invalid\");
+                        errorPlaceholder.addClass(\"invalid-feedback\").html(response[field]).show();
+                    } else {
+                        inputField.removeClass(\"is-invalid\").addClass(\"is-valid\");
+                        errorPlaceholder.removeClass(\"invalid-feedback\").hide();
+                    }
             },
         });
     }
@@ -848,53 +839,55 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
         clearTimeout(debounceTimer);
         let field = \$(this).attr(\"id\");
         let value = \$(this).val();
-        const id = \$(\"#id_transport\").val();
 
-            if (value.length >= 7) {
+            if (value.length >= 5) {
                 debounceTimer = setTimeout(() => {
-                    checkAvailability(field, value, id);
+                    checkAvailability(field, value);
                 }, 250); 
             }
     });
 
-//  Datepicker setup
+/***  Datepicker setup  ***/
     \$('.datepicker').datepicker({
         format: 'dd-mm-yyyy',
         endDate: new Date(),
         autoclose: true,
-        clearBtn: false
-    }).on('changeDate', function (e) {
-        \$(this).trigger('change');                              // validator catches the value
-            if (this.id === 'date_load') {
-                \$('#date_unload').datepicker('setStartDate', e.date)
-                                 .datepicker('update', e.date);
-            }
-        \$(this).valid();
-    }).on('show', function () {
-        \$(this).data('selectedDate', \$(this).val());            // store current value when datepicker opens
-    }).on('hide', function () {
-        const currentVal = \$(this).val();   
-        if (!currentVal) {                                      // if the user didn't select anything and just clicked out, preserve current value
-            const storedDate = \$(this).data('selectedDate');
-            if (storedDate) {
-                \$(this).val(storedDate); // restore value
-            }
-        }
+        clearBtn: false 
+    })
+        .on('changeDate', function (e) {
+            \$(this).trigger('change');                                  // Validator catches the value
+                if (this.id === 'date_load') {
+                    \$('#date_unload').datepicker('setStartDate', e.date)
+                                     .datepicker('update', e.date);
+                    }
+                    \$(this).valid(); 
+    })
+        .on('show', function () {
+            \$(this).data('selectedDate', \$(this).val());                // Store current value when datepicker opens
+    })
+        .on('hide', function () {
+            const currentVal = \$(this).val();   
+                if (!currentVal) {                                      // If the user didn't select anything and just clicked out, preserve current value
+                    const storedDate = \$(this).data('selectedDate');
+                        if (storedDate) {
+                            \$(this).val(storedDate);                    // Restore value
+                        }
+                }
     });
 
-//  Validation method for defining current date as max date
+/***  Validation method for defining current date as max date  ***/
     \$.validator.addMethod(\"noFutureDate\", function (value, element) {
-        if (!value) return true;                                            // allow empty if not required
+        if (!value) return true;                                            // Allow empty if not required
 
         const parts = value.split(\"-\");
-        const inputDate = new Date(parts[2], parts[1] - 1, parts[0]);       // assuming dd-mm-yyyy
+        const inputDate = new Date(parts[2], parts[1] - 1, parts[0]);       // Assuming dd-mm-yyyy
         const today = new Date();
-        today.setHours(0, 0, 0, 0);                                         // remove time part
-
-        return inputDate <= today;
+        
+        today.setHours(0, 0, 0, 0);                                         // Remove time part
+            return inputDate <= today;
     });
 
-//  Validation method for defining that date_unload must be greater than or equal to date_load
+/***  Validation method for defining that date_unload must be greater than or equal to date_load  ***/
     \$.validator.addMethod(\"dateAfterOrEqual\", function(value, element, params) {
         const dateLoadVal = \$(params).val();
             if (!value || !dateLoadVal) return true;
@@ -908,13 +901,25 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
             return this.optional(element) || dateUnload >= dateLoad;
     });
 
-//  Validator 
+/***  Custom validation rule to ensure the \"Scegliere un'opzione\" option is not selected  ***/
+    \$.validator.addMethod(\"notPlaceholder\", function(value, element) {
+        return value !== \"\" && value !== \"0\"; // Assuming \"0\" or \"\" represents the placeholder option value
+    });
+
+/***  Validator [JQuery Validation]  ***/
     const validator = \$('#transport-form').validate({
-        ignore: [],
+        ignore: \":hidden:not(.always-validate)\",                // Skip hidden fields unless forced
+        onkeyup: false,
+        onfocusout: function (element) {
+            if (\$(element).is(':visible')) {
+                this.element(element);                          // Validate just this field
+            }
+        },
+        onclick: false,
         rules: {
-            slot: { required: true, rangelength: [15, 35], pattern: \"^[A-Za-z0-9_]+\$\" },
-            cmr: { required: true, rangelength: [7, 35], pattern: \"^[A-Za-z0-9\\-]+\$\" },
-            type: { required: true },
+            slot: { required: true, rangelength: [5, 35], pattern: \"^[A-Za-z0-9_]+\$\" },
+            cmr: { required: true, rangelength: [5, 35], pattern: \"^[A-Za-z0-9\\-]+\$\" },
+            type: { required: true, notPlaceholdere: true },
             issuer: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
             supplier: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
             transport: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
@@ -922,8 +927,8 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
             date_unload: { required: true, noFutureDate: true, dateAfterOrEqual: \"#date_load\" },
             container: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
             kg_load: { required: true, number: true, min: 0 },
-            cooling: { required: true, digits: true },
-            price_typology: { required: true },
+            cooling: { required: true, notPlaceholder: true },
+            price_typology: { required: true, notPlaceholder: true },
             price_value: { 
                 required: {
                     depends: function() {
@@ -941,12 +946,12 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
         messages: {
             slot: {
                 required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 11 e al massimo 35 caratteri.\",
+                rangelength: \"Usare almeno 5 e al massimo 35 caratteri.\",
                 pattern: \"Slot ID può contenere lettere, numeri e underscore (_). Spazi non consentiti.\"
             },
             cmr: {
                 required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 7 e al massimo 35 caratteri.\",
+                rangelength: \"Usare almeno 5 e al massimo 35 caratteri.\",
                 pattern: \"CMR può contenere lettere, numeri e trattini (-). Spazi non consentiti.\"
             },
             type: {
@@ -988,10 +993,12 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
             },
             cooling: {
                 required: \"Campo obbligatorio.\",
-                digits: \"Raffredamento deve essere un numero intero positivo, senza segni o decimali.\"
+                //digits: \"Raffreddamento deve essere un numero intero positivo, senza segni o decimali.\",
+                notPlaceholder: \"Selezionare un'opzione.\"
             },
             price_typology: {
-                required: \"Campo obbligatorio.\"
+                required: \"Campo obbligatorio.\",
+                notPlaceholder: \"Selezionare un'opzione.\"
             }, 
             price_value: {
                 required: \"Campo obbligatorio.\",
@@ -1031,25 +1038,26 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
             \$(element).removeClass('is-invalid');
             \$(element).closest('.form-group').find('.error-placeholder').html('');
         },
-        invalidHandler: function (form, validator) {            // Only validate visible fieldset
+        invalidHandler: function (form, validator) {                // Only validate visible fieldset
             if (validator.errorList.length) {
                 const firstError = validator.errorList[0].element;
                 const errorStep = \$(firstError).closest('fieldset').data('step');
 
                 \$('fieldset').removeClass('active').hide();
                 const targetStep = \$('fieldset[data-step=\"' + errorStep + '\"]');
+
                 targetStep.addClass('active').show();
-                updateSubtitle();
+                formSubtitle();
 
                 \$('html, body').animate({
                     scrollTop: \$(firstError).offset().top - 100
-                }, 500);
+                }, 250);
             }
         }
     });
 
 //  Handle next/previous button clicks with validation
-    window.ButtonClick = function (step) {
+    /*window.ButtonClick = function (step) {
         const current = \$('fieldset:visible');
         const currentStep = current.data('step');
         const nextStep = currentStep + step;
@@ -1060,15 +1068,15 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
 
         \$('fieldset').removeClass('active').hide();
         const next = \$('fieldset[data-step=\"' + nextStep + '\"]').addClass('active').fadeIn();
-        updateSubtitle();
-    };
+        formSubtitle();
+    };*/
 
 //  On submit validate form and AJAX form submission
     \$(\"#transport-form\").submit(function (e) {
         e.preventDefault();                             // Prevent the default form submission
 
         if (\$(this).valid()) {
-            var formData = \$(this).serialize();         // Serialize form data
+            const formData = \$(this).serialize();         // Serialize form data
 
             \$.ajax({
                 url: \$(this).attr(\"action\"),            // PHP file to handle the submission
@@ -1077,10 +1085,10 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                 dataType: \"json\",
                 success: function(response) {
                     if (response.success) {        
-                        // Encode the new ID
+                        //  Encode the new ID
                         const created = encodeURIComponent(response.created);
         
-                        // Redirect to users page with newId in the query string
+                        //  Redirect to users page with newId in the query string
                         window.location.href = '/platform?created=' + created + '#id-' + created;
                         document.getElementById('id-' + response.created)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     } else {
@@ -1125,7 +1133,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  770 => 429,  763 => 428,  754 => 422,  747 => 421,  738 => 415,  732 => 410,  726 => 405,  719 => 404,  711 => 399,  698 => 387,  692 => 386,  684 => 383,  676 => 377,  673 => 375,  590 => 293,  587 => 291,  560 => 265,  554 => 264,  546 => 261,  537 => 254,  531 => 253,  523 => 250,  514 => 243,  508 => 242,  500 => 239,  491 => 232,  485 => 231,  477 => 228,  468 => 221,  462 => 220,  454 => 217,  446 => 211,  440 => 210,  420 => 195,  412 => 189,  406 => 188,  386 => 173,  378 => 167,  372 => 166,  364 => 163,  355 => 156,  352 => 154,  331 => 134,  325 => 133,  317 => 130,  309 => 124,  303 => 123,  295 => 120,  287 => 114,  281 => 113,  273 => 110,  265 => 104,  259 => 103,  251 => 100,  243 => 94,  237 => 93,  229 => 90,  221 => 84,  215 => 83,  207 => 80,  199 => 74,  193 => 73,  185 => 70,  177 => 64,  171 => 63,  163 => 60,  155 => 54,  149 => 53,  129 => 38,  120 => 31,  115 => 29,  97 => 13,  94 => 11,  92 => 10,  83 => 9,  76 => 5,  74 => 4,  67 => 3,  56 => 2,  45 => 1,);
+        return array (  756 => 446,  749 => 445,  740 => 439,  733 => 438,  724 => 432,  718 => 427,  712 => 422,  705 => 421,  697 => 416,  669 => 389,  666 => 388,  653 => 376,  647 => 375,  639 => 372,  631 => 366,  628 => 364,  625 => 362,  562 => 282,  559 => 280,  555 => 277,  549 => 254,  543 => 253,  535 => 250,  525 => 242,  519 => 241,  511 => 238,  501 => 230,  495 => 229,  487 => 226,  477 => 218,  471 => 217,  463 => 214,  453 => 206,  447 => 205,  439 => 202,  431 => 196,  425 => 195,  405 => 180,  398 => 175,  392 => 174,  372 => 159,  365 => 154,  359 => 153,  351 => 150,  341 => 142,  338 => 140,  331 => 134,  325 => 133,  317 => 130,  309 => 124,  303 => 123,  295 => 120,  287 => 114,  281 => 113,  273 => 110,  265 => 104,  259 => 103,  251 => 100,  243 => 94,  237 => 93,  229 => 90,  221 => 84,  215 => 83,  207 => 80,  199 => 74,  193 => 73,  185 => 70,  177 => 64,  171 => 63,  163 => 60,  155 => 54,  149 => 53,  129 => 38,  120 => 31,  115 => 29,  97 => 13,  94 => 11,  92 => 10,  83 => 9,  76 => 5,  74 => 4,  67 => 3,  56 => 2,  45 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -1158,13 +1166,13 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
             </div>
 
             <form id=\"transport-form\" method=\"POST\" action=\"transport\" autocomplete=\"off\" novalidate>
-                <input type=\"hidden\" name=\"csrf_token\" value=\"{{ csrf_token }}\">
+                <input type=\"hidden\" name=\"csrf_token\" class=\"always-validate\" value=\"{{ csrf_token }}\">
 
                 {# Fieldset 1 => Insert Transport #}   
                 <fieldset class=\"mx-auto my-3 active\" data-step=\"1\">         
                     <div class=\"card-body\">
                         <div class=\"row\">
-                            <div class=\"col-md-4 mb-3\">
+                            <div class=\"form-group col-md-4 mb-3\">
                                 <label for=\"type\" class=\"form-control-label\"> Tipo: </label>
                                 <select name=\"type\" id=\"type\" 
                                     class=\"form-control {% if errors.type %}is-invalid{% endif %}\">
@@ -1186,7 +1194,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\">        
+                            <div class=\"form-group col-md-4 mb-3\">        
                                 <label for=\"slot\" class=\"form-control-label\"> Slot ID: </label>
                                 <input name=\"slot\" type=\"text\" id=\"slot\"
                                     class=\"form-control {% if errors.slot %}is-invalid{% endif %}\" />
@@ -1196,7 +1204,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\">        
+                            <div class=\"form-group col-md-4 mb-3\">        
                                 <label for=\"cmr\" class=\"form-control-label\"> Numero CMR: </label>
                                 <input name=\"cmr\" type=\"text\" id=\"cmr\"
                                     class=\"form-control {% if errors.cmr %}is-invalid{% endif %}\" />
@@ -1206,7 +1214,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\">         
+                            <div class=\"form-group col-md-4 mb-3\">         
                                 <label for=\"issuer\" class=\"form-control-label\"> Ditta emittente: </label>
                                 <input name=\"issuer\" type=\"text\" id=\"issuer\"
                                     class=\"form-control {% if errors.issuer %}is-invalid{% endif %}\" />
@@ -1216,7 +1224,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\">         
+                            <div class=\"form-group col-md-4 mb-3\">         
                                 <label for=\"supplier\" class=\"form-control-label\"> Fornitore: </label>
                                 <input name=\"supplier\" type=\"text\" id=\"supplier\"
                                     class=\"form-control {% if errors.email %}is-invalid{% endif %}\" />
@@ -1226,7 +1234,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\">         
+                            <div class=\"form-group col-md-4 mb-3\">         
                                 <label for=\"transport\" class=\"form-control-label\"> Trasporto: </label>
                                 <input name=\"transport\" type=\"text\" id=\"transport\"
                                     class=\"form-control {% if errors.email %}is-invalid{% endif %}\" />
@@ -1236,7 +1244,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\"> 
+                            <div class=\"form-group col-md-4 mb-3\"> 
                                 <label for=\"date_load\" class=\"form-control-label\" data-toggle=\"tooltip\" title=\"--> Terminale\"> Data carico: </label>
                                 <input name=\"date_load\" type=\"text\" id=\"date_load\" 
                                     class=\"form-control datepicker {% if errors.date_load %}is-invalid{% endif %}\" />
@@ -1246,7 +1254,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\"> 
+                            <div class=\"form-group col-md-4 mb-3\"> 
                                 <label for=\"date_unload\" class=\"form-control-label\" data-toggle=\"tooltip\" title=\"--> Padova\"> Data scarico: </label>
                                 <input name=\"date_unload\" type=\"text\" id=\"date_unload\" 
                                     class=\"form-control datepicker {% if errors.date_unload %}is-invalid{% endif %}\" />
@@ -1256,7 +1264,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 </div>
                             </div>
 
-                            <div class=\"col-md-4 mb-3\">         
+                            <div class=\"form-group col-md-4 mb-3\">         
                                 <label for=\"container\" class=\"form-control-label\"> Container: </label>
                                 <input name=\"container\" type=\"text\" id=\"container\"
                                     class=\"form-control {% if errors.container %}is-invalid{% endif %}\" />
@@ -1266,21 +1274,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 </div>
                             </div>
                         </div>
-                    </div>
-                        
-                    <div class=\"card-footer mx-auto\">      
-                        <button type=\"button\" class=\"my-2 action-button back\" onclick=\"history.back();\">
-                            <span class=\"m-auto\">
-                                <i class=\"bi bi-chevron-double-left\"></i> INDIETRO
-                            </span>
-                        </button>
-                            
-                        <button type=\"button\" class=\"my-2 action-button next\">
-                            <span class=\"m-auto\">
-                                AVANTI <i class=\"bi bi-chevron-double-right\"></i>
-                            </span>
-                        </button>
-                    </div>           
+                    </div>          
                 </fieldset>
                 {# END Fieldset 1 => Insert Transport #}
 
@@ -1288,32 +1282,32 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                 <fieldset class=\"mx-auto my-3\" data-step=\"2\">         
                     <div class=\"card-body\">
                         <div class=\"row\">
-                            <div class=\"col-md-6 mb-3\">    
-                                <label for=\"kg_load\" data-bs-toggle=\"tooltip\" title=\"--> Quantità nominale [ kg ]\"
-                                    class=\"form-control-label\"> Quantità caricata: </label>
+                            <div class=\"form-group col-md-6 mb-3\">    
+                                <label for=\"kg_load\" data-bs-toggle=\"tooltip\" title=\"--> Quantità nominale [ kg ]\" class=\"form-control-label\"> 
+                                    Quantità caricata: 
+                                </label>
                                 <input name=\"kg_load\" type=\"text\" id=\"kg_load\"
-                                    class=\"form-control {% if errors.kg_load %}is-invalid{% endif %}\" />
+                                       class=\"form-control {% if errors.kg_load %}is-invalid{% endif %}\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.kg_load %}<div class=\"invalid-feedback\">{{ errors.kg_load }}</div>{% endif %}
                                 </div>
                             </div>
 
-                            <div class=\"col-md-6 mb-3\">
+                            <div class=\"form-group col-md-6 mb-3\">
                                 <label for=\"cooling\" class=\"form-control-label\"> Raffreddamento: </label>
-                                <select name=\"cooling\" id=\"cooling\" 
-                                    class=\"form-control {% if errors.cooling %}is-invalid{% endif %}\">
-                                        <option class=\"opt-type\" style=\"color: lightgray;\"> 
-                                            Scegliere un'opzione
-                                        </option>
+                                <select name=\"cooling\" id=\"cooling\" class=\"form-control {% if errors.cooling %}is-invalid{% endif %}\">
+                                    <option class=\"opt-type\" style=\"color: lightgray;\"> 
+                                        Scegliere un'opzione
+                                    </option>
 
-                                        <option value=\"600\" class=\"opt-type\"> 
-                                            SÌ = 600
-                                        </option>
+                                    <option value=\"600\" class=\"opt-type\"> 
+                                        SÌ = 600
+                                    </option>
                                                 
-                                        <option value=\"0\" class=\"opt-type\"> 
-                                            NO = 0
-                                        </option>
+                                    <option value=\"0\" class=\"opt-type\"> 
+                                        NO = 0
+                                    </option>
                                 </select>
 
                                 <div class=\"error-placeholder\">
@@ -1321,21 +1315,20 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 </div>
                             </div>
 
-                            <div class=\"col-md-6 mb-3\">
+                            <div class=\"form-group col-md-6 mb-3\">
                                 <label for=\"price_typology\" class=\"form-control-label\"> Tipologia costo: </label>
-                                <select name=\"price_typology\" id=\"price_typology\" 
-                                    class=\"form-control {% if errors.price_typology %}is-invalid{% endif %}\">
-                                        <option value=\"\" class=\"opt-type\" style=\"color: lightgray;\"> 
-                                            Scegliere un'opzione
-                                        </option>
+                                <select name=\"price_typology\" id=\"price_typology\" class=\"form-control {% if errors.price_typology %}is-invalid{% endif %}\">
+                                    <option value=\"\" class=\"opt-type\" style=\"color: lightgray;\"> 
+                                        Scegliere un'opzione
+                                    </option>
 
-                                        <option value=\"yes\" class=\"opt-type\"> 
-                                            SÌ
-                                        </option>
+                                    <option value=\"yes\" class=\"opt-type\"> 
+                                        SÌ
+                                    </option>
                                                 
-                                        <option value=\"no\" class=\"opt-type\"> 
-                                            NO
-                                        </option>
+                                    <option value=\"no\" class=\"opt-type\"> 
+                                        NO
+                                    </option>
                                 </select>
 
                                 <div class=\"error-placeholder\">
@@ -1343,41 +1336,44 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 </div>
                             </div>
 
-                            <div class=\"col-md-6 mb-3\">        
+                            <div class=\"form-group col-md-6 mb-3\">        
                                 <label for=\"price_value\" class=\"form-control-label\"> Valore costo: </label>
                                 <input name=\"price_value\" type=\"text\" id=\"price_value\"
-                                    class=\"form-control {% if errors.price_value %}is-invalid{% endif %}\" />
+                                       class=\"form-control {% if errors.price_value %}is-invalid{% endif %}\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.price_value %}<div class=\"invalid-feedback\">{{ errors.price_value }}</div>{% endif %}
                                 </div>
                             </div>
 
-                            <div class=\"col-md-6 mb-3\">        
-                                <label for=\"kg_unload\" data-bs-toggle=\"tooltip\" title=\"--> [ kg ]\"
-                                    class=\"form-control-label\"> Quantità scaricata: </label>
+                            <div class=\"form-group col-md-6 mb-3\">        
+                                <label for=\"kg_unload\" data-bs-toggle=\"tooltip\" title=\"--> [ kg ]\" class=\"form-control-label\"> 
+                                    Quantità scaricata: 
+                                </label>
                                 <input name=\"kg_unload\" type=\"text\" id=\"kg_unload\"
-                                    class=\"form-control {% if errors.kg_unload %}is-invalid{% endif %}\" />
+                                       class=\"form-control {% if errors.kg_unload %}is-invalid{% endif %}\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.kg_unload %}<div class=\"invalid-feedback\">{{ errors.kg_unload }}</div>{% endif %}
                                 </div>
                             </div>
                       
-                            <div class=\"col-md-6 mb-3\">        
-                                <label for=\"liquid_density\" data-bs-toggle=\"tooltip\" title=\"--> [ kg &frasl; m³ ]\"
-                                    class=\"form-control-label\"> Densità (liquido): </label>
+                            <div class=\"form-group col-md-6 mb-3\">        
+                                <label for=\"liquid_density\" data-bs-toggle=\"tooltip\" title=\"--> [ kg &frasl; m³ ]\" class=\"form-control-label\"> 
+                                    Densità (liquido): 
+                                </label>
                                 <input name=\"liquid_density\" type=\"text\" id=\"liquid_density\"
-                                    class=\"form-control {% if errors.liquid_density %}is-invalid{% endif %}\" />
+                                       class=\"form-control {% if errors.liquid_density %}is-invalid{% endif %}\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.liquid_density %}<div class=\"invalid-feedback\">{{ errors.liquid_density }}</div>{% endif %}
                                 </div>
                             </div>
 
-                            <div class=\"col-md-6 mb-3\">        
-                                <label for=\"gas_weight\" data-bs-toggle=\"tooltip\" title=\"--> [ kg &frasl; Nm³ ]\"
-                                       class=\"form-control-label\"> Peso specifico (gas): </label>
+                            <div class=\"form-group col-md-6 mb-3\">        
+                                <label for=\"gas_weight\" data-bs-toggle=\"tooltip\" title=\"--> [ kg &frasl; Nm³ ]\" class=\"form-control-label\"> 
+                                    Peso specifico (gas): 
+                                </label>
                                 <input name=\"gas_weight\" type=\"text\" id=\"gas_weight\"
                                        class=\"form-control {% if errors.gas_weight %}is-invalid{% endif %}\" />
 
@@ -1386,9 +1382,10 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 </div>
                             </div>
    
-                            <div class=\"col-md-6 mb-3\">        
-                                <label for=\"pcs_ghv\" data-bs-toggle=\"tooltip\" title=\"--> [ kg &frasl; m³ ]\"
-                                       class=\"form-control-label\"> PCS/GHV: </label>
+                            <div class=\"form-group col-md-6 mb-3\">        
+                                <label for=\"pcs_ghv\" data-bs-toggle=\"tooltip\" title=\"--> [ kg &frasl; m³ ]\" class=\"form-control-label\"> 
+                                    PCS/GHV: 
+                                </label>
                                 <input name=\"pcs_ghv\" type=\"text\" id=\"pcs_ghv\"
                                        class=\"form-control {% if errors.pcs_ghv %}is-invalid{% endif %}\" />
 
@@ -1398,8 +1395,8 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                             </div>
                         </div>
 
-                        <div class=\"card-footer mx-auto\">      
-                            <button type=\"button\" class=\"my-2 action-button back\">
+                        {#<div class=\"card-footer mx-auto\">      
+                            <button type=\"button\" class=\"my-2 action-button prev\">
                                 <span class=\"m-auto\">
                                     <i class=\"bi bi-chevron-double-left\"></i> INDIETRO
                                 </span>
@@ -1416,7 +1413,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                     SALVA <i class=\"bi bi-chevron-double-right\"></i>
                                 </span>
                             </button>
-                        </div>
+                        </div>#}
                     </div>
                 </fieldset>
                 {# END Fieldset 2 => Insert Quantity #}
@@ -1483,8 +1480,8 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                         </div>
                     </div>
     
-                    <div class=\"card-footer mx-auto\">      
-                        <button type=\"button\" class=\"my-2 action-button back\">
+                    {#<div class=\"card-footer mx-auto\">      
+                        <button type=\"button\" class=\"my-2 action-button prev\">
                             <span class=\"m-auto\">
                                 <i class=\"bi bi-chevron-double-left\"></i> INDIETRO
                             </span>
@@ -1501,7 +1498,7 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                                 AVANTI <i class=\"bi bi-chevron-double-right\"></i>
                             </span>
                         </button>
-                    </div>
+                    </div>#}
                 </fieldset>
                 {# END Fieldset 3 => Insert Partial #}
 
@@ -1528,106 +1525,139 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                     </div>
                 </fieldset>
                 {# END Fieldset 4 => Insert Note (Optional) #}
+
+                {# Card Footer With Fieldset Buttons #}                      
+                <div class=\"card-footer mx-auto\">      
+                    <button type=\"button\" class=\"my-2 action-button prev\" onclick=\"history.back();\">
+                        <span class=\"m-auto\">
+                            <i class=\"bi bi-chevron-double-left\"></i> INDIETRO
+                        </span>
+                    </button>
+                            
+                    <button type=\"button\" class=\"my-2 action-button next\">
+                        <span class=\"m-auto\">
+                            AVANTI <i class=\"bi bi-chevron-double-right\"></i>
+                        </span>
+                    </button>
+
+                    <button type=\"submit\" class=\"my-2 action-button save\" name=\"save\">
+                        <span class=\"m-auto\">
+                            SALVA <i class=\"bi bi-chevron-double-right\"></i>
+                        </span>
+                    </button>
+
+                    <button type=\"button\" class=\"my-2 action-button add\" name=\"add\" id=\"add-part\">
+                        <span class=\"m-auto\">
+                            AGGIUNGI <i class=\"bi bi-plus-circle\"></i>
+                        </span>
+                    </button>
+                </div> 
+                {# Card Footer With Fieldset Buttons #}
             </form>
         </div>
     </section>
 {% endblock %}    
 
 {% block jquery %}
-<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
-        integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
-        crossorigin=\"anonymous\">
-</script>
-    {# JQuery Validation #}
-<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js\" 
-        integrity=\"sha256-umbTaFxP31Fv6O1itpLS/3+v5fOAWDLOUzlmvOGaKV4=\" 
-        crossorigin=\"anonymous\">
-</script>
-    {# JQuery Validation Additional Methods #}
-<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js\" 
-        integrity=\"sha256-MtEA819Zls6dtLt5S5BpEMOhifPyz7gfzfgtNtY75lE=\" 
-        crossorigin=\"anonymous\">
-</script>
+    <script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
+            integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
+            crossorigin=\"anonymous\">
+    </script>
+        {# JQuery Validation #}
+    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js\" 
+            integrity=\"sha256-umbTaFxP31Fv6O1itpLS/3+v5fOAWDLOUzlmvOGaKV4=\" 
+            crossorigin=\"anonymous\">
+    </script>
+        {# JQuery Validation Additional Methods #}
+    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js\" 
+            integrity=\"sha256-MtEA819Zls6dtLt5S5BpEMOhifPyz7gfzfgtNtY75lE=\" 
+            crossorigin=\"anonymous\">
+    </script>
 {% endblock %}
 
 {% block datepicker %}
-<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js\" 
-        integrity=\"sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=\" 
-        crossorigin=\"anonymous\">
-</script>
+    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js\" 
+            integrity=\"sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=\" 
+            crossorigin=\"anonymous\">
+    </script>
 {% endblock %}
 
 {% block page_script %}
 <script> 
 \$(document).ready(function () {
-    \$('[data-toggle=\"tooltip\"]').tooltip();
+    \$('[data-bs-toggle=\"tooltip\"]').tooltip();
 
-//  Update header subtitle with fieldset change
-    function updateSubtitle() {
-        const step = \$('fieldset:visible').data('step');
+/***  Update header subtitle with fieldset change  ***/
+    function formSubtitle() {
+        const step = \$('fieldset.active').data('step');
         let subtitle = '';
 
             switch (step) {
-                case 1: subtitle = 'Inserire i dati richiesti per creare il nuovo <b style=\"color: #6d1741\">trasporto</b>.';
-                        break;
-                case 2: subtitle = 'Inserire le <b style=\"color: #6d1741\">quantità</b> del nuovo trasporto.';
-                        break;
-                case 3: subtitle = 'Inserire gli <b style=\"color: #6d1741\">scarichi parziali</b> del nuovo trasporto.';
-                        break;
-                case 4: subtitle = 'Inserire la nota per il nuovo trasporto. (Non obbligatorio)';
-                        break;
-                default: subtitle = '';
+                case 1: subtitle = 'Inserire i dati richiesti per creare il nuovo <b style=\"color: #6d1741\">trasporto</b>.'; break;
+                case 2: subtitle = 'Inserire le <b style=\"color: #6d1741\">quantità</b> del nuovo trasporto.'; break;
+                case 3: subtitle = 'Inserire gli <b style=\"color: #6d1741\">scarichi parziali</b> del nuovo trasporto.'; break;
+                case 4: subtitle = 'Inserire la nota per il nuovo trasporto. (Non obbligatorio)'; break;
             }
 
         \$('#step-subtitle').html(subtitle);
     }
 
-//  Initial subtitle load
-    updateSubtitle();
+/***  Initial subtitle load  ***/
+    formSubtitle();
 
-//  Bind next button to navigation
+/***  Bind next button to navigation  ***/
     \$(\".next\").on('click', function () {
-        let currentStep = \$(this).closest(\"fieldset\");
+        const currentStep = \$('fieldset.active');
+        const nextStep = \$('fieldset[data-step=\"' + (currentStep.data('step') + 1) + '\"]');
 
-        if (\$(\"#transport-form\").valid()) {
-            currentStep.removeClass(\"active\").next().addClass(\"active\");
-            \$(\"fieldset\").hide();
-            \$(\"fieldset.active\").show();
-            updateSubtitle();
-        } 
+            currentStep.find(':input').prop('disabled', false);
+            \$('fieldset:not(.active) :input:not(.always-validate)').prop('disabled', true);
+
+                if (\$('#transport-form').valid()) {
+                    currentStep.removeClass('active').hide();
+                    nextStep.addClass('active').show();
+                    formSubtitle();
+                    
+                    \$('html, body').animate({ scrollTop: 0 }, 300);
+                } else {
+                    const firstError = validator.errorList[0]?.element;
+                        if (firstError) {
+                            \$('html, body').animate({ scrollTop: \$(firstError).offset().top - 100 }, 300);
+                        }
+                }
+
+            \$('fieldset :input').prop('disabled', false); 
     });
 
-//  Bind previous button to navigation
+/***  Bind previous button to navigation  ***/
     \$(\".prev\").on('click', function () {
-        let currentStep = \$(this).closest(\"fieldset\");
+        const current = \$(\"fieldset.active\");
+        const step = current.data('step');
+        const prevStep = \$('fieldset[data-step=\"' + (step - 1) + '\"]');
 
-        currentStep.removeClass(\"active\").prev().addClass(\"active\");
-        \$(\"fieldset\").hide();
-        \$(\"fieldset.active\").show();
-        updateSubtitle();
+            current.removeClass('active').hide();
+            prevStep.addClass('active').show();
+            formSubtitle();
     });
 
-//  Function to check transport availability by slot and cmr
+/***  Function to check transport availability by Slot ID and CMR Number  ***/
     function checkAvailability(field, value, id = null) {
         \$.ajax({
             url: \"/check-transport\",
             type: \"POST\",
-            data: { 
-                [field]: value, 
-                id_transport: id 
-            },
+            data: { [field]: value, id_transport: id },
             dataType: \"json\",
             success: function (response) {
-                let inputField = \$(\"#\" + field);
-                let errorPlaceholder = inputField.closest(\".form-group\").find(\".error-placeholder\");
+                const inputField = \$(\"#\" + field);
+                const errorPlaceholder = inputField.closest(\".form-group\").find(\".error-placeholder\");
 
-                if (response[field]) {
-                    inputField.removeClass(\"is-valid\").addClass(\"is-invalid\");
-                    errorPlaceholder.addClass(\"invalid-feedback\").html(response[field]).show();
-                } else {
-                    inputField.removeClass(\"is-invalid\").addClass(\"is-valid\");
-                    errorPlaceholder.removeClass(\"invalid-feedback\").hide();
-                }
+                    if (response[field]) {
+                        inputField.removeClass(\"is-valid\").addClass(\"is-invalid\");
+                        errorPlaceholder.addClass(\"invalid-feedback\").html(response[field]).show();
+                    } else {
+                        inputField.removeClass(\"is-invalid\").addClass(\"is-valid\");
+                        errorPlaceholder.removeClass(\"invalid-feedback\").hide();
+                    }
             },
         });
     }
@@ -1639,53 +1669,55 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
         clearTimeout(debounceTimer);
         let field = \$(this).attr(\"id\");
         let value = \$(this).val();
-        const id = \$(\"#id_transport\").val();
 
-            if (value.length >= 7) {
+            if (value.length >= 5) {
                 debounceTimer = setTimeout(() => {
-                    checkAvailability(field, value, id);
+                    checkAvailability(field, value);
                 }, 250); 
             }
     });
 
-//  Datepicker setup
+/***  Datepicker setup  ***/
     \$('.datepicker').datepicker({
         format: 'dd-mm-yyyy',
         endDate: new Date(),
         autoclose: true,
-        clearBtn: false
-    }).on('changeDate', function (e) {
-        \$(this).trigger('change');                              // validator catches the value
-            if (this.id === 'date_load') {
-                \$('#date_unload').datepicker('setStartDate', e.date)
-                                 .datepicker('update', e.date);
-            }
-        \$(this).valid();
-    }).on('show', function () {
-        \$(this).data('selectedDate', \$(this).val());            // store current value when datepicker opens
-    }).on('hide', function () {
-        const currentVal = \$(this).val();   
-        if (!currentVal) {                                      // if the user didn't select anything and just clicked out, preserve current value
-            const storedDate = \$(this).data('selectedDate');
-            if (storedDate) {
-                \$(this).val(storedDate); // restore value
-            }
-        }
+        clearBtn: false 
+    })
+        .on('changeDate', function (e) {
+            \$(this).trigger('change');                                  // Validator catches the value
+                if (this.id === 'date_load') {
+                    \$('#date_unload').datepicker('setStartDate', e.date)
+                                     .datepicker('update', e.date);
+                    }
+                    \$(this).valid(); 
+    })
+        .on('show', function () {
+            \$(this).data('selectedDate', \$(this).val());                // Store current value when datepicker opens
+    })
+        .on('hide', function () {
+            const currentVal = \$(this).val();   
+                if (!currentVal) {                                      // If the user didn't select anything and just clicked out, preserve current value
+                    const storedDate = \$(this).data('selectedDate');
+                        if (storedDate) {
+                            \$(this).val(storedDate);                    // Restore value
+                        }
+                }
     });
 
-//  Validation method for defining current date as max date
+/***  Validation method for defining current date as max date  ***/
     \$.validator.addMethod(\"noFutureDate\", function (value, element) {
-        if (!value) return true;                                            // allow empty if not required
+        if (!value) return true;                                            // Allow empty if not required
 
         const parts = value.split(\"-\");
-        const inputDate = new Date(parts[2], parts[1] - 1, parts[0]);       // assuming dd-mm-yyyy
+        const inputDate = new Date(parts[2], parts[1] - 1, parts[0]);       // Assuming dd-mm-yyyy
         const today = new Date();
-        today.setHours(0, 0, 0, 0);                                         // remove time part
-
-        return inputDate <= today;
+        
+        today.setHours(0, 0, 0, 0);                                         // Remove time part
+            return inputDate <= today;
     });
 
-//  Validation method for defining that date_unload must be greater than or equal to date_load
+/***  Validation method for defining that date_unload must be greater than or equal to date_load  ***/
     \$.validator.addMethod(\"dateAfterOrEqual\", function(value, element, params) {
         const dateLoadVal = \$(params).val();
             if (!value || !dateLoadVal) return true;
@@ -1699,13 +1731,25 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
             return this.optional(element) || dateUnload >= dateLoad;
     });
 
-//  Validator 
+/***  Custom validation rule to ensure the \"Scegliere un'opzione\" option is not selected  ***/
+    \$.validator.addMethod(\"notPlaceholder\", function(value, element) {
+        return value !== \"\" && value !== \"0\"; // Assuming \"0\" or \"\" represents the placeholder option value
+    });
+
+/***  Validator [JQuery Validation]  ***/
     const validator = \$('#transport-form').validate({
-        ignore: [],
+        ignore: \":hidden:not(.always-validate)\",                // Skip hidden fields unless forced
+        onkeyup: false,
+        onfocusout: function (element) {
+            if (\$(element).is(':visible')) {
+                this.element(element);                          // Validate just this field
+            }
+        },
+        onclick: false,
         rules: {
-            slot: { required: true, rangelength: [15, 35], pattern: \"^[A-Za-z0-9_]+\$\" },
-            cmr: { required: true, rangelength: [7, 35], pattern: \"^[A-Za-z0-9\\-]+\$\" },
-            type: { required: true },
+            slot: { required: true, rangelength: [5, 35], pattern: \"^[A-Za-z0-9_]+\$\" },
+            cmr: { required: true, rangelength: [5, 35], pattern: \"^[A-Za-z0-9\\-]+\$\" },
+            type: { required: true, notPlaceholdere: true },
             issuer: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
             supplier: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
             transport: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
@@ -1713,8 +1757,8 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
             date_unload: { required: true, noFutureDate: true, dateAfterOrEqual: \"#date_load\" },
             container: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
             kg_load: { required: true, number: true, min: 0 },
-            cooling: { required: true, digits: true },
-            price_typology: { required: true },
+            cooling: { required: true, notPlaceholder: true },
+            price_typology: { required: true, notPlaceholder: true },
             price_value: { 
                 required: {
                     depends: function() {
@@ -1732,12 +1776,12 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
         messages: {
             slot: {
                 required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 11 e al massimo 35 caratteri.\",
+                rangelength: \"Usare almeno 5 e al massimo 35 caratteri.\",
                 pattern: \"Slot ID può contenere lettere, numeri e underscore (_). Spazi non consentiti.\"
             },
             cmr: {
                 required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 7 e al massimo 35 caratteri.\",
+                rangelength: \"Usare almeno 5 e al massimo 35 caratteri.\",
                 pattern: \"CMR può contenere lettere, numeri e trattini (-). Spazi non consentiti.\"
             },
             type: {
@@ -1779,10 +1823,12 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
             },
             cooling: {
                 required: \"Campo obbligatorio.\",
-                digits: \"Raffredamento deve essere un numero intero positivo, senza segni o decimali.\"
+                //digits: \"Raffreddamento deve essere un numero intero positivo, senza segni o decimali.\",
+                notPlaceholder: \"Selezionare un'opzione.\"
             },
             price_typology: {
-                required: \"Campo obbligatorio.\"
+                required: \"Campo obbligatorio.\",
+                notPlaceholder: \"Selezionare un'opzione.\"
             }, 
             price_value: {
                 required: \"Campo obbligatorio.\",
@@ -1822,25 +1868,26 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
             \$(element).removeClass('is-invalid');
             \$(element).closest('.form-group').find('.error-placeholder').html('');
         },
-        invalidHandler: function (form, validator) {            // Only validate visible fieldset
+        invalidHandler: function (form, validator) {                // Only validate visible fieldset
             if (validator.errorList.length) {
                 const firstError = validator.errorList[0].element;
                 const errorStep = \$(firstError).closest('fieldset').data('step');
 
                 \$('fieldset').removeClass('active').hide();
                 const targetStep = \$('fieldset[data-step=\"' + errorStep + '\"]');
+
                 targetStep.addClass('active').show();
-                updateSubtitle();
+                formSubtitle();
 
                 \$('html, body').animate({
                     scrollTop: \$(firstError).offset().top - 100
-                }, 500);
+                }, 250);
             }
         }
     });
 
 //  Handle next/previous button clicks with validation
-    window.ButtonClick = function (step) {
+    /*window.ButtonClick = function (step) {
         const current = \$('fieldset:visible');
         const currentStep = current.data('step');
         const nextStep = currentStep + step;
@@ -1851,15 +1898,15 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
 
         \$('fieldset').removeClass('active').hide();
         const next = \$('fieldset[data-step=\"' + nextStep + '\"]').addClass('active').fadeIn();
-        updateSubtitle();
-    };
+        formSubtitle();
+    };*/
 
 //  On submit validate form and AJAX form submission
     \$(\"#transport-form\").submit(function (e) {
         e.preventDefault();                             // Prevent the default form submission
 
         if (\$(this).valid()) {
-            var formData = \$(this).serialize();         // Serialize form data
+            const formData = \$(this).serialize();         // Serialize form data
 
             \$.ajax({
                 url: \$(this).attr(\"action\"),            // PHP file to handle the submission
@@ -1868,10 +1915,10 @@ class __TwigTemplate_e7c167dd4a2c4b032b4155ebf318165a extends Template
                 dataType: \"json\",
                 success: function(response) {
                     if (response.success) {        
-                        // Encode the new ID
+                        //  Encode the new ID
                         const created = encodeURIComponent(response.created);
         
-                        // Redirect to users page with newId in the query string
+                        //  Redirect to users page with newId in the query string
                         window.location.href = '/platform?created=' + created + '#id-' + created;
                         document.getElementById('id-' + response.created)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     } else {

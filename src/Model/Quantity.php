@@ -32,141 +32,69 @@ class Quantity{
  *      Quantity insert and update:     validate_quantity($quantity)
  ********************************************************************/
     public function validate_quantity(array $quantity): array {
-        $labels = [
-            'kg_load'        => 'Quantità caricata',
-            'cooling'        => 'Raffreddamento',
-            'price_typology' => 'Tipologia costo',
-            'price_value'    => 'Valore costo extra',
-            'kg_unload'      => 'Quantità scaricata',
-            'liquid_density' => 'Densità liquido',
-            'gas_weight'     => 'Peso specifico (gas)',
-            'pcs_ghv'        => 'PCS/GHV',
-        ];
-
-        $rules = Validate::quantity_rules();
         $errors = [];
 
-        foreach ($rules as $field => $ruleSet) {
-            $value = $quantity[$field] ?? '';
-
-            //  Required
-            if (!empty($ruleSet['required']) && $value === '') {
-                $errors[$field] = "Campo obbligatorio.";
-                continue;
-            }
-
-            //  Required if condition
-            if (isset($ruleSet['required_if'])) {
-                [$depField, $expected] = $ruleSet['required_if'];
-                
-                if (($quantity[$depField] ?? '') === $expected && $value === '') {
+            //  Required fields check
+            foreach (['kg_load', 'cooling', 'price_typology', 'kg_unload', 'liquid_density', 'gas_weight', 'pcs_ghv'] as $field) {
+                if (!isset($quantity[$field]) || $quantity[$field] === '') {
                     $errors[$field] = "Campo obbligatorio.";
-                    continue;
-                }
+                } 
             }
 
-            //  Type check
-            $label = $labels[$field] ?? $field;     // fallback to $field if not mapped
-            switch ($ruleSet['type'] ?? null) {
-                case 'digits':
-                    if (!Validate::validate_number($value, 'digits')) {
-                        $errors[$field] = "$label deve essere un numero intero positivo.";
-                    }
-                    break;
-                case 'number':
-                    if (!Validate::validate_number($value, 'number')) {
-                        $errors[$field] = "$label deve essere un numero positivo (intero o decimale).";
-                    }
-                    break;
-                case 'letters':
-                    if (!Validate::validate_string($value, 'letters')) {
-                        $errors[$field] = "$label può contenere solo lettere.";
-                    }
-                    break;
-            }
-
-            //  Minimum value
-            if (isset($ruleSet['min']) && is_numeric($value)) {
-                if (!Validate::validate_number($value, 'min', $ruleSet['min'])) {
-                    $errors[$field] = "Il valore minimo per $label deve essere maggiore o uguale a {$ruleSet['min']}.";
-                }
-            }
-    }
-
-    return $errors;
-
-        // Required fields check
-        foreach (['kg_load', 'cooling', 'price_typology', 'kg_unload', 'liquid_density', 'gas_weight', 'pcs_ghv'] as $field) {
-            if (!isset($quantity[$field]) || $quantity[$field] === '') {
-                $errors[$field] = "Campo obbligatorio.";
-            } 
-        }
-
-        //  Kg Load validation
+            //  Kg Load validation
             if (!Validate::validate_number($quantity['kg_load'], 'number') || 
                 !Validate::validate_number($quantity['kg_load'], 'min')) {
                 $errors['kg_load'] = "Quantità caricata deve essere un numero positivo (intero o decimale).";
-            }/* elseif (!empty($quantity['kg_load']) && Validate::validate_number($quantity['kg_load'], 'min')) {
-                $errors['kg_load'] = "Il valore minimo deve essere maggiore o uguale a .";
-            }*/
+            }
 
-        //  Cooling validation
-            if (!Validate::validate_number($quantity['cooling'], 'digits')) {
+            //  Cooling validation
+            /*if (!Validate::validate_number($quantity['cooling'], 'digits')) {
                 $errors['cooling'] = "Raffredamento deve essere un numero intero positivo, senza segni o decimali.";
-            } 
+            } */
 
-        //  Price Typology validation
+            //  Price Typology validation
             if (!Validate::validate_string($quantity['price_typology'], 'letters')) {
                 $errors['price_typology'] = "Tipologia costo può contenere solo lettere.";
             } elseif ($quantity['price_typology'] === 'yes') {
-            //  Price Value validation
+                //  Price Value validation
                 if (!Validate::validate_number($quantity['price_value'], 'digits') ||
                     !Validate::validate_number($quantity['price_value'], 'min', 1)) {
                         $errors['price_value'] = "Valore costo extra deve essere un numero intero positivo maggiore o uguale a 1, senza segni o decimali.";
                 } elseif (!isset($quantity['price_value']) || empty($quantity['price_value'])) {
                     $errors['price_value'] = "Campo obbligatorio.";
                 }
-                    /*elseif (!isset($quantity['price_value']) || !Validate::validate_number($quantity['price_value'], 'min', 1)) {
-                        $errors['price_value'] = "Il valore minimo deve essere maggiore o uguale a 1.";
-                    } 
+                    /*
                 } else {
                     $quantity['price_value'] = 0;*/
             }
 
-        //  Kg Unload validation
+            //  Kg Unload validation
             if (!Validate::validate_number($quantity['kg_unload'], 'number') ||
                 !Validate::validate_number($quantity['kg_unload'], 'min')) {
                     $errors['kg_unload'] = "Quantità scaricata deve essere un numero positivo (intero o decimale).";
-            } /*elseif (!empty($quantity['kg_unload']) && !Validate::validate_number($quantity['kg_unload'], 'min')) {
-                $errors['kg_unload'] = "Il valore minimo deve essere maggiore o uguale a 0.";
-            }*/
+            } 
 
-        //  Liquid Density validation
+            //  Liquid Density validation
             if (!Validate::validate_number($quantity['liquid_density'], 'number') ||
                 !Validate::validate_number($quantity['liquid_density'], 'min')) {
                     $errors['liquid_density'] = "Densità liquido deve essere un numero positivo (intero o decimale).";
-            } /*elseif (!empty($quantity['liquid_density']) && !Validate::validate_number($quantity['liquid_density'], 'min')) {
-                $errors['liquid_density'] = "Il valore minimo deve essere maggiore o uguale a 0.";
-            }*/
+            } 
 
-        //  Gas Weight validation
+            //  Gas Weight validation
             if (!Validate::validate_number($quantity['gas_weight'], 'number') ||
                 !Validate::validate_number($quantity['gas_weight'], 'min')) {
                     $errors['gas_weight'] = "Peso specifico (gas) deve essere un numero positivo (intero o decimale).";
-            } /*elseif (!empty($quantity['gas_weight']) && !Validate::validate_number($quantity['gas_weight'], 'min')) {
-                $errors['gas_weight'] = "Il valore minimo deve essere maggiore o uguale a 0.";
-            }*/
+            } 
 
-        //  PCS GHV validation
+            //  PCS GHV validation
             if (!Validate::validate_number($quantity['pcs_ghv'], 'number') ||
                 !Validate::validate_number($quantity['pcs_ghv'], 'min')) {
                     $errors['pcs_ghv'] = "PCS/GHV deve essere un numero positivo (intero o decimale).";
-            } /*elseif (!empty($quantity['pcs_ghv']) && !Validate::validate_number($quantity['pcs_ghv'], 'min')) {
-                $errors['pcs_ghv'] = "Il valore minimo deve essere maggiore o uguale a 0.";
-            }*/
+            }
 
         return $errors;
     }
+
 
 //  ===> GET ALL QUANTITIES BY TRANSPORT ID    [select all]        
     public function getAll(): array{    

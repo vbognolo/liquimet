@@ -126,35 +126,39 @@ class Transport{
         return $this->db->runSQL($sql, $args)->fetchAll();  
     }
 
-/***************************************************************************
+/*************************************************************************************
  * Validation And Availability Checks
- *    Validate Transport    => validate_transport($transport)
- *    Validate Dates        => validate_dates($dateLoadStr, $dateUnloadStr)
+ *    Validate Transport            => validate_transport($transport)
+ *    Validate Dates                => validate_dates($dateLoadStr, $dateUnloadStr)
+ *    Check Transport Existance     => check_transport()  
  *      
- *      
- ***************************************************************************/
-    public function validate_transport(array $transport): array {
+ *************************************************************************************/
+    public function validate_transport(array $transport, ?int $id = null): array {
         $errors = [];
 
-        //  Required fields check
-        foreach (['slot', 'cmr', 'issuer', 'supplier', 'date_load', 'date_unload', 'transport', 'container'] as $field) {
-            if (empty($transport[$field])) {
-                $errors[$field] = "Campo obbligatorio.";
+            //  Required fields check
+            foreach (['slot', 'cmr', 'issuer', 'supplier', 'date_load', 'date_unload', 'transport', 'container'] as $field) {
+                if (empty($transport[$field])) {
+                    $errors[$field] = "Campo obbligatorio.";
+                }
             }
-        }
 
             //  Slot validation
             if (!empty($transport['slot']) && !Validate::validate_string($transport['slot'], 'letters_numbers')) {
-                $errors['slot'] = "Slot ID può contenere lettere, numeri e underscore (_). Spazi non consentiti.";
-            } elseif (!empty($transport['slot']) && !Validate::chars_length($transport['slot'], 11, 35)) {
-                $errors['slot'] = "Usare almeno 11 e al massimo 35 caratteri.";
+                $errors['slot'] = "Slot ID può contenere lettere, numeri e l'underscore (_). Spazi non consentiti.";
+            } elseif (!empty($transport['slot']) && !Validate::chars_length($transport['slot'], 5, 35)) {
+                $errors['slot'] = "Usare almeno 5 e al massimo 35 caratteri.";
+            } elseif (!empty($transport['slot']) && $this->duplicate_transport('slot', $transport['slot'], $id)) {
+                $errors['slot'] = "Slot ID già in uso.";
             }
 
             //  Cmr validation
             if (!empty($transport['cmr']) && !Validate::validate_string($transport['cmr'], 'letters-numbers')) {
                 $errors['cmr'] = "CMR può contenere lettere, numeri e trattini (-). Spazi non consentiti.";
-            } elseif (!empty($transport['cmr']) && !Validate::chars_length($transport['cmr'], 7, 35)) {
-                $errors['cmr'] = "Usare almeno 7 e al massimo 35 caratteri.";
+            } elseif (!empty($transport['cmr']) && !Validate::chars_length($transport['cmr'], 5, 35)) {
+                $errors['cmr'] = "Usare almeno 5 e al massimo 35 caratteri.";
+            } elseif (!empty($transport['cmr']) && $this->duplicate_transport('cmr', $transport['cmr'], $id)) {
+                $errors['cmr'] = "Numero CMR già in uso.";
             }
 
             //  Issuer validation
@@ -184,6 +188,10 @@ class Transport{
             } elseif (!empty($transport['container']) && !Validate::chars_length($transport['container'], 3, 50)) {
                 $errors['container'] = "Usare almeno 3 e al massimo 50 caratteri.";
             }
+
+            //  Dates validation
+            $dateErrors = $this->validate_dates($transport['date_load'] ?? '', $transport['date_unload'] ?? '');
+            $errors = array_merge($errors, $dateErrors);
 
         return $errors;
     }
@@ -216,28 +224,24 @@ class Transport{
         return $errors;
     }
 
-/************************************
- *  Check if data exists in database 
- ************************************/
-    public function check_transport(string $field, string $value, ?int $id = null): bool {
-        $allowed = ['slot', 'cmr'];
+    public function duplicate_transport(string $field, string $value, ?int $id = null): bool {
+        $allowed = ['slot', 'cmr'];         // Whitelisted column names
 
             if (!in_array($field, $allowed)) return false;
 
         $sql = "SELECT 1 FROM `transports` WHERE {$field} = :value";
         $params = ['value' => $value];
 
+            //  Skip checking the current record during updates
             if ($id !== null) {
                 $sql .= " AND id_transport != :id_transport";
                 $params['id_transport'] = $id;
             }
 
-        $sql .= " LIMIT 1";
+        $sql .= " LIMIT 1";                 // Checks existance without fetching unnecessary data
 
         return (bool) $this->db->runSQL($sql, $params)->fetchColumn();
     }
-
-    
 
 /**********************************************************
  *  Transport CRUD Operations:
@@ -249,10 +253,6 @@ class Transport{
  *      
  **********************************************************/
     public function createTransport(array $data, int $user): bool {
-        if (self::check_transport($data['slot'], $data['cmr'])) {       
-            return false;           
-        }  
-
         $sql = "INSERT INTO `transports` 
                     (type, slot, cmr, issuer, supplier, transport, date_load, 
                         date_unload, container, seo, created, id_user)
