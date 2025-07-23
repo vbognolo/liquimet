@@ -48,13 +48,13 @@ class Quantity{
             }
 
             //  Cooling validation
-            /*if (!Validate::validate_number($quantity['cooling'], 'digits')) {
-                $errors['cooling'] = "Raffredamento deve essere un numero intero positivo, senza segni o decimali.";
-            } */
+            if (!in_array($quantity['cooling'], ['600', '0'], true)) {
+                $errors['cooling'] = "Selezionare un'opzione valida.";
+            } 
 
             //  Price Typology validation
-            if (!Validate::validate_string($quantity['price_typology'], 'letters')) {
-                $errors['price_typology'] = "Tipologia costo può contenere solo lettere.";
+            if (!in_array($quantity['price_typology'], ['yes', 'no'], true)) {
+                $errors['price_typology'] = "Selezionare un'opzione valida.";
             } elseif ($quantity['price_typology'] === 'yes') {
                 //  Price Value validation
                 if (!Validate::validate_number($quantity['price_value'], 'digits') ||

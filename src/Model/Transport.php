@@ -9,13 +9,14 @@ class Transport{
         $this->db = $db;                                 
     }
     
-/**************************************************
- * Select Statements For Getting Transports 
+/********************************************************
+ * SELECT statements to get transports 
  *    Get Transport By ID          => get($id)
  *    Get Note By Transport ID     => getNote($id)
- *    Get All Transports  
- *      
- **************************************************/  
+ *    Get Platform Transports      => getAllTransports()
+ *    Get All Full Transports      => getFull()
+ *    Get All Partial Transports   => getPartial()  
+ *******************************************************/  
     public function get(int $id): array {
         $sql = "SELECT t.id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, t.date_unload, 
                        t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, t.seo,
@@ -40,7 +41,12 @@ class Transport{
         return $this->db->runSQL($sql, ['id_transport' => $id])->fetchAll() ?: [];
     }
 
-    public function getAllTransports(): array {
+    public function getAllTransports(int $limit, int $offset, ?string $type = null): array {
+        $params = [
+            'limit' => $limit,
+            'offset' => $offset
+        ];
+
         $sql = "SELECT t.id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, 
                        t.date_unload, t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, 
                        q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.mwh, q.liquid_density, q.gas_weight, 
@@ -50,10 +56,29 @@ class Transport{
                 FROM `transports`       AS t
                 LEFT JOIN `quantities`  AS q ON t.id_transport = q.id_transport
                 LEFT JOIN `notes`       AS n ON t.id_transport = n.id_transport
-                LEFT JOIN `users`       AS u ON t.id_user = u.id_user
-                    ORDER BY t.id_transport DESC";
+                LEFT JOIN `users`       AS u ON t.id_user = u.id_user";
 
-        return $this->db->runSQL($sql)->fetchAll();
+            if ($type !== null) {
+                $sql .= " WHERE t.type = :type ";
+                $params['type'] = $type;
+            }
+                    
+        $sql .= "ORDER BY t.id_transport DESC LIMIT :limit OFFSET :offset";
+        $stmt = $this->db->prepare($sql);
+
+            // Bind parameters explicitly, using PDO::PARAM_INT for limit and offset
+            foreach ($params as $key => $value) {
+                if (in_array($key, ['limit', 'offset'])) {
+                    $stmt->bindValue(':' . $key, $value, \PDO::PARAM_INT);
+                } else {
+                    $stmt->bindValue(':' . $key, $value);
+                }
+            }
+
+        $stmt->execute();
+        return $stmt->fetchAll();
+
+        //return $this->db->runSQL($sql, ['type' => $type, 'limit' => $limit, 'offset' => $offset])->fetchAll();
     }
     
 //  ===> GET ALL TRANSPORTS    [select all -> possibility to choose by id_user and transport number limit]
@@ -77,7 +102,7 @@ class Transport{
     }
     
 //  ===> GET ALL FULL TRANSPORTS    [select all fulls]
-    public function getFull(): array {
+    public function getFulls(): array {
         $sql = "SELECT t.id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, 
                        t.date_unload, t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, t.seo, 
                        q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.mwh, q.liquid_density, q.gas_weight, 
@@ -95,19 +120,21 @@ class Transport{
     }    
 
 //  ===> GET ALL PARTIAL TRANSPORTS    [select all partials]
-    public function getPartial(): array{
-        $sql = "SELECT t.id_transport, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, t.date_unload, t.id_month_load, t.week_unload, 
-                    t.id_month_unload, t.month_unload, t.container, t.seo,
-                    q.mwh, q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.liquid_density, q.gas_weight, q.mj_kg, q.pcs_ghv, 
-                    q.volume_mc, q.volume_nmc, q.smc_mc, q.gas_nmc, q.gas_smc, q.smc_kg
-                    /*p.id_partial, p.destination, p.exw, p.date, p.place, p.q_unloaded, p.invoice*/
-                FROM transports AS t
-                INNER JOIN quantities AS q
-                    ON t.id_transport = q.id_transport
-                WHERE t.type = 'P'
-                ORDER BY t.id_transport DESC;";
+    public function getPartials(): array{
+        $sql = "SELECT t.id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, 
+                       t.date_unload, t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, t.seo, 
+                       q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.mwh, q.liquid_density, q.gas_weight, 
+                       q.mj_kg, q.pcs_ghv, q.volume_mc, q.volume_nmc, q.smc_mc, q.gas_nmc, q.gas_smc, q.smc_kg,
+                       n.content, n.created,
+                       u.username AS author
+                FROM `transports` AS t
+                LEFT JOIN `quantities` AS q ON t.id_transport = q.id_transport
+                LEFT JOIN `notes`      AS n ON t.id_transport = n.id_transport
+                JOIN `users`           AS u ON t.id_user = u.id_user
+                WHERE t.type = :type
+                    ORDER BY t.id_transport DESC";
         
-        return $this->db->runSQL($sql)->fetchAll();  
+        return $this->db->runSQL($sql, ['type' => 'P'])->fetchAll();  
     }  
 
 //  ===> GET LAST 5 INSERTED TRANSPORTS    [select 7 recently added transports]   
@@ -130,8 +157,8 @@ class Transport{
  * Validation And Availability Checks
  *    Validate Transport            => validate_transport($transport)
  *    Validate Dates                => validate_dates($dateLoadStr, $dateUnloadStr)
- *    Check Transport Existance     => check_transport()  
- *      
+ *    Check Transport Existance     => duplicate_transport($field, $value, $id)  
+ *    Validate Partial              => validate_partial($partial)  
  *************************************************************************************/
     public function validate_transport(array $transport, ?int $id = null): array {
         $errors = [];
@@ -195,7 +222,7 @@ class Transport{
 
         return $errors;
     }
-
+ 
     public function validate_dates($dateLoadStr, $dateUnloadStr): array {
         $errors = [];
 
@@ -357,19 +384,6 @@ class Transport{
             return true;                                     
     }
 
-//  ** [C H E C K]     S T A T E M E N T S **
-//  ===> CHECK IF ID EXISTS    [select single]
-    public function available(string $term): int {   
-        $args['term1'] = $args['term2'] = "%$term%";  
-
-        $sql = "SELECT COUNT(id_transport)
-                FROM transports
-                WHERE slot = :term1
-                    OR cmr = :term2;";
-        
-        return $this->db->runSQL($sql, $args)->fetchColumn();  
-    }
-
 /*******************************************************************
  *  Count Statements For Transports 
  *      Count All Transports:            => totalTransport())
@@ -379,7 +393,7 @@ class Transport{
         $sql = "SELECT COUNT(id_transport) 
                 FROM `transports`";    
              
-        return (int) $this->db->runSQL($sql)->fetchColumn();                      //return count from result set
+        return (int) $this->db->runSQL($sql)->fetchColumn();                      // return count from result set
     }
 
     public function totalTransports(string $type): int {

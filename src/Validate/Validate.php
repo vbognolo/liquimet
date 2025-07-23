@@ -1,12 +1,11 @@
 <?php  
 namespace Liquimet\Validate;
-use function mbstrlen; 
 
 class Validate {   
     public static function validate_input($data): string {  
-        $data = \trim($data ?? '');     //ensure data is not null, set to blank string (PHP 8.1)
+        $data = \trim($data ?? '');     // ensure data is not null, set to blank string (PHP 8.1)
         return \htmlspecialchars( \preg_replace('/\s+/', ' ', $data), ENT_QUOTES, 'UTF-8');            
-                //replaces multiple space chars with single space ('') 
+                // replaces multiple space chars with single space ('') 
     }
 
     public static function chars_length(string $text, int $min, int $max = PHP_INT_MAX): bool {
@@ -15,16 +14,16 @@ class Validate {
     }
 
     public static function validate_username(string $username): bool {
-        return \mb_strlen($username) >= 4 &&                            //length min 4 chars
-               \mb_strlen($username) <= 20 &&                           //length max 20 chars
-               \preg_match('/^[A-Za-z0-9]+$/', $username);    //only allows letters and numbers
+        return \mb_strlen($username) >= 4 &&                            // length min 4 chars
+               \mb_strlen($username) <= 20 &&                           // length max 20 chars
+               \preg_match('/^[A-Za-z0-9]+$/', $username);    // only allows letters and numbers
     }
 
     public static function validateString(string $name, int $minlength, int $maxlength): bool {
         return (bool) \mb_strlen($name) >= $minlength &&                            
                       \mb_strlen($name) <= $maxlength &&                           
                       \preg_match('/^[a-zA-ZčšćđžČŠĆĐŽáàäâÁÀÄÂéèëêÉÈËÊíìïîÍÌÏÎóòöôÓÒÖÔúùüûÚÙÜÛ\s]+$/', $name);         
-                            //checks for special characters
+                            // checks for special characters
     }
 
     public static function validate_email(string $email): bool {
@@ -55,23 +54,27 @@ class Validate {
             return $age >= $min;
     }
 
-    public static function validate_date(string $date): bool {
-        $formatDate = self::formatDateforDB( $date);
-            if (!$formatDate) return false;
+public static function validate_date(string $date): ?string {
+    $date = trim($date);
+    if (!$date) return null;
 
-        $inputDate = new \DateTime($formatDate);
-        $today = new \DateTime(); 
-
-            if ($inputDate > $today) { 
-                return false; 
-            }
-
-            if ($inputDate->format('Y') < 2006) { 
-                return false;
-            }
-
-            return true; // Date is valid
+    $inputDate = \DateTime::createFromFormat('d-m-Y', $date);
+    if (!$inputDate || $inputDate->format('d-m-Y') !== $date) {
+        return null;
     }
+
+    $today = new \DateTime('today');
+    if ($inputDate > $today) {
+        return null;
+    }
+
+    if ((int)$inputDate->format('Y') < 2006) {
+        return null;
+    }
+
+    return $inputDate->format('Y-m-d');  // Return date formatted for DB
+}
+
 
 //  Format date to standard Y-m-d format for db insertion
     public static function formatDateForDB(string $inputDate): ?string {
@@ -120,26 +123,26 @@ class Validate {
 
     public static function validate_string(string $value, string $allowed): bool {
         switch ($allowed) {
-            case 'letters':
+            case 'letters':                             // Only letters
                 $pattern = '/^[A-Za-z]+$/';
                 break;
-            case 'letters_numbers':
+            case 'letters_numbers':                     // Letters, numbers and underscore
                 $pattern = '/^[A-Za-z0-9_]+$/';
                 break;
 
-            case 'letters-numbers':
+            case 'letters-numbers':                     // Letter, numbers and 
                 $pattern = '/^[A-Za-z0-9\-]+$/';
                 break;
 
-            case 'lettersSpaces':
+            case 'lettersSpaces':                       // Letters and spaces
                 $pattern = '/^[A-Za-z][A-Za-z ]*$/';
                 break;
 
-            case 'lettersNumbers':
+            case 'lettersNumbers':                      // Letters and numbers
                 $pattern = '/^[A-Za-z0-9]+$/';
                 break;
 
-            case 'allLettersSpaces':
+            case 'allLettersSpaces':                    // Letters with signs and spaces
                 $pattern = '/^[A-Za-zÀ-ÿ](?:[A-Za-zÀ-ÿ ]*)$/'; // /^[A-Za-zÀ-ÿ][A-Za-ZÀ-ÿ ]+$';
                 break;
 
@@ -199,31 +202,5 @@ class Validate {
         }
 
         return true;         
-    }
-
-    public static function transport_rules(): array {
-        return [
-            'kg_load'           => ['required'    => true,                      'type' => 'number', 'min' => 0],
-            'cooling'           => ['required'    => true,                      'type' => 'digits'],
-            'price_typology'    => ['required'    => true,                      'type' => 'letters'],
-            'price_value'       => ['required_if' => ['price_typology', 'yes'], 'type' => 'digits', 'min' => 1],
-            'kg_unload'         => ['required'    => true,                      'type' => 'number', 'min' => 0],
-            'liquid_density'    => ['required'    => true,                      'type' => 'number', 'min' => 0],
-            'gas_weight'        => ['required'    => true,                      'type' => 'number', 'min' => 0],
-            'pcs_ghv'           => ['required'    => true,                      'type' => 'number', 'min' => 0],
-        ];
-    }
-
-    public static function quantity_rules(): array {
-        return [
-            'kg_load'           => ['required'    => true,                      'type' => 'number', 'min' => 0],
-            'cooling'           => ['required'    => true,                      'type' => 'digits'],
-            'price_typology'    => ['required'    => true,                      'type' => 'letters'],
-            'price_value'       => ['required_if' => ['price_typology', 'yes'], 'type' => 'digits', 'min' => 1],
-            'kg_unload'         => ['required'    => true,                      'type' => 'number', 'min' => 0],
-            'liquid_density'    => ['required'    => true,                      'type' => 'number', 'min' => 0],
-            'gas_weight'        => ['required'    => true,                      'type' => 'number', 'min' => 0],
-            'pcs_ghv'           => ['required'    => true,                      'type' => 'number', 'min' => 0],
-        ];
     }
 }

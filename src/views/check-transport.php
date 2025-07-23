@@ -14,7 +14,7 @@ $response = ['exists' => false, 'message' => ''];
 
         $model = new Transport($database);
 
-        if ($model->check_transport($field, $value, $id)) {
+        if ($model->duplicate_transport($field, $value, $id)) {
             $response['exists'] = true;
             $response['message'] = $field === 'slot' ? "Slot ID già in uso." : "Numero CMR già in uso.";
         }  

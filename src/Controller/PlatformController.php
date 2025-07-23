@@ -6,6 +6,7 @@ use Liquimet\Session\Session;
 use Liquimet\Model\User;
 use Liquimet\Model\Transport;
 use Liquimet\Model\Quantity;
+use Liquimet\Model\Partial;
 use Liquimet\Validate\Validate;
 
 class PlatformController {
@@ -14,26 +15,28 @@ class PlatformController {
     private $mUser;
     private $mTrans;
     private $mQty;
+    private $mPart;
 
-    public function __construct(Environment $twig, Session $session, User $mUser, Transport $mTrans, Quantity $mQty) {
+    public function __construct(Environment $twig, Session $session, User $mUser, Transport $mTrans, Quantity $mQty, Partial $mPart) {
         $this->twig = $twig;
         $this->session = $session;
         $this->mUser = $mUser;
         $this->mTrans = $mTrans;
         $this->mQty = $mQty;
+        $this->mPart = $mPart;
     }
 
 /******************************************************
  *  Render Transports Pages:
- *      Platform
- *      Full Transports
- *      Partial Transports
- *      Transport Modals
- *      New Transport
+ *      Platform Page
+ *      Full Transports Page
+ *      Partial Transports Page
+ *      Transport Modals Page
+ *      New Transport Page
  ******************************************************/
     public function renderPlatformPage() {
         $this->session->requireLogin();
-        $transports = $this->mTrans->getAllTransports();
+        $transports = $this->mTrans->getAllTransports(10, 0, 'F');
 
             $sessionData = [ 'id_user'  => $this->session->getID(),
                              'username' => $this->session->getUsername(),
@@ -51,19 +54,27 @@ class PlatformController {
 
     public function renderFullTransportsPage() {
         $this->session->requireLogin();
-        $csrfToken = $this->session->generateCsrfToken();
-        $fulls = $this->mTrans->getFull();
+        $csrfToken = $this->session->generateCsrfToken();  
         $type = 'F';
+        $page = 1;
+        $limit = 5;
+        $offset = 0;
 
             $sessionData = [ 'username' => $this->session->getUsername(),
                              'name'     => $this->session->getName(),
                              'role'     => $this->session->getRole()
                             ];
+            
+        $total = $this->mTrans->totalTransports($type);
+        $fulls = $this->mTrans->getAllTransports($limit, $offset, $type);
+        $pagination = ceil($total / $limit);
 
         $data = [ 'session'     => $sessionData,
                   'user'        => $this->mUser->get($this->session->getID()),
                   'transports'  => $fulls,
-                  'total'       => $this->mTrans->totalTransports($type),
+                  'page'        => $page,
+                  'total'       => $total,
+                  'pagination'  => $pagination,
                   'csrf_token'  => $csrfToken
                 ];
 
@@ -72,25 +83,98 @@ class PlatformController {
 
     public function renderPartTransportsPage() {
         $this->session->requireLogin();
-        $partials = $this->mTrans->getPartial();
+        $csrfToken = $this->session->generateCsrfToken();
         $type = 'P';
+        $page = 1;
+        $limit = 5;
+        $offset = 0;
 
-            $sessionData = [
-                'id_user' => $this->session->getID(),
-                'username' => $this->session->getUsername(),
-                'name' => $this->session->getName(),
-                'role' => $this->session->getRole()
-            ];
+            $sessionData = [ 'username' => $this->session->getUsername(),
+                             'name'     => $this->session->getName(),
+                             'role'     => $this->session->getRole()
+                            ];
 
-        $data = [
-                // Fetch Login And Session Data
-            'session' => $sessionData,
-                // Fetch Platform Table Data
-            'transports' => $partials,
-            'total' => $this->mTrans->totalTransports($type)
-        ];
+        $total = $this->mTrans->totalTransports($type);
+        $parts = $this->mTrans->getAllTransports($limit, $offset, $type);
+        $pagination = ceil($total / $limit);
+        $partials = [];
+
+            foreach ($this->mPart->getAll() as $p) {
+                $partials[$p['id_transport']][] = $p;
+            }
+
+        $pagination = ceil($this->mTrans->totalTransports($type) / $limit);
+            
+            $sessionData = [ 'id_user' => $this->session->getID(),
+                             'username' => $this->session->getUsername(),
+                             'name' => $this->session->getName(),
+                             'role' => $this->session->getRole()
+                            ];
+
+        $data = [ 'session'     => $sessionData,
+                  'user'        => $this->mUser->get($this->session->getID()),
+                  'transports'  => $parts,
+                  'partials'    => $partials,
+                  'page'        => $page,
+                  'total'       => $total,
+                  'pagination'  => $pagination,
+                  'csrf_token'  => $csrfToken
+                ];
 
         echo $this->twig->render('transports-part.twig', $data);
+    }
+
+    public function renderPagination() {
+        $this->session->requireLogin();
+        $csrfToken = $_POST['csrf_token'] ?? '';
+        
+            if (empty($csrfToken) || !$this->session->verifyCsrfToken($csrfToken)) {
+                echo json_encode(['success' => false, 'message' => 'Si è verificato un problema. Aggiornare la pagina e riprovare.']);
+                exit;
+            }
+
+        $type = ($_POST['type'] === 'P') ? 'P' : 'F';       // Default is 'F'
+        $page = isset($_POST['page']) && Validate::validate_number($_POST['page'], 'number', 1) ? (int)$_POST['page'] : 1;
+        $limit = 5;
+        $offset = ($page - 1) * $limit;
+        //$type = 'F';
+
+            $sessionData = [ 'id_user' => $this->session->getID(),
+                             'username' => $this->session->getUsername(),
+                             'name' => $this->session->getName(),
+                             'role' => $this->session->getRole()
+                            ];
+
+        $total = $this->mTrans->totalTransports($type);
+        $transports = $this->mTrans->getAllTransports($limit, $offset, $type);
+        $pagination = ceil($total / $limit);
+
+        // Group partials (only when type == 'P')
+        $partials = [];
+
+            if ($type === 'P') {
+                foreach ($this->mPart->getAll() as $p) {
+                    $partials[$p['id_transport']][] = $p;
+                }
+            }
+
+        $data = [ 'session'     => $sessionData,
+                  'user'        => $this->mUser->get($this->session->getID()),
+                  'transports'  => $transports,
+                  'page'        => $page,
+                  'limit'       => $limit,
+                  'pagination'  => $pagination,
+                  'total'       => $total,
+                  'csrf_token'  => $csrfToken,
+                  'partials'    => $partials,
+                  'type'        => $type
+                ];
+
+            // Decide template based on type
+            // Choose correct partial
+            $template = $type === 'P' ? 'transports-part-ajax.twig' : 'transports-full-ajax.twig';
+            echo $this->twig->render($template, $data);
+        //echo $this->twig->render('transports-full-ajax.twig', $data);
     }
 
     public function renderTransportModals (){
@@ -220,6 +304,49 @@ class PlatformController {
             }
     }
 
+    public function getPartialData(){
+        $this->session->requireLogin();
+        $csrfToken = $_POST['csrf_token'] ?? '';
+
+            if (empty($csrfToken) || !$this->session->verifyCsrfToken($csrfToken)) {
+                echo json_encode(['success' => false, 'message' => 'Si è verificato un problema. Aggiornare la pagina e riprovare.']);
+                exit;
+            }
+                
+        $id = isset($_POST['id_partial']) ? (int) $_POST['id_partial'] : 0;
+
+            if ($id <= 0) {
+                echo json_encode(['success' => false, 'message' => 'Quantita non trovata.']);
+                exit;
+            }
+
+        $partial = $this->mPart->get($id);
+        $transport = $this->mTrans->get($partial['id_transport']);
+
+            if ($partial) {
+                header('Content-Type: application/json');
+                    echo json_encode([
+                        'success' => true,
+                        'partial' => [
+                            'id_partial' => $partial['id_partial'],
+                            'destination' => $partial['destination'],
+                            'exw' => $partial['exw'],
+                            'date' => Validate::formatDateForView($partial['date'], 'd-m-Y'),
+                            'place' => $partial['place'],
+                            'q_unloaded' => $partial['q_unloaded'],
+                            'invoice' => $partial['invoice'],
+                            'id_transport' => $partial['id_transport']
+                        ],
+                        'transport' => $transport,
+                        'csrf_token' => $csrfToken
+                    ]);
+                    exit;
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Scarico parziale non trovato.']);
+                exit;
+            }
+    }
+
     public function getTransportNotes(){
         $this->session->requireLogin();
         $csrfToken = $_POST['csrf_token'] ?? '';
@@ -250,6 +377,20 @@ class PlatformController {
             } 
     }
 
+    public function checkSlotID(){
+        if (!$this->session->isLoggedIn()) {
+            http_response_code(403);
+            echo json_encode(['available' => false]);
+                return;
+        }
+    
+        $slot = Validate::validate_input($_POST['slot'] ?? '');
+        $userId = $this->session->getID();
+    
+        $check = $this->mTrans->duplicate_transport('slot', $slot);
+        echo json_encode(['available' => !$check]);
+    }
+
 /**********************************************************
  *  Handlers For CRUD Operations:
  *      Create New Transport    => handleCreateTransport()
@@ -259,10 +400,11 @@ class PlatformController {
  *      Transport Modals
  *      
  **********************************************************/
-    public function handleCreateTransport() {
+    public function createTransport() {
         $this->session->requireLogin();
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                header('Content-Type: application/json; charset=utf-8');
                 $csrfToken = $_POST['csrf_token'] ?? '';
 
                     if (empty($csrfToken) || !$this->session->verifyCsrfToken($csrfToken)) {
@@ -272,23 +414,16 @@ class PlatformController {
 
                 //  Sanitize transport input data
                 $transport = [
-                    'type'          => Validate::validate_input($_POST['type']),
-                    'slot'          => Validate::validate_input($_POST['slot']),
-                    'cmr'           => Validate::validate_input($_POST['cmr']),
-                    'issuer'        => Validate::validate_input($_POST['issuer']),               
-                    'supplier'      => Validate::validate_input($_POST['supplier']),
-                    'transport'     => Validate::validate_input($_POST['transport']),
-                    'date_load'     => Validate::validate_input($_POST['date_load']),
-                    'date_unload'   => Validate::validate_input($_POST['date_unload']),
-                    'container'     => Validate::validate_input($_POST['container'])
+                    'type'         => Validate::validate_input($_POST['type']),
+                    'slot'         => Validate::validate_input($_POST['slot']),
+                    'cmr'          => Validate::validate_input($_POST['cmr']),
+                    'issuer'       => Validate::validate_input($_POST['issuer']),               
+                    'supplier'     => Validate::validate_input($_POST['supplier']),
+                    'transport'    => Validate::validate_input($_POST['transport']),
+                    'date_load'    => Validate::validate_input($_POST['date_load']),
+                    'date_unload'  => Validate::validate_input($_POST['date_unload']),
+                    'container'    => Validate::validate_input($_POST['container'])
                 ]; 
-
-                //  Validate dates
-                /*$dateErrors = $this->mTrans->validate_dates($transport['date_load'], $transport['date_unload']);
-                    if (!empty($dateErrors)) {
-                        echo json_encode(['success' => false, 'errors' => $dateErrors]);
-                        exit;
-                    }*/
                 
                 //  Field validation
                 $errors = $this->mTrans->validate_transport($transport);
@@ -310,14 +445,14 @@ class PlatformController {
 
                 //  Sanitize quantity input data
                 $quantity = [
-                    'kg_load'         => Validate::validate_input($_POST['kg_load']),
-                    'cooling'         => Validate::validate_input($_POST['cooling']),
-                    'price_typology'  => Validate::validate_input($_POST['price_typology']),
-                    'price_value'     => Validate::validate_input($_POST['price_value']),
-                    'kg_unload'       => Validate::validate_input($_POST['kg_unload']),
-                    'liquid_density'  => Validate::validate_input($_POST['liquid_density']),
-                    'gas_weight'      => Validate::validate_input($_POST['gas_weight']),
-                    'pcs_ghv'         => Validate::validate_input($_POST['pcs_ghv'])
+                    'kg_load'         => Validate::validate_input($_POST['kg_load']) ?? '',
+                    'cooling'         => Validate::validate_input($_POST['cooling']) ?? '',
+                    'price_typology'  => Validate::validate_input($_POST['price_typology']) ?? '',
+                    'price_value'     => Validate::validate_input($_POST['price_value'] ?? 0),
+                    'kg_unload'       => Validate::validate_input($_POST['kg_unload']) ?? '',
+                    'liquid_density'  => Validate::validate_input($_POST['liquid_density']) ?? '',
+                    'gas_weight'      => Validate::validate_input($_POST['gas_weight']) ?? '',
+                    'pcs_ghv'         => Validate::validate_input($_POST['pcs_ghv']) ?? ''
                 ];
 
                 $errors = $this->mQty->validate_quantity($quantity);
@@ -328,6 +463,10 @@ class PlatformController {
                         exit;
                     }  
 
+                // Optional note
+                $note = trim($_POST['note'] ?? '');
+                $note = !empty($note) ? Validate::validate_input($note) : null;
+
                 //  Save transport + quantity in transaction
                 try {
                     $this->mTrans->begin();
@@ -337,8 +476,53 @@ class PlatformController {
 
                         $this->mQty->createQuantity($lastID, $quantity, $this->session->getID());
 
+                        // Create partials if type === 'P'
+                        if ($transport['type'] === 'P') {
+                            $partials = [];
+
+                            foreach ($_POST['destination'] as $i => $v) {
+                                $partials[] = [
+                                    'destination'  => Validate::validate_input($_POST['destination'][$i] ?? ''),
+                                    'exw'          => Validate::validate_input($_POST['exw'][$i] ?? ''),
+                                    'date'         => Validate::validate_input($_POST['date'][$i] ?? ''),
+                                    'place'        => Validate::validate_input($_POST['place'][$i] ?? ''),
+                                    'q_unloaded'   => Validate::validate_input($_POST['q_unloaded'][$i] ?? ''),
+                                    'invoice'      => Validate::validate_input($_POST['invoice'][$i] ?? '')
+                                ];
+                            }
+
+                            // Validate all partials
+                            $partialErrors = [];
+                            foreach ($partials as $index => $partial) {
+                                $errors = $this->mPart->validate_partial($partial, $_POST['date_load'], $_POST['date_unload']);
+                                if (!empty($errors)) {
+                                    // Prefix keys with index for proper jQuery mapping
+                                    foreach ($errors as $field => $message) {
+                                        $partialErrors["{$field}[{$index}]"] = $message;
+                                    }
+                                }
+                            }
+
+                            if (!empty($partialErrors)) {
+                                echo json_encode(['success' => false, 'errors' => $partialErrors]);
+                                $this->mTrans->rollBack();
+                                exit;
+                            }
+
+                            // Save each validated partial
+                            foreach ($partials as $partial) {
+                                $this->mPart->createPartial($lastID, $partial, $this->session->getID());
+                            }
+                        }
+
+                        // Insert note if present
+                        /*if ($note) {
+                            $this->mTrans->saveNotes($lastID, $note, $userID);
+                        }*/
+
+
                     $this->mTrans->commit();
-                    echo json_encode(['success' => true, 'created' => $lastID]);
+                    echo json_encode(['success' => true, 'csrf_token' => $csrfToken, 'created' => $lastID]);
                 } catch (\PDOException $e) {
                     $this->mTrans->rollBack();
                     echo json_encode([
@@ -350,7 +534,7 @@ class PlatformController {
             }
     }
 
-    public function handleEditTransport(){
+    public function editTransport(){
         $this->session->requireLogin();
             $csrfToken = $_POST['csrf_token'] ?? '';
             
@@ -371,7 +555,7 @@ class PlatformController {
             'issuer' => Validate::validate_input($_POST['issuer']),               
             'supplier' => Validate::validate_input($_POST['supplier']),
             'transport' => Validate::validate_input($_POST['transport']),
-            'date_load' => Validate::validate_input($_POST['date_load']),//date_format(new \DateTime($_POST['date_load']), 'Y-m-d'),
+            'date_load' => Validate::validate_date($_POST['date_load']),//date_format(new \DateTime($_POST['date_load']), 'Y-m-d'),
             'date_unload' => Validate::validate_input($_POST['date_unload']),//date_format(new \DateTime($_POST['date_unload']), 'Y-m-d'),
             'container' => Validate::validate_input($_POST['container'])
         ]; 
@@ -472,7 +656,7 @@ class PlatformController {
         exit;
     }
 
-    public function handleEditQuantity(){
+    public function editQuantity(){
         $this->session->requireLogin();
 
         $csrfToken = $_POST['csrf_token'] ?? '';
@@ -502,66 +686,11 @@ class PlatformController {
         ]; 
 
         $errors = $this->mQty->validate_quantity($quantity);
-        
-        //  Kg Load validation
-    /*        if (!Validate::validate_number($quantity['kg_load'], 'number')) {
-                $errors['kg_load'] = "Quantita caricata può contenere numeri interi positivi o numeri decimali.";
-            } elseif (!Validate::validate_number($quantity['kg_load'], 'min')) {
-                $errors['kg_load'] = "Il valore minimo deve essere maggiore o uguale a 0.";
+            //  If no errors, proceed with user update
+            if (!empty($errors)) {
+                echo json_encode(['success' => false, 'errors' => $errors]);
+                exit;
             }
-        
-        //  Cooling validation
-            if (!Validate::validate_number($quantity['cooling'], 'digits')) {
-                $errors['cooling'] = "Raffredamento può contenere solo numeri interi positivi, senza segni o decimali.";
-            } 
-
-        //  Price Typology validation
-            if (!Validate::validate_string($quantity['price_typology'], 'letters')) {
-                $errors['price_typology'] = "Tipologia costo può contenere solo lettere.";
-            } elseif ($quantity['price_typology'] === 'yes') {
-            //  Price Value validation
-                if (!Validate::validate_number($quantity['price_value'], 'digits')) {
-                    $errors['price_value'] = "Valore costo extra può contenere solo numeri interi positivi, senza segni o decimali.";
-                } elseif (!isset($quantity['price_value']) || !Validate::validate_number($quantity['price_value'], 'min', 1)) {
-                    $errors['price_value'] = "Il valore minimo deve essere maggiore o uguale a 1.";
-                } 
-            } else {
-                $quantity['price_value'] = 0;
-            }
-
-        //  Kg Unload validation
-            if (!Validate::validate_number($quantity['kg_unload'], 'number')) {
-                $errors['kg_unload'] = "Quantita scaricata può contenere numeri interi positivi o numeri decimali.";
-            } elseif (!Validate::validate_number($quantity['kg_unload'], 'min')) {
-                $errors['kg_unload'] = "Il valore minimo deve essere maggiore o uguale a 0.";
-            }
-
-        //  Liquid Density validation
-            if (!Validate::validate_number($quantity['liquid_density'], 'number')) {
-                $errors['liquid_density'] = "Densita liquido può contenere numeri interi positivi o numeri decimali.";
-            } elseif (!Validate::validate_number($quantity['liquid_density'], 'min')) {
-                $errors['liquid_density'] = "Il valore minimo deve essere maggiore o uguale a 0.";
-            }
-
-        //  Gas Weight validation
-            if (!Validate::validate_number($quantity['gas_weight'], 'number')) {
-                $errors['gas_weight'] = "Peso specifico (gas) può contenere numeri interi positivi o numeri decimali.";
-            } elseif (!Validate::validate_number($quantity['gas_weight'], 'min')) {
-                $errors['gas_weight'] = "Il valore minimo deve essere maggiore o uguale a 0.";
-            }
-
-        //  PCS GHV validation
-            if (!Validate::validate_number($quantity['pcs_ghv'], 'number')) {
-                $errors['pcs_ghv'] = "PCS/GHV può contenere numeri interi positivi o numeri decimali.";
-            } elseif (!Validate::validate_number($quantity['pcs_ghv'], 'min')) {
-                $errors['pcs_ghv'] = "Il valore minimo deve essere maggiore o uguale a 0.";
-            }
-      */
-        //  If no errors, proceed with user update
-        if (!empty($errors)) {
-            echo json_encode(['success' => false, 'errors' => $errors]);
-            exit;
-        }
 
         $updated = $this->mQty->update($quantity, $this->session->getID());
 
@@ -574,7 +703,62 @@ class PlatformController {
             exit;
     }
 
-    public function handleEditNote() {
+    public function editPartial(){
+        $this->session->requireLogin();
+
+        $csrfToken = $_POST['csrf_token'] ?? '';
+            if (empty($csrfToken) || !$this->session->verifyCsrfToken($csrfToken)) {
+                echo json_encode(['success' => false, 'message' => 'Si è verificato un problema. Aggiornare la pagina e riprovare.']);
+                exit;
+            }
+    
+        $id = (int) (Validate::validate_input($_POST['id_partial']) ?? 0);
+            if ($id <= 0) {
+                echo json_encode(['success' => false, 'message' => 'Scarico parziale non trovato.']);
+                exit;
+            }
+
+        $partial = [
+            'id_partial'  => $id,
+            'destination' => Validate::validate_input($_POST['destination']) ?? '',
+            'exw'         => Validate::validate_input($_POST['exw']) ?? null,
+            'date'        => trim($_POST['date']) ?? '',
+            'place'       => Validate::validate_input($_POST['place'] ?? 0),
+            'q_unloaded'  => Validate::validate_input($_POST['q_unloaded']) ?? '',
+            'invoice'     => Validate::validate_input($_POST['invoice']) ?? ''
+        ]; 
+
+        $id_transport = $this->mPart->get($partial['id_partial'])['id_transport'];
+        $transport = $this->mTrans->get($id_transport);
+
+        $dateLoadStr = \DateTime::createFromFormat('d-m-Y', $transport['date_load']);
+        $dateUnloadStr = \DateTime::createFromFormat('d-m-Y', $transport['date_unload']);
+
+        $errors = $this->mPart->validate_partial($partial, $dateLoadStr, $dateUnloadStr);
+            //  If no errors, proceed with user update
+            if (!empty($errors)) {
+                echo json_encode(['success' => false, 'errors' => $errors]);
+                exit;
+            }
+
+        $partial['date'] = Validate::validate_date($partial['date']);
+            if ($partial['date'] === null) {
+                echo json_encode(['success' => false, 'errors' => ['date' => 'Data non valida']]);
+                exit;
+            }
+                
+        $modified = $this->mPart->update($partial, $this->session->getID());
+            
+            if ($modified) {
+                $data = $this->mPart->get((int) $partial['id_partial']);
+                    echo json_encode(['success' => true, 'csrf_token' => $csrfToken, 'modified' => $data]);
+            } else {
+                echo json_encode(['success' => false, 'message' => "Errore nell'aggiornamento dei dati."]);
+            }
+            exit;
+    }
+
+    public function editNote() {
         $this->session->requireLogin();
 
         $csrfToken = $_POST['csrf_token'] ?? '';
@@ -609,8 +793,8 @@ class PlatformController {
 
     public function handleDeleteTransport() {
         $this->session->requireAdmin();
+
         $csrfToken = $_POST['csrf_token'] ?? '';
-        
             if (empty($csrfToken) || !$this->session->verifyCsrfToken($csrfToken)) {
                 header('Content-Type: application/json; charset=utf-8');
                 echo json_encode(['success' => false, 'message' => 'Si è verificato un problema. Aggiornare la pagina e riprovare.']);
@@ -618,7 +802,6 @@ class PlatformController {
             }
     
         $id = (int) Validate::validate_input($_POST['id_transport'] ?? 0); 
-        
             if (!$id) {
                 header('Content-Type: application/json; charset=utf-8');
                 echo json_encode(['success' => false, 'message' => 'Trasporto non trovato.']);

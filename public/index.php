@@ -17,6 +17,7 @@ $mUser = new \Liquimet\Model\User($database);
 $mTitle = new \Liquimet\Model\Title($database);
 $mTrans = new \Liquimet\Model\Transport($database);
 $mQty = new \Liquimet\Model\Quantity($database);
+$mPart = new \Liquimet\Model\Partial($database);
 
 // Only now include the routes (since models exist) 
 require_once APP_ROOT . '/routes/routes.php';

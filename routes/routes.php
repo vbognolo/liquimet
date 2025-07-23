@@ -58,19 +58,23 @@ $router->post('check-password', [$UserController, 'checkPassword']);
 /*************************
  *  Platform Controller  *    
  *************************/
-$PlatformController = new PlatformController($twig, $session, $mUser, $mTrans, $mQty);
+$PlatformController = new PlatformController($twig, $session, $mUser, $mTrans, $mQty, $mPart);
 // GET methods
 $router->get('platform', [$PlatformController, 'renderPlatformPage']);                  // Render platform data
 $router->get('transports-full', [$PlatformController, 'renderFullTransportsPage']);     // Render full transports data
 $router->get('transports-part', [$PlatformController, 'renderPartTransportsPage']);     // Render partial transports data
 $router->get('transport-modal', [$PlatformController, 'renderTransportModals']);        // Render transport modal
 $router->get('transport', [$PlatformController, 'renderNewTransportPage']);             // Render new transport 
+
 // POST methods
-$router->post('transport', [$PlatformController, 'handleCreateTransport']);             // Handler for transport create
+$router->post('transport-pagination', [$PlatformController, 'renderPagination']);       // Render pagination for transports
+$router->post('transport', [$PlatformController, 'createTransport']);             // Handler for transport create
 $router->post('get-transport', [$PlatformController, 'getTransportData']);              // Get transport data for edit
-$router->post('transport-edit', [$PlatformController, 'handleEditTransport']);          // Handler for transport edit
+$router->post('transport-edit', [$PlatformController, 'editTransport']);          // Handler for transport edit
 $router->post('get-quantity', [$PlatformController, 'getQuantityData']);                // Get quantity data for edit
-$router->post('quantity-edit', [$PlatformController, 'handleEditQuantity']);            // Handler for quantity edit
+$router->post('quantity-edit', [$PlatformController, 'editQuantity']);            // Handler for quantity edit
+$router->post('get-partial', [$PlatformController, 'getPartialData']);                  // Get partial data for edit
+$router->post('partial-edit', [$PlatformController, 'editPartial']);              // Handler for partial edit
 $router->post('get-note', [$PlatformController, 'getTransportNotes']);                  // Get transport note for edit
-$router->post('transport-note', [$PlatformController, 'handleEditNote']);               // Handler for transport note edit
+$router->post('transport-note', [$PlatformController, 'editNote']);               // Handler for transport note edit
 $router->post('transport-delete', [$PlatformController, 'handleDeleteTransport']);      // Handler for transport delete

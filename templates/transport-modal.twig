@@ -203,16 +203,7 @@
                             <label class="col-4 form-control-label my-1"> Raffreddamento: </label>
                         
                             <div class="col-8">
-                                <select name="cooling" id="cooling" class="form-control 
-                                    {% if errors.cooling %}is-invalid{% endif %}">
-                                    {#<option class="opt-type">
-                                        {% if (quantity.cooling == 0) %}
-                                            NO = 0
-                                        {% else %}
-                                            SÌ = 600
-                                        {% endif %}
-                                    </option> #}
-
+                                <select name="cooling" id="cooling" class="form-control {% if errors.cooling %}is-invalid{% endif %}">
                                     <option value="600" class="opt-type"> 
                                         SÌ = 600
                                     </option>
@@ -233,8 +224,7 @@
                             <label class="col-4 form-control-label my-1"> Tipologia costo extra: </label>
                             
                             <div class="col-8">
-                                <select name="price_typology" id="price_typology" class="form-control 
-                                    {% if errors.price_typology %}is-invalid{% endif %}">
+                                <select name="price_typology" id="price_typology" class="form-control {% if errors.price_typology %}is-invalid{% endif %}">
                                     {#<option class="opt-type">
                                         {% if (quantity.price_typology == 'yes') %}
                                             SÌ
@@ -463,6 +453,141 @@
 </div>
 {# End Transport Delete Modal #}
 
+{# Edit Partial Modal #}
+<div class="modal fade" id="editPartModal" tabindex="-1" role="dialog" aria-labelledby="editPartLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header mx-auto row">
+                <h2 class="modal-title" id="editPartLabel"> 
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                        MODIFICA
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                </h2>
+
+                    <h4 class="modal-subtitle my-2"> 
+                        Modifica i dati esistenti del trasporto parziale.
+                    </h4>
+            </div>
+        
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form id="partial-edit" method="POST" action="partial-edit" autocomplete="off" novalidate>
+                        <input type="hidden" name="id_partial" id="id_partial" />
+                        <input type="hidden" id="date_load" value="{{ transport.date_load }}">
+                        <input type="hidden" id="date_unload" value="{{ transport.date_unload }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+                        {# Destination #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="destination" class="col-4 form-control-label my-1"> Destinazione: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="destination" id="destination"
+                                       class="form-control {% if errors.destination %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.destination %}<div class="invalid-feedback">{{ errors.destination }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+
+                        {# EXW #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="exw" class="col-4 form-control-label my-1"> EXW: </label>
+                            
+                            <div class="col-8">
+                                <select name="exw" id="exw" class="form-control {% if errors.exw %}is-invalid{% endif %}">
+                                    <option value="destino" class="opt-type"> 
+                                        DESTINO
+                                    </option>
+                                        
+                                    <option value="fos" class="opt-type"> 
+                                        FOS
+                                    </option>
+                                </select>
+
+                                <div class="error-placeholder">
+                                    {% if errors.exw %}<div class="invalid-feedback">{{ errors.exw }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                            
+                        {# Date #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="date" class="col-4 form-control-label my-1"> Data carico: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="date" id="date" 
+                                       class="form-control datepicker {% if errors.date %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.date %}<div class="invalid-feedback">{{ errors.date }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+
+                        {# Place #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="place" class="col-4 form-control-label my-1"> Luogo: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="place" id="place"
+                                       class="form-control {% if errors.place %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.place %}<div class="invalid-feedback">{{ errors.place }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+
+                        {# Q Unloaded #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="q_unloaded" class="col-4 form-control-label my-1"> Quantità scaricata: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="q_unloaded" id="q_unloaded" 
+                                    class="form-control {% if errors.q_unloaded %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.q_unloaded %}<div class="invalid-feedback">{{ errors.q_unloaded }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+
+                        {# Invoice #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="invoice" class="col-4 form-control-label my-1"> Fattura: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="invoice" id="invoice" 
+                                    class="form-control {% if errors.invoice %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.invoice %}<div class="invalid-feedback">{{ errors.invoice }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default modal-cancel" data-bs-dismiss="modal">
+                                <span class="bi bi-x-circle">
+                                    ANNULLA
+                                </span>    
+                            </button>
+                                
+                            <button type="submit" class="btn btn-default modal-save" name="delete_trans">
+                                <span class="bi bi-check-circle">
+                                    CONFERMA
+                                </span>   
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% block jquery %}
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
@@ -495,7 +620,7 @@ $(document).ready(function () {
         autoclose: true,
         clearBtn: false
     }).on('changeDate', function (e) {
-        $(this).trigger('change');      // validator catches the value
+        $(this).trigger('change');                                          // Validator catches the value
         
         if (this.id === 'date_load') {
             $('#date_unload')
@@ -504,27 +629,25 @@ $(document).ready(function () {
         }
         $(this).valid();
     }).on('show', function () {
-        // Store current value when datepicker opens
-        $(this).data('selectedDate', $(this).val());
+        $(this).data('selectedDate', $(this).val());                        // Store current value when datepicker opens
     }).on('hide', function (e) {
-        // If the user didn't select anything and just clicked out, preserve current value
-        const currentVal = $(this).val();
+        const currentVal = $(this).val();                                   // If the user didn't select anything and just clicked out, preserve current value
         if (!currentVal) {
             const storedDate = $(this).data('selectedDate');
             if (storedDate) {
-                $(this).val(storedDate); // restore value
+                $(this).val(storedDate);                                    // Restore value
             }
         }
     });
 
 //  VALIDATOR METHOD FOR DEFINING CURRENT DATE AS MAX
     $.validator.addMethod("noFutureDate", function (value, element) {
-        if (!value) return true; // allow empty if not required
+        if (!value) return true;                                            // Allow empty if not required
 
         const parts = value.split("-");
-        const inputDate = new Date(parts[2], parts[1] - 1, parts[0]); // assuming dd-mm-yyyy
+        const inputDate = new Date(parts[2], parts[1] - 1, parts[0]);       // Assuming dd-mm-yyyy
         const today = new Date();
-        today.setHours(0, 0, 0, 0); // remove time part
+        today.setHours(0, 0, 0, 0);                                         // Remove time part
 
         return inputDate <= today;
     });
@@ -546,11 +669,11 @@ $(document).ready(function () {
 //  FORM VALIDATION
     $("#transport-edit").validate({
         onfocusout: function(element) {
-            $(element).valid();     // validate the field when it loses focus
+            $(element).valid();                                             // Validate the field when it loses focus
         },
         rules: {
-            slot: { required: true, rangelength: [15, 35], pattern: "^[A-Za-z0-9_]+$" },
-            cmr: { required: true, rangelength: [7, 35], pattern: "^[A-Za-z0-9\-]+$" },
+            slot: { required: true, rangelength: [5, 35], pattern: "^[A-Za-z0-9_]+$" },
+            cmr: { required: true, rangelength: [5, 35], pattern: "^[A-Za-z0-9\-]+$" },
             issuer: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
             supplier: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
             transport: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
@@ -561,12 +684,12 @@ $(document).ready(function () {
         messages: {
             slot: {
                 required: "Campo obbligatorio.",
-                rangelength: "Usare almeno 11 e al massimo 35 caratteri.",
+                rangelength: "Usare almeno 5 e al massimo 35 caratteri.",
                 pattern: "Slot ID può contenere lettere, numeri e underscore (_). Spazi non consentiti."
             },
             cmr: {
                 required: "Campo obbligatorio.",
-                rangelength: "Usare almeno 7 e al massimo 35 caratteri.",
+                rangelength: "Usare almeno 5 e al massimo 35 caratteri.",
                 pattern: "CMR può contenere lettere, numeri e trattini (-). Spazi non consentiti."
             },
             issuer: {
@@ -705,7 +828,7 @@ $(document).ready(function () {
         }
     }
 
-    $('#price_typology').on('change', togglePriceValueField);
+    $('#price_typology').on('change', togglePriceValueField());
 
 //  QUANTITY FORM VALIDATION
     $("#quantity-edit").validate({
@@ -849,6 +972,110 @@ $(document).ready(function () {
         }
     });
 
+    $("#partial-edit").validate({
+        onfocusout: function(element) {
+            $(element).valid();     
+        },
+        rules: {
+            destination: { required: true, rangelength: [3, 50 ], pattern: "^[A-Za-z ]+$" },
+            exw: { required: true },
+            date: { required: true, noFutureDate: true },
+            place: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
+            q_unloaded: { required: true, number: true },
+            invoice: { required: true, number: true }
+        },
+        messages: {
+            destination: {
+                required: "Campo obbligatorio.",
+                rangelength: "Usare almeno 3 e al massimo 50 caratteri.",
+                pattern: "Destinazione può contenere lettere e spazi (senza spazio iniziale)."
+            },
+            exw: {
+                required: "Campo obbligatorio."
+            },
+            date: {
+                required: "Campo obbligatorio.",
+                noFutureDate: "Inserire una data valida. Non sono permesse date future."
+            }, 
+            place: {
+                required: "Campo obbligatorio.",
+                rangelength: "Usare almeno 3 e al massimo 50 caratteri.",
+                pattern: "Luogo può contenere solo lettere e spazi (senza spazio iniziale)."
+            }, 
+            q_unloaded: {
+                required: "Campo obbligatorio.",
+                number: "Quantità caricata deve essere un numero positivo (intero o decimale).",
+            },
+            invoice: {
+                required: "Campo obbligatorio.",
+                number: "Quantità caricata deve essere un numero positivo (intero o decimale)."
+            }
+        },
+        errorPlacement: function(error, element) {
+            error.addClass("text-danger small");
+            element.removeClass("is-valid").addClass("is-invalid");                                             // Bootstrap error class
+            element.closest(".form-group").find(".error-placeholder").html(error);      // Insert error inside the reserved space
+        },
+        highlight: function (element) {
+            $(element).removeClass('is-valid').addClass('is-invalid');
+        },
+        unhighlight: function (element) {
+            $(element).removeClass('is-invalid');
+            $(element).closest('.form-group').find('.error-placeholder').html('');
+        },
+        submitHandler: function (form) {
+            const $form = $(form);
+
+            $.ajax({
+                url: 'partial-edit',
+                type: 'POST',
+                data: $form.serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        updateOriginalDataFromResponse(response.modified);
+                        $('#editPartModal').modal('hide');
+
+                        const modified = response.modified;
+                        const row = $('#partial-table-' + modified.id_partial);
+
+                        // Update row cells manually
+                        row.find('.col-destination').text(modified.destination);
+                        row.find('.col-exw').text(modified.exw);
+                        row.find('.col-date').text(modified.date);
+                        row.find('.col-place').text(modified.place);
+                        row.find('.col-q-unloaded').text(modified.q_unloaded);
+                        row.find('.col-invoice').text(modified.invoice);
+
+                        // Highlight and scroll
+                        row.addClass('table-success');
+                        $('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
+                            setTimeout(() => row.removeClass('table-success'), 2500);
+                    } else {
+                        // Display PHP validation errors
+                        //$(".invalid-feedback").remove();                    // Clear previous errors
+                        if (response.errors) {
+                            $.each(response.errors, function(field, message) {
+                                const input = $("[name='" + field + "']");
+                                input.removeClass("is-valid").addClass("is-invalid");
+                                input.closest(".form-group").find(".error-placeholder")
+                                    .html('<div class="invalid-feedback">' + message + '</div>');
+                            });
+                        }
+                    }
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                }
+            });
+            return false;
+        },
+        success: function(label, element) {
+            $(element).removeClass("is-invalid").addClass("is-valid");
+            $(element).closest(".form-group").find(".error-placeholder").html("");
+        }
+    });
+
 //  NOTE FORM VALIDATION
     $("#transport-note").validate({
         onfocusout: function(element) {
@@ -936,24 +1163,36 @@ $(document).ready(function () {
     });
 
 //  Reset modal datepicker on cancel
-    $('#editTransModal').on('hidden.bs.modal', function () {
+    $('#editTransModal, #editQtyModal, #editPartModal').on('hidden.bs.modal', function () {
         const dp = $(this).find('.datepicker');
-        const $form = $(this).find('#transport-edit');
+        const $formT = $(this).find('#transport-edit');
+        const $formQ = $(this).find('#quantity-edit');
+        const $formP = $(this).find('#partial-edit');
 
         // Reset the form fields
-        $form[0].reset();
+        $formT[0].reset();
+        $formQ[0].reset();
+        $formP[0].reset();
 
         // Clear jQuery Validation errors
-        $form.validate().resetForm();
+        $formT.validate().resetForm();
+        $formQ.validate().resetForm();
+        $formP.validate().resetForm();
 
         // Remove error classes
-        $form.find('.is-invalid').removeClass('is-invalid');
-        $form.find('.is-valid').removeClass('is-valid');
+        $formT.find('.is-invalid').removeClass('is-invalid');
+        $formT.find('.is-valid').removeClass('is-valid');
+
+        $formQ.find('.is-invalid').removeClass('is-invalid');
+        $formQ.find('.is-valid').removeClass('is-valid');
+
+        $formP.find('.is-invalid').removeClass('is-invalid');
+        $formP.find('.is-valid').removeClass('is-valid');
         
         dp.datepicker('clearDates'); // safely clear dates
         dp.val(''); // clear input value if needed
     });
-
+/*
     $('#editQtyModal').on('hidden.bs.modal', function () {
         const $form = $(this).find('#quantity-edit');
 
@@ -967,7 +1206,7 @@ $(document).ready(function () {
         $form.find('.is-invalid').removeClass('is-invalid');
         $form.find('.is-valid').removeClass('is-valid');
     });
-
+*/
 //  Dates validation on focus in and focus out
     let lastFocused = null;
 
@@ -986,17 +1225,17 @@ $(document).ready(function () {
 
     let originalData = {};
 //  Restore original values on modal close if there were changes
-    $('#editTransModal').on('hide.bs.modal', function() {
+    $('#editTransModal, #editQtyModal, #editPartModal').on('hide.bs.modal', function() {
         if (formHasChanged()) {
             resetFormToOriginal();
         }
     });
 
-    $('#editQtyModal').on('hide.bs.modal', function() {
+    /*$('#editQtyModal').on('hide.bs.modal', function() {
         if (formHasChanged()) {
             resetFormToOriginal();
         }
-    });
+    });*/
 
 //  Reset form to original values
     function resetFormToOriginal() {
@@ -1017,6 +1256,15 @@ $(document).ready(function () {
                 }
         });
         $('#quantity-edit').removeClass('is-invalid');
+
+        $('#partial-edit').find(':input').each(function() {
+            const name = $(this).attr('name');
+                if (name && originalData.hasOwnProperty(name)) {
+                    $(this).val(originalData[name]).trigger('change').removeClass('is-invalid');
+                    $(this).closest('.form-group').find('.error-placeholder').html('');
+                }
+        });
+        $('#partial-edit').removeClass('is-invalid');
     }
 
 //  Detect changes and reset if changed
@@ -1037,6 +1285,15 @@ $(document).ready(function () {
                     return false; // exit early
                 }
         });
+
+        $('#partial-edit').find(':input').each(function () {
+            const name = $(this).attr('name');
+                if (name && originalData[name] !== $(this).val()) {
+                    changed = true;
+                    return false; // exit early
+                }
+        });
+
         return changed;
     }
 
@@ -1056,6 +1313,14 @@ $(document).ready(function () {
                 const name = $(this).attr('name');
                     if (name && data.updated.hasOwnProperty(name)) {
                         originalData[name] = data.updated[name];
+                    }
+            });
+
+        if (!data || !data.modified) return;
+            $('#quantity-edit').find(':input').each(function () {
+                const name = $(this).attr('name');
+                    if (name && data.modified.hasOwnProperty(name)) {
+                        originalData[name] = data.modified[name];
                     }
             });
     }

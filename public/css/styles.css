@@ -733,7 +733,7 @@ table th, table td {
 
 .platform tbody td button:hover,     .platform tbody td button[aria-expanded="true"] {
     transform: scale(0.98);
-    background-color: rgba(88, 86, 86, 0.5);
+    /*background-color: rgba(88, 86, 86, 0.5);*/
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -762,6 +762,13 @@ table th, table td {
     word-break: break-all;
     text-align: center;
     hyphens: auto;
+}
+
+.platform tfoot .table-total {
+    background-color: rgba(2, 51, 101, 0.8); /*#e8f5e0;*/
+    color: rgb(255, 255, 255);	/*rgb(11, 50, 90);*/
+    font-size: 1.5rem;
+    outline: none;
 }
 
 .platform tfoot h5,
@@ -847,7 +854,7 @@ table th, table td {
 
 .collapse-platform > td:last-child {
     border-right: none !important;
-    background-color: rgb(250, 235, 215, 0.7) !important;
+    background-color: rgb(230, 236, 243); /*rgb(250, 235, 215, 0.7) !important;*/
 }
 
 .collapse-platform > td:not(:last-child) .btns {
@@ -895,6 +902,20 @@ table th, table td {
     /*border-top: 1px solid rgba(255, 255, 255, 0.7); */
     border-bottom: 1px solid rgba(255, 255, 255, 0.6);
 }
+/*
+.partial-table {
+  table-layout: fixed;
+  width: 90%;
+}
+
+.partial-table th {
+  width: 100% / 5; /* 100% / number of columns */
+  /*text-align: center; /* or center */
+/*}
+
+.partial-table th.small-col {
+  width: 10%; /* or 5%, adjust as needed */
+/*} */
 /* ===> END FULL, PART TRANSPORTS PLATFORM <=== */
 /*--------------------------------------------------------------
 # =====>                END TABLE DESIGN                       #    // FOR PAGES: PLATFORM, USERS, TITLES, TRANSPORTS-FULL, TRANSPORTS-PART

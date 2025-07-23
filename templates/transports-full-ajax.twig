@@ -1,0 +1,207 @@
+{# Table Body #}
+    <tbody class="table-group-divider" id="transport-tbody">    
+        {% if transports is not empty %}
+            {% for t in transports %}
+                {# Transport Data #}
+                <tr class="align-middle expand" id="id-{{ t.id_transport }}">
+                    <td scope="row">
+                        {{ ((page - 1) * limit) + loop.index }} <br>
+                            <button data-bs-toggle="collapse" data-bs-target="#qty-{{ t.id_transport }}"
+                                    aria-expanded="false" aria-controls="qty-{{ t.id_transport }}" aria-label="Expand quantities">
+                                <i class="bi bi-arrows-expand"></i>
+                            </button> 
+                    </td>
+                    <td class="align-middle p-2 search word-wrap-container col-slot"> {{ t.slot|upper }} </td>
+                    <td class="align-middle p-2 search word-wrap-container col-cmr"> {{ t.cmr|upper }} </td>
+                    <td class="align-middle p-1 search col-issuer"> {{ t.issuer|upper }} </td>
+                    <td class="align-middle p-1 search col-supplier"> {{ t.supplier|upper }} </td>
+                    <td class="align-middle p-1 search col-transport"> {{ t.transport|upper }} </td>
+                    <td class="align-middle p-1 col-univoco"> {{ t.univoco|upper }} </td>
+                    <td class="align-middle p-1 col-load"> {{ t.date_load|date("d/m/Y") }} </td>
+                    <td class="align-middle p-1 col-unload"> {{ t.date_unload|date("d/m/Y") }} </td>
+                    <td class="align-middle p-0 col-month-load"> {{ t.id_month_load }} </td>
+                    <td class="align-middle p-0 col-week-unload"> {{ t.week_unload }} </td>
+                    <td class="align-middle p-1 col-month-unload"> {{ t.id_month_unload }} - {{ t.month_unload|capitalize }} </td>
+                    <td class="align-middle p-1 col-container"> {{ t.container|upper }} </td>
+                    <td class="align-middle p-1 btns">   
+                        {% if (user.role == 'admin') or (user.id_user == t.id_user) %}
+                            <button type="button" class="edit-data edited updateTrans" data-bs-toggle="modal" data-bs-target="#editTransModal"
+                                    data-id="{{ t.id_transport }}">
+                                <i class="bi bi-pencil-square" title="Modifica"></i>
+                            </button>
+                        {% else %}    
+                            <button type="button" class="edit-data" disabled>
+                                <i class="bi bi-x-octagon"></i>
+                            </button>
+                        {% endif %}
+                                
+                        {% if (user.role == 'admin') %}
+                            <button type="button" class="edit-data deleteTrans" data-bs-toggle="modal" data-bs-target="#deleteTransModal"
+                                    data-id="{{ t.id_transport }}" data-slot="{{ t.slot }}">
+                                <i class="bi bi-trash" title="Elimina"></i> 
+                            </button>  
+                        {% endif %}
+                    </td>
+                </tr>
+                {# End Transport Data #}
+
+                {# Quantity Data #}
+                <tr class="collapse bg-white accordion-collapse collapse-platform" id="qty-{{ t.id_transport }}">        
+                    <td colspan="14" class="border-0">
+                        <h4 class="mx-auto my-3 text-center"> 
+                            {% if (user.role == 'admin') or (user.id_user == t.id_user) %}
+                                <button type="button" class="btn my-auto edit-data updateQty" data-bs-toggle="modal" 
+                                        data-bs-target="#editQtyModal" data-id="{{ t.id_transport }}">   
+                                    <i class="bi bi-pencil-square mx-1"></i> 
+                                        <span class="collapse-title">
+                                            Quantità:
+                                        </span>   
+                                </button> 
+                            {% else %}
+                                <span class="btn my-auto collapse-title edit-data updateQty" style="cursor: default">
+                                    Quantità:
+                                </span>
+                            {% endif %}
+                        </h4>
+
+                        <table class="table table-bordered table-light mb-1" id="qty-table-{{ t.id_transport }}">
+                            <tbody>    
+                                <tr>
+                                    <th class="align-middle p-1"> Energia caricata [MWh] </th>
+                                    <td class="bg-light align-middle col-mwh"> {{ t.mwh|default('—') }} </td>   
+
+                                    <th class="align-middle p-1"> Quantità nominale caricata [kg] </th>
+                                    <td class="bg-light align-middle col-kg-load"> {{ t.kg_load|default('—') }} </td>   
+
+                                    <th class="align-middle p-1"> Raffreddamento </th>            
+                                    <td class="bg-light align-middle col-cooling"> {{ t.cooling == 600 ? '600' : 'No' }} </td>
+
+                                    <th class="align-middle p-1"> Tipologia costo extra </th>            
+                                    <td class="bg-light align-middle col-price-typology"> {{ t.price_typology == 'yes'? 'Sì' : 'No' }} </td>   
+
+                                                {#<th class="sub-title align-middle p-1"> Accisa <big>[</big>Sm<sup>3</sup><big>]</big> </th>
+                                                <td class="bg-light bg-gradient align-middle">  </td> #}  
+                                </tr>
+                                    
+                                <tr>
+                                    <th class="align-middle p-1"> Valore costo extra </th>
+                                    <td class="bg-light align-middle col-price-value"> {{ t.price_value|default('—') }} </td>
+
+                                    <th class="align-middle p-1"> Quantità scaricata PD [kg] </th>
+                                    <td class="bg-light align-middle col-kg-unload"> {{ t.kg_unload|default('—') }} </td>
+
+                                    <th class="align-middle p-1"> Densità (liquido) [<sup>kg</sup>&frasl;<sub>m<sup>3</sup></sub>] </th>
+                                    <td class="bg-light align-middle col-liquid-density"> {{ t.liquid_density|default('—') }} </td>
+
+                                    <th class="align-middle p-1"> Peso specifico (gas) <big>[</big><sup>kg</sup>&frasl;<sub>Nm<sup>3</sup></sub><big>]</big> </th>
+                                    <td class="bg-light align-middle col-gas-weight"> {{ t.gas_weight|default('—') }} </td>
+                                </tr>
+                                            
+                                <tr>
+                                    <th class="align-middle p-1"> PCS/GHV <big>[</big><sup>MJ</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                                    <td class="bg-light align-middle col-mj-kg"> {{ t.mj_kg|default('—') }} </td>
+
+                                    <th class="align-middle p-1"> PCS/GHV <big>[</big><sup>kWh</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                                    <td class="bg-light align-middle col-pcs-ghv"> {{ t.pcs_ghv|default('—') }} </td>
+
+                                    <th class="align-middle p-1"> Volume scaricato (liquido) <big>[</big>m<sup>3</sup><big>]</big> </th>
+                                    <td class="bg-light align-middle col-volume-mc"> {{ t.volume_mc|default('—') }} </td>
+
+                                    <th class="align-middle p-1"> Volume sviluppato <big>[</big><sup>Nm<sup>3</sup></sup>&frasl;<sub>m<sup>3</sup></sub><big>]</big> </th>
+                                    <td class="bg-light align-middle col-volume-nmc"> {{ t.volume_nmc|default('—') }} </td> 
+                                </tr>
+                                            
+                                <tr>
+                                    <th class="align-middle p-1"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>m<sup>3</sup></sub> </th>
+                                    <td class="bg-light align-middle col-smc-mc"> {{ t.smc_mc|default('—') }} </td> 
+
+                                    <th class="align-middle p-1"> Gas sviluppato <big>[</big>Nm<sup>3</sup><big>]</big> </th>
+                                    <td class="bg-light align-middle col-gas-nmc"> {{ t.gas_nmc|default('—') }} </td>   
+
+                                    <th class="align-middle p-1"> Gas sviluppato <big>[</big>Sm<sup>3</sup></sup><big>]</big> </th>
+                                    <td class="bg-light align-middle col-gas-smc"> {{ t.gas_smc|default('—') }} </td>   
+
+                                    <th class="align-middle p-1"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>kg</sub> </th>
+                                    <td class="bg-light align-middle col-smc-kg"> {{ t.smc_kg|default('—') }} </td>  
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                {# END Quantity Data #}
+
+                {# Note #}
+                <tr>
+                    <div class="container-fluid table-group-divider">
+                        <div class="note-container">
+                            <h4 class="mx-auto my-2"> 
+                                <button type="button" class="btn my-auto edit-data updateNote" data-bs-toggle="modal" data-bs-target="#editNoteModal"
+                                        data-id="{{ t.id_transport }}">   
+                                    <i class="bi bi-pencil-square mx-1"></i> 
+                                        <span class="collapse-title">
+                                            Nota:
+                                        </span>   
+                                </button> 
+                            </h4>
+
+                            <div class="container-fluid my-0">
+                                <div id="notes-{{ t.id_transport }}" data-ids="{{ t.id_transport }}" class="notes">
+                                    {{ t.content }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+                {# END Note #}
+            {% endfor %}
+        {% endif %}
+    </tbody>
+{# END Table Body #}
+
+{# Table Footer #}    
+    <tfoot id="transport-tfoot">
+        {# Table Pagination #}
+        <tr>
+            <td colspan="14">
+                {% if total > limit %}
+                    <nav class="mt-3">
+                        <ul class="pagination justify-content-center">
+                            {# Previous Page Link #}
+                            <li class="page-item {% if page <= 1 %}disabled{% endif %}">
+                                <a class="page-link transport-page" href="#" data-page="{{ page - 1 }}">
+                                    &laquo;
+                                </a>
+                            </li>
+
+                            {# Page Numbers #}
+                            {% for p in 1..pagination %}
+                                <li class="page-item {% if p == page %}active{% endif %}">
+                                    <a class="page-link transport-page" href="#" data-page="{{ p }}">
+                                        {{ p }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+
+                            {# Next Page Link #}
+                            <li class="page-item {% if page >= pagination %}disabled{% endif %}">
+                                <a class="page-link transport-page" href="#" data-page="{{ page + 1 }}">
+                                    &raquo;
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                {% endif %}
+            </td>
+        </tr>
+        {# END Table Pagination #}
+                
+        <tr>
+            <td colspan="14" class="text-light text-shadow-dark align-middle mb-2 p-2">
+                <h5 class="align-middle my-auto">
+                    TOTALE <i class="bi bi-fuel-pump-fill ms-1"></i>:
+                        <span> {{ total }} </span>
+                </h5> 
+            </td>
+        </tr>
+    </tfoot>
+{# END Table Footer #}

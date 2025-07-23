@@ -37,7 +37,7 @@
                                 <select name="type" id="type" 
                                     class="form-control {% if errors.type %}is-invalid{% endif %}">
                                         <option value="" class="opt-type" style="color: rgb(184,184,184);"> 
-                                            Selezionare un'opzione
+                                            - Selezionare un'opzione -
                                         </option>
 
                                         <option value="F" class="opt-type"> 
@@ -87,7 +87,7 @@
                             <div class="form-group col-md-4 mb-3">         
                                 <label for="supplier" class="form-control-label"> Fornitore: </label>
                                 <input name="supplier" type="text" id="supplier"
-                                    class="form-control {% if errors.email %}is-invalid{% endif %}" />
+                                    class="form-control {% if errors.supplier %}is-invalid{% endif %}" />
 
                                 <div class="error-placeholder">
                                     {% if errors.supplier %}<div class="invalid-feedback">{{ errors.supplier }}</div>{% endif %}
@@ -97,7 +97,7 @@
                             <div class="form-group col-md-4 mb-3">         
                                 <label for="transport" class="form-control-label"> Trasporto: </label>
                                 <input name="transport" type="text" id="transport"
-                                    class="form-control {% if errors.email %}is-invalid{% endif %}" />
+                                    class="form-control {% if errors.transport %}is-invalid{% endif %}" />
 
                                 <div class="error-placeholder">
                                     {% if errors.transport %}<div class="invalid-feedback">{{ errors.transport }}</div>{% endif %}
@@ -105,7 +105,7 @@
                             </div>
 
                             <div class="form-group col-md-4 mb-3"> 
-                                <label for="date_load" class="form-control-label" data-toggle="tooltip" title="--> Terminale"> Data carico: </label>
+                                <label for="date_load" class="form-control-label" data-bs-toggle="tooltip" title="--> Terminale"> Data carico: </label>
                                 <input name="date_load" type="text" id="date_load" 
                                     class="form-control datepicker {% if errors.date_load %}is-invalid{% endif %}" />
 
@@ -115,7 +115,7 @@
                             </div>
 
                             <div class="form-group col-md-4 mb-3"> 
-                                <label for="date_unload" class="form-control-label" data-toggle="tooltip" title="--> Padova"> Data scarico: </label>
+                                <label for="date_unload" class="form-control-label" data-bs-toggle="tooltip" title="--> Padova"> Data scarico: </label>
                                 <input name="date_unload" type="text" id="date_unload" 
                                     class="form-control datepicker {% if errors.date_unload %}is-invalid{% endif %}" />
 
@@ -158,7 +158,7 @@
                                 <label for="cooling" class="form-control-label"> Raffreddamento: </label>
                                 <select name="cooling" id="cooling" class="form-control {% if errors.cooling %}is-invalid{% endif %}">
                                     <option value="" class="opt-type" style="color: lightgray;"> 
-                                        Selezionare un'opzione
+                                        - Selezionare un'opzione -
                                     </option>
 
                                     <option value="600" class="opt-type"> 
@@ -179,7 +179,7 @@
                                 <label for="price_typology" class="form-control-label"> Tipologia costo: </label>
                                 <select name="price_typology" id="price_typology" class="form-control {% if errors.price_typology %}is-invalid{% endif %}">
                                     <option value="" class="opt-type" style="color: lightgray;"> 
-                                        Selezionare un'opzione
+                                        - Selezionare un'opzione -
                                     </option>
 
                                     <option value="yes" class="opt-type"> 
@@ -262,60 +262,157 @@
                 <fieldset class="mx-auto my-3" data-step="3">
                     <div class="card-body">
                         <div class="row table-responsive mx-auto my-2">     
-                            <table class="table table-sm table-borderless" id="partials">
-                                <tr class="mx-auto my-2">
-                                    <th class="mx-auto"> <i class="bi bi-gear my-auto"></i> </th>
-                                    <th class="mx-auto" data-bs-toggle="tooltip" title="--> Dest. cliente"> Destinazione </th>
-                                    <th class="mx-auto"> EXW </th>
-                                    <th class="mx-auto" data-bs-toggle="tooltip" title="--> Data scarico"> Data </th>
-                                    <th class="mx-auto" data-bs-toggle="tooltip" title="--> Luogo scarico"> Luogo </th>
-                                    <th class="mx-auto" data-bs-toggle="tooltip" title="--> Quantità scaricata [ kg ]"> Quantità </th>
-                                    <th class="mx-auto" data-bs-toggle="tooltip" title="--> Fattura Rif."> Fattura </th>  
-                                    <th class="mx-auto"></th>             
-                                </tr>
-                                  
-                                <tr class="mx-auto my-1">
-                                    <td class="part-btns">
-                                        <input type="hidden" name="id[]" id="id_partial" value="0"/>
-                                    </td>
-                              
-                                    <td class="col-3">
-                                        <input type="text" name="destination_0" class="form-control destination" id="destination_0" /> 
-                                    </td>
-    
-                                    <td class="col-2">
-                                        <select class="form-control exw" name="exw" id="exw_0">
-                                            <option value=""></option>
-                                            <option value="fos"> FOS </option>
-                                            <option value="destino"> DESTINO </option>
-                                        </select>
-                                    </td>
-                                                
-                                    <td class="col-2"> 
-                                        <input type="text" class="form-control date" name="date_0" autocomplete="off" id="date_0" />
-                                    </td>
-                            
-                                    <td class="col-2">
-                                        <input type="text" class="form-control place" name="place_0" id="place_0" />
-                                    </td>
-                            
-                                    <td class="col-2">
-                                        <input type="text" class="form-control mx-auto q_unloaded" name="q_unloaded_0" id="q_unloaded_0" />
-                                    </td>
-                            
-                                    <td class="col mx-auto">
-                                        <input type="text" class="form-control mx-auto invoice" name="invoice_0" id="invoice_0" />
-                                    </td>
+                            <table class="table table-sm table-borderless platform" id="partials">
+                                <thead>
+                                    <tr class="mx-auto my-2">
+                                        <th class="mx-auto"> <i class="bi bi-gear my-auto"></i> </th>
+                                        <th class="mx-auto" data-bs-toggle="tooltip" title="--> Dest. cliente"> Destinazione </th>
+                                        <th class="mx-auto"> EXW </th>
+                                        <th class="mx-auto" data-bs-toggle="tooltip" title="--> Data scarico"> Data </th>
+                                        <th class="mx-auto" data-bs-toggle="tooltip" title="--> Luogo scarico"> Luogo </th>
+                                        <th class="mx-auto" data-bs-toggle="tooltip" title="--> Quantità scaricata [ kg ]"> Quantità </th>
+                                        <th class="mx-auto" data-bs-toggle="tooltip" title="--> Fattura Rif."> Fattura </th>  
+                                        <th class="mx-auto"></th>             
+                                    </tr>
+                                </thead>
 
-                                    <td class="part-btns">
-                                        <button type="button" class="my-auto px-1 delete-btn"
-                                            onclick="partRows.delRow(this)">
-                                                <span class="my-auto">
-                                                    <i class="bi bi-x-square"></i>
-                                                </span>
-                                        </button>
-                                    </td>
-                                </tr>
+                                <tbody>     
+                                    <tr class="mx-auto">
+                                        <td class="part-btns">
+                                            <input type="hidden" name="id[]" id="id_partial" value="0"/>
+                                        </td>
+                                
+                                        <td class="col form-group mx-auto mb-3">
+                                            <input type="text" name="destination[]"
+                                                class="form-control destination {% if errors.destination %}is-invalid{% endif %}" />
+
+                                            <div class="error-placeholder">
+                                                {% if errors.destination %}<div class="invalid-feedback">{{ errors.destination }}</div>{% endif %}
+                                            </div> 
+                                        </td>
+
+                                        <td class="col form-group mx-auto mb-3">
+                                            <select class="form-control exw {% if errors.exw %}is-invalid{% endif %}" name="exw[]" id="exw_0">
+                                                <option value="" class="opt-type"></option>
+                                                <option value="fos" class="opt-type"> FOS </option>
+                                                <option value="destino" class="opt-type"> DESTINO </option>
+                                            </select>
+                                        </td>
+
+                                        <td class="col form-group mx-auto mb-3">
+                                            <input type="text" name="date[]"
+                                                class="form-control datepicker date {% if errors.date %}is-invalid{% endif %}" />
+
+                                            <div class="error-placeholder">
+                                                {% if errors.date %}<div class="invalid-feedback">{{ errors.date }}</div>{% endif %}
+                                            </div> 
+                                        </td>
+
+                                        <td class="col form-group mx-auto mb-3">
+                                            <input type="text" name="place[]"
+                                                class="form-control place {% if errors.place %}is-invalid{% endif %}" />
+
+                                            <div class="error-placeholder">
+                                                {% if errors.place %}<div class="invalid-feedback">{{ errors.place }}</div>{% endif %}
+                                            </div> 
+                                        </td>    
+
+                                        <td class="col form-group mx-auto mb-3">
+                                            <input type="text" name="q_unloaded[]"
+                                                class="form-control q_unloaded {% if errors.q_unloaded %}is-invalid{% endif %}" />
+
+                                            <div class="error-placeholder">
+                                                {% if errors.q_unloaded %}<div class="invalid-feedback">{{ errors.q_unloaded }}</div>{% endif %}
+                                            </div> 
+                                        </td>       
+
+                                        <td class="col-2 form-group mx-auto mb-3">
+                                            <input type="text" name="invoice[]"
+                                                class="form-control invoice {% if errors.invoice %}is-invalid{% endif %}" />
+
+                                            <div class="error-placeholder">
+                                                {% if errors.invoice %}<div class="invalid-feedback">{{ errors.invoice }}</div>{% endif %}
+                                            </div> 
+                                        </td>                                                             
+                                                    
+                                        <td class="btns">
+                                            <button type="button" class="my-auto px-1 edit-data delete-btn"
+                                                {#}onclick="partRows.delRow(this)"#}>
+                                                    <span class="my-auto">
+                                                        <i class="bi bi-x-square"></i>
+                                                    </span>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="partial-row-template d-none">
+                                        <td class="part-btns">
+                                            <input type="hidden" name="id[]" value="0" />
+                                        </td>
+
+                                        <td class="col form-group mx-auto mb-3">
+                                            <input type="text" name="destination[]"
+                                                class="form-control destination {% if errors.destination %}is-invalid{% endif %}" />
+
+                                            <div class="error-placeholder">
+                                                {% if errors.destination %}<div class="invalid-feedback">{{ errors.destination }}</div>{% endif %}
+                                            </div> 
+                                        </td>
+
+                                        <td class="col form-group mx-auto mb-3">
+                                            <select class="form-control exw {% if errors.exw %}is-invalid{% endif %}" name="exw[]" id="exw_0">
+                                                <option value="" class="opt-type"></option>
+                                                <option value="fos" class="opt-type"> FOS </option>
+                                                <option value="destino" class="opt-type"> DESTINO </option>
+                                            </select>
+                                        </td>
+
+                                        <td class="col form-group mx-auto mb-3">
+                                            <input type="text" name="date[]"
+                                                class="form-control datepicker date {% if errors.date %}is-invalid{% endif %}" />
+
+                                            <div class="error-placeholder">
+                                                {% if errors.date %}<div class="invalid-feedback">{{ errors.date }}</div>{% endif %}
+                                            </div> 
+                                        </td>
+
+                                        <td class="col form-group mx-auto mb-3">
+                                            <input type="text" name="place[]"
+                                                class="form-control place {% if errors.place %}is-invalid{% endif %}" />
+
+                                            <div class="error-placeholder">
+                                                {% if errors.place %}<div class="invalid-feedback">{{ errors.place }}</div>{% endif %}
+                                            </div> 
+                                        </td>    
+
+                                        <td class="col form-group mx-auto mb-3">
+                                            <input type="text" name="q_unloaded[]"
+                                                class="form-control q_unloaded {% if errors.q_unloaded %}is-invalid{% endif %}" />
+
+                                            <div class="error-placeholder">
+                                                {% if errors.q_unloaded %}<div class="invalid-feedback">{{ errors.q_unloaded }}</div>{% endif %}
+                                            </div> 
+                                        </td>       
+
+                                        <td class="col-2 form-group mx-auto mb-3">
+                                            <input type="text" name="invoice[]"
+                                                class="form-control invoice {% if errors.invoice %}is-invalid{% endif %}" />
+
+                                            <div class="error-placeholder">
+                                                {% if errors.invoice %}<div class="invalid-feedback">{{ errors.invoice }}</div>{% endif %}
+                                            </div> 
+                                        </td>                                                             
+                                                    
+                                        <td class="btns">
+                                            <button type="button" class="my-auto px-1 edit-data delete-btn"
+                                                {#}onclick="partRows.delRow(this)"#}>
+                                                    <span class="my-auto">
+                                                        <i class="bi bi-x-square"></i>
+                                                    </span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -332,7 +429,7 @@
                                           class="form-control {% if errors.note %}is-invalid{% endif %}"></textarea>
 
                                 <div class="error-placeholder">
-                                    {% if errors.kg_load %}<div class="invalid-feedback">{{ errors.kg_load }}</div>{% endif %}
+                                    {% if errors.note %}<div class="invalid-feedback">{{ errors.note }}</div>{% endif %}
                                 </div>
                             </div>
 
@@ -348,7 +445,7 @@
 
                 {# Card Footer With Fieldset Buttons #}                      
                 <div class="card-footer mx-auto">      
-                    <button type="button" class="my-2 action-button prev" onclick="history.back();">
+                    <button type="button" class="my-2 action-button prev">
                         <span class="m-auto">
                             <i class="bi bi-chevron-double-left"></i> INDIETRO
                         </span>
@@ -366,7 +463,7 @@
                         </span>
                     </button>
 
-                    <button type="button" class="my-2 action-button add" name="add" id="add-part">
+                    <button type="button" class="my-2 action-button add" name="add" id="add-part" {#onclick="partRows.addRow()"#}>
                         <span class="m-auto">
                             AGGIUNGI <i class="bi bi-plus-circle"></i>
                         </span>
@@ -405,6 +502,11 @@
 {% block page_script %}
 <script> 
 $(document).ready(function () {
+    // Step 3: Disable all inputs inside .partial-row-template to prevent accidental submission
+    $('.partial-row-template').find('input, select, textarea').prop('disabled', true);
+
+
+
     $('[data-bs-toggle="tooltip"]').tooltip();
 
 /***  Update header subtitle with fieldset change  ***/
@@ -422,50 +524,67 @@ $(document).ready(function () {
         $('#step-subtitle').html(subtitle);
     }
 
-/***  Initial subtitle load  ***/
-    formSubtitle();
+/***  Update buttons on fieldset change  ***/
+    function updateButtonVisibility() {
+        const step = $('fieldset.active').data('step');
 
-/***  Bind next button to navigation  ***/
-    $(".next").on('click', function () {
-        const currentStep = $('fieldset.active');
-        const nextStep = $('fieldset[data-step="' + (currentStep.data('step') + 1) + '"]');
+            //  Show/hide next/save
+            if (step === 4) {
+                $('.next').hide();
+                $('.save').show();
+            } else {
+                $('.next').show();
+                $('.save').hide();
+            }
 
-            currentStep.find(':input').prop('disabled', false);
-            $('fieldset:not(.active) :input:not(.always-validate)').prop('disabled', true);
+            //  Show AGGIUNGI only on step 3
+            if (step === 3) {
+                $('.add').show();
+            } else {
+                $('.add').hide();
+            }
+    }
 
-                if ($('#transport-form').valid()) {
-                    currentStep.removeClass('active').hide();
-                    nextStep.addClass('active').show();
-                    formSubtitle();
-                    
-                    $('html, body').animate({ scrollTop: 0 }, 300);
-                } else {
-                    const firstError = validator.errorList[0]?.element;
-                        if (firstError) {
-                            $('html, body').animate({ scrollTop: $(firstError).offset().top - 100 }, 300);
-                        }
-                }
+/***  Update step flow when choosing type select input  ***/
+    function updateStepFlow() {
+        const type = $('#type').val();
+        const full = type === 'F';
 
-            $('fieldset :input').prop('disabled', false); 
-    });
+        //  Hide/show fieldset 3 (partials)
+        const $trans    = $('fieldset[data-step="1"]');
+        const $qty      = $('fieldset[data-step="2"]');
+        const $partials = $('fieldset[data-step="3"]');
+        const $note     = $('fieldset[data-step="4"]');
 
-/***  Bind previous button to navigation  ***/
-    $(".prev").on('click', function () {
-        const current = $("fieldset.active");
-        const step = current.data('step');
-        const prevStep = $('fieldset[data-step="' + (step - 1) + '"]');
+        //  Always show transport and quantity
+        $trans.show();
+        $qty.show();
 
-            current.removeClass('active').hide();
-            prevStep.addClass('active').show();
-            formSubtitle();
-    });
+            if (full) {
+                $partials.hide();
+                $note.show();
+            } else {
+                $partials.show();
+                $note.show();
+            }
+
+        //  Reset active step to 1
+        $('fieldset').removeClass('active').hide();
+        $trans.addClass('active').show();
+
+        formSubtitle();
+        updateButtonVisibility();
+    }
+
 
 /***  Function to check transport availability by Slot ID and CMR Number  ***/
-    function checkAvailability(field, value, id = null) {
+    /*function checkAvailability(field, value, id = null) {
+        const csrfToken = $('input[name="csrf_token"]').val();
+
         $.ajax({
             url: "/check-transport",
             type: "POST",
-            data: { [field]: value, id_transport: id },
+            data: { [field]: value, id_transport: id, csrf_token: csrfToken },
             dataType: "json",
             success: function (response) {
                 const inputField = $("#" + field);
@@ -480,10 +599,10 @@ $(document).ready(function () {
                     }
             },
         });
-    }
+    }*/
 
 /***  Trigger validation when typing slot and cmr input fields  ***/
-    let debounceTimer;
+    /*let debounceTimer;
         $("#slot, #cmr").on("input", function () {
             clearTimeout(debounceTimer);
             let field = $(this).attr("id");
@@ -494,7 +613,7 @@ $(document).ready(function () {
                         checkAvailability(field, value);
                     }, 250); 
                 }
-        });
+        });*/
 
 /***  Datepicker setup  ***/
     $('.datepicker').datepicker({
@@ -523,6 +642,40 @@ $(document).ready(function () {
                         }
                 }
     });
+
+/***  Quantity Price Value Toggle Field  ***/
+    let switched = false;
+
+    function togglePriceValueField() {
+        const $pv = $('#price_value');
+        const $pt = $('#price_typology');
+        const typology = $pt.val();
+
+        if (typology === 'no') {
+            switched = true;
+            $pv
+                .val(0)
+                .prop('disabled', true)
+                .removeClass('is-valid is-invalid')
+                .closest('.form-group')
+                .find('.error-placeholder').html('');
+        } else {
+            $pv
+                .prop('disabled', false)
+                .removeClass('is-valid is-invalid')
+                .closest('.form-group')
+                .find('.error-placeholder').html('');
+
+            if (switched) {
+                $pv.val('');    // Clear value only if switched from no to yes
+            }
+
+            $pv.trigger('input'); // ensure initial sync
+            switched = false;       // Reset flag after processing
+        }
+    }
+
+    $('#price_typology').on('change', togglePriceValueField());
 
 /***  Validation method for defining current date as max date  ***/
     $.validator.addMethod("noFutureDate", function (value, element) {
@@ -555,6 +708,48 @@ $(document).ready(function () {
         return value !== "" && value !== "0";                   // Assuming '0' or '' represents the placeholder option value
     });
 
+/***  Method for checking if e-mail already exists  ***/
+    /*$.validator.addMethod("slotCheck", function (value, element) {
+        const original = $('[name="original_email"]').val();
+            if (value === original) return true;
+
+        let isSuccess = false;
+            $.ajax({
+                url: 'check-slot',
+                type: 'POST',
+                data: { slot: value },
+                dataType: 'json',
+                async: false,
+                success: function (response) {
+                    isSuccess = response.available === true;
+                }
+            });
+        return isSuccess;
+    });*/
+/***  Method for checking if partial date is between transport's date load and date unload  ***/
+    $.validator.addMethod("dateRangeLoadUnload", function(value, element) {
+        if (!value) return false;
+
+        const regex = /^\d{2}-\d{2}-\d{4}$/;
+            if (!regex.test(value)) return false;
+
+        const [day, month, year] = value.split("-");
+        const inputDate = new Date(year, month - 1, day);
+            if (isNaN(inputDate)) return false;
+
+        const loadVal = $('#date_load').val();
+        const unloadVal = $('#date_unload').val();
+            if (!loadVal || !unloadVal) return false;
+
+        const [lday, lmonth, lyear] = loadVal.split("-");
+        const [uday, umonth, uyear] = unloadVal.split("-");
+
+        const loadDate = new Date(lyear, lmonth - 1, lday);
+        const unloadDate = new Date(uyear, umonth - 1, uday);
+
+        return inputDate >= loadDate && inputDate <= unloadDate;
+    });
+
 /***  Validator [JQuery Validation]  ***/
     const validator = $('#transport-form').validate({
         ignore: ":hidden:not(.always-validate)",                // Skip hidden fields unless forced
@@ -566,18 +761,20 @@ $(document).ready(function () {
         },
         onclick: false,
         rules: {
+            // Transport
             slot: { required: true, rangelength: [5, 35], pattern: "^[A-Za-z0-9_]+$" },
             cmr: { required: true, rangelength: [5, 35], pattern: "^[A-Za-z0-9\-]+$" },
-            type: { required: true, notPlaceholder: true },
+            type: { required: true },
             issuer: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
             supplier: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
             transport: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
             date_load: { required: true, noFutureDate: true },
             date_unload: { required: true, noFutureDate: true, dateAfterOrEqual: "#date_load" },
             container: { required: true, rangelength: [3, 50], pattern: "^[A-Za-z][A-Za-z ]*$" },
+            // Quantity
             kg_load: { required: true, number: true, min: 0 },
-            cooling: { required: true, notPlaceholder: true },
-            price_typology: { required: true, notPlaceholder: true },
+            cooling: { required: true },
+            price_typology: { required: true },
             price_value: { 
                 required: {
                     depends: function() {
@@ -696,6 +893,7 @@ $(document).ready(function () {
 
                 targetStep.addClass('active').show();
                 formSubtitle();
+                updateButtonVisibility();
 
                     $('html, body').animate({
                         scrollTop: $(firstError).offset().top - 100
@@ -704,27 +902,292 @@ $(document).ready(function () {
         }
     });
 
-//  Handle next/previous button clicks with validation
-    /*window.ButtonClick = function (step) {
-        const current = $('fieldset:visible');
-        const currentStep = current.data('step');
-        const nextStep = currentStep + step;
+/***  Add validation to dynamically added partial row  ***/
+    function addValidationToPartialRow($row) {
+        if ($row.hasClass('partial-row-template')) {
+            return; // Skip validation on the hidden template
+        }
+        
+        // Loop through inputs/selects inside the given row
+        $row.find('input, select').each(function () {
+            const name = $(this).attr('name');
 
-            if (step === 1 && !validator.form()) {
-                return false;   
+            if (name.includes('destination')) {
+                $(this).rules('add', {
+                    required: true,
+                    messages: { required: "Campo obbligatorio." }
+                });
             }
 
-        $('fieldset').removeClass('active').hide();
-        const next = $('fieldset[data-step="' + nextStep + '"]').addClass('active').fadeIn();
+            if (name.includes('exw')) {
+                $(this).rules('add', {
+                    required: true,
+                    messages: { required: "Campo obbligatorio." }
+                });
+            }
+
+            if (name.includes('date')) {
+                $(this).rules('add', {
+                    required: true,
+                    noFutureDate: true,
+                    dateRangeLoadUnload: true,
+                    messages: {
+                        required: "Campo obbligatorio.",
+                        noFutureDate: "Inserire una data valida. Non sono permesse date future.",
+                        dateRangeLoadUnload: 'La data deve essere tra carico e scarico.'
+                    }
+                });
+            }
+
+            if (name.includes('place')) {
+                $(this).rules('add', {
+                    required: true,
+                    rangelength: [3, 50],
+                    pattern: /^[A-Za-z][A-Za-z ]*$/,
+                    messages: {
+                        required: "Campo obbligatorio.",
+                        rangelength: 'Min 3, max 50 caratteri.',
+                        pattern: 'Solo lettere e spazi (senza spazio iniziale).'
+                    }
+                });
+            }
+
+            if (name.includes('q_unloaded')) {
+                $(this).rules('add', {
+                    required: true,
+                    number: true,
+                    min: 0,
+                    messages: {
+                        required: "Campo obbligatorio.",
+                        number: 'Deve essere un numero valido.',
+                        min: 'Non può essere negativo.'
+                    }
+                });
+            }
+
+            if (name.includes('invoice')) {
+                $(this).rules('add', {
+                    required: true,
+                    messages: { required: "Campo obbligatorio." }
+                });
+            }
+        });
+        /*$row.find('.destination').rules("add", {
+            required: true,
+            rangelength: [3, 50],
+            pattern: /^[A-Za-z ]+$/,
+            messages: {
+                required: "Campo obbligatorio.",
+                rangelength: "Usare almeno 3 e al massimo 50 caratteri.",
+                pattern: "Destinazione può contenere lettere e spazi (senza spazio iniziale)."
+            }
+        });
+        $row.find('.exw').rules("add", {
+            required: true,
+            notPlaceholder: true,
+            messages: { 
+                required: "Campo obbligatorio.",
+                notPlaceholder: "Selezionare un'opzione."
+            }
+        });
+        $row.find('.date').rules("add", {
+            required: true,
+            noFutureDate: true,
+            dateRangeLoadUnload: true,
+            messages: {
+                required: "Campo obbligatorio.",
+                noFutureDate: "Inserire una data valida. Non sono permesse date future.",
+                dateRangeLoadUnload: ""
+            }
+        });
+        $row.find('.place').rules("add", {
+            required: true,
+            rangelength: [3, 50],
+            pattern: /^[A-Za-z][A-Za-z ]*$/,
+            messages: {
+                required: "Campo obbligatorio.",
+                rangelength: "Usare almeno 3 e al massimo 50 caratteri.",
+                pattern: "Luogo può contenere solo lettere e spazi (senza spazio iniziale)."
+            }
+        });
+        $row.find('.q_unloaded').rules("add", {
+            required: true,
+            number: true,
+            messages: {
+                required: "Campo obbligatorio.",
+                number: "Quantità scaricata deve essere un numero positivo."
+            }
+        });
+        $row.find('.invoice').rules("add", {
+            required: true,
+            number: true,
+            messages: {
+                required: "Campo obbligatorio.",
+                number: "Fattura deve essere un numero positivo."
+            }
+        });
+
+        // Set up datepicker again for the new row
+        $row.find('.date').datepicker({
+            format: 'dd-mm-yyyy',
+            endDate: new Date(),
+            autoclose: true
+        });*/
+    }
+
+/***  Initialize validation on existing partial rows  ***/
+    $('#partials tbody tr').not('.partial-row-template').each(function () {
+        addValidationToPartialRow($(this));
+    });
+
+
+/***  Bind type selection to fieldsets  ***/
+    $('#type').on('change', function () {
+        updateStepFlow();
+    });
+
+/***  Bind next button to navigation  ***/
+    $(".next").on('click', function () {
+        const $current = $('fieldset.active');
+        let allValid = true;
+
+        $current.find(':input:visible').each(function() {
+            if (!validator.element(this)) {
+                allValid = false;
+            }
+        });
+
+            if (!allValid) {
+                return;  // stop navigation if validation fails
+            }
+
+        const currentStep = $current.data('step');
+        let nextStep = currentStep + 1;
+
+            // Skip step 3 if type === 'F'
+            if (nextStep === 3 && $('#type').val() === 'F') {
+                nextStep = 4;
+            }
+
+        $current.removeClass('active').hide();
+        const $next = $('fieldset[data-step="' + nextStep + '"]');
+
+            if ($next.length) {
+                $next.addClass('active').show();
+            }
+
         formSubtitle();
-    };*/
+        updateButtonVisibility();
+
+        $('html, body').animate({ scrollTop: 0 }, 200);
+    });
+
+/***  Bind previous button to navigation  ***/
+    $(".prev").on('click', function () {
+        const $current = $('fieldset.active');
+        const currentStep = $current.data('step');
+        let prevStep = currentStep - 1;
+
+            // Skip step 3 going backward if type = 'F'
+            if (prevStep === 3 && $('#type').val() === 'F') {
+                prevStep = 2;
+            }
+
+        $current.removeClass('active').hide();
+
+        const $prev = $('fieldset[data-step="' + prevStep + '"]');
+            if ($prev.length) {
+                $prev.addClass('active').show();
+            }
+
+        formSubtitle();
+        updateButtonVisibility();
+
+        $('html, body').animate({ scrollTop: 0 }, 200);
+    });
+
+/***  Reindex partial rows  ***/
+    function reindexPartialRows() {
+        $('#partials tbody tr').not('.partial-row-template').each(function(index) {
+            $(this).find('input, select').each(function () {
+                const baseName = $(this).attr('name');
+                if (baseName && baseName.includes('[]')) {
+                    const clean = baseName.replace('[]', '');
+                    $(this).attr('name', clean + '[' + index + ']');
+                }
+            });
+        });
+    }
+
+/*** Add new partial row on button click ***/
+    $('.add').on('click', function () {
+        const $template = $('.partial-row-template').clone()
+            .removeClass('partial-row-template d-none')   // show it
+            .removeAttr('style');                         // remove hidden style if any
+
+        const $tbody = $('#partials tbody');
+
+        // Clear fields and errors
+        $template.find('input, select').val('');
+        $template.find('.is-invalid').removeClass('is-invalid');
+        $template.find('.invalid-feedback').remove();
+        $template.find('.error-placeholder').empty();
+
+        // Remove IDs to prevent duplicates
+        $template.find('[id]').removeAttr('id');
+
+        // Append and reindex
+        $tbody.append($template);
+        reindexPartialRows();
+
+        // Reinit datepicker
+        $template.find('.date').datepicker({
+            format: 'dd-mm-yyyy',
+            endDate: new Date(),
+            autoclose: true
+        });
+
+        // Apply validation
+        addValidationToPartialRow($template);
+    });
+
+/***  Delete partial row on delete button click  ***/
+    $('#partials').on('click', '.delete-btn', function () {
+        //const $rows = $('#partials tbody tr').not('.partial-row-template'); // exclude template row if any
+        const $rows = $("#partials tbody tr").filter(function () {
+            return !$(this).hasClass("partial-row-template") && $(this).css("display") !== "none";
+        });
+
+            if ($rows.length > 1) {
+                const $row = $(this).closest('tr');
+
+                // Remove validation
+                $row.find('input, select').each(function () {
+                    $(this).rules('remove');
+                });
+
+                $row.remove();
+
+                // Reindex again
+                reindexPartialRows();
+            } else {
+                alert('Deve esserci almeno una riga di scarico parziale.');
+            }
+    });
 
 //  On submit validate form and AJAX form submission
     $("#transport-form").submit(function (e) {
         e.preventDefault();                             // Prevent the default form submission
 
         if ($(this).valid()) {
-            const formData = $(this).serialize();         // Serialize form data
+            // Clone the form without the template row
+            const $clonedForm = $('#transport-form').clone();
+
+            // Remove .partial-row-template rows before serializing
+            $clonedForm.find('.partial-row-template').remove();
+
+            // Now safely serialize only real input fields
+            const formData = $clonedForm.serialize();
 
             $.ajax({
                 url: $(this).attr("action"),            // PHP file to handle the submission
@@ -739,12 +1202,41 @@ $(document).ready(function () {
                         //  Redirect to users page with newId in the query string
                         window.location.href = '/platform?created=' + created + '#id-' + created;
                         document.getElementById('id-' + response.created)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    } else {
-                        $(".invalid-feedback").remove();                    
-                        $.each(response.errors, function (field, message) {
-                            const input = $("[name='" + field + "']");
-                            input.addClass("is-invalid");
-                            input.after('<div class="invalid-feedback">' + message + '</div>');
+                    } else if (response.errors) {
+                        // Clear old validation errors
+                        $(".invalid-feedback").remove();
+                        $("input, select, textarea").removeClass("is-invalid");
+
+                        // Process each error field
+                        $.each(response.errors, function(field, message) {
+                            // Match field like "destination[1]"
+                            const match = field.match(/^([^\[]+)\[(\d+)\]$/);
+                            if (match) {
+                                const baseName = match[1];       
+                                const idx = parseInt(match[2], 10) - 1;   // <-- subtract 1 here
+
+                                const $rows = $("#partials tbody tr").not(".partial-row-template");
+
+                                if (idx >= 0 && idx < $rows.length) {
+                                    const $row = $rows.eq(idx);
+                                    const $input = $row.find('[name="' + baseName + '[]"]');
+
+                                        if ($input.length) {
+                                            $input.addClass("is-invalid");
+                                            $input.next(".invalid-feedback").remove();
+                                            $input.after('<div class="invalid-feedback">' + message + '</div>');
+                                        }
+                                }
+                            } else {
+                                // Non-array field errors, unchanged
+                                const $input = $('[name="' + field + '"]');
+
+                                    if ($input.length) {
+                                        $input.addClass("is-invalid");
+                                        $input.next(".invalid-feedback").remove();
+                                        $input.after('<div class="invalid-feedback">' + message + '</div>');
+                                    }
+                            }
                         });
                     }
                 },
@@ -754,6 +1246,52 @@ $(document).ready(function () {
             });
         }
     });
+    
+    /***  Initial functions for Form Subtitle and Button Change on Fieldset  ***/
+    formSubtitle();
+    updateButtonVisibility();
+    updateStepFlow();
 });
+
+/***  Method to add new partial rows  ***/     
+    //receives table id
+    /*function addRowsTable(id){
+        var table = document.getElementById(id);
+        var me = this;
+        
+        if(document.getElementById(id)){
+            var row1 = table.rows[1].outerHTML;
+                
+            //adds index-id in cols with class .tbl_id
+            function setIds(){
+                var tbl_id = document.querySelectorAll('#'+ id +' .tbl_id');
+                        
+                for(var i=0; i < tbl_id.length; i++) 
+                    tbl_id[i].innerHTML = i+1;
+
+                    $(".date").datepicker({
+                        format: 'dd-mm-yyyy',
+                        autoclose: true,
+                        todayHighlight: true,
+                        language: 'it-IT',
+                    });
+            }
+                
+            //add row after clicked row; receives clicked button in row
+            me.addRow = function(btn){
+                btn ? btn.parentNode.parentNode.insertAdjacentHTML('afterend', row1): table.insertAdjacentHTML('beforeend', row1);
+                setIds();
+            }
+                
+            //delete clicked row; receives clicked button in row
+            me.delRow = function(btn){
+                btn.parentNode.parentNode.outerHTML = '';
+                setIds();
+            }
+        }
+    }  */
+           
+/***  create object of addRowsTable(), pass the table id  ***/
+    /*var partRows = new addRowsTable('partials');  */
 </script> 
 {% endblock %}

@@ -216,7 +216,7 @@ class AdminUsersController {
                         'success' => true,
                         'member' => $member,
                         'format_bday' => $formatBday,
-                        'crf_token' => $csrfToken
+                        'csrf_token' => $csrfToken
                     ]);
                     exit;
             } else {
