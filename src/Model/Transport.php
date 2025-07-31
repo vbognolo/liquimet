@@ -9,22 +9,22 @@ class Transport{
         $this->db = $db;                                 
     }
     
-/********************************************************
- * SELECT statements to get transports 
- *    Get Transport By ID          => get($id)
- *    Get Note By Transport ID     => getNote($id)
- *    Get Platform Transports      => getAllTransports()
- *    Get All Full Transports      => getFull()
- *    Get All Partial Transports   => getPartial()  
- *******************************************************/  
+/*------------------------ SELECT -------------------------/
+/    getAllTransports()     => get transports by type      /
+/    get($id)               => get single by ID            /
+/    getNote($id)                                          /
+/    getAllTransports()     => get platform transports     /
+/    getFulls()                                            /
+/    getPartials()                                         /
+/---------------------------------------------------------*/  
     public function get(int $id): array {
         $sql = "SELECT t.id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, t.date_unload, 
                        t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, t.seo,
                        u.id_user
                 FROM `transports` AS t
-                JOIN `users` AS u ON t.id_user = u.id_user 
+                JOIN `users`      AS u ON t.id_user = u.id_user 
                 WHERE t.id_transport = :id_transport
-                    LIMIT 1"; 
+                LIMIT 1"; 
         
         $transport = $this->db->runSQL($sql, ['id_transport' => $id])->fetch();  
             return $transport ?: [];
@@ -41,12 +41,7 @@ class Transport{
         return $this->db->runSQL($sql, ['id_transport' => $id])->fetchAll() ?: [];
     }
 
-    public function getAllTransports(int $limit, int $offset, ?string $type = null): array {
-        $params = [
-            'limit' => $limit,
-            'offset' => $offset
-        ];
-
+    public function getAllTransports(int $limit, int $offset, ?string $type = null): array {                                             
         $sql = "SELECT t.id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, 
                        t.date_unload, t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, 
                        q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.mwh, q.liquid_density, q.gas_weight, 
@@ -56,29 +51,29 @@ class Transport{
                 FROM `transports`       AS t
                 LEFT JOIN `quantities`  AS q ON t.id_transport = q.id_transport
                 LEFT JOIN `notes`       AS n ON t.id_transport = n.id_transport
-                LEFT JOIN `users`       AS u ON t.id_user = u.id_user";
+                LEFT JOIN `users`       AS u ON t.id_user      = u.id_user";
 
+        $params = ['limit' => $limit, 'offset' => $offset];
             if ($type !== null) {
                 $sql .= " WHERE t.type = :type ";
                 $params['type'] = $type;
             }
-                    
-        $sql .= "ORDER BY t.id_transport DESC LIMIT :limit OFFSET :offset";
-        $stmt = $this->db->prepare($sql);
 
-            // Bind parameters explicitly, using PDO::PARAM_INT for limit and offset
-            foreach ($params as $key => $value) {
-                if (in_array($key, ['limit', 'offset'])) {
-                    $stmt->bindValue(':' . $key, $value, \PDO::PARAM_INT);
-                } else {
-                    $stmt->bindValue(':' . $key, $value);
-                }
-            }
+            $sql .= " ORDER BY t.id_transport DESC LIMIT :limit OFFSET :offset";
 
-        $stmt->execute();
-        return $stmt->fetchAll();
+            return $this->db->runSQL($sql, $params)->fetchAll();
+    }
 
-        //return $this->db->runSQL($sql, ['type' => $type, 'limit' => $limit, 'offset' => $offset])->fetchAll();
+        public function totalTransports(?string $type = null): int {
+        $sql = "SELECT COUNT(*) FROM `transports`";
+        $params = [];
+
+        if ($type !== null) {
+            $sql .= " WHERE type = :type";
+            $params['type'] = $type;
+        }
+
+        return (int) $this->db->runSQL($sql, $params)->fetchColumn();      
     }
     
 //  ===> GET ALL TRANSPORTS    [select all -> possibility to choose by id_user and transport number limit]
@@ -109,10 +104,10 @@ class Transport{
                        q.mj_kg, q.pcs_ghv, q.volume_mc, q.volume_nmc, q.smc_mc, q.gas_nmc, q.gas_smc, q.smc_kg,
                        n.content, n.created,
                        u.username AS author
-                FROM `transports` AS t
+                FROM `transports`      AS t
                 LEFT JOIN `quantities` AS q ON t.id_transport = q.id_transport
-                JOIN `users` AS u ON t.id_user = u.id_user
-                LEFT JOIN `notes` AS n ON t.id_transport = n.id_transport
+                JOIN `users`           AS u ON t.id_user = u.id_user
+                LEFT JOIN `notes`      AS n ON t.id_transport = n.id_transport
                 WHERE t.type = :type
                     ORDER BY t.id_transport DESC"; 
         
@@ -389,21 +384,25 @@ class Transport{
  *      Count All Transports:            => totalTransport())
  *      Count All Transports By Type:    => totalTransports($type)
  *******************************************************************/
-    public function totalTransport(): int {
+    /*public function totalTransport(): int {
         $sql = "SELECT COUNT(id_transport) 
                 FROM `transports`";    
              
         return (int) $this->db->runSQL($sql)->fetchColumn();                      // return count from result set
     }
 
-    public function totalTransports(string $type): int {
-        $sql = "SELECT COUNT(id_transport) 
-                FROM `transports`
-                WHERE type = :type";    
-             
-        return (int) $this->db->runSQL($sql, ['type' => $type])->fetchColumn();                      
-    }
+    public function totalTransport(?string $type = null): int {
+        $sql = "SELECT COUNT(*) FROM `transports`";
+        $params = [];
 
+        if ($type !== null) {
+            $sql .= " WHERE type = :type";
+            $params['type'] = $type;
+        }
+
+        return (int) $this->db->runSQL($sql, $params)->fetchColumn();      
+    }
+*/
 /***************************************************************
  *  Search Statements For Transports 
  *      Get Number of Search Matches:    => searchCount($term)

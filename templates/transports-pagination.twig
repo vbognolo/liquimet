@@ -1,0 +1,44 @@
+{# Table Pagination Row #}
+<tr>
+    {% if total > limit %}
+        <td colspan="14" class="bg-light align-middle my-auto p-1">
+            <nav class="my-1 mx-auto">
+                <ul class="pagination justify-content-center my-auto">
+                    {# Previous Page Link #}
+                    <li class="page-item {% if page <= 1 %}disabled{% endif %}">
+                        <button class="page-link transport-page" data-page="{{ page - 1 }}">
+                            &laquo;
+                        </button>
+                    </li>
+
+                    {% for i in 1..pagination %}
+                        <li class="page-item {% if i == page %}active{% endif %}">
+                            <button class="page-link transport-page" data-page="{{ i }}">
+                                {{ i }}
+                            </button>
+                        </li>
+                    {% endfor %}
+
+                    {# Next Page Link #}
+                    <li class="page-item {% if page >= pagination %}disabled{% endif %}">
+                        <button class="page-link transport-page" data-page="{{ page + 1 }}">
+                            &raquo;
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </td>
+    {% endif %}
+</tr>
+{# END #}
+
+{# Count Total Row #}
+<tr>
+    <td colspan="14" class="text-light text-shadow-dark align-middle mb-2 p-2">
+        <h5 class="align-middle my-auto">
+            TOTALE <i class="bi bi-fuel-pump-fill ms-1"></i>:
+                <span> {{ total }} </span>
+        </h5> 
+    </td>
+</tr>
+{# END #}

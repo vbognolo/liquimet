@@ -135,7 +135,7 @@
                         <div class="card recent-card mt-1 mb-3">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="card-title text-secondary p-1 my-auto"> 
-                                    TRASPORTI <span class="text-primary">&nbsp;&#124; RECENTI</span>
+                                    TRASPORTI <span class="text-primary">&nbsp;&#124; RECENTI (10)</span>
                                 </h5>
                             </div>
 
@@ -151,7 +151,7 @@
                                                 <th scope="col"> Univoco </th>
                                                 <th scope="col"> Data </th>
                                                 <th scope="col"> Cont/ATB </th>
-                                                <th scope="col"> Membro </th>
+                                                <th scope="col"> User </th>
                                             </tr>
                                         </thead>
                                             
@@ -165,7 +165,7 @@
                                                     {% set id = id - 1 %}
                                                 </td>
                                                 <td class="p-2"> {{ r.type|upper }} </td>
-                                                <td class="p-2"> [...] _{{ r.seo|upper }} </td>
+                                                <td class="p-2"> (...) _{{ r.seo|upper }} </td>
                                                 <td class="p-2"> {{ r.cmr|upper }} </td>
                                                 <td class="p-2"> {{ r.univoco|upper }} </td>
                                                 <td class="p-2"> 

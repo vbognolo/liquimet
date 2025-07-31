@@ -40,7 +40,7 @@ class AdminController {
             'session' => $sessionData,
             'user' => $this->mUser->get($this->session->getID()),
                 // Fetch Dashboard Data
-            'allTransports' => $this->mTrans->totalTransport(),
+            'allTransports' => $this->mTrans->totalTransports(),
             'fullTransports' => $this->mTrans->totalTransports('F'),
             'partTransports' => $this->mTrans->totalTransports('P'),
             'unloadedSum' => $this->mQty->sumUnloaded(),

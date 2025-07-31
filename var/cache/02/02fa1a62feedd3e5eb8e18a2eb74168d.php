@@ -1,0 +1,456 @@
+<?php
+
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Extension\CoreExtension;
+use Twig\Extension\SandboxExtension;
+use Twig\Markup;
+use Twig\Sandbox\SecurityError;
+use Twig\Sandbox\SecurityNotAllowedTagError;
+use Twig\Sandbox\SecurityNotAllowedFilterError;
+use Twig\Sandbox\SecurityNotAllowedFunctionError;
+use Twig\Source;
+use Twig\Template;
+use Twig\TemplateWrapper;
+
+/* transports.twig */
+class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
+{
+    private Source $source;
+    /**
+     * @var array<string, Template>
+     */
+    private array $macros = [];
+
+    public function __construct(Environment $env)
+    {
+        parent::__construct($env);
+
+        $this->source = $this->getSourceContext();
+
+        $this->blocks = [
+            'title' => [$this, 'block_title'],
+            'head' => [$this, 'block_head'],
+            'search' => [$this, 'block_search'],
+            'browse' => [$this, 'block_browse'],
+            'content' => [$this, 'block_content'],
+            'jquery' => [$this, 'block_jquery'],
+            'page_script' => [$this, 'block_page_script'],
+        ];
+    }
+
+    protected function doGetParent(array $context): bool|string|Template|TemplateWrapper
+    {
+        // line 1
+        return "layout.twig";
+    }
+
+    protected function doDisplay(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        $this->parent = $this->loadTemplate("layout.twig", "transports.twig", 1);
+        yield from $this->parent->unwrap()->yield($context, array_merge($this->blocks, $blocks));
+    }
+
+    // line 2
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_title(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        yield " Piattaforma ";
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate("now", "Y"), "html", null, true);
+        yield " ";
+        yield from [];
+    }
+
+    // line 3
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_head(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        // line 4
+        yield "    ";
+        // line 5
+        yield "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css\" 
+        integrity=\"sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=\" crossorigin=\"anonymous\">
+";
+        yield from [];
+    }
+
+    // line 9
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_search(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        // line 10
+        yield "    ";
+        // line 11
+        yield "    <section class=\"row my-auto mx-auto search-header\">
+        <div class=\"my-auto m-0 search-bar\">
+            <form id=\"search-form\">
+                <button type=\"button\" class=\"my-1 search-btn\">
+                    <i class=\"bi bi-search\"></i>
+                </button>
+                <input type=\"text\" class=\"my-1 search-input\" id=\"search\" placeholder=\"      Cerca..\" />  
+            </form>
+        </div>
+    </section>
+";
+        yield from [];
+    }
+
+    // line 23
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_browse(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        // line 24
+        yield "    ";
+        // line 25
+        yield "    <section class=\"row my-auto mx-auto browse-header\">
+        <div class=\"my-auto m-0 browse-bar\">
+            <form id=\"browse-form\" enctype=\"multipart/form-data\" method=\"POST\" action=\"";
+        // line 27
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["doc_root"] ?? null), "html", null, true);
+        yield "import-csv\">
+                <label for=\"browse-input\" class=\"my-1 browse-btn\">
+                    <i class=\"bi bi-upload\"></i>
+                </label>
+                
+                <input type=\"file\" class=\"my-1 browse-input\" id=\"browse-input\" name=\"browse-input\" 
+                    onchange=\"\$('.browse-label').val(\$(this).val()); \$('.browse-group').css('display', 'block');\" />
+                <input type=\"text\" class=\"my-1 browse-label\" readonly />
+                
+                <span class=\"my-1 browse-group\"> 
+                    <button type=\"button\" class=\"my-1 remove-btn\" onclick=\"document.querySelector('.browse-label').value=''; \$('.browse-group').css('display', 'none');\">
+                        <i class=\"bi bi-x-circle\"></i>
+                    </button>
+
+                    <button type=\"button\" class=\"my-1 upload-btn\">
+                        <i class=\"bi bi-check-circle\"></i>
+                    </button>
+                </span>
+                
+                <!--<button type=\"button\" class=\"my-1 browse-btn\">
+                    <i class=\"bi bi-upload\"></i>
+                </button>-->
+                
+                <!--<div class=\"input-group my-1 browse-group\">
+                    <input type=\"text\" class=\"my-1 browse-label\" name=\"browse-label\" readonly />  
+                        <button type=\"button\" class=\"my-1 upload-btn\">
+                            <span>
+                                <i class=\"bi bi-plus-circle\"></i>
+                            </span>
+                        </button>
+
+                        <button type=\"button\" class=\"my-1 remove-btn\">
+                            <span>
+                                <i class=\"bi bi-x-circle\"></i>
+                            </span>
+                        </button>
+                </div>-->
+            </form>
+        </div>
+    </section>
+    <!--    ===>    END BROWSE FILE BAR    <===    -->
+";
+        yield from [];
+    }
+
+    // line 70
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_content(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        yield " 
+    ";
+        // line 71
+        yield from $this->loadTemplate("shared/transports-navigation.twig", "transports.twig", 71)->unwrap()->yield($context);
+        // line 72
+        yield "
+<section class=\"col-12 m-auto\">
+    <div class=\"d-flex justify-content-center table-responsive\">          
+        <table class=\"table table-hover table-light table-stripped caption-top text-center platform\" id=\"transport-table\">
+            <caption class=\"px-3 mb-2 text-white text-shadow-dark\" style=\"font-size: 1.9rem\"> 
+                <span>
+                    <i class=\"bi bi-arrow-bar-right my-1 fs-3\"></i> 
+                        Trasporti 
+                </span>
+            </caption>
+
+            ";
+        // line 83
+        yield from $this->loadTemplate("shared/transports-head.twig", "transports.twig", 83)->unwrap()->yield($context);
+        // line 84
+        yield "
+            <tbody class=\"table-group-divider\" id=\"transport-tbody\">
+                ";
+        // line 86
+        yield from $this->loadTemplate("transports-ajax.twig", "transports.twig", 86)->unwrap()->yield($context);
+        // line 87
+        yield "            </tbody>
+
+            <tfoot id=\"transport-tfoot\">
+                ";
+        // line 90
+        yield from $this->loadTemplate("shared/pagination.twig", "transports.twig", 90)->unwrap()->yield(CoreExtension::merge($context, ["page" =>         // line 91
+($context["page"] ?? null), "csrf_token" =>         // line 92
+($context["csrfToken"] ?? null)]));
+        // line 94
+        yield "            </tfoot>
+        </table>
+    </div>    
+</section> 
+
+<input type=\"hidden\" name=\"csrf_token\" value=\"";
+        // line 99
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["csrf_token"] ?? null), "html", null, true);
+        yield "\">
+";
+        yield from [];
+    }
+
+    // line 102
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_jquery(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        // line 103
+        yield "    ";
+        // line 104
+        yield "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
+        integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
+        crossorigin=\"anonymous\">
+</script>
+";
+        yield from [];
+    }
+
+    // line 110
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_page_script(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        // line 111
+        yield "<script>
+\$(document).ready(function () {
+    \$(\"body\").tooltip({ 
+        selector: '[data-bs-toggle = tooltip]',
+        placement: 'right' 
+    });
+
+    \$(\"#search\").keyup(function () {
+        var value = this.value.toLowerCase().trim();
+
+        \$(\".platform\").each(function (index) {
+            if (index !== -1) {
+
+                \$(this).find(\"td\").each(function () {
+                    var id = \$(this).text().toLowerCase().trim();
+                    var not_found = (id.indexOf(value) == -1);
+                    
+                    \$(this).closest('tr').toggle(!not_found);
+                        return not_found;
+                });
+            } 
+        });
+    });
+
+    \$(\"#search\").keydown(function (e) {
+        if (e.keyCode == 13) { 
+            e.preventDefault();
+                return false;
+        }
+    });
+});  
+</script>   
+";
+        yield from [];
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function getTemplateName(): string
+    {
+        return "transports.twig";
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function isTraitable(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function getDebugInfo(): array
+    {
+        return array (  250 => 111,  243 => 110,  234 => 104,  232 => 103,  225 => 102,  218 => 99,  211 => 94,  209 => 92,  208 => 91,  207 => 90,  202 => 87,  200 => 86,  196 => 84,  194 => 83,  181 => 72,  179 => 71,  170 => 70,  123 => 27,  119 => 25,  117 => 24,  110 => 23,  95 => 11,  93 => 10,  86 => 9,  79 => 5,  77 => 4,  70 => 3,  57 => 2,  46 => 1,);
+    }
+
+    public function getSourceContext(): Source
+    {
+        return new Source("{% extends 'layout.twig' %}
+{% block title %} Piattaforma {{ 'now'|date('Y') }} {% endblock %}
+{% block head %}
+    {# Bootstrap Datepicker - CSS #}
+    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css\" 
+        integrity=\"sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=\" crossorigin=\"anonymous\">
+{% endblock %}
+
+{% block search %}
+    {# Search Bar #}
+    <section class=\"row my-auto mx-auto search-header\">
+        <div class=\"my-auto m-0 search-bar\">
+            <form id=\"search-form\">
+                <button type=\"button\" class=\"my-1 search-btn\">
+                    <i class=\"bi bi-search\"></i>
+                </button>
+                <input type=\"text\" class=\"my-1 search-input\" id=\"search\" placeholder=\"      Cerca..\" />  
+            </form>
+        </div>
+    </section>
+{% endblock %}
+ 
+{% block browse %}
+    {# Browse Bar #}
+    <section class=\"row my-auto mx-auto browse-header\">
+        <div class=\"my-auto m-0 browse-bar\">
+            <form id=\"browse-form\" enctype=\"multipart/form-data\" method=\"POST\" action=\"{{ doc_root }}import-csv\">
+                <label for=\"browse-input\" class=\"my-1 browse-btn\">
+                    <i class=\"bi bi-upload\"></i>
+                </label>
+                
+                <input type=\"file\" class=\"my-1 browse-input\" id=\"browse-input\" name=\"browse-input\" 
+                    onchange=\"\$('.browse-label').val(\$(this).val()); \$('.browse-group').css('display', 'block');\" />
+                <input type=\"text\" class=\"my-1 browse-label\" readonly />
+                
+                <span class=\"my-1 browse-group\"> 
+                    <button type=\"button\" class=\"my-1 remove-btn\" onclick=\"document.querySelector('.browse-label').value=''; \$('.browse-group').css('display', 'none');\">
+                        <i class=\"bi bi-x-circle\"></i>
+                    </button>
+
+                    <button type=\"button\" class=\"my-1 upload-btn\">
+                        <i class=\"bi bi-check-circle\"></i>
+                    </button>
+                </span>
+                
+                <!--<button type=\"button\" class=\"my-1 browse-btn\">
+                    <i class=\"bi bi-upload\"></i>
+                </button>-->
+                
+                <!--<div class=\"input-group my-1 browse-group\">
+                    <input type=\"text\" class=\"my-1 browse-label\" name=\"browse-label\" readonly />  
+                        <button type=\"button\" class=\"my-1 upload-btn\">
+                            <span>
+                                <i class=\"bi bi-plus-circle\"></i>
+                            </span>
+                        </button>
+
+                        <button type=\"button\" class=\"my-1 remove-btn\">
+                            <span>
+                                <i class=\"bi bi-x-circle\"></i>
+                            </span>
+                        </button>
+                </div>-->
+            </form>
+        </div>
+    </section>
+    <!--    ===>    END BROWSE FILE BAR    <===    -->
+{% endblock %}
+
+{% block content %} 
+    {% include 'shared/transports-navigation.twig' %}
+
+<section class=\"col-12 m-auto\">
+    <div class=\"d-flex justify-content-center table-responsive\">          
+        <table class=\"table table-hover table-light table-stripped caption-top text-center platform\" id=\"transport-table\">
+            <caption class=\"px-3 mb-2 text-white text-shadow-dark\" style=\"font-size: 1.9rem\"> 
+                <span>
+                    <i class=\"bi bi-arrow-bar-right my-1 fs-3\"></i> 
+                        Trasporti 
+                </span>
+            </caption>
+
+            {% include 'shared/transports-head.twig' %}
+
+            <tbody class=\"table-group-divider\" id=\"transport-tbody\">
+                {% include 'transports-ajax.twig' %}
+            </tbody>
+
+            <tfoot id=\"transport-tfoot\">
+                {% include 'shared/pagination.twig' with {
+                    page: page,
+                    csrf_token: csrfToken
+                } %}
+            </tfoot>
+        </table>
+    </div>    
+</section> 
+
+<input type=\"hidden\" name=\"csrf_token\" value=\"{{ csrf_token }}\">
+{% endblock %}
+   
+{% block jquery %}
+    {# JQuery #}
+<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
+        integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
+        crossorigin=\"anonymous\">
+</script>
+{% endblock %}
+
+{% block page_script %}
+<script>
+\$(document).ready(function () {
+    \$(\"body\").tooltip({ 
+        selector: '[data-bs-toggle = tooltip]',
+        placement: 'right' 
+    });
+
+    \$(\"#search\").keyup(function () {
+        var value = this.value.toLowerCase().trim();
+
+        \$(\".platform\").each(function (index) {
+            if (index !== -1) {
+
+                \$(this).find(\"td\").each(function () {
+                    var id = \$(this).text().toLowerCase().trim();
+                    var not_found = (id.indexOf(value) == -1);
+                    
+                    \$(this).closest('tr').toggle(!not_found);
+                        return not_found;
+                });
+            } 
+        });
+    });
+
+    \$(\"#search\").keydown(function (e) {
+        if (e.keyCode == 13) { 
+            e.preventDefault();
+                return false;
+        }
+    });
+});  
+</script>   
+{% endblock %}", "transports.twig", "C:\\wamp64\\www\\liquimet\\templates\\transports.twig");
+    }
+}

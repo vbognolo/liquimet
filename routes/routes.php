@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 use Liquimet\Controller\LoginController;
 use Liquimet\Controller\AdminController;
 use Liquimet\Controller\AdminUsersController;
@@ -10,71 +11,75 @@ use Liquimet\Controller\PlatformController;
         throw new \Exception("Router not initialized before loading routes.php");
     }
 
-/**********************
- *  Login Controller  *    
- **********************/
+/* ------------------------ *
+ *     LOGIN CONTROLLER     *    
+ * ------------------------ */
 $LoginController = new LoginController($twig, $session, $mUser, $loginAttempt);
 // GET methods
-$router->get('login', [$LoginController, 'renderLoginPage']);
-$router->post('login', [$LoginController, 'login']);
-//$router->get('login', [$LoginController, 'lostPasswordPage']);
-$router->post('password-lost', [$LoginController, 'sendResetLink']);
-$router->get('password-reset', [$LoginController, 'renderResetPassword']);
-$router->post('password-reset', [$LoginController, 'updatePassword']);
+$router->get('login',             [$LoginController, 'renderLoginPage']);
+$router->get('password-reset',    [$LoginController, 'renderResetPassword']);
 $router->get('admin/login-audit', [$LoginController, 'showLoginAudit']);
-$router->get('logout', [$LoginController, 'logout']);
+$router->get('logout',            [$LoginController, 'logout']);
+// POST methods
+$router->post('login',            [$LoginController, 'login']);
+$router->post('password-lost',    [$LoginController, 'sendResetLink']);
+$router->post('password-reset',   [$LoginController, 'updatePassword']);
 
-/**********************
- *  Admin Controller  *    
- **********************/
+
+/* ------------------------ *
+ *     ADMIN CONTROLLER     *    
+ * ------------------------ */
 $AdminController = new AdminController($twig, $session, $mUser, $mTrans, $mQty);
-$router->get('admin/dashboard', [$AdminController, 'renderDashboardPage']);     // Dashboard routes
+// GET methods
+$router->get('admin/dashboard', [$AdminController, 'renderDashboardPage']);        // Dashboard routes
 
-/****************************
- *  Admin Users Controller  *    
- ****************************/
+/* ---------------------------- *
+ *    ADMIN USERS CONTROLLER    *    
+ * ---------------------------- */
 $AdminUsersController = new AdminUsersController($twig, $session,  $mUser, $mTitle);
-$router->get('admin/users', [$AdminUsersController, 'renderUsersPage']);        // Render users data
-$router->get('admin/user', [$AdminUsersController, 'registerPage']);            // Register new user
+// GET methods
+$router->get('admin/users',       [$AdminUsersController, 'renderUsersPage']);     // Render users data
+$router->get('admin/user',        [$AdminUsersController, 'registerPage']);        // Register new user
+$router->get('admin/user-modal',  [$AdminUsersController, 'renderUserModal']);     // Render user modal 
+// POST methods
+$router->post('admin/user',       [$AdminUsersController, 'register']);            // Handler for register
+$router->post('admin/user-edit',  [$AdminUsersController, 'getUserData']);         // Get user data for edit
+$router->post('user-edit',        [$AdminUsersController, 'handleEditUser']);      // Handler for user edit
+$router->post('getUserDelete',    [$AdminUsersController, 'getUserDelete']);       // Get user's name and surname for delete
+$router->post('handleDeleteUser', [$AdminUsersController, 'handleDeleteUser']);    // Handler for user delete
 
-$router->post('admin/user', [$AdminUsersController, 'register']);               // Handler for register
-$router->get('admin/user-modal', [$AdminUsersController, 'renderUserModal']);   // Render user modal 
-$router->post('admin/user-edit', [$AdminUsersController, 'getUserData']);       // Get user data for edit
-$router->post('user-edit', [$AdminUsersController, 'handleEditUser']);          // Handler for user edit
-$router->post('getUserDelete', [$AdminUsersController, 'getUserDelete']);       // Get user's name and surname for delete
-$router->post('handleDeleteUser', [$AdminUsersController, 'handleDeleteUser']); // Handler for user delete
-
-/*********************
- *  User Controller  *    
- *********************/
+/* ----------------------- *
+ *     USER CONTROLLER     *    
+ * ----------------------- */
 $UserController = new UserController($twig, $session, $mUser, $mTitle);
-$router->get('profile', [$UserController, 'renderProfilePage']);        
-$router->post('profile-edit', [$UserController, 'updateProfile']);      
-$router->post('check-username', [$UserController, 'checkUsername']);
-$router->post('check-email', [$UserController, 'checkEmail']);
+// GET methods
+$router->get('profile',           [$UserController, 'renderProfilePage']);    
+// POST methods    
+$router->post('profile-edit',     [$UserController, 'updateProfile']);      
+$router->post('check-username',   [$UserController, 'checkUsername']);
+$router->post('check-email',      [$UserController, 'checkEmail']);
 $router->post('profile-password', [$UserController, 'updatePassword']);
-$router->post('check-password', [$UserController, 'checkPassword']);
+$router->post('check-password',   [$UserController, 'checkPassword']);
 
-/*************************
- *  Platform Controller  *    
- *************************/
+/* --------------------------- *
+ *     PLATFORM CONTROLLER     *    
+ * --------------------------- */
 $PlatformController = new PlatformController($twig, $session, $mUser, $mTrans, $mQty, $mPart);
 // GET methods
-$router->get('platform', [$PlatformController, 'renderPlatformPage']);                  // Render platform data
-$router->get('transports-full', [$PlatformController, 'renderFullTransportsPage']);     // Render full transports data
-$router->get('transports-part', [$PlatformController, 'renderPartTransportsPage']);     // Render partial transports data
-$router->get('transport-modal', [$PlatformController, 'renderTransportModals']);        // Render transport modal
-$router->get('transport', [$PlatformController, 'renderNewTransportPage']);             // Render new transport 
-
+$router->get('transports',      [$PlatformController, 'viewAllTransports']);      // Render platform data
+$router->get('transports-full', [$PlatformController, 'viewFullTransports']);     // Render full transports data
+$router->get('transports-part', [$PlatformController, 'viewPartTransports']);     // Render partial transports data
+$router->get('transport-modal', [$PlatformController, 'viewTransportModal']);     // Render transport modal
+$router->get('transport',       [$PlatformController, 'viewNewTransport']);       // Render new transport 
 // POST methods
-$router->post('transport-pagination', [$PlatformController, 'renderPagination']);       // Render pagination for transports
-$router->post('transport', [$PlatformController, 'createTransport']);             // Handler for transport create
-$router->post('get-transport', [$PlatformController, 'getTransportData']);              // Get transport data for edit
-$router->post('transport-edit', [$PlatformController, 'editTransport']);          // Handler for transport edit
-$router->post('get-quantity', [$PlatformController, 'getQuantityData']);                // Get quantity data for edit
-$router->post('quantity-edit', [$PlatformController, 'editQuantity']);            // Handler for quantity edit
-$router->post('get-partial', [$PlatformController, 'getPartialData']);                  // Get partial data for edit
-$router->post('partial-edit', [$PlatformController, 'editPartial']);              // Handler for partial edit
-$router->post('get-note', [$PlatformController, 'getTransportNotes']);                  // Get transport note for edit
-$router->post('transport-note', [$PlatformController, 'editNote']);               // Handler for transport note edit
-$router->post('transport-delete', [$PlatformController, 'handleDeleteTransport']);      // Handler for transport delete
+$router->post('pagination',           [$PlatformController, 'viewPagination']);         // Render pagination for transports
+$router->post('transport',            [$PlatformController, 'createTransport']);        // Handler for transport create
+$router->post('get-transport',        [$PlatformController, 'getTransportData']);       // Get transport data for edit
+$router->post('transport-edit',       [$PlatformController, 'editTransport']);          // Handler for transport edit
+$router->post('get-quantity',         [$PlatformController, 'getQuantityData']);        // Get quantity data for edit
+$router->post('quantity-edit',        [$PlatformController, 'editQuantity']);           // Handler for quantity edit
+$router->post('get-partial',          [$PlatformController, 'getPartialData']);         // Get partial data for edit
+$router->post('partial-edit',         [$PlatformController, 'editPartial']);            // Handler for partial edit
+$router->post('get-note',             [$PlatformController, 'getTransportNotes']);      // Get transport note for edit
+$router->post('transport-note',       [$PlatformController, 'editNote']);               // Handler for transport note edit
+$router->post('transport-delete',     [$PlatformController, 'handleDeleteTransport']);  // Handler for transport delete

@@ -1,0 +1,205 @@
+<tbody class="table-group-divider">   
+            {% if transports is not empty %}
+                {% for t in transports %}
+                    {# Transport Data #}
+                    <tr class="align-middle expand" id="id-{{ t.id_transport }}">
+                        <td scope="row all">
+                            {{ loop.index }} <br>
+                            <span class="text-dark note-icon" data-bs-toggle="tooltip" data-id="{{ t.id_transport }}"
+                                title="{{ t.note ? t.note|capitalize|truncate(50) : 'N/A' }}">
+                                    <i class="bi bi-exclamation-circle"></i>
+                            </span>
+
+                            {#<button data-bs-toggle="collapse" data-bs-target="#qty-{{ t.id_transport }}"
+                                aria-expanded="false" aria-controls="qty-{{ t.id_transport }}" aria-label="Expand quantities">
+                                    <i class="bi bi-arrows-expand"></i>
+                            </button>#}
+                        </td>
+                        <td class="align-middle p-1 fw-600"> {{ t.type|upper }} </td>
+                        <td class="align-middle p-1 search word-wrap-container"> {{ t.slot|upper }} </td>
+                        <td class="align-middle p-1 search word-wrap-container"> {{ t.cmr|upper }} </td>
+                        <td class="align-middle p-1 search"> {{ t.issuer|upper }} </td>
+                        <td class="align-middle p-1 search"> {{ t.supplier|upper }} </td>
+                        <td class="align-middle p-1 search"> {{ t.transport|upper }} </td>
+                        <td class="align-middle p-1"> {{ t.univoco|upper }} </td>
+                        <td class="align-middle p-1"> {{ t.date_load|date("d/m/Y") }} </td>
+                        <td class="align-middle p-1"> {{ t.date_unload|date("d/m/Y") }} </td>
+                        <td class="align-middle p-1"> {{ t.id_month_load }} </td>
+                        <td class="align-middle p-1"> {{ t.week_unload }} </td>
+                        <td class="align-middle p-1" colspan="2"> {{ t.id_month_unload }} - {{ t.month_unload }} </td>
+                        <td class="align-middle p-1 last-border"> {{ t.container|upper }} </td>
+                        <td class="align-middle p-1 text-center">
+                            <button class="btn btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#qty-{{ t.id_transport }}"
+                                aria-expanded="false" aria-controls="qty-{{ t.id_transport }}">
+                                    <i class="bi bi-arrows-expand"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {# End Transport Data #}  
+     
+                        {# Quantity Data #}
+                        <tr class="accordion-toggle" id="{{ loop.index }}">        
+                            <td colspan="17" class="border-0">
+                                <div class="accordion-body collapse rowQty" id="qty-{{ t.id_transport }}"> 
+                                    <h4 class="mx-auto my-2 text-center"> 
+                                        <span class="btn my-auto collapse-title edit-data" style="cursor: default">
+                                            Quantità:
+                                        </span> 
+                                    </h4>
+
+                                    <table class="table table-bordered table-sm mb-2">
+                                        <tbody>    
+                                            <tr>
+                                                <th class="sub-title align-middle p-1"> Energia caricata [MWh] </th>
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.mwh }} 
+                                                    </td>   
+                                                <th class="sub-title align-middle p-1"> Quantità nominale caricata [kg] </th>
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.kg_load }} 
+                                                    </td>   
+                                                <th class="sub-title align-middle p-1"> Raffreddamento </th>            
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.cooling == 600 ? '600' : 'No' }}
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> Tipologia costo extra </th>            
+                                                <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.price_typology == 'yes'? 'Sì' : 'No' }}
+                                                    </td>            
+                                                <!--<th class="sub-title align-middle p-1"> Accisa <big>[</big>Sm<sup>3</sup><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle">  
+
+                                                    </td>        -->    
+                                            </tr>
+                                         
+                                            <tr>
+                                                <th class="sub-title align-middle p-1"> Valore costo extra </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                            {{ t.price_value }} 
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> Quantità scaricata PD [kg] </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                            {{ t.kg_unload }} 
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> Densità (liquido) [<sup>kg</sup>&frasl;<sub>m<sup>3</sup></sub>] </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                            {{ t.liquid_density }} 
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> Peso specifico (gas) <big>[</big><sup>kg</sup>&frasl;<sub>Nm<sup>3</sup></sub><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                            {{ t.gas_weight }} 
+                                                    </td>
+                                                <!--<th class="sub-title align-middle p-1"> Accisa totale </th>
+                                                    <td class="bg-light bg-gradient align-middle">  
+
+                                                    </td>-->
+                                            </tr>
+                                                     
+                                            <tr>
+                                                <th class="sub-title align-middle p-1"> PCS/GHV <big>[</big><sup>MJ</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.mj_kg }} 
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> PCS/GHV <big>[</big><sup>kWh</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.pcs_ghv }} 
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> Volume scaricato (liquido) <big>[</big>m<sup>3</sup><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.volume_mc }} 
+                                                    </td>
+                                                <th class="sub-title align-middle p-1"> Volume sviluppato <big>[</big><sup>Nm<sup>3</sup></sup>&frasl;<sub>m<sup>3</sup></sub><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.volume_nmc }} 
+                                                    </td>  
+                                                <!--<th class="sub-title align-middle p-1"> Incidenza </th> 
+                                                    <td class="bg-light bg-gradient align-middle">  
+
+                                                    </td> -->
+                                            </tr>
+                             
+                                            <tr>
+                                                <th class="sub-title align-middle p-1"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>m<sup>3</sup></sub> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.smc_mc }} 
+                                                    </td>   
+                                                <th class="sub-title align-middle p-1"> Gas sviluppato <big>[</big>Nm<sup>3</sup><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.gas_nmc }} 
+                                                    </td>   
+                                                <th class="sub-title align-middle p-1"> Gas sviluppato <big>[</big>Sm<sup>3</sup></sup><big>]</big> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.gas_smc}} 
+                                                    </td>   
+                                                <th class="sub-title align-middle p-1"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>kg</sub> </th>
+                                                    <td class="bg-light bg-gradient align-middle"> 
+                                                        {{ t.smc_kg }} 
+                                                    </td>  
+                                                <!--<th class="sub-title align-middle p-1"> </th> 
+                                                    <td class="bg-light bg-gradient align-middle"> 
+
+                                                    </td>       -->   
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div> 
+                            </td> 
+                        </tr>
+                        <!--    ===>    End Quantity Data    <===    -->
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="16" class="text-center text-light p-3">
+                                <strong> Nessun utente trovato. </strong>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+
+                            {# Table Pagination #}
+        <tr>
+            <td colspan="16">
+                {% if total > limit %}
+                    <nav class="mt-3">
+                        <ul class="pagination justify-content-center">
+                            {# Previous Page Link #}
+                            <li class="page-item {% if page <= 1 %}disabled{% endif %}">
+                                <a class="page-link transport-page" href="#" data-page="{{ page - 1 }}">
+                                    &laquo;
+                                </a>
+                            </li>
+
+                            {# Page Numbers #}
+                            {% for p in 1..pagination %}
+                                <li class="page-item {% if p == page %}active{% endif %}">
+                                    <a class="page-link transport-page" href="#" data-page="{{ p }}">
+                                        {{ p }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+
+                            {# Next Page Link #}
+                            <li class="page-item {% if page >= pagination %}disabled{% endif %}">
+                                <a class="page-link transport-page" href="#" data-page="{{ page + 1 }}">
+                                    &raquo;
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                {% endif %}
+            </td>
+        </tr>
+        {# END Table Pagination #}
+                     
+                    {# Table Footer #}
+                    <tfoot>
+                        <tr>
+                            <td colspan="16" class="text-light align-middle mb-2 p-2">
+                                <h5 class="align-middle my-auto">
+                                    TOTALE <i class="bi bi-fuel-pump-fill ms-1"></i> + <i class="bi bi-fuel-pump"></i>:
+                                        <span> {{ total }} </span>
+                                </h5> 
+                            </td>
+                        </tr>
+                    </tfoot>

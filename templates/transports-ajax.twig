@@ -1,0 +1,321 @@
+    {# Table Body #}
+{% if transports is not empty %}
+    {% for t in transports %}
+            {# Transport Data #}
+        <tr class="align-middle expand" id="id-{{ t.id_transport }}">
+            <td style="width: 50px" scope="row">
+                {{ ((page - 1) * limit) + loop.index }} <br>
+                    <button data-bs-toggle="collapse" data-bs-target="#qty-{{ t.id_transport }}"
+                            aria-expanded="false" aria-controls="qty-{{ t.id_transport }}" aria-label="Expand quantities">
+                        <i class="bi bi-arrows-expand"></i>
+                    </button> 
+            </td>
+            <td style="width: 300px" class="align-middle p-2 search word-wrap-container col-slot"> {{ t.slot|upper }} </td>
+            <td style="width: 250px" class="align-middle p-2 search word-wrap-container col-cmr"> {{ t.cmr|upper }} </td>
+            <td style="width: 150px" class="align-middle p-1 search col-issuer"> {{ t.issuer|upper }} </td>
+            <td style="width: 150px" class="align-middle p-1 search col-supplier"> {{ t.supplier|upper }} </td>
+            <td style="width: 100px" class="align-middle p-1 search col-transport"> {{ t.transport|upper }} </td>
+            <td style="width: 180px" class="align-middle p-1 col-univoco"> {{ t.univoco|upper }} </td>
+            <td style="width: 120px" class="align-middle p-1 col-load"> {{ t.date_load|date("d/m/Y") }} </td>
+            <td style="width: 120px" class="align-middle p-1 col-unload"> {{ t.date_unload|date("d/m/Y") }} </td>
+            <td style="width: 90px" class="align-middle p-0 col-month-load"> {{ t.id_month_load }} </td>
+            <td style="width: 120px" class="align-middle p-0 col-week-unload"> {{ t.week_unload }} </td>
+            <td style="width: 130px" class="align-middle p-1 col-month-unload"> {{ t.id_month_unload }} - {{ t.month_unload|capitalize }} </td>
+            <td style="width: 160px" class="align-middle p-1 col-container"> {{ t.container|upper }} </td>
+            <td style="width: 80px" class="align-middle p-1 btns">   
+                {% if (session.role == 'admin') or (session.id_user == t.id_user) %}
+                    <button type="button" class="edit-data edited updateTrans" data-bs-toggle="modal" data-bs-target="#editTransModal"
+                            data-id="{{ t.id_transport }}">
+                        <i class="bi bi-pencil-square" title="Modifica"></i>
+                    </button>
+                {% else %}    
+                    <button type="button" class="edit-data" disabled>
+                        <i class="bi bi-x-octagon"></i>
+                    </button>
+                {% endif %}
+                                
+                {% if (session.role == 'admin') %}
+                    <button type="button" class="edit-data deleteTrans" data-bs-toggle="modal" data-bs-target="#deleteTransModal"
+                            data-id="{{ t.id_transport }}" data-slot="{{ t.slot }}">
+                        <i class="bi bi-trash" title="Elimina"></i> 
+                    </button>  
+                {% endif %}
+            </td>
+        </tr>
+
+            {# Quantity Data #}
+        <tr class="collapse bg-white accordion-collapse collapse-platform" id="qty-{{ t.id_transport }}">        
+            <td colspan="14" class="border-0">
+                <h4 class="mx-auto my-3 text-center"> 
+                    {% if (session.role == 'admin') or (session.id_user == t.id_user) %}
+                        <button type="button" class="btn my-auto edit-data updateQty" data-bs-toggle="modal" 
+                                data-bs-target="#editQtyModal" data-id="{{ t.id_transport }}">   
+                            <i class="bi bi-pencil-square mx-1"></i> 
+                                <span class="collapse-title">
+                                    Quantità:
+                                </span>   
+                        </button> 
+                    {% else %}
+                        <span class="btn my-auto collapse-title edit-data updateQty" style="cursor: default">
+                            Quantità:
+                        </span>
+                    {% endif %}
+                </h4>
+
+                <table class="table table-bordered table-light mb-1" id="qty-table-{{ t.id_transport }}">
+                    <tbody>    
+                        <tr>
+                            <th class="align-middle p-1"> Energia caricata [MWh] </th>
+                            <td class="bg-light align-middle col-mwh"> {{ t.mwh|default('—') }} </td>   
+
+                            <th class="align-middle p-1"> Quantità nominale caricata [kg] </th>
+                            <td class="bg-light align-middle col-kg-load"> {{ t.kg_load|default('—') }} </td>   
+
+                            <th class="align-middle p-1"> Raffreddamento </th>            
+                            <td class="bg-light align-middle col-cooling"> {{ t.cooling == 600 ? '600' : 'No' }} </td>
+
+                            <th class="align-middle p-1"> Tipologia costo extra </th>            
+                            <td class="bg-light align-middle col-price-typology"> {{ t.price_typology == 'yes'? 'Sì' : 'No' }} </td>   
+                        </tr>
+                                    
+                        <tr>
+                            <th class="align-middle p-1"> Valore costo extra </th>
+                            <td class="bg-light align-middle col-price-value"> {{ t.price_value|default('—') }} </td>
+
+                            <th class="align-middle p-1"> Quantità scaricata PD [kg] </th>
+                            <td class="bg-light align-middle col-kg-unload"> {{ t.kg_unload|default('—') }} </td>
+
+                            <th class="align-middle p-1"> Densità (liquido) [<sup>kg</sup>&frasl;<sub>m<sup>3</sup></sub>] </th>
+                            <td class="bg-light align-middle col-liquid-density"> {{ t.liquid_density|default('—') }} </td>
+
+                            <th class="align-middle p-1"> Peso specifico (gas) <big>[</big><sup>kg</sup>&frasl;<sub>Nm<sup>3</sup></sub><big>]</big> </th>
+                            <td class="bg-light align-middle col-gas-weight"> {{ t.gas_weight|default('—') }} </td>
+                        </tr>
+                                            
+                        <tr>
+                            <th class="align-middle p-1"> PCS/GHV <big>[</big><sup>MJ</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                            <td class="bg-light align-middle col-mj-kg"> {{ t.mj_kg|default('—') }} </td>
+
+                            <th class="align-middle p-1"> PCS/GHV <big>[</big><sup>kWh</sup>&frasl;<sub>kg</sub><big>]</big> </th>
+                            <td class="bg-light align-middle col-pcs-ghv"> {{ t.pcs_ghv|default('—') }} </td>
+
+                            <th class="align-middle p-1"> Volume scaricato (liquido) <big>[</big>m<sup>3</sup><big>]</big> </th>
+                            <td class="bg-light align-middle col-volume-mc"> {{ t.volume_mc|default('—') }} </td>
+
+                            <th class="align-middle p-1"> Volume sviluppato <big>[</big><sup>Nm<sup>3</sup></sup>&frasl;<sub>m<sup>3</sup></sub><big>]</big> </th>
+                            <td class="bg-light align-middle col-volume-nmc"> {{ t.volume_nmc|default('—') }} </td> 
+                        </tr>
+                                            
+                        <tr>
+                            <th class="align-middle p-1"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>m<sup>3</sup></sub> </th>
+                            <td class="bg-light align-middle col-smc-mc"> {{ t.smc_mc|default('—') }} </td> 
+
+                            <th class="align-middle p-1"> Gas sviluppato <big>[</big>Nm<sup>3</sup><big>]</big> </th>
+                            <td class="bg-light align-middle col-gas-nmc"> {{ t.gas_nmc|default('—') }} </td>   
+
+                            <th class="align-middle p-1"> Gas sviluppato <big>[</big>Sm<sup>3</sup></sup><big>]</big> </th>
+                            <td class="bg-light align-middle col-gas-smc"> {{ t.gas_smc|default('—') }} </td>   
+
+                            <th class="align-middle p-1"> <sup>Sm<sup>3</sup></sup>&frasl;&nbsp;<sub>kg</sub> </th>
+                            <td class="bg-light align-middle col-smc-kg"> {{ t.smc_kg|default('—') }} </td>  
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+
+            {# Note #}
+        <tr class="collapse bg-white accordion-collapse collapse-platform" id="qty-{{ t.id_transport }}">
+            <td colspan="14" class="border-0">
+                <div class="note-container">
+                    <h4 class="mx-auto my-2"> 
+                        <button type="button" class="btn my-auto edit-data updateNote" data-bs-toggle="modal" data-bs-target="#editNoteModal"
+                                data-id="{{ t.id_transport }}">   
+                            <i class="bi bi-pencil-square mx-1"></i> 
+                                <span class="collapse-title">
+                                    Nota:
+                                </span>   
+                        </button> 
+                    </h4>
+
+                    <div class="container-fluid my-0">
+                        <div id="notes-{{ t.id_transport }}" data-ids="{{ t.id_transport }}" class="notes">
+                            Nessuna nota
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+{% endif %}
+
+{% block jquery %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+        crossorigin="anonymous">
+</script>
+    {# JQuery Validation #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js" 
+        integrity="sha256-umbTaFxP31Fv6O1itpLS/3+v5fOAWDLOUzlmvOGaKV4=" 
+        crossorigin="anonymous">
+</script>
+    {# JQuery Validation Additional Methods #}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js" 
+        integrity="sha256-MtEA819Zls6dtLt5S5BpEMOhifPyz7gfzfgtNtY75lE=" 
+        crossorigin="anonymous">
+</script>
+{% endblock %}
+
+{% block datepicker %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" 
+        integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" 
+        crossorigin="anonymous">
+</script>
+{% endblock %}
+
+{% block page_script %}
+<script>
+$(document).ready(function () {
+    $(document).on('click', '.transport-page', function(e) {
+        e.preventDefault();
+        const page = $(this).data('page');
+        const csrfToken = $('input[name="csrf_token"]').val();
+
+        $.ajax({
+            type: 'POST',
+            url: 'pagination', 
+            dataType: 'json',
+            data: {
+                csrf_token: csrfToken,
+                page: page
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('#transport-tbody').html(response.tbody).find('#transport-tbody').html();
+                    $('#transport-tfoot').html(response.pagination).find('#transport-tfoot').html();
+                }
+            },
+            error: function () {
+                alert('Errore nel caricamento della pagina.');
+            }
+        });
+
+        // Avoid multiple fast clicks by disabling temporarily
+        if ($(this).parent().hasClass('disabled') || $(this).parent().hasClass('active')) {
+            return;
+        }
+
+        // Scroll to table after page load starts
+        $('html, body').animate({ scrollTop: $('#transport-table').offset().top }, 300);
+    });
+
+//  Transport edit button, open modal with populated transports's data
+    $(document).on('click', '.updateTrans', function () {
+        const id = $(this).data('id');
+        const csrfToken = $('input[name="csrf_token"]').val(); // grab the token from a hidden input
+
+        $.post('get-transport', { action: 'getTransportData', id_transport: id, csrf_token: csrfToken }, function (response) {
+            if (response.success) {
+                const transport = response.transport;
+
+                    $('#editTransModal #id_transport').val(transport.id_transport);
+                    $('#editTransModal #slot').val(transport.slot.toUpperCase());
+                    $('#editTransModal #cmr').val(transport.cmr.toUpperCase());
+                    $('#editTransModal #issuer').val(transport.issuer.toUpperCase());
+                    $('#editTransModal #supplier').val(transport.supplier.toUpperCase());
+                    $('#editTransModal #transport').val(transport.transport.toUpperCase());
+                    $('#editTransModal #date_load').val(transport.date_load);
+                    $('#editTransModal #date_unload').val(transport.date_unload);
+                    $('#editTransModal #container').val(transport.container.toUpperCase());
+
+                    /*$('#editTransModal #original_slot').val(transport.slot);
+                    $('#editTransModal #original_cmr').val(transport.cmr);*/
+
+                    $('#editTransModal').modal('show');
+            } else {
+                alert(response.message || 'Errore durante il caricamento dei dati.');
+            }
+        }, 'json');
+    });
+
+//  Quantity edit button, open modal with populated quantity's data
+    $(document).on('click', '.updateQty', function () {
+        const id = $(this).data('id');
+        const csrfToken = $('input[name="csrf_token"]').val(); 
+
+        $.post('get-quantity', { action: 'getQuantityData', id_transport: id, csrf_token: csrfToken }, function (response) {
+            if (response.success) {
+                const quantity = response.quantity;
+
+                    $('#editQtyModal #id_transport').val(quantity.id_transport);
+                    $('#editQtyModal #id_quantity').val(quantity.id_quantity);
+                    $('#editQtyModal #kg_load').val(quantity.kg_load);
+                    $('#editQtyModal #cooling').val(quantity.cooling);
+                    $('#editQtyModal #price_typology').val(quantity.price_typology);
+                    $('#editQtyModal #price_value').val(quantity.price_value);
+                    $('#editQtyModal #kg_unload').val(quantity.kg_unload);
+                    $('#editQtyModal #liquid_density').val(quantity.liquid_density);
+                    $('#editQtyModal #gas_weight').val(quantity.gas_weight);
+                    $('#editQtyModal #pcs_ghv').val(quantity.pcs_ghv);
+
+                    $('#editQtyModal').modal('show');
+            } else {
+                alert(response.message || 'Errore durante il caricamento dei dati.');
+            }
+        }, 'json');
+    });
+
+//  Delete transport button
+    $(document).on('click', '.deleteTrans', function () {
+        const id = $(this).data('id');
+        const slot = $(this).data('slot');
+        const csrfToken = $('input[name="csrf_token"]').val(); 
+
+        $("#deleteTransModal #id_transport").val(id);
+        $("#deleteTransModal #slot-placeholder").text(slot);
+    });
+
+//  Note edit button
+    $('.notes').each(function () {
+        const container = $(this);
+        const id = container.data('ids');
+        const csrfToken = $('input[name="csrf_token"]').val(); 
+
+        $.post('get-note', { action: 'getTransportNotes', id_transport: id, csrf_token: csrfToken }, function (response) {
+            if (response.success && response.notes.length > 0) {
+                let html = '';
+                response.notes.forEach(n => {
+                    html += `<span class="d-inline-block me-2" data-bs-toggle="tooltip" title="Scritto da ${n.author} il ${n.created}">
+                                ${n.content}
+                            </span> <br>`;
+                });
+                container.html(html);
+                container.find('[data-bs-toggle="tooltip"]').tooltip();
+            } else {
+                container.html('<div class="text-muted">Nessuna nota.</div>');
+            }
+        }, 'json');
+    });
+
+//  Notes edit button, open modal with populated quantity's data
+    $(document).on('click', '.updateNote', function () {
+        const id = $(this).data('id');
+        const csrfToken = $('input[name="csrf_token"]').val(); 
+
+        $.post('get-note', { action: 'getTransportNotes', id_transport: id, csrf_token: csrfToken }, function (response) {
+            if (response.success) {
+                const notes = response.notes;
+
+                $('#editNoteModal #id_transport').val(id);
+                $('#editNoteModal #id_note').val(notes.id_note);
+                $('#editNoteModal #note').val(notes.map(n => n.content).join(' '));
+
+                $('#editNoteModal').modal('show');
+            } else {
+                alert(response.message || 'Errore durante il caricamento dei dati.');
+            }
+        }, 'json');
+    });
+});
+</script>
+{% endblock %}
