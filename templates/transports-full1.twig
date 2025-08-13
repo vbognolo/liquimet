@@ -7,7 +7,7 @@
 {% endblock %}
   
 {% block content %} 
-    {% include 'transports-navigation.twig' %}
+    {% include 'shared/transports-navigation.twig' %}
 
 <section class="col-12 m-auto">
     <div class="d-flex justify-content-center table-responsive">          
@@ -15,40 +15,30 @@
             <caption class="px-3 mb-2 text-white text-shadow-dark" style="font-size: 1.9rem"> 
                 <span>
                     <i class="bi bi-arrow-bar-right my-1 fs-3"></i> 
-                        TRASPORTI PARZIALI
+                        Trasporti Pieni
                 </span>
             </caption>
 
-            <thead>
-                <tr class="border-top border-light bg-primary bg-gradient table-title">
-                    <th scope="col" class="align-middle px-3"> # </th>
-                    <th scope="col" class="align-middle px-2"> Slot ID </th>
-                    <th scope="col" class="align-middle px-2"> Numero CMR </th>
-                    <th scope="col" class="align-middle px-3"> Emittente </th>
-                    <th scope="col" class="align-middle px-3"> Fornitore </th>
-                    <th scope="col" class="align-middle px-3"> Trasporto </th>
-                    <th scope="col" class="align-middle px-3"> Univoco </th>
-                    <th scope="col" class="align-middle px-2"> Data carico </th>
-                    <th scope="col" class="align-middle px-2"> Data scarico </th>
-                    <th scope="col" class="align-middle"> Mese carico </th>
-                    <th scope="col" class="align-middle"> Settimana scarico </th>
-                    <th scope="col" class="align-middle"> Mese scarico </th>
-                    <th scope="col" class="align-middle px-2"> Container<br>ATB </th>
-                    <th scope="col" class="align-middle px-2"> <i class="bi bi-gear"></i> </th>
-                </tr>
-            </thead>
+            {% include 'shared/transports-head.twig' %}
 
-            {# Include transport-part-ajax.twig for tbody and tfoot #}
-            {% include 'transports-part-ajax.twig' %}
+            <tbody class="table-group-divider" id="transport-tbody">
+                {% include 'transports-full-ajax.twig' %}
+            </tbody>
 
-            
+            <tfoot id="transport-tfoot">
+                {% include 'shared/pagination.twig' with {
+                    type: 'F',
+                    page: page,
+                    csrf_token: csrfToken
+                } %}
+            </tfoot>
         </table>
     </div>  
 </section>  
 <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     {% include 'transport-modal.twig' %}
 {% endblock %}
- 
+
 {% block jquery %}
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
@@ -76,6 +66,40 @@
 {% block page_script %}
 <script>
 $(document).ready(function () {
+    $(document).on('click', '.transport-page', function(e) {
+        e.preventDefault();
+        const page = $(this).data('page');
+        const csrfToken = $('input[name="csrf_token"]').val();
+
+        $.ajax({
+            type: 'POST',
+            url: 'pagination', 
+            dataType: 'json',
+            data: {
+                csrf_token: csrfToken,
+                type: 'F',
+                page: page
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('#transport-tbody').html(response.tbody).find('#transport-tbody').html();
+                    $('#transport-tfoot').html(response.pagination).find('#transport-tfoot').html();
+                }
+            },
+            error: function () {
+                alert('Errore nel caricamento della pagina.');
+            }
+        });
+
+        // Avoid multiple fast clicks by disabling temporarily
+        if ($(this).parent().hasClass('disabled') || $(this).parent().hasClass('active')) {
+            return;
+        }
+
+        // Scroll to table after page load starts
+        $('html, body').animate({ scrollTop: $('#transport-table').offset().top }, 300);
+    });
+
 //  Transport edit button, open modal with populated transports's data
     $(document).on('click', '.updateTrans', function () {
         const id = $(this).data('id');
@@ -132,35 +156,6 @@ $(document).ready(function () {
         }, 'json');
     });
 
-//  Partial edit button, open modal with populated partial's data
-    $(document).on('click', '.updatePart', function () {
-        const id = $(this).data('id');
-        const csrfToken = $('input[name="csrf_token"]').val(); 
-
-        $.post('get-partial', { action: 'getPartialData', id_partial: id, csrf_token: csrfToken }, function (response) {
-            if (response.success) {
-                const partial = response.partial;
-
-                    $('#editPartModal #id_partial').val(partial.id_partial);
-                    $('#editPartModal #destination').val(partial.destination);
-                    $('#editPartModal #exw').val('').trigger('change'); // Reset
-                    $('#editPartModal #exw').val(partial.exw).trigger('change');
-                    $('#editPartModal #date').val(partial.date);
-                    $('#editPartModal #place').val(partial.place);
-                    $('#editPartModal #q_unloaded').val(partial.q_unloaded);
-                    $('#editPartModal #invoice').val(partial.invoice);
-
-                    // Optional: Reset validation errors
-                    $('#partial-edit .is-invalid').removeClass('is-invalid');
-                    $('#partial-edit .invalid-feedback').remove();
-
-                    $('#editPartModal').modal('show');
-            } else {
-                alert(response.message || 'Errore durante il caricamento dei dati.');
-            }
-        }, 'json');
-    });
-
 //  Delete transport button
     $(document).on('click', '.deleteTrans', function () {
         const id = $(this).data('id');
@@ -169,14 +164,6 @@ $(document).ready(function () {
 
         $("#deleteTransModal #id_transport").val(id);
         $("#deleteTransModal #slot-placeholder").text(slot);
-
-        /*$.post('transport-delete', { action: '', id_transport: id, csrf_token: csrfToken }, function (response) {
-            if (response.success) {
-
-            } else {
-                alert(response.message || 'Errore durante il caricamento dei dati.');
-            }
-        }, 'json');*/
     });
 
 //  Note edit button
@@ -219,44 +206,6 @@ $(document).ready(function () {
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
         }, 'json');
-    });
-
-//  Load table content by pagination
-    function loadPage(page = 1, type = 'P') {
-        const csrfToken = $('input[name="csrf_token"]').val();  
-
-        $.ajax({
-            type: 'POST',
-            url: 'transport-pagination',  
-            data: {
-                page: page,
-                csrf_token: csrfToken,
-                type: type
-            },
-            success: function (html) {
-                // Extract full tbody and tfoot tags from returned HTML
-                const tbody = $(html).filter('tbody').html() || $(html).find('tbody').html();
-                const tfoot = $(html).filter('tfoot').html() || $(html).find('tfoot').html();
-
-                // Replace the table body and footer
-                $('#partials-tbody').html(tbody);
-                $('#partials-tfoot').html(tfoot);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                alert('Error loading page data: ' + textStatus + ' - ' + errorThrown + '\n' + jqXHR.responseText);
-            }
-        });
-    }
-
-    //  Handle click on pagination links dynamically
-    $(document).on('click', '.transport-page', function (e) {
-        e.preventDefault();
-        const page = $(this).data('page');
-
-            if (page) {
-                loadPage(page);
-                $('html, body').animate({scrollTop: $('#transport-table').offset().top}, 300);
-            }
     });
 });
 </script>

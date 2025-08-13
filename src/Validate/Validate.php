@@ -8,6 +8,7 @@ class Validate {
                 // replaces multiple space chars with single space ('') 
     }
 
+    // 
     public static function chars_length(string $text, int $min, int $max = PHP_INT_MAX): bool {
         $length = \mb_strlen($text);
             return $length >= $min && $length <= $max;
@@ -19,12 +20,12 @@ class Validate {
                \preg_match('/^[A-Za-z0-9]+$/', $username);    // only allows letters and numbers
     }
 
-    public static function validateString(string $name, int $minlength, int $maxlength): bool {
+    /*public static function validateString(string $name, int $minlength, int $maxlength): bool {
         return (bool) \mb_strlen($name) >= $minlength &&                            
                       \mb_strlen($name) <= $maxlength &&                           
                       \preg_match('/^[a-zA-ZčšćđžČŠĆĐŽáàäâÁÀÄÂéèëêÉÈËÊíìïîÍÌÏÎóòöôÓÒÖÔúùüûÚÙÜÛ\s]+$/', $name);         
                             // checks for special characters
-    }
+    }*/
 
     public static function validate_email(string $email): bool {
         return (bool) \filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -38,7 +39,7 @@ class Validate {
      * Validate age using multiple input date formats.
      */
     public static function validate_age(string $date, int $min): bool {
-        $formattedDate = self::formatDateforDB($date);
+        $formattedDate = self::format_database($date);
             if (!$formattedDate) return false;            // Invalid date format
 
         // Create DateTime objects for the birthdate and today's date
@@ -54,57 +55,142 @@ class Validate {
             return $age >= $min;
     }
 
-public static function validate_date(string $date): ?string {
-    $date = trim($date);
-    if (!$date) return null;
+    /*public static function validate_date(string $date): ?string {
+        $date = trim($date);
+        if (!$date) return null;
 
-    $inputDate = \DateTime::createFromFormat('d-m-Y', $date);
-    if (!$inputDate || $inputDate->format('d-m-Y') !== $date) {
-        return null;
-    }
+        $inputDate = \DateTime::createFromFormat('d-m-Y', $date);
+        /*if (!$inputDate || $inputDate->format('d-m-Y') !== $date) {
+            return null;
+        }*/
 
-    $today = new \DateTime('today');
-    if ($inputDate > $today) {
-        return null;
-    }
+        /*$today = new \DateTime('today');
+        if ($inputDate > $today) {
+            return null;
+        }*/
 
-    if ((int)$inputDate->format('Y') < 2006) {
-        return null;
-    }
+        /*$min = new \DateTime('01-01-2006');
 
-    return $inputDate->format('Y-m-d');  // Return date formatted for DB
-}
+        if ($inputDate < $min) {
+            return null;
+        }
+
+        return $inputDate->format('Y-m-d');  // Return date formatted for DB
+    }*/
+
+    /*public static function validate_date_field(?string $dateStr, string $fieldName, ?string $compareDate = null): ?array {
+        $dateStr = trim($dateStr ?? '');
+        $errors = [];
+
+            if (!$dateStr) {
+                $errors[$fieldName] = "Campo obbligatorio.";
+                    return $errors;
+            }
+
+            // Validate format and year range
+            if (!self::validate_date($dateStr)) {
+                $errors[$fieldName] = "Inserire una data valida. Non sono permesse date precedenti al 2006.";
+                    return $errors;
+            }
+
+        $formatted = self::format_database($dateStr);
+        $today = (new \DateTime('today'))->format('Y-m-d');
+
+            if ($formatted > $today) {
+                $errors[$fieldName] = "Inserire una data valida. Non sono permesse date future.";
+            }
+
+            if ($compareDate && $formatted < $compareDate) {
+                $errors[$fieldName] = "La data di scarico non può essere precedente alla data di carico.";
+            }
+
+        return $errors ?: null;
+    }*/
 
 
 //  Format date to standard Y-m-d format for db insertion
-    public static function formatDateForDB(string $inputDate): ?string {
+    public static function format_database(string $inputDate): ?string {
+        //$dt = \DateTime::createFromFormat('d-m-Y', $inputDate);
+            //return ($dt && $dt->format('d-m-Y') === $inputDate) ? $dt->format('Y-m-d') : null;
         // Ensure the input date is not empty and is a valid date
-        if (empty($inputDate) || !strtotime($inputDate)) {
+        /*if (empty($inputDate) || !strtotime($inputDate)) {
             return null; // Return null if the date is invalid or empty
+        }*/
+
+        $inputDate = trim($inputDate);
+
+        if ($inputDate === '') {
+            return null;
         }
 
-        $formats = ['d/m/Y', 'd-m-Y', 'd.m.Y', 'Y/m/d', 'Y-m-d', 'Y.m.d', 'd/m/Y H:i:s', 'd-m-Y H:i:s', 'd.m.Y H:i:s'];    // Supported formats
+        // Supported formats
+        $formats = [
+            'd/m/Y', 'd-m-Y', 'd.m.Y', 'd/m/Y H:i:s', 'd-m-Y H:i:s', 'd.m.Y H:i:s',
+            'Y/m/d', 'Y-m-d', 'Y.m.d', 'Y/m/d H:i:s', 'Y-m-d H:i:s', 'Y.m.d H:i:s',
+            'm/d/Y', 'm-d-Y', 'm.d.Y', 'm/d/Y H:i:s', 'm-d-Y H:i:s', 'm.d.Y H:i:s'
+        ];    
 
         foreach ($formats as $format) {
             $date = \DateTime::createFromFormat($format, $inputDate);
+
+            //return ($date && $date->format('d-m-Y') === $inputDate) ? $date->format('Y-m-d') : null;
             
-            if ($date && $date->format($format) === $inputDate) {
+            /*if ($date && $date->format($format) === $inputDate) {
                 return $date->format('Y-m-d'); // Always output in DB format
+            }*/
+
+            if ($date) {
+                if ($date->format($format) === $inputDate) {
+                    return $date->format('Y-m-d'); 
+                }
             }
         }
         
-        return null; // Return null if no valid format matched
+        return null; // Return null if no valid format matched*/
     }
 
 //  Format date to d-m-Y format for data display
-    public static function formatDateForView(string $dbDate, string $format = 'd-m-Y'): ?string {
+    public static function format_view(string $dbDate, string $format = 'd-m-Y'): string {
+        /*$dt = \DateTime::createFromFormat('Y-m-d', $dbDate);
+            return $dt ? $dt->format('d/m/Y') : '';*/
         // Ensure the input date is not empty and is a valid date
-        if (empty($dbDate) || !strtotime($dbDate)) {
+        /*if (empty($dbDate) || !strtotime($dbDate)) {
             return null; // Return null if the date is invalid or empty
+        }*/
+
+        if (empty($dbDate)) {
+            return '';
         }
 
-        // Use IntlDateFormatter if requested format is 'long_it'
+        // Support 'long_it' if needed
         if ($format === 'long_it') {
+            $dateTime = \DateTime::createFromFormat('Y-m-d', $dbDate);
+            
+            if (!$dateTime) {
+                return '';
+            }
+
+            $formatter = new \IntlDateFormatter(
+                'it_IT',
+                \IntlDateFormatter::LONG,
+                \IntlDateFormatter::NONE,
+                'Europe/Rome',
+                null,
+                'd MMMM yyyy'
+            );
+
+            return $formatter->format($dateTime);
+        }
+        // Only allow these two formats
+        if ($format !== 'd-m-Y' && $format !== 'd/m/Y') {
+            return '';
+        }
+
+        $date = \DateTime::createFromFormat('Y-m-d', $dbDate);
+        return $date ? $date->format($format) : '';
+
+        // Use IntlDateFormatter if requested format is 'long_it'
+        /*if ($format === 'long_it') {
             $dateTime = new \DateTime($dbDate);
             $formatter = new \IntlDateFormatter(
                 'it_IT',
@@ -117,8 +203,8 @@ public static function validate_date(string $date): ?string {
             return $formatter->format($dateTime);
         }
 
-        $date = date_create($dbDate);
-        return $date ? date_format($date, $format) : null;
+        $date = \DateTime::createFromFormat('Y-m-d', $dbDate);
+        return $date ? $date->format($format) : '';*/
     }    
 
     public static function validate_string(string $value, string $allowed): bool {

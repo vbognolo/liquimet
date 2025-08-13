@@ -39,24 +39,31 @@ class __TwigTemplate_211d2dcc98bf2825694b325355d951a7 extends Template
     {
         $macros = $this->macros;
         // line 2
-        yield "<thead>
-    <tr class=\"border-top border-light bg-primary bg-gradient table-title\">
-        <th scope=\"col\" style=\"width: 50px\" class=\"align-middle px-3\"> # </th>
-        <th scope=\"col\" style=\"width: 300px\" class=\"align-middle px-2\"> Slot ID </th>
-        <th scope=\"col\" style=\"width: 250px\" class=\"align-middle px-2\"> Numero CMR </th>
-        <th scope=\"col\" style=\"width: 150px\" class=\"align-middle px-3\"> Emittente </th>
-        <th scope=\"col\" style=\"width: 150px\" class=\"align-middle px-3\"> Fornitore </th>
-        <th scope=\"col\" style=\"width: 100px\" class=\"align-middle px-3\"> Trasporto </th>
-        <th scope=\"col\" style=\"width: 180px\" class=\"align-middle px-3\"> Univoco </th>
-        <th scope=\"col\" style=\"width: 120px\" class=\"align-middle px-2\"> Data carico </th>
-        <th scope=\"col\" style=\"width: 120px\" class=\"align-middle px-2\"> Data scarico </th>
-        <th scope=\"col\" style=\"width: 90px\" class=\"align-middle\"> Mese carico </th>
-        <th scope=\"col\" style=\"width: 120px\" class=\"align-middle\"> Settimana scarico </th>
-        <th scope=\"col\" style=\"width: 130px\" class=\"align-middle\"> Mese scarico </th>
-        <th scope=\"col\" style=\"width: 160px\" class=\"align-middle px-2\"> Container<br>ATB </th>
-        <th scope=\"col\" style=\"width: 80px\" class=\"align-middle px-2\"> <i class=\"bi bi-gear\"></i> </th>
-    </tr>
-</thead>";
+        yield "<tr class=\"border-top border-light bg-primary bg-gradient table-title\">
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 50px\"> # </th>
+        ";
+        // line 5
+        yield "    ";
+        if (($context["show_type"] ?? null)) {
+            // line 6
+            yield "        <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 50px\"> Tipo </th>
+    ";
+        }
+        // line 8
+        yield "    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 350px\"> Slot ID </th>
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 250px\"> Numero CMR </th>
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 150px\"> Emittente </th>
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 150px\"> Fornitore </th>
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 100px\"> Trasporto </th>
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 180px\"> Univoco </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 120px\"> Data carico </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 120px\"> Data scarico </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 90px\"> Mese carico </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 120px\"> Settimana scarico </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 130px\"> Mese scarico </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 160px\"> Container<br>ATB </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 80px\"> <i class=\"bi bi-gear\"></i> </th>
+</tr>";
         yield from [];
     }
 
@@ -71,31 +78,41 @@ class __TwigTemplate_211d2dcc98bf2825694b325355d951a7 extends Template
     /**
      * @codeCoverageIgnore
      */
+    public function isTraitable(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
     public function getDebugInfo(): array
     {
-        return array (  42 => 2,);
+        return array (  53 => 8,  49 => 6,  46 => 5,  42 => 2,);
     }
 
     public function getSourceContext(): Source
     {
-        return new Source("{# Transports table head #}
-<thead>
-    <tr class=\"border-top border-light bg-primary bg-gradient table-title\">
-        <th scope=\"col\" style=\"width: 50px\" class=\"align-middle px-3\"> # </th>
-        <th scope=\"col\" style=\"width: 300px\" class=\"align-middle px-2\"> Slot ID </th>
-        <th scope=\"col\" style=\"width: 250px\" class=\"align-middle px-2\"> Numero CMR </th>
-        <th scope=\"col\" style=\"width: 150px\" class=\"align-middle px-3\"> Emittente </th>
-        <th scope=\"col\" style=\"width: 150px\" class=\"align-middle px-3\"> Fornitore </th>
-        <th scope=\"col\" style=\"width: 100px\" class=\"align-middle px-3\"> Trasporto </th>
-        <th scope=\"col\" style=\"width: 180px\" class=\"align-middle px-3\"> Univoco </th>
-        <th scope=\"col\" style=\"width: 120px\" class=\"align-middle px-2\"> Data carico </th>
-        <th scope=\"col\" style=\"width: 120px\" class=\"align-middle px-2\"> Data scarico </th>
-        <th scope=\"col\" style=\"width: 90px\" class=\"align-middle\"> Mese carico </th>
-        <th scope=\"col\" style=\"width: 120px\" class=\"align-middle\"> Settimana scarico </th>
-        <th scope=\"col\" style=\"width: 130px\" class=\"align-middle\"> Mese scarico </th>
-        <th scope=\"col\" style=\"width: 160px\" class=\"align-middle px-2\"> Container<br>ATB </th>
-        <th scope=\"col\" style=\"width: 80px\" class=\"align-middle px-2\"> <i class=\"bi bi-gear\"></i> </th>
-    </tr>
-</thead>", "shared/transports-head.twig", "C:\\wamp64\\www\\liquimet\\templates\\shared\\transports-head.twig");
+        return new Source("{# Transports Table Head #}
+<tr class=\"border-top border-light bg-primary bg-gradient table-title\">
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 50px\"> # </th>
+        {# Add extra head column conditionally via Twig block #}
+    {% if show_type %}
+        <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 50px\"> Tipo </th>
+    {% endif %}
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 350px\"> Slot ID </th>
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 250px\"> Numero CMR </th>
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 150px\"> Emittente </th>
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 150px\"> Fornitore </th>
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 100px\"> Trasporto </th>
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 180px\"> Univoco </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 120px\"> Data carico </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 120px\"> Data scarico </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 90px\"> Mese carico </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 120px\"> Settimana scarico </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 130px\"> Mese scarico </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 160px\"> Container<br>ATB </th>
+    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 80px\"> <i class=\"bi bi-gear\"></i> </th>
+</tr>", "shared/transports-head.twig", "C:\\wamp64\\www\\liquimet\\templates\\shared\\transports-head.twig");
     }
 }

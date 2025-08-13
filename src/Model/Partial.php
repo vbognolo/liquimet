@@ -109,16 +109,14 @@ class Partial {
     } 
 
 //  ===> GET ALL PARTIALS BY TRANSPORT ID
-    public function getParts(int $id): array{      
-        $sql = "SELECT p.id_transport, p.destination, p.exw, p.date, p.place, p.q_unloaded, p.invoice, 
+    public function getPartByTransportID(int $id): array {      
+        $sql = "SELECT p.id_partial, p.destination, p.exw, p.date, p.place, p.q_unloaded, p.invoice, 
                        t.id_transport,
-                       n.content, n.created,
                        u.username AS author
                 FROM `partials` AS p
                 LEFT JOIN `transports`  AS t ON t.id_transport = p.id_transport
-                LEFT JOIN `notes`       AS n ON t.id_transport = n.id_transport
                 LEFT JOIN `users`       AS u ON t.id_user = u.id_user
-                WHERE p.id_transport = :id_transport;";
+                WHERE t.id_transport = :id_transport;";
 
         return $this->db->runSQL($sql, ['id_transport' => $id])->fetchAll(); 
     }

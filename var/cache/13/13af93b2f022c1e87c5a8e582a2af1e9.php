@@ -44,7 +44,9 @@ class __TwigTemplate_944c85a528fcee4500eb85a73adadfc6 extends Template
         // line 3
         if ((($context["total"] ?? null) > ($context["limit"] ?? null))) {
             // line 4
-            yield "        <td colspan=\"14\" class=\"bg-light align-middle my-auto p-1\">
+            yield "        <td colspan=\"";
+            yield ((($context["show_type"] ?? null)) ? (16) : (15));
+            yield "\" class=\"bg-light align-middle my-auto p-1\">
             <nav class=\"my-1 mx-auto\">
                 <ul class=\"pagination justify-content-center my-auto\">
                     ";
@@ -117,7 +119,10 @@ class __TwigTemplate_944c85a528fcee4500eb85a73adadfc6 extends Template
 ";
         // line 36
         yield "<tr>
-    <td colspan=\"14\" class=\"text-light text-shadow-dark align-middle mb-2 p-2\">
+    <td colspan=\"";
+        // line 37
+        yield ((($context["show_type"] ?? null)) ? (16) : (15));
+        yield "\" class=\"text-light text-shadow-dark align-middle mb-2 p-2\">
         <h5 class=\"align-middle my-auto\">
             TOTALE <i class=\"bi bi-fuel-pump-fill ms-1\"></i>:
                 <span> ";
@@ -152,7 +157,7 @@ class __TwigTemplate_944c85a528fcee4500eb85a73adadfc6 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  125 => 40,  119 => 36,  116 => 34,  113 => 32,  102 => 24,  95 => 23,  92 => 21,  82 => 17,  78 => 16,  71 => 15,  67 => 14,  59 => 9,  52 => 8,  47 => 4,  45 => 3,  42 => 2,);
+        return array (  130 => 40,  124 => 37,  121 => 36,  118 => 34,  115 => 32,  104 => 24,  97 => 23,  94 => 21,  84 => 17,  80 => 16,  73 => 15,  69 => 14,  61 => 9,  54 => 8,  47 => 4,  45 => 3,  42 => 2,);
     }
 
     public function getSourceContext(): Source
@@ -160,7 +165,7 @@ class __TwigTemplate_944c85a528fcee4500eb85a73adadfc6 extends Template
         return new Source("{# Table Pagination Row #}
 <tr>
     {% if total > limit %}
-        <td colspan=\"14\" class=\"bg-light align-middle my-auto p-1\">
+        <td colspan=\"{{ show_type ? 16 : 15 }}\" class=\"bg-light align-middle my-auto p-1\">
             <nav class=\"my-1 mx-auto\">
                 <ul class=\"pagination justify-content-center my-auto\">
                     {# Previous Page Link #}
@@ -193,7 +198,7 @@ class __TwigTemplate_944c85a528fcee4500eb85a73adadfc6 extends Template
 
 {# Count Total Row #}
 <tr>
-    <td colspan=\"14\" class=\"text-light text-shadow-dark align-middle mb-2 p-2\">
+    <td colspan=\"{{ show_type ? 16 : 15 }}\" class=\"text-light text-shadow-dark align-middle mb-2 p-2\">
         <h5 class=\"align-middle my-auto\">
             TOTALE <i class=\"bi bi-fuel-pump-fill ms-1\"></i>:
                 <span> {{ total }} </span>

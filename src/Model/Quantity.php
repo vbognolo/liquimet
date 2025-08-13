@@ -27,6 +27,17 @@ class Quantity{
             return $quantity ?: false;
     }
 
+    public function getByTransportID(int $id): array {    
+        $sql = "SELECT id_quantity, kg_load, cooling, price_typology, price_value, kg_unload, mwh, liquid_density, 
+                       gas_weight, mj_kg, pcs_ghv, volume_mc, volume_nmc, smc_mc, gas_nmc, gas_smc, smc_kg, id_transport
+                FROM `quantities`
+                WHERE id_transport = :id_transport
+                    LIMIT 1"; 
+        
+        $quantity = $this->db->runSQL($sql, ['id_transport' => $id])->fetch();  
+            return $quantity ?: false;
+    }
+
 /********************************************************************
  *  Validate Data Statements
  *      Quantity insert and update:     validate_quantity($quantity)
@@ -63,9 +74,6 @@ class Quantity{
                 } elseif (!isset($quantity['price_value']) || empty($quantity['price_value'])) {
                     $errors['price_value'] = "Campo obbligatorio.";
                 }
-                    /*
-                } else {
-                    $quantity['price_value'] = 0;*/
             }
 
             //  Kg Unload validation
@@ -178,7 +186,7 @@ class Quantity{
         return (bool) $this->db->runSQL($sql, $args);
     }
 
-    public function update(array $data, int $user): bool {                                          
+    public function updateQuantity(array $data): bool {                                          
         $sql = "UPDATE `quantities`
                 SET kg_load = :kg_load, 
                     cooling = :cooling, 
@@ -193,7 +201,6 @@ class Quantity{
                 WHERE id_quantity = :id_quantity"; 
 
         $args = [
-            'id_quantity' => $data['id_quantity'],
             'kg_load' => $data['kg_load'],        
             'cooling' => $data['cooling'],              
             'price_typology' => $data['price_typology'], 
@@ -203,11 +210,12 @@ class Quantity{
             'gas_weight' => $data['gas_weight'], 
             'pcs_ghv' => $data['pcs_ghv'], 
             'modified' => date('Y-m-d'), 
-            'modified_by' => $user
-        ];     
+            'modified_by' => $data['modified_by'],
+            'id_quantity' => $data['id_quantity']
+        ];       
 
         $update = $this->db->runSQL($sql, $args);   
-            return $update->rowCount() > 0;                                                
+            return $update->rowCount() > 0;                                            
     }
     
 //  ===> DELETE TRANSPORT BY ID    [delete single - only admin]

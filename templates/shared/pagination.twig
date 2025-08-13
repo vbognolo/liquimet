@@ -1,7 +1,7 @@
 {# Table Pagination Row #}
 <tr>
     {% if total > limit %}
-        <td colspan="14" class="bg-light align-middle my-auto p-1">
+        <td colspan="{{ show_type ? 16 : 15 }}" class="bg-light align-middle my-auto p-1">
             <nav class="my-1 mx-auto">
                 <ul class="pagination justify-content-center my-auto">
                     {# Previous Page Link #}
@@ -34,7 +34,7 @@
 
 {# Count Total Row #}
 <tr>
-    <td colspan="14" class="text-light text-shadow-dark align-middle mb-2 p-2">
+    <td colspan="{{ show_type ? 16 : 15 }}" class="text-light text-shadow-dark align-middle mb-2 p-2">
         <h5 class="align-middle my-auto">
             TOTALE <i class="bi bi-fuel-pump-fill ms-1"></i>:
                 <span> {{ total }} </span>

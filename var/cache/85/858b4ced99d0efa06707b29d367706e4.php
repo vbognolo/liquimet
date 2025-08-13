@@ -32,22 +32,13 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
         $this->parent = false;
 
         $this->blocks = [
-            'head' => [$this, 'block_head'],
-            'jquery' => [$this, 'block_jquery'],
-            'datepicker' => [$this, 'block_datepicker'],
-            'page_script' => [$this, 'block_page_script'],
         ];
     }
 
     protected function doDisplay(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 1
-        yield from $this->unwrap()->yieldBlock('head', $context, $blocks);
-        // line 6
-        yield "
-";
-        // line 8
+        // line 2
         yield "<div class=\"modal fade\" id=\"editTransModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"editTransLabel\" aria-hidden=\"true\">
     <div class=\"modal-dialog modal-lg modal-dialog-centered\">
         <div class=\"modal-content\">
@@ -67,240 +58,262 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                 <div class=\"container-fluid\">
                     <form id=\"transport-edit\" method=\"POST\" action=\"transport-edit\" autocomplete=\"off\" novalidate>
                         <input type=\"hidden\" name=\"id_transport\" id=\"id_transport\" value=\"";
-        // line 26
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "id_transport", [], "any", false, false, false, 26), "html", null, true);
+        // line 20
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "id_transport", [], "any", false, false, false, 20), "html", null, true);
         yield "\" />
                         <input type=\"hidden\" name=\"csrf_token\" value=\"";
-        // line 27
+        // line 21
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["csrf_token"] ?? null), "html", null, true);
         yield "\" />   
+                        <input type=\"hidden\" name=\"original_slot\" id=\"original_slot\" value=\"";
+        // line 22
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "slot", [], "any", false, false, false, 22), "html", null, true);
+        yield "\" />
+                        <input type=\"hidden\" name=\"original_cmr\" id=\"original_cmr\" value=\"";
+        // line 23
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "cmr", [], "any", false, false, false, 23), "html", null, true);
+        yield "\" />
 
                         ";
-        // line 30
+        // line 26
         yield "                        <div class=\"row form-group mx-auto my-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Slot ID: </label>
+                            <label for=\"slot\" class=\"col-4 form-control-label my-1\"> Slot ID: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"slot\" id=\"slot\" data-original=\"";
-        // line 34
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "slot", [], "any", false, false, false, 34), "html", null, true);
+        // line 30
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "slot", [], "any", false, false, false, 30), "html", null, true);
+        yield "\" value=\"";
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "slot", [], "any", false, false, false, 30), "html", null, true);
         yield "\"
-                                    class=\"form-control text-upper ";
-        // line 35
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "slot", [], "any", false, false, false, 35)) {
+                                       class=\"form-control text-upper ";
+        // line 31
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "slot", [], "any", false, false, false, 31)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 38
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "slot", [], "any", false, false, false, 38)) {
+        // line 34
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "slot", [], "any", false, false, false, 34)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "slot", [], "any", false, false, false, 38), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "slot", [], "any", false, false, false, 34), "html", null, true);
             yield "</div>";
         }
-        // line 39
+        // line 35
         yield "                                </div> 
                             </div>
                         </div>
                         
                         ";
-        // line 44
+        // line 40
         yield "                        <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Numero CMR: </label>
+                            <label for=\"cmr\" class=\"col-4 form-control-label my-1\"> Numero CMR: </label>
                         
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"cmr\" id=\"cmr\" data-original=\"";
-        // line 48
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "cmr", [], "any", false, false, false, 48), "html", null, true);
+        // line 44
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "cmr", [], "any", false, false, false, 44), "html", null, true);
+        yield "\" value=\"";
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "cmr", [], "any", false, false, false, 44), "html", null, true);
         yield "\"
-                                    class=\"form-control ";
-        // line 49
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cmr", [], "any", false, false, false, 49)) {
+                                       class=\"form-control ";
+        // line 45
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cmr", [], "any", false, false, false, 45)) {
             yield "is-invalid";
         }
         yield " text-upper\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 52
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cmr", [], "any", false, false, false, 52)) {
+        // line 48
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cmr", [], "any", false, false, false, 48)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cmr", [], "any", false, false, false, 52), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cmr", [], "any", false, false, false, 48), "html", null, true);
             yield "</div>";
         }
-        // line 53
+        // line 49
         yield "                                </div> 
                             </div>
                         </div>
                         
                         ";
-        // line 58
+        // line 54
         yield "                        <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Fornitore: </label>
+                            <label for=\"issuer\" class=\"col-4 form-control-label my-1\"> Fornitore: </label>
                             
                             <div class=\"col-8\">
-                                <input type=\"text\" name=\"issuer\" id=\"issuer\"
-                                    class=\"form-control ";
-        // line 63
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "issuer", [], "any", false, false, false, 63)) {
+                                <input type=\"text\" name=\"issuer\" id=\"issuer\" value=\"";
+        // line 58
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "issuer", [], "any", false, false, false, 58), "html", null, true);
+        yield "\"
+                                       class=\"form-control ";
+        // line 59
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "issuer", [], "any", false, false, false, 59)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 66
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "issuer", [], "any", false, false, false, 66)) {
+        // line 62
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "issuer", [], "any", false, false, false, 62)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "issuer", [], "any", false, false, false, 66), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "issuer", [], "any", false, false, false, 62), "html", null, true);
             yield "</div>";
         }
-        // line 67
+        // line 63
         yield "                                </div>
                             </div>
                         </div>
                             
                         ";
-        // line 72
+        // line 68
         yield "                        <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Emittente: </label>
+                            <label for=\"supplier\" class=\"col-4 form-control-label my-1\"> Emittente: </label>
                             
                             <div class=\"col-8\">
-                                <input type=\"text\" name=\"supplier\" id=\"supplier\"
-                                    class=\"form-control ";
-        // line 77
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "supplier", [], "any", false, false, false, 77)) {
+                                <input type=\"text\" name=\"supplier\" id=\"supplier\" value=\"";
+        // line 72
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "supplier", [], "any", false, false, false, 72), "html", null, true);
+        yield "\"
+                                       class=\"form-control ";
+        // line 73
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "supplier", [], "any", false, false, false, 73)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 80
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "supplier", [], "any", false, false, false, 80)) {
+        // line 76
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "supplier", [], "any", false, false, false, 76)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "supplier", [], "any", false, false, false, 80), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "supplier", [], "any", false, false, false, 76), "html", null, true);
             yield "</div>";
         }
-        // line 81
+        // line 77
         yield "                                </div>  
                             </div>
                         </div>
                             
                         ";
+        // line 82
+        yield "                        <div class=\"row form-group mx-auto mb-3\">
+                            <label for=\"transport\" class=\"col-4 form-control-label my-1\"> Trasporto: </label>
+                            
+                            <div class=\"col-8\">
+                                <input type=\"text\" name=\"transport\" id=\"transport\" value=\"";
         // line 86
-        yield "                        <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Trasporto: </label>
-                            
-                            <div class=\"col-8\">
-                                <input type=\"text\" name=\"transport\" id=\"transport\"
-                                    class=\"form-control ";
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "transport", [], "any", false, false, false, 86), "html", null, true);
+        yield "\"
+                                       class=\"form-control ";
+        // line 87
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "transport", [], "any", false, false, false, 87)) {
+            yield "is-invalid";
+        }
+        yield "\" />
+
+                                <div class=\"error-placeholder\">
+                                    ";
+        // line 90
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "transport", [], "any", false, false, false, 90)) {
+            yield "<div class=\"invalid-feedback\">";
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "transport", [], "any", false, false, false, 90), "html", null, true);
+            yield "</div>";
+        }
         // line 91
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "transport", [], "any", false, false, false, 91)) {
-            yield "is-invalid";
-        }
-        yield "\" />
-
-                                <div class=\"error-placeholder\">
-                                    ";
-        // line 94
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "transport", [], "any", false, false, false, 94)) {
-            yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "transport", [], "any", false, false, false, 94), "html", null, true);
-            yield "</div>";
-        }
-        // line 95
         yield "                                </div> 
                             </div>
                         </div>
                             
                         ";
+        // line 96
+        yield "                        <div class=\"row form-group mx-auto mb-3\">
+                            <label for=\"date_load\" class=\"col-4 form-control-label my-1\"> Data carico: </label>
+                            
+                            <div class=\"col-8\">
+                                <input type=\"text\" name=\"date_load\" id=\"date_load\" value=\"";
         // line 100
-        yield "                        <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Data carico: </label>
-                            
-                            <div class=\"col-8\">
-                                <input type=\"text\" name=\"date_load\" id=\"date_load\" 
-                                    data-original=\"";
-        // line 105
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "date_load", [], "any", false, false, false, 105), "html", null, true);
-        yield "\" class=\"form-control datepicker 
-                                        ";
-        // line 106
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date_load", [], "any", false, false, false, 106)) {
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(((CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "date_load", [], "any", true, true, false, 100)) ? (Twig\Extension\CoreExtension::default(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "date_load", [], "any", false, false, false, 100), "")) : ("")), "html", null, true);
+        yield "\"
+                                       class=\"form-control datepicker ";
+        // line 101
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date_load", [], "any", false, false, false, 101)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 109
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date_load", [], "any", false, false, false, 109)) {
+        // line 104
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date_load", [], "any", false, false, false, 104)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date_load", [], "any", false, false, false, 109), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date_load", [], "any", false, false, false, 104), "html", null, true);
             yield "</div>";
         }
-        // line 110
+        // line 105
         yield "                                </div> 
                             </div>
                         </div>
                             
                         ";
-        // line 115
+        // line 110
         yield "                        <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Data scarico: </label>
+                            <label for=\"date_unload\" class=\"col-4 form-control-label my-1\"> Data scarico: </label>
                             
                             <div class=\"col-8\">
-                                <input type=\"text\" name=\"date_unload\" id=\"date_unload\"  
-                                    data-original=\"";
-        // line 120
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "date_unload", [], "any", false, false, false, 120), "html", null, true);
-        yield "\" class=\"form-control datepicker 
-                                        ";
-        // line 121
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date_unload", [], "any", false, false, false, 121)) {
+                                <input type=\"text\" name=\"date_unload\" id=\"date_unload\" value=\"";
+        // line 114
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(((CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "date_unload", [], "any", true, true, false, 114)) ? (Twig\Extension\CoreExtension::default(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "date_unload", [], "any", false, false, false, 114), "")) : ("")), "html", null, true);
+        yield "\"
+                                       class=\"form-control datepicker ";
+        // line 115
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date_unload", [], "any", false, false, false, 115)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 124
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date_unload", [], "any", false, false, false, 124)) {
+        // line 118
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date_unload", [], "any", false, false, false, 118)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date_unload", [], "any", false, false, false, 124), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date_unload", [], "any", false, false, false, 118), "html", null, true);
             yield "</div>";
         }
-        // line 125
+        // line 119
         yield "                                </div> 
                             </div>
                         </div>    
                             
                         ";
-        // line 130
+        // line 124
         yield "                        <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Container / ATB: </label>
+                            <label for=\"container\" class=\"col-4 form-control-label my-1\"> Container / ATB: </label>
                             
                             <div class=\"col-8\">
-                                <input type=\"text\" name=\"container\" id=\"container\"
-                                    class=\"form-control ";
-        // line 135
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "container", [], "any", false, false, false, 135)) {
+                                <input type=\"text\" name=\"container\" id=\"container\" value=\"";
+        // line 128
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "container", [], "any", false, false, false, 128), "html", null, true);
+        yield "\"
+                                       class=\"form-control ";
+        // line 129
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "container", [], "any", false, false, false, 129)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 138
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "container", [], "any", false, false, false, 138)) {
+        // line 132
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "container", [], "any", false, false, false, 132)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "container", [], "any", false, false, false, 138), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "container", [], "any", false, false, false, 132), "html", null, true);
             yield "</div>";
         }
-        // line 139
+        // line 133
         yield "                                </div>  
                             </div>
                         </div>
@@ -312,7 +325,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                                 </span>    
                             </button>
                             
-                            <button type=\"submit\" class=\"btn btn-default modal-save\" name=\"update_transport\">
+                            <button type=\"submit\" class=\"btn btn-default modal-save\">
                                 <span class=\"bi bi-check-circle\">
                                     SALVA
                                 </span>   
@@ -325,10 +338,10 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
     </div>
 </div>
 ";
-        // line 163
+        // line 157
         yield "
 ";
-        // line 165
+        // line 159
         yield "<div class=\"modal fade\" id=\"editQtyModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"editQtyLabel\" aria-hidden=\"true\">
     <div class=\"modal-dialog modal-lg modal-dialog-centered\">
         <div class=\"modal-content\">
@@ -350,46 +363,46 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                         <input type=\"hidden\" name=\"id_transport\" id=\"id_transport\" />
                         <input type=\"hidden\" name=\"id_quantity\" id=\"id_quantity\" />
                         <input type=\"hidden\" name=\"csrf_token\" value=\"";
-        // line 185
+        // line 179
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["csrf_token"] ?? null), "html", null, true);
         yield "\" />
 
                         ";
-        // line 188
+        // line 182
         yield "                        <div class=\"row form-group mx-auto my-3\">
                             <label class=\"col-4 form-control-label my-1\"> Quantità caricata: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"kg_load\" id=\"kg_load\" 
                                     class=\"form-control ";
-        // line 193
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 193)) {
+        // line 187
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 187)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 196
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 196)) {
+        // line 190
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 190)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 196), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_load", [], "any", false, false, false, 190), "html", null, true);
             yield "</div>";
         }
-        // line 197
+        // line 191
         yield "                                </div> 
                             </div>
                         </div>
 
                         ";
-        // line 202
+        // line 196
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label class=\"col-4 form-control-label my-1\"> Raffreddamento: </label>
                         
                             <div class=\"col-8\">
                                 <select name=\"cooling\" id=\"cooling\" class=\"form-control ";
-        // line 206
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cooling", [], "any", false, false, false, 206)) {
+        // line 200
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cooling", [], "any", false, false, false, 200)) {
             yield "is-invalid";
         }
         yield "\">
@@ -404,31 +417,31 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 217
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cooling", [], "any", false, false, false, 217)) {
+        // line 211
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cooling", [], "any", false, false, false, 211)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cooling", [], "any", false, false, false, 217), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "cooling", [], "any", false, false, false, 211), "html", null, true);
             yield "</div>";
         }
-        // line 218
+        // line 212
         yield "                                </div> 
                             </div>
                         </div>
                         
                         ";
-        // line 223
+        // line 217
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label class=\"col-4 form-control-label my-1\"> Tipologia costo extra: </label>
                             
                             <div class=\"col-8\">
                                 <select name=\"price_typology\" id=\"price_typology\" class=\"form-control ";
-        // line 227
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_typology", [], "any", false, false, false, 227)) {
+        // line 221
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_typology", [], "any", false, false, false, 221)) {
             yield "is-invalid";
         }
         yield "\">
                                     ";
-        // line 235
+        // line 229
         yield "                                    
                                     <option value=\"yes\" class=\"opt-type\"> 
                                         SÌ
@@ -441,151 +454,151 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 246
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_typology", [], "any", false, false, false, 246)) {
+        // line 240
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_typology", [], "any", false, false, false, 240)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_typology", [], "any", false, false, false, 246), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_typology", [], "any", false, false, false, 240), "html", null, true);
             yield "</div>";
         }
-        // line 247
+        // line 241
         yield "                                </div>
                             </div>
                         </div>
                             
                         ";
-        // line 252
+        // line 246
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label class=\"col-4 form-control-label my-1\"> Valore costo extra: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"price_value\" id=\"price_value\"
                                     class=\"form-control ";
-        // line 257
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_value", [], "any", false, false, false, 257)) {
+        // line 251
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_value", [], "any", false, false, false, 251)) {
             yield "is-invalid";
         }
         yield "\" />
                                 ";
-        // line 259
+        // line 253
         yield "
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 262
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_value", [], "any", false, false, false, 262)) {
+        // line 256
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_value", [], "any", false, false, false, 256)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_value", [], "any", false, false, false, 262), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "price_value", [], "any", false, false, false, 256), "html", null, true);
             yield "</div>";
         }
-        // line 263
+        // line 257
         yield "                                </div>  
                             </div>
                         </div>
                             
                         ";
-        // line 268
+        // line 262
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label class=\"col-4 form-control-label my-1\"> Quantità scaricata: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"kg_unload\" id=\"kg_unload\"
                                     class=\"form-control ";
-        // line 273
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_unload", [], "any", false, false, false, 273)) {
+        // line 267
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_unload", [], "any", false, false, false, 267)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 276
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_unload", [], "any", false, false, false, 276)) {
+        // line 270
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_unload", [], "any", false, false, false, 270)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_unload", [], "any", false, false, false, 276), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "kg_unload", [], "any", false, false, false, 270), "html", null, true);
             yield "</div>";
         }
-        // line 277
+        // line 271
         yield "                                </div> 
                             </div>
                         </div>
 
                         ";
-        // line 282
+        // line 276
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label class=\"col-4 form-control-label my-1\"> Densità liquido: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"liquid_density\" id=\"liquid_density\" 
                                     class=\"form-control ";
-        // line 287
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "liquid_density", [], "any", false, false, false, 287)) {
+        // line 281
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "liquid_density", [], "any", false, false, false, 281)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 290
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "liquid_density", [], "any", false, false, false, 290)) {
+        // line 284
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "liquid_density", [], "any", false, false, false, 284)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "liquid_density", [], "any", false, false, false, 290), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "liquid_density", [], "any", false, false, false, 284), "html", null, true);
             yield "</div>";
         }
-        // line 291
+        // line 285
         yield "                                </div> 
                             </div>
                         </div>
                             
                         ";
-        // line 296
+        // line 290
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label class=\"col-4 form-control-label my-1\"> Peso specifico (gas): </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"gas_weight\" id=\"gas_weight\" 
                                     class=\"form-control ";
-        // line 301
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "gas_weight", [], "any", false, false, false, 301)) {
+        // line 295
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "gas_weight", [], "any", false, false, false, 295)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 304
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "gas_weight", [], "any", false, false, false, 304)) {
+        // line 298
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "gas_weight", [], "any", false, false, false, 298)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "gas_weight", [], "any", false, false, false, 304), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "gas_weight", [], "any", false, false, false, 298), "html", null, true);
             yield "</div>";
         }
-        // line 305
+        // line 299
         yield "                                </div> 
                             </div>
                         </div>
                             
                         ";
-        // line 310
+        // line 304
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label class=\"col-4 form-control-label my-1\"> PCS/GHV: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"pcs_ghv\" id=\"pcs_ghv\"
                                     class=\"form-control ";
-        // line 315
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "pcs_ghv", [], "any", false, false, false, 315)) {
+        // line 309
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "pcs_ghv", [], "any", false, false, false, 309)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 318
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "pcs_ghv", [], "any", false, false, false, 318)) {
+        // line 312
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "pcs_ghv", [], "any", false, false, false, 312)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "pcs_ghv", [], "any", false, false, false, 318), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "pcs_ghv", [], "any", false, false, false, 312), "html", null, true);
             yield "</div>";
         }
-        // line 319
+        // line 313
         yield "                                </div> 
                             </div>
                         </div>    
@@ -610,10 +623,10 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
     </div>
 </div>
 ";
-        // line 343
+        // line 337
         yield "
 ";
-        // line 345
+        // line 339
         yield "<div class=\"modal fade\" id=\"editNoteModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"editNoteLabel\" aria-hidden=\"true\">
     <div class=\"modal-dialog modal-lg modal-dialog-centered\">
         <div class=\"modal-content\">
@@ -635,7 +648,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                         <input type=\"hidden\" name=\"id_transport\" id=\"id_transport\" />
                         <input type=\"hidden\" name=\"id_note\" id=\"id_note\" />
                         <input type=\"hidden\" name=\"csrf_token\" value=\"";
-        // line 365
+        // line 359
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["csrf_token"] ?? null), "html", null, true);
         yield "\" />
 
@@ -645,8 +658,8 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                             <div class=\"\">
                                 <textarea name=\"note\" id=\"note\" maxlength=\"2000\"
                                     class=\"form-control ";
-        // line 372
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "content", [], "any", false, false, false, 372)) {
+        // line 366
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "content", [], "any", false, false, false, 366)) {
             yield "is-invalid";
         }
         yield "\"
@@ -654,13 +667,13 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 376
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "content", [], "any", false, false, false, 376)) {
+        // line 370
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "content", [], "any", false, false, false, 370)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "content", [], "any", false, false, false, 376), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "content", [], "any", false, false, false, 370), "html", null, true);
             yield "</div>";
         }
-        // line 377
+        // line 371
         yield "                                </div>
                             </div>
                         </div>                        
@@ -691,10 +704,10 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
     </div>
 </div>
 ";
-        // line 407
+        // line 401
         yield "
 ";
-        // line 409
+        // line 403
         yield "<div class=\"modal fade\" id=\"deleteTransModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"deleteTransLabel\" aria-hidden=\"true\">
     <div class=\"modal-dialog modal-lg modal-dialog-centered\">
         <div class=\"modal-content\">
@@ -715,7 +728,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                     <form id=\"transport-delete\" method=\"POST\" action=\"transport-delete\" autocomplete=\"off\" novalidate>
                         <input type=\"hidden\" name=\"id_transport\" id=\"id_transport\" />
                         <input type=\"hidden\" name=\"csrf_token\" value=\"";
-        // line 428
+        // line 422
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["csrf_token"] ?? null), "html", null, true);
         yield "\" />
 
@@ -744,10 +757,10 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
     </div>
 </div>
 ";
-        // line 455
+        // line 449
         yield "
 ";
-        // line 457
+        // line 451
         yield "<div class=\"modal fade\" id=\"editPartModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"editPartLabel\" aria-hidden=\"true\">
     <div class=\"modal-dialog modal-lg modal-dialog-centered\">
         <div class=\"modal-content\">
@@ -768,54 +781,54 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                     <form id=\"partial-edit\" method=\"POST\" action=\"partial-edit\" autocomplete=\"off\" novalidate>
                         <input type=\"hidden\" name=\"id_partial\" id=\"id_partial\" />
                         <input type=\"hidden\" id=\"date_load\" value=\"";
-        // line 476
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "date_load", [], "any", false, false, false, 476), "html", null, true);
+        // line 470
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "date_load", [], "any", false, false, false, 470), "html", null, true);
         yield "\">
                         <input type=\"hidden\" id=\"date_unload\" value=\"";
-        // line 477
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "date_unload", [], "any", false, false, false, 477), "html", null, true);
+        // line 471
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["transport"] ?? null), "date_unload", [], "any", false, false, false, 471), "html", null, true);
         yield "\">
                         <input type=\"hidden\" name=\"csrf_token\" value=\"";
-        // line 478
+        // line 472
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["csrf_token"] ?? null), "html", null, true);
         yield "\" />
 
                         ";
-        // line 481
+        // line 475
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label for=\"destination\" class=\"col-4 form-control-label my-1\"> Destinazione: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"destination\" id=\"destination\"
                                        class=\"form-control ";
-        // line 486
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "destination", [], "any", false, false, false, 486)) {
+        // line 480
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "destination", [], "any", false, false, false, 480)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 489
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "destination", [], "any", false, false, false, 489)) {
+        // line 483
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "destination", [], "any", false, false, false, 483)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "destination", [], "any", false, false, false, 489), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "destination", [], "any", false, false, false, 483), "html", null, true);
             yield "</div>";
         }
-        // line 490
+        // line 484
         yield "                                </div> 
                             </div>
                         </div>
 
                         ";
-        // line 495
+        // line 489
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label for=\"exw\" class=\"col-4 form-control-label my-1\"> EXW: </label>
                             
                             <div class=\"col-8\">
                                 <select name=\"exw\" id=\"exw\" class=\"form-control ";
-        // line 499
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "exw", [], "any", false, false, false, 499)) {
+        // line 493
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "exw", [], "any", false, false, false, 493)) {
             yield "is-invalid";
         }
         yield "\">
@@ -830,121 +843,121 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 510
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "exw", [], "any", false, false, false, 510)) {
+        // line 504
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "exw", [], "any", false, false, false, 504)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "exw", [], "any", false, false, false, 510), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "exw", [], "any", false, false, false, 504), "html", null, true);
             yield "</div>";
         }
-        // line 511
+        // line 505
         yield "                                </div>
                             </div>
                         </div>
                             
                         ";
-        // line 516
+        // line 510
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label for=\"date\" class=\"col-4 form-control-label my-1\"> Data carico: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"date\" id=\"date\" 
                                        class=\"form-control datepicker ";
-        // line 521
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date", [], "any", false, false, false, 521)) {
+        // line 515
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date", [], "any", false, false, false, 515)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 524
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date", [], "any", false, false, false, 524)) {
+        // line 518
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date", [], "any", false, false, false, 518)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date", [], "any", false, false, false, 524), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date", [], "any", false, false, false, 518), "html", null, true);
             yield "</div>";
         }
-        // line 525
+        // line 519
         yield "                                </div> 
                             </div>
                         </div>
 
                         ";
-        // line 530
+        // line 524
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label for=\"place\" class=\"col-4 form-control-label my-1\"> Luogo: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"place\" id=\"place\"
                                        class=\"form-control ";
-        // line 535
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "place", [], "any", false, false, false, 535)) {
+        // line 529
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "place", [], "any", false, false, false, 529)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 538
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "place", [], "any", false, false, false, 538)) {
+        // line 532
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "place", [], "any", false, false, false, 532)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "place", [], "any", false, false, false, 538), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "place", [], "any", false, false, false, 532), "html", null, true);
             yield "</div>";
         }
-        // line 539
+        // line 533
         yield "                                </div> 
                             </div>
                         </div>
 
                         ";
-        // line 544
+        // line 538
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label for=\"q_unloaded\" class=\"col-4 form-control-label my-1\"> Quantità scaricata: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"q_unloaded\" id=\"q_unloaded\" 
                                     class=\"form-control ";
-        // line 549
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "q_unloaded", [], "any", false, false, false, 549)) {
+        // line 543
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "q_unloaded", [], "any", false, false, false, 543)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 552
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "q_unloaded", [], "any", false, false, false, 552)) {
+        // line 546
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "q_unloaded", [], "any", false, false, false, 546)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "q_unloaded", [], "any", false, false, false, 552), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "q_unloaded", [], "any", false, false, false, 546), "html", null, true);
             yield "</div>";
         }
-        // line 553
+        // line 547
         yield "                                </div> 
                             </div>
                         </div>
 
                         ";
-        // line 558
+        // line 552
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label for=\"invoice\" class=\"col-4 form-control-label my-1\"> Fattura: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"invoice\" id=\"invoice\" 
                                     class=\"form-control ";
-        // line 563
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "invoice", [], "any", false, false, false, 563)) {
+        // line 557
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "invoice", [], "any", false, false, false, 557)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 566
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "invoice", [], "any", false, false, false, 566)) {
+        // line 560
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "invoice", [], "any", false, false, false, 560)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "invoice", [], "any", false, false, false, 566), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "invoice", [], "any", false, false, false, 560), "html", null, true);
             yield "</div>";
         }
-        // line 567
+        // line 561
         yield "                                </div> 
                             </div>
                         </div>
@@ -967,834 +980,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
             </div>
         </div>
     </div>
-</div>
-
-";
-        // line 591
-        yield from $this->unwrap()->yieldBlock('jquery', $context, $blocks);
-        // line 605
-        yield "
-";
-        // line 606
-        yield from $this->unwrap()->yieldBlock('datepicker', $context, $blocks);
-        // line 612
-        yield "
-";
-        // line 613
-        yield from $this->unwrap()->yieldBlock('page_script', $context, $blocks);
-        yield from [];
-    }
-
-    // line 1
-    /**
-     * @return iterable<null|scalar|\Stringable>
-     */
-    public function block_head(array $context, array $blocks = []): iterable
-    {
-        $macros = $this->macros;
-        // line 2
-        yield "    ";
-        // line 3
-        yield "    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css\" 
-        integrity=\"sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=\" crossorigin=\"anonymous\">
-";
-        yield from [];
-    }
-
-    // line 591
-    /**
-     * @return iterable<null|scalar|\Stringable>
-     */
-    public function block_jquery(array $context, array $blocks = []): iterable
-    {
-        $macros = $this->macros;
-        // line 592
-        yield "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
-        integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
-        crossorigin=\"anonymous\">
-</script>
-<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js\" 
-        integrity=\"sha256-umbTaFxP31Fv6O1itpLS/3+v5fOAWDLOUzlmvOGaKV4=\" 
-        crossorigin=\"anonymous\">
-</script>
-<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js\" 
-        integrity=\"sha256-MtEA819Zls6dtLt5S5BpEMOhifPyz7gfzfgtNtY75lE=\" 
-        crossorigin=\"anonymous\">
-</script>
-";
-        yield from [];
-    }
-
-    // line 606
-    /**
-     * @return iterable<null|scalar|\Stringable>
-     */
-    public function block_datepicker(array $context, array $blocks = []): iterable
-    {
-        $macros = $this->macros;
-        // line 607
-        yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js\" 
-        integrity=\"sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=\" 
-        crossorigin=\"anonymous\">
-</script>
-";
-        yield from [];
-    }
-
-    // line 613
-    /**
-     * @return iterable<null|scalar|\Stringable>
-     */
-    public function block_page_script(array $context, array $blocks = []): iterable
-    {
-        $macros = $this->macros;
-        // line 614
-        yield "<script>
-\$(document).ready(function () {
-//  DATEPICKER 
-    \$('.datepicker').datepicker({
-        format: 'dd-mm-yyyy',
-        endDate: new Date(),
-        autoclose: true,
-        clearBtn: false
-    }).on('changeDate', function (e) {
-        \$(this).trigger('change');                                          // Validator catches the value
-        
-        if (this.id === 'date_load') {
-            \$('#date_unload')
-                .datepicker('setStartDate', e.date)
-                .datepicker('update', e.date);
-        }
-        \$(this).valid();
-    }).on('show', function () {
-        \$(this).data('selectedDate', \$(this).val());                        // Store current value when datepicker opens
-    }).on('hide', function (e) {
-        const currentVal = \$(this).val();                                   // If the user didn't select anything and just clicked out, preserve current value
-        if (!currentVal) {
-            const storedDate = \$(this).data('selectedDate');
-            if (storedDate) {
-                \$(this).val(storedDate);                                    // Restore value
-            }
-        }
-    });
-
-//  VALIDATOR METHOD FOR DEFINING CURRENT DATE AS MAX
-    \$.validator.addMethod(\"noFutureDate\", function (value, element) {
-        if (!value) return true;                                            // Allow empty if not required
-
-        const parts = value.split(\"-\");
-        const inputDate = new Date(parts[2], parts[1] - 1, parts[0]);       // Assuming dd-mm-yyyy
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);                                         // Remove time part
-
-        return inputDate <= today;
-    });
-
-//  VALIDATOR METHOD FOR DEFINING THAT UNLOAD'S DATE MUST BE AFTER OR EQUAL TO LOAD'S DATE
-    \$.validator.addMethod(\"dateAfterOrEqual\", function(value, element, params) {
-        const dateLoadVal = \$(params).val();
-            if (!value || !dateLoadVal) return true;
-
-        // Parse dates as dd-mm-yyyy
-        const partsUnload = value.split(\"-\");
-        const partsLoad = dateLoadVal.split(\"-\");
-
-        const dateUnload = new Date(partsUnload[2], partsUnload[1] - 1, partsUnload[0]);
-        const dateLoad = new Date(partsLoad[2], partsLoad[1] - 1, partsLoad[0]);
-            return this.optional(element) || dateUnload >= dateLoad;
-    });
-
-//  FORM VALIDATION
-    \$(\"#transport-edit\").validate({
-        onfocusout: function(element) {
-            \$(element).valid();                                             // Validate the field when it loses focus
-        },
-        rules: {
-            slot: { required: true, rangelength: [5, 35], pattern: \"^[A-Za-z0-9_]+\$\" },
-            cmr: { required: true, rangelength: [5, 35], pattern: \"^[A-Za-z0-9\\-]+\$\" },
-            issuer: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
-            supplier: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
-            transport: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
-            date_load: { required: true, noFutureDate: true },
-            date_unload: { required: true, noFutureDate: true, dateAfterOrEqual: \"#date_load\" },
-            container: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" }
-        },
-        messages: {
-            slot: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 5 e al massimo 35 caratteri.\",
-                pattern: \"Slot ID può contenere lettere, numeri e underscore (_). Spazi non consentiti.\"
-            },
-            cmr: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 5 e al massimo 35 caratteri.\",
-                pattern: \"CMR può contenere lettere, numeri e trattini (-). Spazi non consentiti.\"
-            },
-            issuer: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
-                pattern: \"Emittente può contenere solo lettere e spazi (senza spazio iniziale).\"
-            }, 
-            supplier: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
-                pattern: \"Fornitore può contenere solo lettere e spazi (senza spazio iniziale).\"
-            }, 
-            transport: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
-                pattern: \"Trasporto può contenere solo lettere e spazi (senza spazio iniziale).\"
-            },
-            date_load: {
-                required: \"Campo obbligatorio.\",
-                noFutureDate: \"Inserire una data valida. Non sono permesse date future.\"
-            }, 
-            date_unload: {
-                required: \"Campo obbligatorio.\",
-                noFutureDate: \"Inserire una data valida. Non sono permesse date future.\",
-                dateAfterOrEqual: \"La data di scarico non può essere precedente alla data di carico.\"
-            }, 
-            container: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
-                pattern: \"Container può contenere solo lettere e spazi (senza spazio iniziale).\"
-            }
-        },
-        errorPlacement: function(error, element) {
-            error.addClass(\"text-danger small\");
-            element.removeClass(\"is-valid\").addClass(\"is-invalid\");                                             // Bootstrap error class
-            element.closest(\".form-group\").find(\".error-placeholder\").html(error);      // Insert error inside the reserved space
-        },
-        highlight: function (element) {
-            \$(element).removeClass('is-valid').addClass('is-invalid');
-        },
-        unhighlight: function (element) {
-            \$(element).removeClass('is-invalid');
-            \$(element).closest('.form-group').find('.error-placeholder').html('');
-        },
-        submitHandler: function (form) {
-            const \$form = \$(form);
-            const oSlot = \$(\"#slot\").data(\"original\");
-            const oCmr = \$(\"#cmr\").data(\"original\");
-
-            \$.ajax({
-                url: 'transport-edit',
-                type: 'POST',
-                data: \$form.serialize() + '&original_slot=' + encodeURIComponent(oSlot) + '&original_cmr=' + encodeURIComponent(oCmr),
-                dataType: 'json',
-                success: function (response) {
-                    if (response.success) {
-                        updateOriginalDataFromResponse(response.edited);
-                        \$('#editTransModal').modal('hide');
-
-                        const edited = response.edited;
-                        const row = \$('#id-' + edited.id_transport);
-
-                        // Update row cells manually
-                        row.find('.col-slot').text(edited.slot);
-                        row.find('.col-cmr').text(edited.cmr);
-                        row.find('.col-issuer').text(edited.issuer);
-                        row.find('.col-supplier').text(edited.supplier);
-                        row.find('.col-transport').text(edited.transport);
-                        row.find('.col-load').text(edited.date_load);
-                        row.find('.col-unload').text(edited.date_unload);
-                        row.find('.col-container').text(edited.container);
-
-                        row.find('.col-univoco').text(edited.univoco);
-                        row.find('.col-month-load').text(edited.id_month_load);
-                        row.find('.col-week-unload').text(edited.week_unload);
-                        row.find('.col-month-unload').text(`\${edited.id_month_unload} - \${edited.month_unload}`);
-
-                        // Highlight and scroll
-                        row.addClass('table-success');
-                        \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
-                            setTimeout(() => row.removeClass('table-success'), 2500);
-                    } else {
-                        // Display PHP validation errors
-                        //\$(\".invalid-feedback\").remove();                    // Clear previous errors
-                        if (response.errors) {
-                            \$.each(response.errors, function(field, message) {
-                                const input = \$(\"[name='\" + field + \"']\");
-                                input.removeClass(\"is-valid\").addClass(\"is-invalid\");
-                                input.closest(\".form-group\").find(\".error-placeholder\")
-                                    .html('<div class=\"invalid-feedback\">' + message + '</div>');
-                            });
-                        }
-                    }
-                },
-                error: function (xhr) {
-                    console.error(xhr.responseText);
-                }
-            });
-            return false;
-        },
-        success: function(label, element) {
-            \$(element).removeClass(\"is-invalid\").addClass(\"is-valid\");
-            \$(element).closest(\".form-group\").find(\".error-placeholder\").html(\"\");
-        }
-    });
-
-//  Quantity Price Value Toggle Field
-    let switched = false;
-
-    function togglePriceValueField() {
-        const \$pv = \$('#price_value');
-        const \$pt = \$('#price_typology');
-        const typology = \$pt.val();
-
-        if (typology === 'no') {
-            switched = true;
-            \$pv
-                .val(0)
-                .prop('disabled', true)
-                .removeClass('is-valid is-invalid')
-                .closest('.form-group')
-                .find('.error-placeholder').html('');
-        } else {
-            \$pv
-                .prop('disabled', false)
-                .removeClass('is-valid is-invalid')
-                .closest('.form-group')
-                .find('.error-placeholder').html('');
-
-            if (switched) {
-                \$pv.val('');    // Clear value only if switched from no to yes
-            }
-
-            \$pv.trigger('input'); // ensure initial sync
-            switched = false;       // Reset flag after processing
-        }
-    }
-
-    \$('#price_typology').on('change', togglePriceValueField());
-
-//  QUANTITY FORM VALIDATION
-    \$(\"#quantity-edit\").validate({
-        onfocusout: function(element) {
-            \$(element).valid();     // validate the field when it loses focus
-        },
-        rules: {
-            kg_load: { required: true, number: true, min: 0 },
-            cooling: { required: true, digits: true },
-            price_typology: { required: true },
-            price_value: { 
-                required: {
-                    depends: function() {
-                        return \$('#price_typology').val() === 'yes';
-                    }
-                },
-                digits: true,
-                min: 1
-            },
-            kg_unload: { required: true, number: true, min: 0 },
-            liquid_density: { required: true, number: true, min: 0 },
-            gas_weight: { required: true, number: true, min: 0 },
-            pcs_ghv: { required: true, number: true, min: 0 }
-        },
-        messages: {
-            kg_load: {
-                required: \"Campo obbligatorio.\",
-                number: \"Quantità caricata deve essere un numero positivo (intero o decimale).\",
-                min: \"Il valore minimo deve essere maggiore o uguale a 0.\"
-            },
-            cooling: {
-                required: \"Campo obbligatorio.\",
-                digits: \"Raffredamento deve essere un numero intero positivo, senza segni o decimali.\"
-            },
-            price_typology: {
-                required: \"Campo obbligatorio.\"
-            }, 
-            price_value: {
-                required: \"Campo obbligatorio.\",
-                digits: \"Valore costo extra deve essere un numero intero positivo maggiore o uguale a 1, senza segni o decimali.\",
-                min: \"Il valore minimo deve essere maggiore o uguale a 1.\"
-            }, 
-            kg_unload: {
-                required: \"Campo obbligatorio.\",
-                number: \"Quantità scaricata deve essere un numero positivo (intero o decimale).\",
-                min: \"Il valore minimo deve essere maggiore o uguale a 0.\"
-            },
-            liquid_density: {
-                required: \"Campo obbligatorio.\",
-                number: \"Densità liquido deve essere un numero positivo (intero o decimale).\",
-                min: \"Il valore minimo deve essere maggiore o uguale a 0.\",
-            }, 
-            gas_weight: {
-                required: \"Campo obbligatorio.\",
-                number: \"Peso specifico (gas) deve essere un numero positivo (intero o decimale).\",
-                min: \"Il valore minimo deve essere maggiore o uguale a 0.\"
-            }, 
-            pcs_ghv: {
-                required: \"Campo obbligatorio.\",
-                number: \"PCS/GHV deve essere un numero positivo (intero o decimale).\",
-                min: \"Il valore minimo deve essere maggiore o uguale a 0.\"
-            }
-        },
-        errorPlacement: function(error, element) {
-            error.addClass(\"text-danger small\");
-            element.removeClass(\"is-valid\").addClass(\"is-invalid\");                                             // Bootstrap error class
-            element.closest(\".form-group\").find(\".error-placeholder\").html(error);      // Insert error inside the reserved space
-        },
-        highlight: function (element) {
-            \$(element).removeClass('is-valid').addClass('is-invalid');
-        },
-        unhighlight: function (element) {
-            \$(element).removeClass('is-invalid');
-            \$(element).closest('.form-group').find('.error-placeholder').html('');
-        },
-        submitHandler: function (form) {
-            const \$form = \$(form);
-
-            \$.ajax({
-                url: 'quantity-edit',
-                type: 'POST',
-                data: \$form.serialize(), 
-                dataType: 'json',
-                success: function (response) {
-                    if (response.success) {
-                        updateOriginalDataFromResponse(response.updated);
-                        //\$('#editQtyModal').modal('hide');
-
-                        const updated = response.updated;
-                        const row = \$('#qty-table-' + updated.id_transport);
-
-                        // Update row cells manually
-                        row.find('.col-kg-load').text(updated.kg_load);
-                        row.find('.col-cooling').text(updated.cooling);
-                        row.find('.col-price-typology').text(updated.price_typology);
-                        row.find('.col-price-value').text(updated.price_value);
-                        row.find('.col-kg-unload').text(updated.kg_unload);
-                        row.find('.col-liquid-density').text(updated.liquid_density);
-                        row.find('.col-gas-weight').text(updated.gas_weight);
-                        row.find('.col-pcs-ghv').text(updated.pcs_ghv);
-
-                        row.find('.col-mwh').text(updated.mwh);
-                        row.find('.col-mj-kg').text(updated.mj_kg);
-                        row.find('.col-volume-mc').text(updated.volume_mc);
-                        row.find('.col-volume-nmc').text(updated.volume_nmc);
-                        row.find('.col-smc-mc').text(updated.smc_mc);
-                        row.find('.col-gas-nmc').text(updated.gas_nmc);
-                        row.find('.col-gas-smc').text(updated.gas_smc);
-                        row.find('.col-smc-kg').text(updated.smc_kg);
-
-                        // Highlight and scroll
-                        row.addClass('table-success');
-                        \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
-                            setTimeout(() => row.removeClass('table-success'), 2500);
-
-                        setTimeout(() => {
-                            \$(\"#editQtyModal\").modal('hide');
-                        }, 400);
-                    } else {
-                        // Display PHP validation errors
-                        //\$(\".invalid-feedback\").remove();                    // Clear previous errors
-                        if (response.errors) {
-                            \$.each(response.errors, function(field, message) {
-                                const input = \$(\"[name='\" + field + \"']\");
-                                input.removeClass(\"is-valid\").addClass(\"is-invalid\");
-                                input.closest(\".form-group\").find(\".error-placeholder\")
-                                    .html('<div class=\"invalid-feedback\">' + message + '</div>');
-                            });
-                        }
-                    }
-                },
-                error: function (xhr) {
-                    console.error(xhr.responseText);
-                }
-            });
-            return false;
-        },
-        success: function(label, element) {
-            \$(element).removeClass(\"is-invalid\").addClass(\"is-valid\");
-            \$(element).closest(\".form-group\").find(\".error-placeholder\").html(\"\");
-        }
-    });
-
-    \$(\"#partial-edit\").validate({
-        onfocusout: function(element) {
-            \$(element).valid();     
-        },
-        rules: {
-            destination: { required: true, rangelength: [3, 50 ], pattern: \"^[A-Za-z ]+\$\" },
-            exw: { required: true },
-            date: { required: true, noFutureDate: true },
-            place: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
-            q_unloaded: { required: true, number: true },
-            invoice: { required: true, number: true }
-        },
-        messages: {
-            destination: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
-                pattern: \"Destinazione può contenere lettere e spazi (senza spazio iniziale).\"
-            },
-            exw: {
-                required: \"Campo obbligatorio.\"
-            },
-            date: {
-                required: \"Campo obbligatorio.\",
-                noFutureDate: \"Inserire una data valida. Non sono permesse date future.\"
-            }, 
-            place: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
-                pattern: \"Luogo può contenere solo lettere e spazi (senza spazio iniziale).\"
-            }, 
-            q_unloaded: {
-                required: \"Campo obbligatorio.\",
-                number: \"Quantità caricata deve essere un numero positivo (intero o decimale).\",
-            },
-            invoice: {
-                required: \"Campo obbligatorio.\",
-                number: \"Quantità caricata deve essere un numero positivo (intero o decimale).\"
-            }
-        },
-        errorPlacement: function(error, element) {
-            error.addClass(\"text-danger small\");
-            element.removeClass(\"is-valid\").addClass(\"is-invalid\");                                             // Bootstrap error class
-            element.closest(\".form-group\").find(\".error-placeholder\").html(error);      // Insert error inside the reserved space
-        },
-        highlight: function (element) {
-            \$(element).removeClass('is-valid').addClass('is-invalid');
-        },
-        unhighlight: function (element) {
-            \$(element).removeClass('is-invalid');
-            \$(element).closest('.form-group').find('.error-placeholder').html('');
-        },
-        submitHandler: function (form) {
-            const \$form = \$(form);
-
-            \$.ajax({
-                url: 'partial-edit',
-                type: 'POST',
-                data: \$form.serialize(),
-                dataType: 'json',
-                success: function (response) {
-                    if (response.success) {
-                        updateOriginalDataFromResponse(response.modified);
-                        \$('#editPartModal').modal('hide');
-
-                        const modified = response.modified;
-                        const row = \$('#partial-table-' + modified.id_partial);
-
-                        // Update row cells manually
-                        row.find('.col-destination').text(modified.destination);
-                        row.find('.col-exw').text(modified.exw);
-                        row.find('.col-date').text(modified.date);
-                        row.find('.col-place').text(modified.place);
-                        row.find('.col-q-unloaded').text(modified.q_unloaded);
-                        row.find('.col-invoice').text(modified.invoice);
-
-                        // Highlight and scroll
-                        row.addClass('table-success');
-                        \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
-                            setTimeout(() => row.removeClass('table-success'), 2500);
-                    } else {
-                        // Display PHP validation errors
-                        //\$(\".invalid-feedback\").remove();                    // Clear previous errors
-                        if (response.errors) {
-                            \$.each(response.errors, function(field, message) {
-                                const input = \$(\"[name='\" + field + \"']\");
-                                input.removeClass(\"is-valid\").addClass(\"is-invalid\");
-                                input.closest(\".form-group\").find(\".error-placeholder\")
-                                    .html('<div class=\"invalid-feedback\">' + message + '</div>');
-                            });
-                        }
-                    }
-                },
-                error: function (xhr) {
-                    console.error(xhr.responseText);
-                }
-            });
-            return false;
-        },
-        success: function(label, element) {
-            \$(element).removeClass(\"is-invalid\").addClass(\"is-valid\");
-            \$(element).closest(\".form-group\").find(\".error-placeholder\").html(\"\");
-        }
-    });
-
-//  NOTE FORM VALIDATION
-    \$(\"#transport-note\").validate({
-        onfocusout: function(element) {
-            \$(element).valid();     // validate the field when it loses focus
-        },
-        rules: {
-            content: { maxlength: 2000 }
-        },
-        messages: {
-            content: {
-                maxlength: \"Massimo 2000 caratteri.\"
-            }
-        },
-        errorPlacement: function(error, element) {
-            error.addClass(\"text-danger small\");
-            element.removeClass(\"is-valid\").addClass(\"is-invalid\");                                             // Bootstrap error class
-            element.closest(\".form-group\").find(\".error-placeholder\").html(error);      // Insert error inside the reserved space
-        },
-        highlight: function (element) {
-            \$(element).removeClass('is-valid').addClass('is-invalid');
-        },
-        unhighlight: function (element) {
-            \$(element).removeClass('is-invalid');
-            \$(element).closest('.form-group').find('.error-placeholder').html('');
-        },
-        submitHandler: function (form) {
-            const \$form = \$(form);
-
-            \$.ajax({
-                url: 'transport-note',
-                type: 'POST',
-                data: \$form.serialize(), 
-                dataType: 'json',
-                success: function (response) {
-                    if (response.success) {
-                        updateOriginalDataFromResponse(response.notes);
-                        \$('#editNoteModal').modal('hide');
-
-                        const modified = response.notes;
-                        const row = \$('#notes-' + modified.id_transport);
-
-                        // Update row cells manually
-                        modified.forEach(n => {
-                            row.find('#note').html(`<span class=\"d-inline-block me-2\" data-bs-toggle=\"tooltip\" title=\"Scritto da \${n.author} il \${n.created}\">
-                                \${n.content}
-                            </span> <br>`);
-                        });
-
-                        // Highlight and scroll
-                        row.addClass('table-success');
-                        \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
-                            setTimeout(() => row.removeClass('table-success'), 2500);
-
-                        setTimeout(() => {
-                            \$(\"#editNoteModal\").modal('hide');
-                        }, 400);
-                    } else {
-                        // Display PHP validation errors
-                        //\$(\".invalid-feedback\").remove();                    // Clear previous errors
-                        if (response.errors) {
-                            \$.each(response.errors, function(field, message) {
-                                const input = \$(\"[name='\" + field + \"']\");
-                                input.removeClass(\"is-valid\").addClass(\"is-invalid\");
-                                input.closest(\".form-group\").find(\".error-placeholder\")
-                                    .html('<div class=\"invalid-feedback\">' + message + '</div>');
-                            });
-                        }
-                    }
-                },
-                error: function (xhr) {
-                    console.error(xhr.responseText);
-                }
-            });
-            return false;
-        },
-        success: function(label, element) {
-            \$(element).removeClass(\"is-invalid\").addClass(\"is-valid\");
-            \$(element).closest(\".form-group\").find(\".error-placeholder\").html(\"\");
-        }
-    }); 
-
-    \$('#editQtyModal').on('shown.bs.modal', function () {
-        switched = false;
-        togglePriceValueField(); // apply correct enabled/disabled state
-    });
-
-//  Reset modal datepicker on cancel
-    \$('#editTransModal, #editQtyModal, #editPartModal').on('hidden.bs.modal', function () {
-        const dp = \$(this).find('.datepicker');
-        const \$formT = \$(this).find('#transport-edit');
-        const \$formQ = \$(this).find('#quantity-edit');
-        const \$formP = \$(this).find('#partial-edit');
-
-        // Reset the form fields
-        \$formT[0].reset();
-        \$formQ[0].reset();
-        \$formP[0].reset();
-
-        // Clear jQuery Validation errors
-        \$formT.validate().resetForm();
-        \$formQ.validate().resetForm();
-        \$formP.validate().resetForm();
-
-        // Remove error classes
-        \$formT.find('.is-invalid').removeClass('is-invalid');
-        \$formT.find('.is-valid').removeClass('is-valid');
-
-        \$formQ.find('.is-invalid').removeClass('is-invalid');
-        \$formQ.find('.is-valid').removeClass('is-valid');
-
-        \$formP.find('.is-invalid').removeClass('is-invalid');
-        \$formP.find('.is-valid').removeClass('is-valid');
-        
-        dp.datepicker('clearDates'); // safely clear dates
-        dp.val(''); // clear input value if needed
-    });
-/*
-    \$('#editQtyModal').on('hidden.bs.modal', function () {
-        const \$form = \$(this).find('#quantity-edit');
-
-        // Reset the form fields
-        \$form[0].reset();
-
-        // Clear jQuery Validation errors
-        \$form.validate().resetForm();
-
-        // Remove error classes
-        \$form.find('.is-invalid').removeClass('is-invalid');
-        \$form.find('.is-valid').removeClass('is-valid');
-    });
-*/
-//  Dates validation on focus in and focus out
-    let lastFocused = null;
-
-    \$('#date_load, #date_unload').on('focusin', function () {
-        lastFocused = this;
-    });
-
-    \$('#date_load, #date_unload').on('focusout', function () {
-        setTimeout(function () {
-            if (lastFocused) {
-                \$(lastFocused).valid();
-                lastFocused = null;
-            }
-        }, 5);
-    });
-
-    let originalData = {};
-//  Restore original values on modal close if there were changes
-    \$('#editTransModal, #editQtyModal, #editPartModal').on('hide.bs.modal', function() {
-        if (formHasChanged()) {
-            resetFormToOriginal();
-        }
-    });
-
-    /*\$('#editQtyModal').on('hide.bs.modal', function() {
-        if (formHasChanged()) {
-            resetFormToOriginal();
-        }
-    });*/
-
-//  Reset form to original values
-    function resetFormToOriginal() {
-        \$('#transport-edit').find(':input').each(function() {
-            const name = \$(this).attr('name');
-                if (name && originalData.hasOwnProperty(name)) {
-                    \$(this).val(originalData[name]).trigger('change').removeClass('is-invalid');
-                    \$(this).closest('.form-group').find('.error-placeholder').html('');
-                }
-        });
-        \$('#transport-edit').removeClass('is-invalid');
-
-        \$('#quantity-edit').find(':input').each(function() {
-            const name = \$(this).attr('name');
-                if (name && originalData.hasOwnProperty(name)) {
-                    \$(this).val(originalData[name]).trigger('change').removeClass('is-invalid');
-                    \$(this).closest('.form-group').find('.error-placeholder').html('');
-                }
-        });
-        \$('#quantity-edit').removeClass('is-invalid');
-
-        \$('#partial-edit').find(':input').each(function() {
-            const name = \$(this).attr('name');
-                if (name && originalData.hasOwnProperty(name)) {
-                    \$(this).val(originalData[name]).trigger('change').removeClass('is-invalid');
-                    \$(this).closest('.form-group').find('.error-placeholder').html('');
-                }
-        });
-        \$('#partial-edit').removeClass('is-invalid');
-    }
-
-//  Detect changes and reset if changed
-    function formHasChanged() {
-        let changed = false;
-        \$('#transport-edit').find(':input').each(function () {
-            const name = \$(this).attr('name');
-                if (name && originalData[name] !== \$(this).val()) {
-                    changed = true;
-                    return false; // exit early
-                }
-        });
-
-        \$('#quantity-edit').find(':input').each(function () {
-            const name = \$(this).attr('name');
-                if (name && originalData[name] !== \$(this).val()) {
-                    changed = true;
-                    return false; // exit early
-                }
-        });
-
-        \$('#partial-edit').find(':input').each(function () {
-            const name = \$(this).attr('name');
-                if (name && originalData[name] !== \$(this).val()) {
-                    changed = true;
-                    return false; // exit early
-                }
-        });
-
-        return changed;
-    }
-
-//  Re-store original data on successful submission
-//  (Put this inside your AJAX success response when update is successful)
-    function updateOriginalDataFromResponse(data) {
-        if (!data || !data.edited) return;
-            \$('#transport-edit').find(':input').each(function () {
-                const name = \$(this).attr('name');
-                    if (name && data.edited.hasOwnProperty(name)) {
-                        originalData[name] = data.edited[name];
-                    }
-            });
-
-        if (!data || !data.updated) return;
-            \$('#quantity-edit').find(':input').each(function () {
-                const name = \$(this).attr('name');
-                    if (name && data.updated.hasOwnProperty(name)) {
-                        originalData[name] = data.updated[name];
-                    }
-            });
-
-        if (!data || !data.modified) return;
-            \$('#quantity-edit').find(':input').each(function () {
-                const name = \$(this).attr('name');
-                    if (name && data.modified.hasOwnProperty(name)) {
-                        originalData[name] = data.modified[name];
-                    }
-            });
-    }
-
-    \$(\"#transport-delete\").validate({
-        rules: {
-            id_transport: { required: true }
-        },
-        submitHandler: function (form) {
-            const formData = \$(form).serialize();
-
-        \$.ajax({
-            url: 'transport-delete',
-            method: 'POST',
-            data: formData,
-            dataType: 'json',
-            success: function (response) {
-                if (response.success) {
-                    // Hide modal, remove transport row
-                    \$('#deleteTransModal').modal('hide');
-                    \$('#transport-table #id-' + \$('#id_transport').val()).remove();
-                } else {
-                    alert(response.message || 'Errore durante l\\'eliminazione.');
-                }
-            },
-            error: function () {
-                alert('Errore server. Riprova.');
-            }
-        });
-
-        return false;
-        }
-    });
-});
-</script>
-";
+</div>";
         yield from [];
     }
 
@@ -1819,18 +1005,12 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  1052 => 614,  1045 => 613,  1036 => 607,  1029 => 606,  1012 => 592,  1005 => 591,  998 => 3,  996 => 2,  989 => 1,  984 => 613,  981 => 612,  979 => 606,  976 => 605,  974 => 591,  948 => 567,  942 => 566,  934 => 563,  927 => 558,  921 => 553,  915 => 552,  907 => 549,  900 => 544,  894 => 539,  888 => 538,  880 => 535,  873 => 530,  867 => 525,  861 => 524,  853 => 521,  846 => 516,  840 => 511,  834 => 510,  818 => 499,  812 => 495,  806 => 490,  800 => 489,  792 => 486,  785 => 481,  780 => 478,  776 => 477,  772 => 476,  751 => 457,  748 => 455,  719 => 428,  698 => 409,  695 => 407,  664 => 377,  658 => 376,  649 => 372,  639 => 365,  617 => 345,  614 => 343,  589 => 319,  583 => 318,  575 => 315,  568 => 310,  562 => 305,  556 => 304,  548 => 301,  541 => 296,  535 => 291,  529 => 290,  521 => 287,  514 => 282,  508 => 277,  502 => 276,  494 => 273,  487 => 268,  481 => 263,  475 => 262,  470 => 259,  464 => 257,  457 => 252,  451 => 247,  445 => 246,  432 => 235,  426 => 227,  420 => 223,  414 => 218,  408 => 217,  392 => 206,  386 => 202,  380 => 197,  374 => 196,  366 => 193,  359 => 188,  354 => 185,  332 => 165,  329 => 163,  304 => 139,  298 => 138,  290 => 135,  283 => 130,  277 => 125,  271 => 124,  263 => 121,  259 => 120,  252 => 115,  246 => 110,  240 => 109,  232 => 106,  228 => 105,  221 => 100,  215 => 95,  209 => 94,  201 => 91,  194 => 86,  188 => 81,  182 => 80,  174 => 77,  167 => 72,  161 => 67,  155 => 66,  147 => 63,  140 => 58,  134 => 53,  128 => 52,  120 => 49,  116 => 48,  110 => 44,  104 => 39,  98 => 38,  90 => 35,  86 => 34,  80 => 30,  75 => 27,  71 => 26,  51 => 8,  48 => 6,  46 => 1,);
+        return array (  961 => 561,  955 => 560,  947 => 557,  940 => 552,  934 => 547,  928 => 546,  920 => 543,  913 => 538,  907 => 533,  901 => 532,  893 => 529,  886 => 524,  880 => 519,  874 => 518,  866 => 515,  859 => 510,  853 => 505,  847 => 504,  831 => 493,  825 => 489,  819 => 484,  813 => 483,  805 => 480,  798 => 475,  793 => 472,  789 => 471,  785 => 470,  764 => 451,  761 => 449,  732 => 422,  711 => 403,  708 => 401,  677 => 371,  671 => 370,  662 => 366,  652 => 359,  630 => 339,  627 => 337,  602 => 313,  596 => 312,  588 => 309,  581 => 304,  575 => 299,  569 => 298,  561 => 295,  554 => 290,  548 => 285,  542 => 284,  534 => 281,  527 => 276,  521 => 271,  515 => 270,  507 => 267,  500 => 262,  494 => 257,  488 => 256,  483 => 253,  477 => 251,  470 => 246,  464 => 241,  458 => 240,  445 => 229,  439 => 221,  433 => 217,  427 => 212,  421 => 211,  405 => 200,  399 => 196,  393 => 191,  387 => 190,  379 => 187,  372 => 182,  367 => 179,  345 => 159,  342 => 157,  317 => 133,  311 => 132,  303 => 129,  299 => 128,  293 => 124,  287 => 119,  281 => 118,  273 => 115,  269 => 114,  263 => 110,  257 => 105,  251 => 104,  243 => 101,  239 => 100,  233 => 96,  227 => 91,  221 => 90,  213 => 87,  209 => 86,  203 => 82,  197 => 77,  191 => 76,  183 => 73,  179 => 72,  173 => 68,  167 => 63,  161 => 62,  153 => 59,  149 => 58,  143 => 54,  137 => 49,  131 => 48,  123 => 45,  117 => 44,  111 => 40,  105 => 35,  99 => 34,  91 => 31,  85 => 30,  79 => 26,  74 => 23,  70 => 22,  66 => 21,  62 => 20,  42 => 2,);
     }
 
     public function getSourceContext(): Source
     {
-        return new Source("{% block head %}
-    {# Bootstrap Datepicker - CSS #}
-    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css\" 
-        integrity=\"sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=\" crossorigin=\"anonymous\">
-{% endblock %}
-
-{# Edit Transport Modal #}
+        return new Source("{# Edit Transport Modal #}
 <div class=\"modal fade\" id=\"editTransModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"editTransLabel\" aria-hidden=\"true\">
     <div class=\"modal-dialog modal-lg modal-dialog-centered\">
         <div class=\"modal-content\">
@@ -1851,14 +1031,16 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                     <form id=\"transport-edit\" method=\"POST\" action=\"transport-edit\" autocomplete=\"off\" novalidate>
                         <input type=\"hidden\" name=\"id_transport\" id=\"id_transport\" value=\"{{ transport.id_transport }}\" />
                         <input type=\"hidden\" name=\"csrf_token\" value=\"{{ csrf_token }}\" />   
+                        <input type=\"hidden\" name=\"original_slot\" id=\"original_slot\" value=\"{{ transport.slot }}\" />
+                        <input type=\"hidden\" name=\"original_cmr\" id=\"original_cmr\" value=\"{{ transport.cmr }}\" />
 
                         {# Slot ID #}
                         <div class=\"row form-group mx-auto my-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Slot ID: </label>
+                            <label for=\"slot\" class=\"col-4 form-control-label my-1\"> Slot ID: </label>
                             
                             <div class=\"col-8\">
-                                <input type=\"text\" name=\"slot\" id=\"slot\" data-original=\"{{ transport.slot }}\"
-                                    class=\"form-control text-upper {% if errors.slot %}is-invalid{% endif %}\" />
+                                <input type=\"text\" name=\"slot\" id=\"slot\" data-original=\"{{ transport.slot }}\" value=\"{{ transport.slot }}\"
+                                       class=\"form-control text-upper {% if errors.slot %}is-invalid{% endif %}\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.slot %}<div class=\"invalid-feedback\">{{ errors.slot }}</div>{% endif %}
@@ -1868,11 +1050,11 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                         
                         {# CMR Number #}
                         <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Numero CMR: </label>
+                            <label for=\"cmr\" class=\"col-4 form-control-label my-1\"> Numero CMR: </label>
                         
                             <div class=\"col-8\">
-                                <input type=\"text\" name=\"cmr\" id=\"cmr\" data-original=\"{{ transport.cmr }}\"
-                                    class=\"form-control {% if errors.cmr %}is-invalid{% endif %} text-upper\" />
+                                <input type=\"text\" name=\"cmr\" id=\"cmr\" data-original=\"{{ transport.cmr }}\" value=\"{{ transport.cmr }}\"
+                                       class=\"form-control {% if errors.cmr %}is-invalid{% endif %} text-upper\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.cmr %}<div class=\"invalid-feedback\">{{ errors.cmr }}</div>{% endif %}
@@ -1882,11 +1064,11 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                         
                         {# Issuer #}
                         <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Fornitore: </label>
+                            <label for=\"issuer\" class=\"col-4 form-control-label my-1\"> Fornitore: </label>
                             
                             <div class=\"col-8\">
-                                <input type=\"text\" name=\"issuer\" id=\"issuer\"
-                                    class=\"form-control {% if errors.issuer %}is-invalid{% endif %}\" />
+                                <input type=\"text\" name=\"issuer\" id=\"issuer\" value=\"{{ transport.issuer }}\"
+                                       class=\"form-control {% if errors.issuer %}is-invalid{% endif %}\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.issuer %}<div class=\"invalid-feedback\">{{ errors.issuer }}</div>{% endif %}
@@ -1896,11 +1078,11 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                             
                         {# Supplier #}
                         <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Emittente: </label>
+                            <label for=\"supplier\" class=\"col-4 form-control-label my-1\"> Emittente: </label>
                             
                             <div class=\"col-8\">
-                                <input type=\"text\" name=\"supplier\" id=\"supplier\"
-                                    class=\"form-control {% if errors.supplier %}is-invalid{% endif %}\" />
+                                <input type=\"text\" name=\"supplier\" id=\"supplier\" value=\"{{ transport.supplier }}\"
+                                       class=\"form-control {% if errors.supplier %}is-invalid{% endif %}\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.supplier %}<div class=\"invalid-feedback\">{{ errors.supplier }}</div>{% endif %}
@@ -1910,11 +1092,11 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                             
                         {# Transport #}
                         <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Trasporto: </label>
+                            <label for=\"transport\" class=\"col-4 form-control-label my-1\"> Trasporto: </label>
                             
                             <div class=\"col-8\">
-                                <input type=\"text\" name=\"transport\" id=\"transport\"
-                                    class=\"form-control {% if errors.transport %}is-invalid{% endif %}\" />
+                                <input type=\"text\" name=\"transport\" id=\"transport\" value=\"{{ transport.transport }}\"
+                                       class=\"form-control {% if errors.transport %}is-invalid{% endif %}\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.transport %}<div class=\"invalid-feedback\">{{ errors.transport }}</div>{% endif %}
@@ -1924,12 +1106,11 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                             
                         {# Date Load #}
                         <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Data carico: </label>
+                            <label for=\"date_load\" class=\"col-4 form-control-label my-1\"> Data carico: </label>
                             
                             <div class=\"col-8\">
-                                <input type=\"text\" name=\"date_load\" id=\"date_load\" 
-                                    data-original=\"{{ transport.date_load }}\" class=\"form-control datepicker 
-                                        {% if errors.date_load %}is-invalid{% endif %}\" />
+                                <input type=\"text\" name=\"date_load\" id=\"date_load\" value=\"{{ transport.date_load|default('') }}\"
+                                       class=\"form-control datepicker {% if errors.date_load %}is-invalid{% endif %}\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.date_load %}<div class=\"invalid-feedback\">{{ errors.date_load }}</div>{% endif %}
@@ -1939,12 +1120,11 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                             
                         {# Date Unload #}
                         <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Data scarico: </label>
+                            <label for=\"date_unload\" class=\"col-4 form-control-label my-1\"> Data scarico: </label>
                             
                             <div class=\"col-8\">
-                                <input type=\"text\" name=\"date_unload\" id=\"date_unload\"  
-                                    data-original=\"{{ transport.date_unload}}\" class=\"form-control datepicker 
-                                        {% if errors.date_unload %}is-invalid{% endif %}\" />
+                                <input type=\"text\" name=\"date_unload\" id=\"date_unload\" value=\"{{ transport.date_unload|default('') }}\"
+                                       class=\"form-control datepicker {% if errors.date_unload %}is-invalid{% endif %}\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.date_unload %}<div class=\"invalid-feedback\">{{ errors.date_unload }}</div>{% endif %}
@@ -1954,11 +1134,11 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                             
                         {# Container #}
                         <div class=\"row form-group mx-auto mb-3\">
-                            <label class=\"col-4 form-control-label my-1\"> Container / ATB: </label>
+                            <label for=\"container\" class=\"col-4 form-control-label my-1\"> Container / ATB: </label>
                             
                             <div class=\"col-8\">
-                                <input type=\"text\" name=\"container\" id=\"container\"
-                                    class=\"form-control {% if errors.container %}is-invalid{% endif %}\" />
+                                <input type=\"text\" name=\"container\" id=\"container\" value=\"{{ transport.container }}\"
+                                       class=\"form-control {% if errors.container %}is-invalid{% endif %}\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.container %}<div class=\"invalid-feedback\">{{ errors.container }}</div>{% endif %}
@@ -1973,7 +1153,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
                                 </span>    
                             </button>
                             
-                            <button type=\"submit\" class=\"btn btn-default modal-save\" name=\"update_transport\">
+                            <button type=\"submit\" class=\"btn btn-default modal-save\">
                                 <span class=\"bi bi-check-circle\">
                                     SALVA
                                 </span>   
@@ -1985,7 +1165,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
         </div>
     </div>
 </div>
-{# End Edit Transport Modal #}
+{# End Transport Modal #}
 
 {# Edit Quantity Modal #}
 <div class=\"modal fade\" id=\"editQtyModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"editQtyLabel\" aria-hidden=\"true\">
@@ -2165,7 +1345,7 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
         </div>
     </div>
 </div>
-{# End Edit Quantity Modal #}
+{# End Quantity Modal #}
 
 {# Transport Note Modal #}
 <div class=\"modal fade\" id=\"editNoteModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"editNoteLabel\" aria-hidden=\"true\">
@@ -2412,776 +1592,6 @@ class __TwigTemplate_f4cb34de339e30c1fb2ceb5bdeba8956 extends Template
             </div>
         </div>
     </div>
-</div>
-
-{% block jquery %}
-<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
-        integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
-        crossorigin=\"anonymous\">
-</script>
-<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js\" 
-        integrity=\"sha256-umbTaFxP31Fv6O1itpLS/3+v5fOAWDLOUzlmvOGaKV4=\" 
-        crossorigin=\"anonymous\">
-</script>
-<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js\" 
-        integrity=\"sha256-MtEA819Zls6dtLt5S5BpEMOhifPyz7gfzfgtNtY75lE=\" 
-        crossorigin=\"anonymous\">
-</script>
-{% endblock %}
-
-{% block datepicker %}
-<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js\" 
-        integrity=\"sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=\" 
-        crossorigin=\"anonymous\">
-</script>
-{% endblock %}
-
-{% block page_script %}
-<script>
-\$(document).ready(function () {
-//  DATEPICKER 
-    \$('.datepicker').datepicker({
-        format: 'dd-mm-yyyy',
-        endDate: new Date(),
-        autoclose: true,
-        clearBtn: false
-    }).on('changeDate', function (e) {
-        \$(this).trigger('change');                                          // Validator catches the value
-        
-        if (this.id === 'date_load') {
-            \$('#date_unload')
-                .datepicker('setStartDate', e.date)
-                .datepicker('update', e.date);
-        }
-        \$(this).valid();
-    }).on('show', function () {
-        \$(this).data('selectedDate', \$(this).val());                        // Store current value when datepicker opens
-    }).on('hide', function (e) {
-        const currentVal = \$(this).val();                                   // If the user didn't select anything and just clicked out, preserve current value
-        if (!currentVal) {
-            const storedDate = \$(this).data('selectedDate');
-            if (storedDate) {
-                \$(this).val(storedDate);                                    // Restore value
-            }
-        }
-    });
-
-//  VALIDATOR METHOD FOR DEFINING CURRENT DATE AS MAX
-    \$.validator.addMethod(\"noFutureDate\", function (value, element) {
-        if (!value) return true;                                            // Allow empty if not required
-
-        const parts = value.split(\"-\");
-        const inputDate = new Date(parts[2], parts[1] - 1, parts[0]);       // Assuming dd-mm-yyyy
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);                                         // Remove time part
-
-        return inputDate <= today;
-    });
-
-//  VALIDATOR METHOD FOR DEFINING THAT UNLOAD'S DATE MUST BE AFTER OR EQUAL TO LOAD'S DATE
-    \$.validator.addMethod(\"dateAfterOrEqual\", function(value, element, params) {
-        const dateLoadVal = \$(params).val();
-            if (!value || !dateLoadVal) return true;
-
-        // Parse dates as dd-mm-yyyy
-        const partsUnload = value.split(\"-\");
-        const partsLoad = dateLoadVal.split(\"-\");
-
-        const dateUnload = new Date(partsUnload[2], partsUnload[1] - 1, partsUnload[0]);
-        const dateLoad = new Date(partsLoad[2], partsLoad[1] - 1, partsLoad[0]);
-            return this.optional(element) || dateUnload >= dateLoad;
-    });
-
-//  FORM VALIDATION
-    \$(\"#transport-edit\").validate({
-        onfocusout: function(element) {
-            \$(element).valid();                                             // Validate the field when it loses focus
-        },
-        rules: {
-            slot: { required: true, rangelength: [5, 35], pattern: \"^[A-Za-z0-9_]+\$\" },
-            cmr: { required: true, rangelength: [5, 35], pattern: \"^[A-Za-z0-9\\-]+\$\" },
-            issuer: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
-            supplier: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
-            transport: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
-            date_load: { required: true, noFutureDate: true },
-            date_unload: { required: true, noFutureDate: true, dateAfterOrEqual: \"#date_load\" },
-            container: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" }
-        },
-        messages: {
-            slot: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 5 e al massimo 35 caratteri.\",
-                pattern: \"Slot ID può contenere lettere, numeri e underscore (_). Spazi non consentiti.\"
-            },
-            cmr: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 5 e al massimo 35 caratteri.\",
-                pattern: \"CMR può contenere lettere, numeri e trattini (-). Spazi non consentiti.\"
-            },
-            issuer: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
-                pattern: \"Emittente può contenere solo lettere e spazi (senza spazio iniziale).\"
-            }, 
-            supplier: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
-                pattern: \"Fornitore può contenere solo lettere e spazi (senza spazio iniziale).\"
-            }, 
-            transport: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
-                pattern: \"Trasporto può contenere solo lettere e spazi (senza spazio iniziale).\"
-            },
-            date_load: {
-                required: \"Campo obbligatorio.\",
-                noFutureDate: \"Inserire una data valida. Non sono permesse date future.\"
-            }, 
-            date_unload: {
-                required: \"Campo obbligatorio.\",
-                noFutureDate: \"Inserire una data valida. Non sono permesse date future.\",
-                dateAfterOrEqual: \"La data di scarico non può essere precedente alla data di carico.\"
-            }, 
-            container: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
-                pattern: \"Container può contenere solo lettere e spazi (senza spazio iniziale).\"
-            }
-        },
-        errorPlacement: function(error, element) {
-            error.addClass(\"text-danger small\");
-            element.removeClass(\"is-valid\").addClass(\"is-invalid\");                                             // Bootstrap error class
-            element.closest(\".form-group\").find(\".error-placeholder\").html(error);      // Insert error inside the reserved space
-        },
-        highlight: function (element) {
-            \$(element).removeClass('is-valid').addClass('is-invalid');
-        },
-        unhighlight: function (element) {
-            \$(element).removeClass('is-invalid');
-            \$(element).closest('.form-group').find('.error-placeholder').html('');
-        },
-        submitHandler: function (form) {
-            const \$form = \$(form);
-            const oSlot = \$(\"#slot\").data(\"original\");
-            const oCmr = \$(\"#cmr\").data(\"original\");
-
-            \$.ajax({
-                url: 'transport-edit',
-                type: 'POST',
-                data: \$form.serialize() + '&original_slot=' + encodeURIComponent(oSlot) + '&original_cmr=' + encodeURIComponent(oCmr),
-                dataType: 'json',
-                success: function (response) {
-                    if (response.success) {
-                        updateOriginalDataFromResponse(response.edited);
-                        \$('#editTransModal').modal('hide');
-
-                        const edited = response.edited;
-                        const row = \$('#id-' + edited.id_transport);
-
-                        // Update row cells manually
-                        row.find('.col-slot').text(edited.slot);
-                        row.find('.col-cmr').text(edited.cmr);
-                        row.find('.col-issuer').text(edited.issuer);
-                        row.find('.col-supplier').text(edited.supplier);
-                        row.find('.col-transport').text(edited.transport);
-                        row.find('.col-load').text(edited.date_load);
-                        row.find('.col-unload').text(edited.date_unload);
-                        row.find('.col-container').text(edited.container);
-
-                        row.find('.col-univoco').text(edited.univoco);
-                        row.find('.col-month-load').text(edited.id_month_load);
-                        row.find('.col-week-unload').text(edited.week_unload);
-                        row.find('.col-month-unload').text(`\${edited.id_month_unload} - \${edited.month_unload}`);
-
-                        // Highlight and scroll
-                        row.addClass('table-success');
-                        \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
-                            setTimeout(() => row.removeClass('table-success'), 2500);
-                    } else {
-                        // Display PHP validation errors
-                        //\$(\".invalid-feedback\").remove();                    // Clear previous errors
-                        if (response.errors) {
-                            \$.each(response.errors, function(field, message) {
-                                const input = \$(\"[name='\" + field + \"']\");
-                                input.removeClass(\"is-valid\").addClass(\"is-invalid\");
-                                input.closest(\".form-group\").find(\".error-placeholder\")
-                                    .html('<div class=\"invalid-feedback\">' + message + '</div>');
-                            });
-                        }
-                    }
-                },
-                error: function (xhr) {
-                    console.error(xhr.responseText);
-                }
-            });
-            return false;
-        },
-        success: function(label, element) {
-            \$(element).removeClass(\"is-invalid\").addClass(\"is-valid\");
-            \$(element).closest(\".form-group\").find(\".error-placeholder\").html(\"\");
-        }
-    });
-
-//  Quantity Price Value Toggle Field
-    let switched = false;
-
-    function togglePriceValueField() {
-        const \$pv = \$('#price_value');
-        const \$pt = \$('#price_typology');
-        const typology = \$pt.val();
-
-        if (typology === 'no') {
-            switched = true;
-            \$pv
-                .val(0)
-                .prop('disabled', true)
-                .removeClass('is-valid is-invalid')
-                .closest('.form-group')
-                .find('.error-placeholder').html('');
-        } else {
-            \$pv
-                .prop('disabled', false)
-                .removeClass('is-valid is-invalid')
-                .closest('.form-group')
-                .find('.error-placeholder').html('');
-
-            if (switched) {
-                \$pv.val('');    // Clear value only if switched from no to yes
-            }
-
-            \$pv.trigger('input'); // ensure initial sync
-            switched = false;       // Reset flag after processing
-        }
-    }
-
-    \$('#price_typology').on('change', togglePriceValueField());
-
-//  QUANTITY FORM VALIDATION
-    \$(\"#quantity-edit\").validate({
-        onfocusout: function(element) {
-            \$(element).valid();     // validate the field when it loses focus
-        },
-        rules: {
-            kg_load: { required: true, number: true, min: 0 },
-            cooling: { required: true, digits: true },
-            price_typology: { required: true },
-            price_value: { 
-                required: {
-                    depends: function() {
-                        return \$('#price_typology').val() === 'yes';
-                    }
-                },
-                digits: true,
-                min: 1
-            },
-            kg_unload: { required: true, number: true, min: 0 },
-            liquid_density: { required: true, number: true, min: 0 },
-            gas_weight: { required: true, number: true, min: 0 },
-            pcs_ghv: { required: true, number: true, min: 0 }
-        },
-        messages: {
-            kg_load: {
-                required: \"Campo obbligatorio.\",
-                number: \"Quantità caricata deve essere un numero positivo (intero o decimale).\",
-                min: \"Il valore minimo deve essere maggiore o uguale a 0.\"
-            },
-            cooling: {
-                required: \"Campo obbligatorio.\",
-                digits: \"Raffredamento deve essere un numero intero positivo, senza segni o decimali.\"
-            },
-            price_typology: {
-                required: \"Campo obbligatorio.\"
-            }, 
-            price_value: {
-                required: \"Campo obbligatorio.\",
-                digits: \"Valore costo extra deve essere un numero intero positivo maggiore o uguale a 1, senza segni o decimali.\",
-                min: \"Il valore minimo deve essere maggiore o uguale a 1.\"
-            }, 
-            kg_unload: {
-                required: \"Campo obbligatorio.\",
-                number: \"Quantità scaricata deve essere un numero positivo (intero o decimale).\",
-                min: \"Il valore minimo deve essere maggiore o uguale a 0.\"
-            },
-            liquid_density: {
-                required: \"Campo obbligatorio.\",
-                number: \"Densità liquido deve essere un numero positivo (intero o decimale).\",
-                min: \"Il valore minimo deve essere maggiore o uguale a 0.\",
-            }, 
-            gas_weight: {
-                required: \"Campo obbligatorio.\",
-                number: \"Peso specifico (gas) deve essere un numero positivo (intero o decimale).\",
-                min: \"Il valore minimo deve essere maggiore o uguale a 0.\"
-            }, 
-            pcs_ghv: {
-                required: \"Campo obbligatorio.\",
-                number: \"PCS/GHV deve essere un numero positivo (intero o decimale).\",
-                min: \"Il valore minimo deve essere maggiore o uguale a 0.\"
-            }
-        },
-        errorPlacement: function(error, element) {
-            error.addClass(\"text-danger small\");
-            element.removeClass(\"is-valid\").addClass(\"is-invalid\");                                             // Bootstrap error class
-            element.closest(\".form-group\").find(\".error-placeholder\").html(error);      // Insert error inside the reserved space
-        },
-        highlight: function (element) {
-            \$(element).removeClass('is-valid').addClass('is-invalid');
-        },
-        unhighlight: function (element) {
-            \$(element).removeClass('is-invalid');
-            \$(element).closest('.form-group').find('.error-placeholder').html('');
-        },
-        submitHandler: function (form) {
-            const \$form = \$(form);
-
-            \$.ajax({
-                url: 'quantity-edit',
-                type: 'POST',
-                data: \$form.serialize(), 
-                dataType: 'json',
-                success: function (response) {
-                    if (response.success) {
-                        updateOriginalDataFromResponse(response.updated);
-                        //\$('#editQtyModal').modal('hide');
-
-                        const updated = response.updated;
-                        const row = \$('#qty-table-' + updated.id_transport);
-
-                        // Update row cells manually
-                        row.find('.col-kg-load').text(updated.kg_load);
-                        row.find('.col-cooling').text(updated.cooling);
-                        row.find('.col-price-typology').text(updated.price_typology);
-                        row.find('.col-price-value').text(updated.price_value);
-                        row.find('.col-kg-unload').text(updated.kg_unload);
-                        row.find('.col-liquid-density').text(updated.liquid_density);
-                        row.find('.col-gas-weight').text(updated.gas_weight);
-                        row.find('.col-pcs-ghv').text(updated.pcs_ghv);
-
-                        row.find('.col-mwh').text(updated.mwh);
-                        row.find('.col-mj-kg').text(updated.mj_kg);
-                        row.find('.col-volume-mc').text(updated.volume_mc);
-                        row.find('.col-volume-nmc').text(updated.volume_nmc);
-                        row.find('.col-smc-mc').text(updated.smc_mc);
-                        row.find('.col-gas-nmc').text(updated.gas_nmc);
-                        row.find('.col-gas-smc').text(updated.gas_smc);
-                        row.find('.col-smc-kg').text(updated.smc_kg);
-
-                        // Highlight and scroll
-                        row.addClass('table-success');
-                        \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
-                            setTimeout(() => row.removeClass('table-success'), 2500);
-
-                        setTimeout(() => {
-                            \$(\"#editQtyModal\").modal('hide');
-                        }, 400);
-                    } else {
-                        // Display PHP validation errors
-                        //\$(\".invalid-feedback\").remove();                    // Clear previous errors
-                        if (response.errors) {
-                            \$.each(response.errors, function(field, message) {
-                                const input = \$(\"[name='\" + field + \"']\");
-                                input.removeClass(\"is-valid\").addClass(\"is-invalid\");
-                                input.closest(\".form-group\").find(\".error-placeholder\")
-                                    .html('<div class=\"invalid-feedback\">' + message + '</div>');
-                            });
-                        }
-                    }
-                },
-                error: function (xhr) {
-                    console.error(xhr.responseText);
-                }
-            });
-            return false;
-        },
-        success: function(label, element) {
-            \$(element).removeClass(\"is-invalid\").addClass(\"is-valid\");
-            \$(element).closest(\".form-group\").find(\".error-placeholder\").html(\"\");
-        }
-    });
-
-    \$(\"#partial-edit\").validate({
-        onfocusout: function(element) {
-            \$(element).valid();     
-        },
-        rules: {
-            destination: { required: true, rangelength: [3, 50 ], pattern: \"^[A-Za-z ]+\$\" },
-            exw: { required: true },
-            date: { required: true, noFutureDate: true },
-            place: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
-            q_unloaded: { required: true, number: true },
-            invoice: { required: true, number: true }
-        },
-        messages: {
-            destination: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
-                pattern: \"Destinazione può contenere lettere e spazi (senza spazio iniziale).\"
-            },
-            exw: {
-                required: \"Campo obbligatorio.\"
-            },
-            date: {
-                required: \"Campo obbligatorio.\",
-                noFutureDate: \"Inserire una data valida. Non sono permesse date future.\"
-            }, 
-            place: {
-                required: \"Campo obbligatorio.\",
-                rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
-                pattern: \"Luogo può contenere solo lettere e spazi (senza spazio iniziale).\"
-            }, 
-            q_unloaded: {
-                required: \"Campo obbligatorio.\",
-                number: \"Quantità caricata deve essere un numero positivo (intero o decimale).\",
-            },
-            invoice: {
-                required: \"Campo obbligatorio.\",
-                number: \"Quantità caricata deve essere un numero positivo (intero o decimale).\"
-            }
-        },
-        errorPlacement: function(error, element) {
-            error.addClass(\"text-danger small\");
-            element.removeClass(\"is-valid\").addClass(\"is-invalid\");                                             // Bootstrap error class
-            element.closest(\".form-group\").find(\".error-placeholder\").html(error);      // Insert error inside the reserved space
-        },
-        highlight: function (element) {
-            \$(element).removeClass('is-valid').addClass('is-invalid');
-        },
-        unhighlight: function (element) {
-            \$(element).removeClass('is-invalid');
-            \$(element).closest('.form-group').find('.error-placeholder').html('');
-        },
-        submitHandler: function (form) {
-            const \$form = \$(form);
-
-            \$.ajax({
-                url: 'partial-edit',
-                type: 'POST',
-                data: \$form.serialize(),
-                dataType: 'json',
-                success: function (response) {
-                    if (response.success) {
-                        updateOriginalDataFromResponse(response.modified);
-                        \$('#editPartModal').modal('hide');
-
-                        const modified = response.modified;
-                        const row = \$('#partial-table-' + modified.id_partial);
-
-                        // Update row cells manually
-                        row.find('.col-destination').text(modified.destination);
-                        row.find('.col-exw').text(modified.exw);
-                        row.find('.col-date').text(modified.date);
-                        row.find('.col-place').text(modified.place);
-                        row.find('.col-q-unloaded').text(modified.q_unloaded);
-                        row.find('.col-invoice').text(modified.invoice);
-
-                        // Highlight and scroll
-                        row.addClass('table-success');
-                        \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
-                            setTimeout(() => row.removeClass('table-success'), 2500);
-                    } else {
-                        // Display PHP validation errors
-                        //\$(\".invalid-feedback\").remove();                    // Clear previous errors
-                        if (response.errors) {
-                            \$.each(response.errors, function(field, message) {
-                                const input = \$(\"[name='\" + field + \"']\");
-                                input.removeClass(\"is-valid\").addClass(\"is-invalid\");
-                                input.closest(\".form-group\").find(\".error-placeholder\")
-                                    .html('<div class=\"invalid-feedback\">' + message + '</div>');
-                            });
-                        }
-                    }
-                },
-                error: function (xhr) {
-                    console.error(xhr.responseText);
-                }
-            });
-            return false;
-        },
-        success: function(label, element) {
-            \$(element).removeClass(\"is-invalid\").addClass(\"is-valid\");
-            \$(element).closest(\".form-group\").find(\".error-placeholder\").html(\"\");
-        }
-    });
-
-//  NOTE FORM VALIDATION
-    \$(\"#transport-note\").validate({
-        onfocusout: function(element) {
-            \$(element).valid();     // validate the field when it loses focus
-        },
-        rules: {
-            content: { maxlength: 2000 }
-        },
-        messages: {
-            content: {
-                maxlength: \"Massimo 2000 caratteri.\"
-            }
-        },
-        errorPlacement: function(error, element) {
-            error.addClass(\"text-danger small\");
-            element.removeClass(\"is-valid\").addClass(\"is-invalid\");                                             // Bootstrap error class
-            element.closest(\".form-group\").find(\".error-placeholder\").html(error);      // Insert error inside the reserved space
-        },
-        highlight: function (element) {
-            \$(element).removeClass('is-valid').addClass('is-invalid');
-        },
-        unhighlight: function (element) {
-            \$(element).removeClass('is-invalid');
-            \$(element).closest('.form-group').find('.error-placeholder').html('');
-        },
-        submitHandler: function (form) {
-            const \$form = \$(form);
-
-            \$.ajax({
-                url: 'transport-note',
-                type: 'POST',
-                data: \$form.serialize(), 
-                dataType: 'json',
-                success: function (response) {
-                    if (response.success) {
-                        updateOriginalDataFromResponse(response.notes);
-                        \$('#editNoteModal').modal('hide');
-
-                        const modified = response.notes;
-                        const row = \$('#notes-' + modified.id_transport);
-
-                        // Update row cells manually
-                        modified.forEach(n => {
-                            row.find('#note').html(`<span class=\"d-inline-block me-2\" data-bs-toggle=\"tooltip\" title=\"Scritto da \${n.author} il \${n.created}\">
-                                \${n.content}
-                            </span> <br>`);
-                        });
-
-                        // Highlight and scroll
-                        row.addClass('table-success');
-                        \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
-                            setTimeout(() => row.removeClass('table-success'), 2500);
-
-                        setTimeout(() => {
-                            \$(\"#editNoteModal\").modal('hide');
-                        }, 400);
-                    } else {
-                        // Display PHP validation errors
-                        //\$(\".invalid-feedback\").remove();                    // Clear previous errors
-                        if (response.errors) {
-                            \$.each(response.errors, function(field, message) {
-                                const input = \$(\"[name='\" + field + \"']\");
-                                input.removeClass(\"is-valid\").addClass(\"is-invalid\");
-                                input.closest(\".form-group\").find(\".error-placeholder\")
-                                    .html('<div class=\"invalid-feedback\">' + message + '</div>');
-                            });
-                        }
-                    }
-                },
-                error: function (xhr) {
-                    console.error(xhr.responseText);
-                }
-            });
-            return false;
-        },
-        success: function(label, element) {
-            \$(element).removeClass(\"is-invalid\").addClass(\"is-valid\");
-            \$(element).closest(\".form-group\").find(\".error-placeholder\").html(\"\");
-        }
-    }); 
-
-    \$('#editQtyModal').on('shown.bs.modal', function () {
-        switched = false;
-        togglePriceValueField(); // apply correct enabled/disabled state
-    });
-
-//  Reset modal datepicker on cancel
-    \$('#editTransModal, #editQtyModal, #editPartModal').on('hidden.bs.modal', function () {
-        const dp = \$(this).find('.datepicker');
-        const \$formT = \$(this).find('#transport-edit');
-        const \$formQ = \$(this).find('#quantity-edit');
-        const \$formP = \$(this).find('#partial-edit');
-
-        // Reset the form fields
-        \$formT[0].reset();
-        \$formQ[0].reset();
-        \$formP[0].reset();
-
-        // Clear jQuery Validation errors
-        \$formT.validate().resetForm();
-        \$formQ.validate().resetForm();
-        \$formP.validate().resetForm();
-
-        // Remove error classes
-        \$formT.find('.is-invalid').removeClass('is-invalid');
-        \$formT.find('.is-valid').removeClass('is-valid');
-
-        \$formQ.find('.is-invalid').removeClass('is-invalid');
-        \$formQ.find('.is-valid').removeClass('is-valid');
-
-        \$formP.find('.is-invalid').removeClass('is-invalid');
-        \$formP.find('.is-valid').removeClass('is-valid');
-        
-        dp.datepicker('clearDates'); // safely clear dates
-        dp.val(''); // clear input value if needed
-    });
-/*
-    \$('#editQtyModal').on('hidden.bs.modal', function () {
-        const \$form = \$(this).find('#quantity-edit');
-
-        // Reset the form fields
-        \$form[0].reset();
-
-        // Clear jQuery Validation errors
-        \$form.validate().resetForm();
-
-        // Remove error classes
-        \$form.find('.is-invalid').removeClass('is-invalid');
-        \$form.find('.is-valid').removeClass('is-valid');
-    });
-*/
-//  Dates validation on focus in and focus out
-    let lastFocused = null;
-
-    \$('#date_load, #date_unload').on('focusin', function () {
-        lastFocused = this;
-    });
-
-    \$('#date_load, #date_unload').on('focusout', function () {
-        setTimeout(function () {
-            if (lastFocused) {
-                \$(lastFocused).valid();
-                lastFocused = null;
-            }
-        }, 5);
-    });
-
-    let originalData = {};
-//  Restore original values on modal close if there were changes
-    \$('#editTransModal, #editQtyModal, #editPartModal').on('hide.bs.modal', function() {
-        if (formHasChanged()) {
-            resetFormToOriginal();
-        }
-    });
-
-    /*\$('#editQtyModal').on('hide.bs.modal', function() {
-        if (formHasChanged()) {
-            resetFormToOriginal();
-        }
-    });*/
-
-//  Reset form to original values
-    function resetFormToOriginal() {
-        \$('#transport-edit').find(':input').each(function() {
-            const name = \$(this).attr('name');
-                if (name && originalData.hasOwnProperty(name)) {
-                    \$(this).val(originalData[name]).trigger('change').removeClass('is-invalid');
-                    \$(this).closest('.form-group').find('.error-placeholder').html('');
-                }
-        });
-        \$('#transport-edit').removeClass('is-invalid');
-
-        \$('#quantity-edit').find(':input').each(function() {
-            const name = \$(this).attr('name');
-                if (name && originalData.hasOwnProperty(name)) {
-                    \$(this).val(originalData[name]).trigger('change').removeClass('is-invalid');
-                    \$(this).closest('.form-group').find('.error-placeholder').html('');
-                }
-        });
-        \$('#quantity-edit').removeClass('is-invalid');
-
-        \$('#partial-edit').find(':input').each(function() {
-            const name = \$(this).attr('name');
-                if (name && originalData.hasOwnProperty(name)) {
-                    \$(this).val(originalData[name]).trigger('change').removeClass('is-invalid');
-                    \$(this).closest('.form-group').find('.error-placeholder').html('');
-                }
-        });
-        \$('#partial-edit').removeClass('is-invalid');
-    }
-
-//  Detect changes and reset if changed
-    function formHasChanged() {
-        let changed = false;
-        \$('#transport-edit').find(':input').each(function () {
-            const name = \$(this).attr('name');
-                if (name && originalData[name] !== \$(this).val()) {
-                    changed = true;
-                    return false; // exit early
-                }
-        });
-
-        \$('#quantity-edit').find(':input').each(function () {
-            const name = \$(this).attr('name');
-                if (name && originalData[name] !== \$(this).val()) {
-                    changed = true;
-                    return false; // exit early
-                }
-        });
-
-        \$('#partial-edit').find(':input').each(function () {
-            const name = \$(this).attr('name');
-                if (name && originalData[name] !== \$(this).val()) {
-                    changed = true;
-                    return false; // exit early
-                }
-        });
-
-        return changed;
-    }
-
-//  Re-store original data on successful submission
-//  (Put this inside your AJAX success response when update is successful)
-    function updateOriginalDataFromResponse(data) {
-        if (!data || !data.edited) return;
-            \$('#transport-edit').find(':input').each(function () {
-                const name = \$(this).attr('name');
-                    if (name && data.edited.hasOwnProperty(name)) {
-                        originalData[name] = data.edited[name];
-                    }
-            });
-
-        if (!data || !data.updated) return;
-            \$('#quantity-edit').find(':input').each(function () {
-                const name = \$(this).attr('name');
-                    if (name && data.updated.hasOwnProperty(name)) {
-                        originalData[name] = data.updated[name];
-                    }
-            });
-
-        if (!data || !data.modified) return;
-            \$('#quantity-edit').find(':input').each(function () {
-                const name = \$(this).attr('name');
-                    if (name && data.modified.hasOwnProperty(name)) {
-                        originalData[name] = data.modified[name];
-                    }
-            });
-    }
-
-    \$(\"#transport-delete\").validate({
-        rules: {
-            id_transport: { required: true }
-        },
-        submitHandler: function (form) {
-            const formData = \$(form).serialize();
-
-        \$.ajax({
-            url: 'transport-delete',
-            method: 'POST',
-            data: formData,
-            dataType: 'json',
-            success: function (response) {
-                if (response.success) {
-                    // Hide modal, remove transport row
-                    \$('#deleteTransModal').modal('hide');
-                    \$('#transport-table #id-' + \$('#id_transport').val()).remove();
-                } else {
-                    alert(response.message || 'Errore durante l\\'eliminazione.');
-                }
-            },
-            error: function () {
-                alert('Errore server. Riprova.');
-            }
-        });
-
-        return false;
-        }
-    });
-});
-</script>
-{% endblock %}", "transport-modal.twig", "C:\\wamp64\\www\\liquimet\\templates\\transport-modal.twig");
+</div>", "transport-modal.twig", "C:\\wamp64\\www\\liquimet\\templates\\transport-modal.twig");
     }
 }

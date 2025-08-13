@@ -7,7 +7,7 @@
 {% endblock %}
  
 {% block content %} 
-    {% include 'transports-navigation.twig' %}
+    {% include 'shared/transports-navigation.twig' %}
 
     <section class="col-9 mx-auto register-form"> {# new-form class #}
         <div class="card">
@@ -505,8 +505,6 @@
 $(document).ready(function () {
     // Step 3: Disable all inputs inside .partial-row-template to prevent accidental submission
     $('.partial-row-template').find('input, select, textarea').prop('disabled', true);
-
-
 
     $('[data-bs-toggle="tooltip"]').tooltip();
 
@@ -1201,7 +1199,7 @@ $(document).ready(function () {
                         const created = encodeURIComponent(response.created);
         
                         //  Redirect to users page with newId in the query string
-                        window.location.href = '/platform?created=' + created + '#id-' + created;
+                        window.location.href = '/transports?created=' + created + '#id-' + created;
                         document.getElementById('id-' + response.created)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     } else if (response.errors) {
                         // Clear old validation errors

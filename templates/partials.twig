@@ -1,0 +1,58 @@
+{# Partials Table #}
+<td colspan="16" class="border-0">
+    <h4 class="mx-auto my-3 text-center"> 
+        <span class="btn my-auto collapse-title edit-data updateQty" style="cursor: default">
+            Scarichi parziali:
+        </span>
+    </h4>
+
+    <table class="table table-bordered table-light mb-1" id="part-table-{{ t.id_transport }}">
+        <thead>
+            <tr class="border-top border-light bg-primary bg-gradient table-title">
+                <th scope="col" class="align-middle px-3 small-col"> # </th>
+                <th scope="col" class="align-middle px-2"> Destinazione </th>
+                <th scope="col" class="align-middle px-2"> EXW </th>
+                <th scope="col" class="align-middle px-2"> Data </th>
+                <th scope="col" class="align-middle px-2"> Luogo </th>
+                <th scope="col" class="align-middle px-2"> Quantità scaricata </th>
+                <th scope="col" class="align-middle px-2"> Fattura </th>
+                <th scope="col" class="align-middle px-2 small-col"> <i class="bi bi-gear"></i> </th>
+            </tr>
+        </thead>
+                                                     
+        <tbody>
+        {% for p in partials %}
+            <tr class="bg-light bg-gradient">
+                <td scope="row" class="align-middle p-1"> 
+                    {{ loop.index }}
+                </td>         
+                <td class="align-middle p-1 col-destination" id="dest"> {{ p.destination|upper }} </td>                                   
+                <td class="align-middle p-1 col-exw" id="exw"> {{ p.exw|upper }} </td>  
+                <td class="align-middle p-1 col-date" id="date"> {{ p.date|date("d/m/Y") }} </td>                   
+                <td class="align-middle p-1 col-place" id="place"> {{ p.place|capitalize }} </td>
+                <td class="align-middle p-1 col-q-unloaded" id="qty"> {{ p.q_unloaded }} </td>
+                <td class="align-middle p-1 col-invoice" id="invoice"> {{ p.invoice }} </td>
+                <td class="align-middle m-auto btns"> 
+                {% if (user.role == 'admin') or (user.id_user == t.id_user) %}
+                    <button type="button" class="edit-data edit-part" data-bs-toggle="modal" data-bs-target="#editPart-{{ p.id_partial }}" 
+                            data-id="{{ p.id_partial }}">
+                                <i class="bi bi-pencil-square"></i>
+                    </button> 
+                {% else %}
+                    <button type="button" class="edit-data" disabled>
+                        <i class="bi bi-x-octagon"></i>
+                    </button>
+                {% endif %}
+                                                    
+                {% if (user.role == 'admin') %}
+                    <button type="button" class="edit-data delete-data" data-bs-toggle="modal" data-bs-target="#deletePart-{{ p.id_partial }}"
+                            data-id="{{ p.id_partial }}">
+                                <i class="bi bi-trash"></i> 
+                    </button>     
+                {% endif %}                        
+                </td> 
+            </tr>  
+        {% endfor %}
+        </tbody>
+    </table>
+</td>
