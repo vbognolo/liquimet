@@ -621,7 +621,8 @@ main {
 
 .submenu-navigation .nav-item a,
 #profile-nav li button,
-#profile-nav li button:active {
+#profile-nav li button:active,
+.platform-caption button.platform-btn {
     display: block;
     text-decoration: none;
     font-size: 1.7rem;
@@ -632,6 +633,8 @@ main {
     padding: 5px 15px;
     border-top: 2px solid transparent;
     border-bottom: 2px solid #ffffff;
+    border-right: none;
+    border-left: none;
     border-radius: 1.2rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; 
     transition: all 0.3s ease-in-out;
@@ -640,7 +643,8 @@ main {
 .submenu-navigation .nav-item a.active,
 .submenu-navigation .nav-item a:hover,
 #profile-nav li > button.active,
-#profile-nav li button:hover {
+#profile-nav li button:hover,
+.platform-caption button.platform-btn:hover {
     border-top: 2px solid #ffffff;
     box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
 }
@@ -653,6 +657,44 @@ main {
 /*--------------------------------------------------------------
 # =====>                  TABLE DESIGN                         #    // FOR PAGES: platform, users, titles, transports-full, transports-part
 --------------------------------------------------------------*/
+/* Table Caption + Dropdown Menu */
+.card.platform-caption {
+    --bs-card-cap-bg: rgba(var(--bs-body-color-rgb), 0.0); /* Transparent */
+    background: none; 
+    border: none;
+}
+
+.platform-caption .platform-btn {
+    font-size: 1.6rem;
+}
+
+.platform-caption .dropdown-menu {
+    border: 2px solid rgb(144, 6, 73); 
+    border-radius: 5%;
+    top: 0.1rem !important; 
+}
+
+.platform-caption .dropdown-header h5 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #0066cc;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+}
+
+.platform-caption .dropdown-item {
+    font-size: 1.7rem;
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+.platform-caption .dropdown-item:hover, 
+.platform-caption .dropdown-item.active {
+    background-color: #f6f9ff;
+    border-radius: 5%;
+    color: #900649;
+}
+
 /* Table Platform */
 table th, table td {
     white-space: normal;
@@ -667,8 +709,8 @@ table th, table td {
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
     overflow: auto;
     scrollbar-width: thin;
-}
-
+} 
+/* 
 .platform caption span {
     letter-spacing: 0.1rem;
     color: #ffffff;
@@ -680,7 +722,7 @@ table th, table td {
     border-radius: 1.2rem;
     box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
 }
-
+*/
 .platform thead th {
     position: sticky;
     top: 0;
@@ -859,7 +901,7 @@ table th, table td {
 
 .collapse-platform > td:not(:last-child) .btns {
     border-right: none !important;
-    background-color: none;
+    /*background-color: transparent;*/
 }
 /* End Collapse Platform */
 
@@ -877,8 +919,7 @@ table th, table td {
     appearance: none;
         -moz-appearance: none;
         -webkit-appearance: none;
-    background: none;
-    background-color: transparent; 
+    background: none; 
     cursor: pointer;
     overflow: hidden;
     color: #000000;

@@ -41,7 +41,6 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
             'scripts' => [$this, 'block_scripts'],
             'jquery' => [$this, 'block_jquery'],
             'datepicker' => [$this, 'block_datepicker'],
-            'datatables' => [$this, 'block_datatables'],
             'page_script' => [$this, 'block_page_script'],
         ];
     }
@@ -84,7 +83,7 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
 ";
         // line 22
         yield from $this->unwrap()->yieldBlock('body', $context, $blocks);
-        // line 203
+        // line 200
         yield "</html>";
         yield from [];
     }
@@ -342,7 +341,7 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
     ";
         // line 179
         yield from $this->unwrap()->yieldBlock('scripts', $context, $blocks);
-        // line 201
+        // line 198
         yield "</body>
 ";
         yield from [];
@@ -418,17 +417,11 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
         ";
         // line 193
         yield "        ";
-        yield from $this->unwrap()->yieldBlock('datatables', $context, $blocks);
+        yield from $this->unwrap()->yieldBlock('page_script', $context, $blocks);
         // line 194
         yield "
         ";
         // line 196
-        yield "        ";
-        yield from $this->unwrap()->yieldBlock('page_script', $context, $blocks);
-        // line 197
-        yield "
-        ";
-        // line 199
         yield "        <script src=\"/js/main.js\"></script> 
     ";
         yield from [];
@@ -458,16 +451,6 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
     /**
      * @return iterable<null|scalar|\Stringable>
      */
-    public function block_datatables(array $context, array $blocks = []): iterable
-    {
-        $macros = $this->macros;
-        yield from [];
-    }
-
-    // line 196
-    /**
-     * @return iterable<null|scalar|\Stringable>
-     */
     public function block_page_script(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
@@ -487,7 +470,7 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  468 => 196,  458 => 193,  448 => 190,  438 => 181,  432 => 199,  429 => 197,  426 => 196,  423 => 194,  420 => 193,  417 => 191,  414 => 190,  407 => 184,  404 => 182,  401 => 181,  399 => 180,  392 => 179,  382 => 170,  374 => 91,  367 => 90,  359 => 44,  352 => 43,  346 => 201,  344 => 179,  337 => 175,  331 => 171,  329 => 170,  322 => 165,  318 => 163,  316 => 162,  307 => 160,  290 => 145,  277 => 134,  269 => 128,  267 => 127,  247 => 110,  243 => 109,  238 => 106,  232 => 103,  227 => 100,  222 => 97,  219 => 95,  216 => 90,  213 => 88,  207 => 83,  201 => 79,  195 => 74,  193 => 73,  191 => 72,  185 => 68,  179 => 63,  167 => 57,  163 => 55,  156 => 50,  153 => 48,  150 => 43,  133 => 32,  130 => 31,  121 => 23,  114 => 22,  104 => 19,  93 => 4,  88 => 203,  86 => 22,  80 => 19,  77 => 18,  72 => 14,  66 => 9,  58 => 4,  53 => 1,);
+        return array (  451 => 193,  441 => 190,  431 => 181,  425 => 196,  422 => 194,  419 => 193,  416 => 191,  413 => 190,  406 => 184,  403 => 182,  400 => 181,  398 => 180,  391 => 179,  381 => 170,  373 => 91,  366 => 90,  358 => 44,  351 => 43,  345 => 198,  343 => 179,  336 => 175,  330 => 171,  328 => 170,  321 => 165,  317 => 163,  315 => 162,  306 => 160,  289 => 145,  276 => 134,  268 => 128,  266 => 127,  246 => 110,  242 => 109,  237 => 106,  231 => 103,  226 => 100,  221 => 97,  218 => 95,  215 => 90,  212 => 88,  206 => 83,  200 => 79,  194 => 74,  192 => 73,  190 => 72,  184 => 68,  178 => 63,  166 => 57,  162 => 55,  155 => 50,  152 => 48,  149 => 43,  132 => 32,  129 => 31,  120 => 23,  113 => 22,  103 => 19,  92 => 4,  87 => 200,  85 => 22,  79 => 19,  76 => 18,  71 => 14,  65 => 9,  57 => 4,  52 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -682,9 +665,6 @@ class __TwigTemplate_14d52bf08f210e18728c57e0e5aa432f extends Template
 
         {# Conditionally include Bootstrap Datepicker if required #}
         {% block datepicker %}{% endblock %}
-
-        {# Conditionally include DataTables if required #}
-        {% block datatables %}{% endblock %}
 
         {# Conditionally include other scripts #}
         {% block page_script %}{% endblock %}

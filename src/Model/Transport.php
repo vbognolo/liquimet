@@ -8,20 +8,20 @@ class Transport {
     public function __construct(Database $db) {
         $this->db = $db;                                 
     }
-    
-/*------------------------ SELECT ---------------------------/
-/        ◦ getAllTransports($limit, $offset, ?$type)         /
-/        ◦ get($id)                                          /
-/        ◦ viewPartTransports()           /
-/           ◦ viewPagination()               /
-/           ◦ viewTransportModal()           /
-/           ◦ totalTransports(?$type)                                /
-/-----------------------------------------------------------*/ 
+/*------------------------------------------------------------------------------------------------------------------- SELECT ---------------/ 
+/                     ◦ getAllTransports (limit, offset, ?type = null)                                                                      /
+/                     ◦ selectTransport (id)                                                                                                /
+/                     ◦ getRecent (user = null)                                                                                             /
+/------------------------------------------------------------------------------------------------------------------------------------------*/  
     public function getAllTransports(int $limit, int $offset, ?string $type = null): array {                                             
-        $sql = "SELECT t.id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, 
+        $sql = /*"SELECT t.id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, 
                        t.date_unload, t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, 
                        q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.mwh, q.liquid_density, q.gas_weight, 
-                       q.mj_kg, q.pcs_ghv, q.volume_mc, q.volume_nmc, q.smc_mc, q.gas_nmc, q.gas_smc, q.smc_kg,
+                       q.mj_kg, q.pcs_ghv, q.volume_mc, q.volume_nmc, q.smc_mc, q.gas_nmc, q.gas_smc, q.smc_kg,*/
+                "SELECT t.id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, 
+                       t.date_unload, t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, 
+                       q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.liquid_density, q.gas_weight, 
+                       q.pcs_ghv,
                        n.content, n.created,
                        u.username, CONCAT(u.name, ' ', u.surname) AS author
                 FROM `transports`       AS t
@@ -37,10 +37,55 @@ class Transport {
 
         $sql .= " ORDER BY t.date_load DESC LIMIT :limit OFFSET :offset";
 
-        return $this->db->runSQL($sql, $params)->fetchAll();
+        $transports = $this->db->runSQL($sql, $params)->fetchAll();
+
+        // Add derived quantity calculations
+    foreach ($transports as &$t) {
+        $kg_unload      = (int)($t['kg_unload'] ?? 0);
+        $pcs_ghv        = (float)($t['pcs_ghv'] ?? 0);
+        $liquid_density = (float)($t['liquid_density'] ?? 0);
+        $gas_weight     = (float)($t['gas_weight'] ?? 0);
+
+        if ($kg_unload > 0 && $pcs_ghv > 0 && $liquid_density > 0 && $gas_weight > 0) {
+            $mwh        = ($kg_unload * $pcs_ghv) / 1000;
+            $mj_kg      = $pcs_ghv * 3.6;
+            $volume_mc  = $kg_unload / $liquid_density;
+            $volume_nmc = $liquid_density / $gas_weight;
+            $smc_mc     = ($volume_nmc / 273.15) * 288.15;
+            $gas_smc    = $volume_mc * $smc_mc;
+            $smc_kg     = $gas_smc / $kg_unload;
+            $gas_nmc    = $volume_mc * $volume_nmc;
+
+            // ✅ Save raw full-precision values
+            $t['mwh_raw']        = $mwh;
+            $t['mj_kg_raw']      = $mj_kg;
+            $t['volume_mc_raw']  = $volume_mc;
+            $t['volume_nmc_raw'] = $volume_nmc;
+            $t['smc_mc_raw']     = $smc_mc;
+            $t['gas_smc_raw']    = $gas_smc;
+            $t['smc_kg_raw']     = $smc_kg;
+            $t['gas_nmc_raw']    = $gas_nmc;
+
+            // ✅ Save display values (2 decimals, dot separator)
+            $t['mwh']        = number_format($mwh, 2, '.', '');
+            $t['mj_kg']      = number_format($mj_kg, 2, '.', '');
+            $t['volume_mc']  = number_format($volume_mc, 2, '.', '');
+            $t['volume_nmc'] = $volume_nmc;
+            $t['smc_mc']     = number_format($smc_mc, 2, '.', '');
+            $t['gas_smc']    = number_format($gas_smc, 2, '.', '');
+            $t['smc_kg']     = number_format($smc_kg, 2, '.', '');
+            $t['gas_nmc']    = number_format($gas_nmc, 2, '.', '');
+        } else {
+            // Default zeros if missing data
+            $t['mwh'] = $t['mj_kg'] = $t['volume_mc'] = $t['smc_mc'] = $t['gas_smc'] = $t['smc_kg'] = $t['gas_nmc'] = "0.00";
+            $t['volume_nmc'] = "0";
+        }
     }
 
-    public function get(int $id): array {
+    return $transports ?: false;
+    }
+
+    public function selectTransport(int $id): array {
         $sql = "SELECT t.id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, 
                        t.date_unload, t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, t.seo, 
                        t.id_user, t.created, t.modified, t.modified_by,
@@ -54,7 +99,6 @@ class Transport {
             return $transport ?: [];
     }
 
-//  ===> GET LAST 5 INSERTED TRANSPORTS    [select 7 recently added transports]   
     public function getRecent($user = null): array{
         $args['user'] = $args['user1'] = $user;
         
@@ -69,15 +113,11 @@ class Transport {
         
         return $this->db->runSQL($sql, $args)->fetchAll();  
     }
-
-/*------------------------ VALIDATION ---------------------------/
-/    ◦ validate_transport_data($transport, ?$id)                 /
-/    ◦ validate_transport_dates($dateLoadStr, $dateUnloadStr)    /
-/    ◦ check_transport_existence($field, $value, ?$excludeID)    /
-/           ◦                /
-/           ◦            /
-/           ◦                                 /
-/---------------------------------------------------------------*/ 
+/*--------------------------------------------------------------------------------------------------------------- VALIDATION ---------------/ 
+/                     ◦ validate_transport_data (transport, ?id)                                                                            /
+/                     ◦ validate_transport_dates (dateLoadStr, dateUnloadStr)                                                               /
+/                     ◦ check_transport_existence (field, value, ?excludeID)                                                                /
+/------------------------------------------------------------------------------------------------------------------------------------------*/
     public function validate_transport_data(array $transport, ?int $id = null): array {
         $errors = [];
 

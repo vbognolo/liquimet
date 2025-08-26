@@ -1,6 +1,6 @@
 <?php
 namespace Liquimet\Model;
-use Liquimet\Validate\Validate;
+    use Liquimet\Validate\Validate;
 
 class Quantity{
     private $db;
@@ -8,15 +8,11 @@ class Quantity{
     public function __construct(Database $db){
         $this->db = $db;                                 
     }
-
-/********************************************
- *  Select Statements For Getting Transports 
- *      Get Quantity By ID:    get($id)
- *      
- *      
- *      
- ********************************************/  
-    public function get(int $id): array {    
+/*------------------------------------------------------------------------------------------------------------------- SELECT ---------------/ 
+/                     ◦ selectQuantity (id)                                                                                                 /
+/                     ◦ getQtyByTransportID (id)                                                                                            /
+/------------------------------------------------------------------------------------------------------------------------------------------*/  
+    public function selectQuantity(int $id): array {    
         $sql = "SELECT id_quantity, kg_load, cooling, price_typology, price_value, kg_unload, mwh, liquid_density, 
                        gas_weight, mj_kg, pcs_ghv, volume_mc, volume_nmc, smc_mc, gas_nmc, gas_smc, smc_kg, id_transport
                 FROM `quantities`
@@ -27,140 +23,98 @@ class Quantity{
             return $quantity ?: false;
     }
 
-    public function getByTransportID(int $id): array {    
-        $sql = "SELECT id_quantity, kg_load, cooling, price_typology, price_value, kg_unload, mwh, liquid_density, 
-                       gas_weight, mj_kg, pcs_ghv, volume_mc, volume_nmc, smc_mc, gas_nmc, gas_smc, smc_kg, id_transport
+    public function getQtyByTransportID(int $id): array {    
+        $sql = "SELECT id_quantity, kg_load, cooling, price_typology, price_value, kg_unload, liquid_density, 
+                       gas_weight, pcs_ghv, id_transport
                 FROM `quantities`
                 WHERE id_transport = :id_transport
                     LIMIT 1"; 
         
         $quantity = $this->db->runSQL($sql, ['id_transport' => $id])->fetch();  
+           /* if (!$quantity) {
+                return [];
+            }
+
+        // Derived values
+        $quantity['mwh']       = Validate::validate_number(($quantity['kg_unload'] * $quantity['pcs_ghv']) / 1000, 'float');
+        $quantity['mj_kg']     = Validate::validate_number($quantity['pcs_ghv'] * 3.6, 'float');
+        $quantity['volume_mc'] = Validate::validate_number($quantity['kg_unload'] / $quantity['liquid_density'], 'float');
+        $quantity['volume_nmc']= Validate::validate_number($quantity['liquid_density'] / $quantity['gas_weight'], 'float');
+        $quantity['smc_mc']    = Validate::validate_number(($quantity['volume_nmc'] / 273.15) * 288.15, 'float');
+        $quantity['gas_smc']   = Validate::validate_number($quantity['volume_mc'] * $quantity['smc_mc'], 'float');
+        $quantity['smc_kg']    = Validate::validate_number($quantity['gas_smc'] / $quantity['kg_unload'], 'float');
+        $quantity['gas_nmc']   = Validate::validate_number($quantity['volume_mc'] * $quantity['volume_nmc'], 'float');
+
+        return $quantity;*/
             return $quantity ?: false;
     }
-
-/********************************************************************
- *  Validate Data Statements
- *      Quantity insert and update:     validate_quantity($quantity)
- ********************************************************************/
-    public function validate_quantity(array $quantity): array {
+/*--------------------------------------------------------------------------------------------------------------- VALIDATION ---------------/ 
+/                     ◦ validate_quantity_data (quantity)                                                                                   /
+/------------------------------------------------------------------------------------------------------------------------------------------*/
+    public function validate_quantity_data(array $quantity): array {
         $errors = [];
 
-            //  Required fields check
-            foreach (['kg_load', 'cooling', 'price_typology', 'kg_unload', 'liquid_density', 'gas_weight', 'pcs_ghv'] as $field) {
-                if (!isset($quantity[$field]) || $quantity[$field] === '') {
-                    $errors[$field] = "Campo obbligatorio.";
-                } 
-            }
-
-            //  Kg Load validation
-            if (!Validate::validate_number($quantity['kg_load'], 'number') || 
-                !Validate::validate_number($quantity['kg_load'], 'min')) {
-                $errors['kg_load'] = "Quantità caricata deve essere un numero positivo (intero o decimale).";
-            }
-
-            //  Cooling validation
-            if (!in_array($quantity['cooling'], ['600', '0'], true)) {
-                $errors['cooling'] = "Selezionare un'opzione valida.";
+        //  Required fields 
+        foreach (['kg_load', 'cooling', 'price_typology', 'kg_unload', 'liquid_density', 'gas_weight', 'pcs_ghv'] as $field) {
+            if (!isset($quantity[$field]) || $quantity[$field] === '') {
+                $errors[$field] = "Campo obbligatorio.";
             } 
+        }
 
-            //  Price Typology validation
-            if (!in_array($quantity['price_typology'], ['yes', 'no'], true)) {
-                $errors['price_typology'] = "Selezionare un'opzione valida.";
-            } elseif ($quantity['price_typology'] === 'yes') {
-                //  Price Value validation
-                if (!Validate::validate_number($quantity['price_value'], 'digits') ||
-                    !Validate::validate_number($quantity['price_value'], 'min', 1)) {
-                        $errors['price_value'] = "Valore costo extra deve essere un numero intero positivo maggiore o uguale a 1, senza segni o decimali.";
-                } elseif (!isset($quantity['price_value']) || empty($quantity['price_value'])) {
-                    $errors['price_value'] = "Campo obbligatorio.";
-                }
+        //  Kg Load validation
+        if (!Validate::validate_number($quantity['kg_load'], 'number') || 
+            !Validate::validate_number($quantity['kg_load'], 'min')) {
+            $errors['kg_load'] = "Quantità caricata deve essere un numero positivo (intero o decimale).";
+        }
+
+        //  Cooling validation
+        if (!in_array($quantity['cooling'], ['600', '0'], true)) {
+            $errors['cooling'] = "Selezionare un'opzione valida.";
+        } 
+
+        //  Price Typology validation
+        if (!in_array($quantity['price_typology'], ['yes', 'no'], true)) {
+            $errors['price_typology'] = "Selezionare un'opzione valida.";
+        } elseif ($quantity['price_typology'] === 'yes') {
+            //  Price Value validation
+            if (!Validate::validate_number($quantity['price_value'], 'digits') ||
+                !Validate::validate_number($quantity['price_value'], 'min', 1)) {
+                    $errors['price_value'] = "Valore costo extra deve essere un numero intero positivo maggiore o uguale a 1, senza segni o decimali.";
+            } elseif (!isset($quantity['price_value']) || empty($quantity['price_value'])) {
+                $errors['price_value'] = "Campo obbligatorio.";
             }
+        }
 
-            //  Kg Unload validation
-            if (!Validate::validate_number($quantity['kg_unload'], 'number') ||
-                !Validate::validate_number($quantity['kg_unload'], 'min')) {
-                    $errors['kg_unload'] = "Quantità scaricata deve essere un numero positivo (intero o decimale).";
-            } 
+        //  Kg Unload validation
+        if (!Validate::validate_number($quantity['kg_unload'], 'number') ||
+            !Validate::validate_number($quantity['kg_unload'], 'min')) {
+                $errors['kg_unload'] = "Quantità scaricata deve essere un numero positivo (intero o decimale).";
+        } 
 
-            //  Liquid Density validation
-            if (!Validate::validate_number($quantity['liquid_density'], 'number') ||
-                !Validate::validate_number($quantity['liquid_density'], 'min')) {
-                    $errors['liquid_density'] = "Densità liquido deve essere un numero positivo (intero o decimale).";
-            } 
+        //  Liquid Density validation
+        if (!Validate::validate_number($quantity['liquid_density'], 'number') ||
+            !Validate::validate_number($quantity['liquid_density'], 'min')) {
+                $errors['liquid_density'] = "Densità liquido deve essere un numero positivo (intero o decimale).";
+        } 
 
-            //  Gas Weight validation
-            if (!Validate::validate_number($quantity['gas_weight'], 'number') ||
-                !Validate::validate_number($quantity['gas_weight'], 'min')) {
-                    $errors['gas_weight'] = "Peso specifico (gas) deve essere un numero positivo (intero o decimale).";
-            } 
+        //  Gas Weight validation
+        if (!Validate::validate_number($quantity['gas_weight'], 'number') ||
+            !Validate::validate_number($quantity['gas_weight'], 'min')) {
+                $errors['gas_weight'] = "Peso specifico (gas) deve essere un numero positivo (intero o decimale).";
+        } 
 
-            //  PCS GHV validation
-            if (!Validate::validate_number($quantity['pcs_ghv'], 'number') ||
-                !Validate::validate_number($quantity['pcs_ghv'], 'min')) {
-                    $errors['pcs_ghv'] = "PCS/GHV deve essere un numero positivo (intero o decimale).";
-            }
+        //  PCS GHV validation
+        if (!Validate::validate_number($quantity['pcs_ghv'], 'number') ||
+            !Validate::validate_number($quantity['pcs_ghv'], 'min')) {
+                $errors['pcs_ghv'] = "PCS/GHV deve essere un numero positivo (intero o decimale).";
+        }
 
         return $errors;
     }
-
-
-//  ===> GET ALL QUANTITIES BY TRANSPORT ID    [select all]        
-    public function getAll(): array{    
-        $sql = "SELECT q.*, 
-                       t.*
-                FROM quantities AS q
-                JOIN transports AS t 
-                    ON q.id_transport = t.id_transport
-                ORDER BY t.id_transport DESC;";
-
-        return $this->db->runSQL($sql)->fetchAll(); 
-    }
-        
-//  ===> GET ALL FULL QUANTITIES    [select all fulls]      
-    public function getFull(): array{    
-        $sql = "SELECT q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.mwh, q.liquid_density, q.gas_weight, q.mj_kg, q.pcs_ghv,
-                       q.volume_mc, q.volume_nmc, q.smc_mc, q.gas_nmc, q.gas_smc, q.smc_kg, 
-                       u.id_user AS id_user,
-                       t.id_transport AS id_transport, t.slot, t.type, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, t.date_unload, 
-                       t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, t.note, t.seo
-                FROM quantities AS q
-                JOIN users AS u 
-                    ON q.id_user = u.id_user
-                JOIN transports AS t 
-                    ON q.id_transport = t.id_transport
-                WHERE t.type = 'F'
-                ORDER BY q.id_transport DESC;";
-
-        return $this->db->runSQL($sql)->fetchAll(); 
-    }
-    
-//  ===> GET ALL PARTIAL QUANTITIES    [select all partials]     
-    public function getPart(): array{    
-        $sql = "SELECT q.kg_load, q.cooling, q.price_typology, q.price_value, q.kg_unload, q.mwh, q.liquid_density, q.gas_weight, q.mj_kg, q.pcs_ghv,
-                       q.volume_mc, q.volume_nmc, q.smc_mc, q.gas_nmc, q.gas_smc, q.smc_kg, 
-                       u.id_user AS id_user,
-                       t.id_transport AS id_transport, t.type, t.slot, t.cmr, t.issuer, t.supplier, t.transport, t.univoco, t.date_load, t.date_unload, 
-                       t.id_month_load, t.week_unload, t.id_month_unload, t.month_unload, t.container, t.note, t.seo  
-                FROM quantities AS q
-                JOIN users AS u 
-                    ON q.id_user = u.id_user
-                JOIN transports AS t 
-                    ON q.id_transport = t.id_transport
-                WHERE t.type = 'P'
-                ORDER BY t.id_transport DESC;";
-
-        return $this->db->runSQL($sql)->fetchAll(); 
-    }
-
-/*****************************************************
- *  Quantity CRUD Operations:
- *      Create Quantity        => createQuantity()
- *      Update Transport       => updateTransport()
- *      
- *      Partial Transports
- *      Transport Modals
- *      
- *****************************************************/
+/*------------------------------------------------------------------------------------------------------------ QUANTITY CRUD ---------------/
+/                     ◦ createQuantity (data)                                                                                               /
+/                     ◦ updateQuantity (data)                                                                                               /
+/------------------------------------------------------------------------------------------------------------------------------------------*/
     public function createQuantity(int $id, array $data, int $user): bool {
         $sql = "INSERT INTO `quantities` 
                     (kg_load, cooling, price_typology, price_value, kg_unload, liquid_density, 
@@ -217,26 +171,19 @@ class Quantity{
         $update = $this->db->runSQL($sql, $args);   
             return $update->rowCount() > 0;                                            
     }
-    
-//  ===> DELETE TRANSPORT BY ID    [delete single - only admin]
-    public function delete(int $id): bool{
-        $sql = "DELETE FROM quantities 
-                WHERE id_transport = :id;";    
-        
-        $this->db->runSQL($sql, [$id]);                  
-            return true;                                     
-    }
-    
-//  ** [C O U N T]     S T A T E M E N T S **    
-//  ===> SUM ALL QUANTITIES
+/*--------------------------------------------------------------------------------------------------------- COUNT AND SEARCH ---------------/ 
+/                     ◦ sumUnloaded()                                                                                                       /
+/                     ◦ count()                                                                                                             /
+/                     ◦ searchCount($term)                                                                                                  /
+/                     ◦ search($term)                                                                                                       /
+/------------------------------------------------------------------------------------------------------------------------------------------*/ 
     public function sumUnloaded(): int {    
         $sql = "SELECT SUM(kg_unload)  
                 FROM quantities";
 
         return (int) $this->db->runSQL($sql)->fetchColumn(); 
     }
-    
-//  ===> COUNT ALL QUANTITIES
+
     public function count(): int{
         $sql = "SELECT COUNT(id_quantity) 
                 FROM quantities;";    
@@ -244,11 +191,8 @@ class Quantity{
         return $this->db->runSQL($sql)->fetchColumn();                      
     }
 
-
-//  ** [S E A R C H]     S T A T E M E N T S **
-//  ===> GET NUMBER OF SEARCH MATCHES
     public function searchCount(string $term): int{
-        $args['term1'] = $args['term2'] = "%$term%";        //add wildcards to search term
+        $args['term1'] = $args['term2'] = "%$term%";        
         
         $sql = "SELECT COUNT(id_transport)
                 FROM transports
@@ -258,7 +202,6 @@ class Quantity{
         return $this->db->runSQL($sql, $args)->fetchColumn(); 
     }
 
-//  ===> GET DATA FROM SEARCH MATCHES
     public function search(string $term): array{
         $args['term1'] = $args['term2'] = "%$term%"; 
         //$args['show']  = $show;         //number of results to show

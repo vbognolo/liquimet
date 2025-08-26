@@ -1,0 +1,583 @@
+{# Edit Transport Modal #}
+<div class="modal fade" id="editTransModal" tabindex="-1" role="dialog" aria-labelledby="editTransLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header mx-auto row">
+                <h2 class="modal-title" id="editTransLabel"> 
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                        MODIFICA
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                </h2>
+
+                <h4 class="modal-subtitle my-2"> 
+                    Modifica i dati esistenti del trasporto.
+                </h4>
+            </div>
+        
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form id="transport-edit" method="POST" action="transport-edit" autocomplete="off" novalidate>
+                        <input type="hidden" name="id_transport" id="id_transport" value="{{ transport.id_transport }}" />
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />   
+                        <input type="hidden" name="original_slot" id="original_slot" value="{{ transport.slot }}" />
+                        <input type="hidden" name="original_cmr" id="original_cmr" value="{{ transport.cmr }}" />
+
+                        {# Slot ID #}
+                        <div class="row form-group mx-auto my-3">
+                            <label for="slot" class="col-4 form-control-label my-1"> Slot ID: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="slot" id="slot" data-original="{{ transport.slot }}" value="{{ transport.slot }}"
+                                       class="form-control text-upper {% if errors.slot %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.slot %}<div class="invalid-feedback">{{ errors.slot }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+                        
+                        {# CMR Number #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="cmr" class="col-4 form-control-label my-1"> Numero CMR: </label>
+                        
+                            <div class="col-8">
+                                <input type="text" name="cmr" id="cmr" data-original="{{ transport.cmr }}" value="{{ transport.cmr }}"
+                                       class="form-control {% if errors.cmr %}is-invalid{% endif %} text-upper" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.cmr %}<div class="invalid-feedback">{{ errors.cmr }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+                        
+                        {# Issuer #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="issuer" class="col-4 form-control-label my-1"> Fornitore: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="issuer" id="issuer" value="{{ transport.issuer }}"
+                                       class="form-control {% if errors.issuer %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.issuer %}<div class="invalid-feedback">{{ errors.issuer }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                            
+                        {# Supplier #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="supplier" class="col-4 form-control-label my-1"> Emittente: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="supplier" id="supplier" value="{{ transport.supplier }}"
+                                       class="form-control {% if errors.supplier %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.supplier %}<div class="invalid-feedback">{{ errors.supplier }}</div>{% endif %}
+                                </div>  
+                            </div>
+                        </div>
+                            
+                        {# Transport #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="transport" class="col-4 form-control-label my-1"> Trasporto: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="transport" id="transport" value="{{ transport.transport }}"
+                                       class="form-control {% if errors.transport %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.transport %}<div class="invalid-feedback">{{ errors.transport }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+                            
+                        {# Date Load #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="date_load" class="col-4 form-control-label my-1"> Data carico: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="date_load" id="date_load" value="{{ transport.date_load|default('') }}"
+                                       class="form-control datepicker {% if errors.date_load %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.date_load %}<div class="invalid-feedback">{{ errors.date_load }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+                            
+                        {# Date Unload #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="date_unload" class="col-4 form-control-label my-1"> Data scarico: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="date_unload" id="date_unload" value="{{ transport.date_unload|default('') }}"
+                                       class="form-control datepicker {% if errors.date_unload %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.date_unload %}<div class="invalid-feedback">{{ errors.date_unload }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>    
+                            
+                        {# Container #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="container" class="col-4 form-control-label my-1"> Container / ATB: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="container" id="container" value="{{ transport.container }}"
+                                       class="form-control {% if errors.container %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.container %}<div class="invalid-feedback">{{ errors.container }}</div>{% endif %}
+                                </div>  
+                            </div>
+                        </div>
+            
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default modal-cancel" data-bs-dismiss="modal">
+                                <span class="bi bi-x-circle">
+                                    CHIUDI 
+                                </span>    
+                            </button>
+                            
+                            <button type="submit" class="btn btn-default modal-save">
+                                <span class="bi bi-check-circle">
+                                    SALVA
+                                </span>   
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{# End Transport Modal #}
+
+{# Edit Quantity Modal #}
+<div class="modal fade" id="editQtyModal" tabindex="-1" role="dialog" aria-labelledby="editQtyLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header mx-auto row">
+                <h2 class="modal-title" id="editQtyLabel"> 
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                        MODIFICA
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                </h2>
+
+                    <h4 class="modal-subtitle my-2"> 
+                        Modifica le quantità del trasporto.
+                    </h4>
+            </div>
+        
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form id="quantity-edit" method="POST" action="quantity-edit" autocomplete="off" novalidate>
+                        <input type="hidden" name="id_transport" id="id_transport" />
+                        <input type="hidden" name="id_quantity" id="id_quantity" />
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+                        {# Kg Load #}
+                        <div class="row form-group mx-auto my-3">
+                            <label class="col-4 form-control-label my-1"> Quantità caricata: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="kg_load" id="kg_load" 
+                                    class="form-control {% if errors.kg_load %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.kg_load %}<div class="invalid-feedback">{{ errors.kg_load }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+
+                        {# Cooling  #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label class="col-4 form-control-label my-1"> Raffreddamento: </label>
+                        
+                            <div class="col-8">
+                                <select name="cooling" id="cooling" class="form-control {% if errors.cooling %}is-invalid{% endif %}">
+                                    <option value="600" class="opt-type"> 
+                                        SÌ = 600
+                                    </option>
+                                    
+                                    <option value="0" class="opt-type"> 
+                                        NO = 0
+                                    </option>
+                                </select>
+
+                                <div class="error-placeholder">
+                                    {% if errors.cooling %}<div class="invalid-feedback">{{ errors.cooling }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+                        
+                        {# Price Typology #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label class="col-4 form-control-label my-1"> Tipologia costo extra: </label>
+                            
+                            <div class="col-8">
+                                <select name="price_typology" id="price_typology" class="form-control {% if errors.price_typology %}is-invalid{% endif %}">
+                                    {#<option class="opt-type">
+                                        {% if (quantity.price_typology == 'yes') %}
+                                            SÌ
+                                        {% else %}
+                                            NO
+                                        {% endif %}
+                                    </option>   #}
+                                    
+                                    <option value="yes" class="opt-type"> 
+                                        SÌ
+                                    </option>
+                                        
+                                    <option value="no" class="opt-type"> 
+                                        NO
+                                    </option>
+                                </select>
+
+                                <div class="error-placeholder">
+                                    {% if errors.price_typology %}<div class="invalid-feedback">{{ errors.price_typology }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                            
+                        {# Price Value #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label class="col-4 form-control-label my-1"> Valore costo extra: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="price_value" id="price_value"
+                                    class="form-control {% if errors.price_value %}is-invalid{% endif %}" />
+                                {#<input type="hidden" name="price_value" id="price_value_hidden">#}
+
+
+                                <div class="error-placeholder">
+                                    {% if errors.price_value %}<div class="invalid-feedback">{{ errors.price_value }}</div>{% endif %}
+                                </div>  
+                            </div>
+                        </div>
+                            
+                        {# Kg Unload #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label class="col-4 form-control-label my-1"> Quantità scaricata: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="kg_unload" id="kg_unload"
+                                    class="form-control {% if errors.kg_unload %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.kg_unload %}<div class="invalid-feedback">{{ errors.kg_unload }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+
+                        {# Liquid Density #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label class="col-4 form-control-label my-1"> Densità liquido: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="liquid_density" id="liquid_density" 
+                                    class="form-control {% if errors.liquid_density %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.liquid_density %}<div class="invalid-feedback">{{ errors.liquid_density }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+                            
+                        {# Gas Weight #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label class="col-4 form-control-label my-1"> Peso specifico (gas): </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="gas_weight" id="gas_weight" 
+                                    class="form-control {% if errors.gas_weight %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.gas_weight %}<div class="invalid-feedback">{{ errors.gas_weight }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+                            
+                        {# Pcs Ghv #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label class="col-4 form-control-label my-1"> PCS/GHV: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="pcs_ghv" id="pcs_ghv"
+                                    class="form-control {% if errors.pcs_ghv %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.pcs_ghv %}<div class="invalid-feedback">{{ errors.pcs_ghv }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>    
+            
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default modal-cancel" data-bs-dismiss="modal">
+                                <span class="bi bi-x-circle">
+                                    CHIUDI 
+                                </span>    
+                            </button>
+                            
+                            <button type="submit" class="btn btn-default modal-save" name="update_quantity">
+                                <span class="bi bi-check-circle">
+                                    SALVA
+                                </span>   
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+{# End Quantity Modal #}
+
+{# Transport Note Modal #}
+<div class="modal fade" id="editNoteModal" tabindex="-1" role="dialog" aria-labelledby="editNoteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header mx-auto row">
+                <h2 class="modal-title" id="editNoteLabel"> 
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                        MODIFICA
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                </h2>
+
+                    <h4 class="modal-subtitle my-2"> 
+                        Modifica la nota del trasporto.
+                    </h4>
+            </div>
+        
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form id="transport-note" method="POST" action="transport-note" autocomplete="off" novalidate>
+                        <input type="hidden" name="id_transport" id="id_transport" />
+                        <input type="hidden" name="id_note" id="id_note" />
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+                        <div class="row form-group mx-auto mb-3">
+                            <label class="form-control-label my-1"> Nota: </label>
+                            
+                            <div class="">
+                                <textarea name="note" id="note" maxlength="2000"
+                                    class="form-control {% if errors.content %}is-invalid{% endif %}"
+                                    style="height: 80px; text-align: center; white-space-collapse: collapse"></textarea>
+
+                                <div class="error-placeholder">
+                                    {% if errors.content %}<div class="invalid-feedback">{{ errors.content }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>                        
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default modal-cancel" data-bs-dismiss="modal">
+                                <span class="bi bi-x-circle">
+                                    CHIUDI 
+                                </span>    
+                            </button>
+
+                            <button type="button" class="btn btn-default modal-reset">
+                                <span class="bi bi-trash">
+                                    CANCELLA 
+                                </span> 
+                            </button>
+                            
+                            <button type="submit" class="btn btn-default modal-save" name="update_note">
+                                <span class="bi bi-check-circle">
+                                    SALVA
+                                </span>   
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{# End Transport Note Modal #}
+
+{# Transport Delete Modal #}
+<div class="modal fade" id="deleteTransModal" tabindex="-1" role="dialog" aria-labelledby="deleteTransLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header mx-auto row">
+                <h2 class="modal-title" id="deleteTransLabel"> 
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                        RIMUOVI
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                </h2>
+
+                    <h4 class="modal-subtitle my-2"> 
+                        Rimuovi il trasporto scelto.
+                    </h4>
+            </div>
+        
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form id="transport-delete" method="POST" action="transport-delete" autocomplete="off" novalidate>
+                        <input type="hidden" name="id_transport" id="id_transport" />
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+                        <p class="container delete-msg">
+                            Rimuovere il trasporto (SLOT ID)? <br>
+                                <span id="slot-placeholder"></span>
+                        </p>                     
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default modal-cancel" data-bs-dismiss="modal">
+                                <span class="bi bi-x-circle">
+                                    ANNULLA
+                                </span>    
+                            </button>
+                            
+                            <button type="submit" class="btn btn-default modal-save" name="delete_trans">
+                                <span class="bi bi-check-circle">
+                                    CONFERMA
+                                </span>   
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{# End Transport Delete Modal #}
+
+{# Edit Partial Modal #}
+<div class="modal fade" id="editPartModal" tabindex="-1" role="dialog" aria-labelledby="editPartLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header mx-auto row">
+                <h2 class="modal-title" id="editPartLabel"> 
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                        MODIFICA
+                    <i class="bi bi-pencil-square my-auto mx-1"></i>
+                </h2>
+
+                    <h4 class="modal-subtitle my-2"> 
+                        Modifica i dati esistenti del trasporto parziale.
+                    </h4>
+            </div>
+        
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form id="partial-edit" method="POST" action="partial-edit" autocomplete="off" novalidate>
+                        <input type="hidden" name="id_partial" id="id_partial" />
+                        <input type="hidden" id="date_load" value="{{ transport.date_load }}">
+                        <input type="hidden" id="date_unload" value="{{ transport.date_unload }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+                        {# Destination #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="destination" class="col-4 form-control-label my-1"> Destinazione: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="destination" id="destination"
+                                       class="form-control {% if errors.destination %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.destination %}<div class="invalid-feedback">{{ errors.destination }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+
+                        {# EXW #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="exw" class="col-4 form-control-label my-1"> EXW: </label>
+                            
+                            <div class="col-8">
+                                <select name="exw" id="exw" class="form-control {% if errors.exw %}is-invalid{% endif %}">
+                                    <option value="destino" class="opt-type"> 
+                                        DESTINO
+                                    </option>
+                                        
+                                    <option value="fos" class="opt-type"> 
+                                        FOS
+                                    </option>
+                                </select>
+
+                                <div class="error-placeholder">
+                                    {% if errors.exw %}<div class="invalid-feedback">{{ errors.exw }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                            
+                        {# Date #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="date" class="col-4 form-control-label my-1"> Data carico: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="date" id="date" 
+                                       class="form-control datepicker {% if errors.date %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.date %}<div class="invalid-feedback">{{ errors.date }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+
+                        {# Place #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="place" class="col-4 form-control-label my-1"> Luogo: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="place" id="place"
+                                       class="form-control {% if errors.place %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.place %}<div class="invalid-feedback">{{ errors.place }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+
+                        {# Q Unloaded #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="q_unloaded" class="col-4 form-control-label my-1"> Quantità scaricata: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="q_unloaded" id="q_unloaded" 
+                                    class="form-control {% if errors.q_unloaded %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.q_unloaded %}<div class="invalid-feedback">{{ errors.q_unloaded }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+
+                        {# Invoice #}
+                        <div class="row form-group mx-auto mb-3">
+                            <label for="invoice" class="col-4 form-control-label my-1"> Fattura: </label>
+                            
+                            <div class="col-8">
+                                <input type="text" name="invoice" id="invoice" 
+                                    class="form-control {% if errors.invoice %}is-invalid{% endif %}" />
+
+                                <div class="error-placeholder">
+                                    {% if errors.invoice %}<div class="invalid-feedback">{{ errors.invoice }}</div>{% endif %}
+                                </div> 
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default modal-cancel" data-bs-dismiss="modal">
+                                <span class="bi bi-x-circle">
+                                    ANNULLA
+                                </span>    
+                            </button>
+                                
+                            <button type="submit" class="btn btn-default modal-save" name="delete_trans">
+                                <span class="bi bi-check-circle">
+                                    CONFERMA
+                                </span>   
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

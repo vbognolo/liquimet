@@ -6,100 +6,60 @@
         integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous">
 {% endblock %}
 
-{% block search %}
-    {# Search Bar #}
-    <section class="row my-auto mx-auto search-header">
-        <div class="my-auto m-0 search-bar">
-            <form id="search-form">
-                <button type="button" class="my-1 search-btn">
-                    <i class="bi bi-search"></i>
-                </button>
-                <input type="text" class="my-1 search-input" id="search" placeholder="      Cerca.." />  
-            </form>
-        </div>
-    </section>
-{% endblock %}
- 
-{% block browse %}
-    {# Browse Bar #}
-    <section class="row my-auto mx-auto browse-header">
-        <div class="my-auto m-0 browse-bar">
-            <form id="browse-form" enctype="multipart/form-data" method="POST" action="{{ doc_root }}import-csv">
-                <label for="browse-input" class="my-1 browse-btn">
-                    <i class="bi bi-upload"></i>
-                </label>
-                
-                <input type="file" class="my-1 browse-input" id="browse-input" name="browse-input" 
-                    onchange="$('.browse-label').val($(this).val()); $('.browse-group').css('display', 'block');" />
-                <input type="text" class="my-1 browse-label" readonly />
-                
-                <span class="my-1 browse-group"> 
-                    <button type="button" class="my-1 remove-btn" onclick="document.querySelector('.browse-label').value=''; $('.browse-group').css('display', 'none');">
-                        <i class="bi bi-x-circle"></i>
-                    </button>
-
-                    <button type="button" class="my-1 upload-btn">
-                        <i class="bi bi-check-circle"></i>
-                    </button>
-                </span>
-                
-                <!--<button type="button" class="my-1 browse-btn">
-                    <i class="bi bi-upload"></i>
-                </button>-->
-                
-                <!--<div class="input-group my-1 browse-group">
-                    <input type="text" class="my-1 browse-label" name="browse-label" readonly />  
-                        <button type="button" class="my-1 upload-btn">
-                            <span>
-                                <i class="bi bi-plus-circle"></i>
-                            </span>
-                        </button>
-
-                        <button type="button" class="my-1 remove-btn">
-                            <span>
-                                <i class="bi bi-x-circle"></i>
-                            </span>
-                        </button>
-                </div>-->
-            </form>
-        </div>
-    </section>
-    <!--    ===>    END BROWSE FILE BAR    <===    -->
-{% endblock %}
-
 {% block content %} 
     {% include 'shared/transports-navigation.twig' %}
 
 <section class="col-12 m-auto">
-    <div class="d-flex justify-content-center table-responsive">          
-        <table class="table table-hover table-stripped caption-top text-center platform" id="transport-table">
-            <caption class="px-3 mb-2 text-white text-shadow-dark" style="font-size: 1.9rem"> 
-                <div class="dropdown-center">
-                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">                
-                        <span>
-                            {% if type is null %}
-                                TUTTI TRASPORTI
-                            {% elseif type == 'F' %}
-                                TRASPORTI PIENI
-                            {% elseif type == 'P' %}
-                                TRASPORTI PARZIALI
-                            {% endif %}
-                        </span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item {% if type is null %}active{% endif %}" style="text-align:center;" href="/transports"> - TUTTI TRASPORTI - </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item {% if type == 'F' %}active{% endif %}" style="text-align:center;" href="/transports-full"> - TRASPORTI PIENI - </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item {% if type == 'P' %}active{% endif %}" style="text-align:center;" href="/transports-part"> - TRASPORTI PARZIALI - </a>
-                        </li>
-                    </ul>
-                </div>
-            </caption>
+    {# Table Caption #}
+    <div class="card platform-caption">
+        <div class="card-header d-flex align-items-start border-0 my-1">
+            <button class="dropdown-toggle mb-1 platform-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">                
+                <span class="p-1 my-auto" style="font-size: 1.6rem">
+                    {% if type is null %}
+                        TUTTI TRASPORTI
+                    {% elseif type == 'F' %}
+                        TRASPORTI PIENI
+                    {% elseif type == 'P' %}
+                        TRASPORTI PARZIALI
+                    {% endif %}
+                </span>
+            </button>
 
+            <ul class="dropdown-menu">
+                <li class="dropdown-header">
+                    <h5> ◦ TRASPORTI ◦ </h5>
+                </li>      
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                <li>
+                    <a class="dropdown-item {% if type is null %}active{% endif %}" style="text-align:center;" href="/transports"> 
+                        Tutti
+                    </a>
+                </li>            
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                <li>
+                    <a class="dropdown-item {% if type == 'F' %}active{% endif %}" style="text-align:center;" href="/transports-full"> 
+                        Pieni
+                    </a>
+                </li>       
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                <li>
+                    <a class="dropdown-item {% if type == 'P' %}active{% endif %}" style="text-align:center;" href="/transports-part"> 
+                        Parziali
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center table-responsive">          
+        <table class="table table-hover text-center platform" id="transports-table">
+            {# Table Head #}
             <thead id="transport-head">
                 {% if type == 'F' %}
                     {% include 'shared/transports-head.twig' with { show_type: false } %}
@@ -110,6 +70,7 @@
                 {% endif %}
             </thead>
 
+            {# Table Body #}
             <tbody id="transport-tbody" class="table-group-divider transport-row-group">
                 {% if type == 'F' %}
                     {% include 'transports-full-ajax.twig' with { show_type: false } %}
@@ -120,6 +81,7 @@
                 {% endif %}
             </tbody>
 
+            {# Table Footer #}
             <tfoot id="transport-tfoot">
                 {% if type == 'F' %}
                     {% include 'shared/pagination.twig' with {
@@ -146,7 +108,7 @@
 </section> 
 
 <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-    {% include 'transport-modal.twig' %}
+    {% include 'transport-modals.twig' %}
 {% endblock %}
    
 {% block jquery %}
@@ -177,11 +139,13 @@
 <script>
 $(function () {
 //  Cache modal, form, and buttons
-    const $editModal = $('#editTransModal');
+    const $transModal = $('#editTransModal');
     const $qtyModal  = $('#editQtyModal');
+
     const $transForm = $('#transport-edit');
     const $qtyForm   = $('#quantity-edit');
     const $partForm  = $('#partial-edit');
+    
     const csrfToken  = $('input[name="csrf_token"]').val();
 
 //  Global originalData for resetting form on modal hide and updating after submit
@@ -190,26 +154,38 @@ $(function () {
 //  Utility: get form data as { name: value }
     function getFormData($form) {
         const data = {};
-        $form.find(':input[name]').each(function () {
-            data[this.name] = $(this).val();
-        });
-        return data;
+            $form.serializeArray().forEach(f => {
+                let val = f.value.trim();
+                    //  Normalize comma to dot for decimals
+                    if (/^\d+(,|\.)\d+$/.test(val)) {
+                        val = val.replace(',', '.');
+                    }
+                data[f.name] = val;
+            });
+        return data;/*
+            $form.find(':input[name]').each(function () {
+                data[this.name] = $(this).val();
+            });
+        return data;*/
     }
 
 //  Utility: compare two form data objects
     function isFormChanged(original, current) {
-        return Object.keys(current).some(key => original[key] !== current[key]);
+        return Object.keys(current).some(key => current[key] !== original[key]);
     }
 
 //  Utility: reset form inputs to original values, clear errors
     function resetFormToOriginal($form) {
-        $form.find(':input[name]').each(function () {
+        for (const [k, v] of Object.entries(originalData)) {
+            $form.find(`[name="${k}"]`).val(v);
+        }
+        /*$form.find(':input[name]').each(function () {
             if (originalData.hasOwnProperty(this.name)) {
                 $(this).val(originalData[this.name]).trigger('change').removeClass('is-invalid');
                 $(this).closest('.form-group').find('.error-placeholder').empty();
             }
         });
-        $form.removeClass('is-invalid');
+        $form.removeClass('is-invalid');*/
     }
 
 //  On modal hide, reset form if changed
@@ -230,7 +206,23 @@ $(function () {
 //  ========== Change detection and Save button enable/disable ==========
 //  Initialize form change tracking per modal and form
     function initFormChangeTracking($modal, $form, $saveBtn) {
-        let modalOriginalData = {};
+        originalData = getFormData($form);
+
+    $form.on('input change', function () {
+        const current = getFormData($form);
+        if (isFormChanged(originalData, current)) {
+            $saveBtn.prop('disabled', false);
+        } else {
+            $saveBtn.prop('disabled', true);
+        }
+    });
+
+    $modal.on('hide.bs.modal', function () {
+        resetFormToOriginal($form);
+        $saveBtn.prop('disabled', true);
+    });
+        
+        /*let modalOriginalData = {};
 
     //  On modal show: cache original form data & disable Save button
         $modal.on('show.bs.modal', function () {
@@ -246,36 +238,15 @@ $(function () {
                 } else {
                     $saveBtn.prop('disabled', true);
                 }
-        });
+        });*/
     }
 
-//  Date helpers
-    /*function parseDMY(str) {
-        const [d, m, y] = str.split('-');
-        return new Date(y, m - 1, d);
-    }
-
-    function parseAnyDate(dateStr) {
-        const norm = dateStr.replace(/[./]/g, '-').trim();
-        const parts = norm.split('-');
-            if (parts.length !== 3) return null;
-
-        let d, m, y;
-            if (parts[0].length === 4) {
-                y = +parts[0]; m = +parts[1] - 1; d = +parts[2];
-            } else {
-                d = +parts[0]; m = +parts[1] - 1; y = +parts[2];
-            }
-
-        const dt = new Date(y, m, d);
-        return dt.getFullYear() === y && dt.getMonth() === m && dt.getDate() === d ? dt : null;
-    }
-*/
     function formatToDMY(date) {
         const d = String(date.getDate()).padStart(2, '0');
         const m = String(date.getMonth() + 1).padStart(2, '0');
             return `${d}-${m}-${date.getFullYear()}`;
     }
+
 //  Parse date with multiple separators and formats 
     function parseAnyDate(dateStr) {
         if (!dateStr) return null;
@@ -284,12 +255,11 @@ $(function () {
             if (parts.length !== 3) return null;
 
         let d, m, y;
-            //  Handle yyyy-mm-dd or dd-mm-yyyy
             if (parts[0].length === 4) {    // yyyy-mm-dd
                 y = +parts[0];
                 m = +parts[1] - 1;
                 d = +parts[2];
-            } else {
+            } else {                        // dd-mm-yyyy
                 d = +parts[0];
                 m = +parts[1] - 1;
                 y = +parts[2];
@@ -299,13 +269,11 @@ $(function () {
         return (dt.getFullYear() === y && dt.getMonth() === m && dt.getDate() === d) ? dt : null;
     }
 
-
-
 //  Initialize datepicker and validation for both forms
     function initValidation() {
         const minDate = new Date(2006, 0, 1); // 01-01-2006
         const today = new Date();
-        //today.setHours(0, 0, 0, 0);
+
     //  Datepicker init (both forms)
         $('.datepicker').datepicker({
             format: 'dd-mm-yyyy',
@@ -431,7 +399,7 @@ $(function () {
                     success: response => {
                         if (response.success) {
                             updateOriginalDataFromResponse(response.edited);
-                            $editModal.modal('hide');
+                            $transModal.modal('hide');
 
                             const edited = response.edited;
                             const row = $('#id-' + edited.id_transport);
@@ -476,6 +444,7 @@ $(function () {
 
         //  Quantity form validation
         $qtyForm.validate({
+            onfocusout: el => $(el).valid(),
             rules: {
                 kg_load: { required: true, number: true, min: 0 },
                 cooling: { required: true, digits: true },
@@ -493,7 +462,6 @@ $(function () {
                 liquid_density: { required: true, number: true, min: 0 },
                 gas_weight: { required: true, number: true, min: 0 },
                 pcs_ghv: { required: true, number: true, min: 0 }
-                //price_value: { required: function () { return $('#price_typology').val() !== 'no'; }, number: true, min: 0 },
             },
             messages: {
                 kg_load: {
@@ -550,51 +518,25 @@ $(function () {
                     success: response => {
                         if (response.success) {
                             updateOriginalDataFromResponse(response.updated);
-                            $qtyModal.modal('hide');
+                            //$qtyModal.modal('hide');
 
                             const updated = response.updated;
                             const row = $('#qty-table-' + updated.id_transport);
 
-                            //  Map of field keys to class selectors
-                            const fieldsMap = {
-                                kg_load: '.col-kg-load',
-                                cooling: '.col-cooling',
-                                price_typology: '.col-price-typology',
-                                price_value: '.col-price-value',
-                                kg_unload: '.col-kg-unload',
-                                liquid_density: '.col-liquid-density',
-                                gas_weight: '.col-gas-weight',
-                                pcs_ghv: '.col-pcs-ghv',
-                                mwh: '.col-mwh',
-                                mj_kg: '.col-mj-kg',
-                                volume_mc: '.col-volume-mc',
-                                volume_nmc: '.col-volume-nmc',
-                                smc_mc: '.col-smc-mc',
-                                gas_nmc: '.col-gas-nmc',
-                                gas_smc: '.col-gas-smc',
-                                smc_kg: '.col-smc-kg'
-                            };
+                            row.find('.col-kg-load').text(updated.kg_load);
+                            row.find('.col-cooling').text(updated.cooling);
+                            row.find('.col-price-typology').text(updated.price_typology);
+                            row.find('.col-price-value').text(updated.price_value);
+                            row.find('.col-kg-unload').text(updated.kg_unload);
+                            row.find('.col-liquid-density').text(updated.liquid_density);
+                            row.find('.col-gas-weight').text(updated.gas_weight);
+                            row.find('.col-pcs-ghv').text(updated.pcs_ghv);
 
-                            const changedCells = [];
+                            $qtyModal.modal('hide');
 
-                            //  Loop through each mapped field
-                            $.each(fieldsMap, (field, selector) => {
-                                const cell = row.find(selector);
-                                const oldValue = cell.text().trim();
-                                const newValue = updated[field] !== undefined ? updated[field] : '—';
-
-                                    if (oldValue !== String(newValue)) {
-                                        cell.text(newValue);
-                                        changedCells.push(cell);
-                                    }
-                            });
-
-                            //  Animate only changed cells
-                            changedCells.forEach(cell => {
-                                cell.removeClass('bg-light');
-                                cell.addClass('bg-success bg-opacity-25');
-                                setTimeout(() => cell.removeClass('bg-success bg-opacity-25'), 2500);
-                            });
+                            //  Reset tracking
+                            originalData = getFormData($qtyForm);
+                     
 
                             $('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
                         } else {
@@ -622,7 +564,7 @@ $(function () {
         const $pv = $('#price_value');
         const typology = $('#price_typology').val();
 
-            if (typology === 'no') {
+            if (typology !== 'yes') {
                 switched = true;
                 $pv.val(0).prop('disabled', true).removeClass('is-valid is-invalid')
                     .closest('.form-group').find('.error-placeholder').empty();
@@ -661,20 +603,19 @@ $(function () {
         $.post('get-transport', { action: 'getTransportData', id_transport: id, csrf_token: csrfToken }, response => {
             if (response.success) {
                 const t = response.transport;
-                $editModal.find('#id_transport').val(t.id_transport);
-                $editModal.find('#slot').val(t.slot.toUpperCase());
-                $editModal.find('#cmr').val(t.cmr.toUpperCase());
-                $editModal.find('#issuer').val(t.issuer.toUpperCase());
-                $editModal.find('#supplier').val(t.supplier.toUpperCase());
-                $editModal.find('#transport').val(t.transport.toUpperCase());
-                $editModal.find('#date_load').val(t.date_load);
-                $editModal.find('#date_unload').val(t.date_unload);
-                $editModal.find('#container').val(t.container.toUpperCase());
+                    $transModal.find('#id_transport').val(t.id_transport);
+                    $transModal.find('#slot').val(t.slot.toUpperCase());
+                    $transModal.find('#cmr').val(t.cmr.toUpperCase());
+                    $transModal.find('#issuer').val(t.issuer.toUpperCase());
+                    $transModal.find('#supplier').val(t.supplier.toUpperCase());
+                    $transModal.find('#transport').val(t.transport.toUpperCase());
+                    $transModal.find('#date_load').val(t.date_load);
+                    $transModal.find('#date_unload').val(t.date_unload);
+                    $transModal.find('#container').val(t.container.toUpperCase());
 
-                $editModal.find('#original_slot').val(t.slot.toUpperCase());
-                $editModal.find('#original_cmr').val(t.cmr.toUpperCase());
-
-                $editModal.modal('show');
+                    $transModal.find('#original_slot').val(t.slot.toUpperCase());
+                    $transModal.find('#original_cmr').val(t.cmr.toUpperCase());
+                $transModal.modal('show');
             } else {
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
@@ -697,8 +638,7 @@ $(function () {
                     $qtyModal.find('#liquid_density').val(q.liquid_density);
                     $qtyModal.find('#gas_weight').val(q.gas_weight);
                     $qtyModal.find('#pcs_ghv').val(q.pcs_ghv);
-
-                    $qtyModal.modal('show');
+                $qtyModal.modal('show');
             } else {
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
@@ -709,10 +649,10 @@ $(function () {
     $('#editTransModal input[name="slot"], #editTransModal input[name="cmr"]').on('change', function () {
         const field = $(this).attr('name');
         const value = $(this).val();
-        const id = $editModal.find('input[name="id_transport"]').val();
+        const id = $transModal.find('input[name="id_transport"]').val();
 
         $.post('check-transport', { field, value, id_transport: id, csrf_token: csrfToken }, function (response) {
-            const input = $editModal.find(`[name="${field}"]`);
+            const input = $transModal.find(`[name="${field}"]`);
             const group = input.closest('.form-group');
             const errorDiv = group.find('.error-placeholder');
 
@@ -732,7 +672,7 @@ $(function () {
     initValidation();
 
 //  Initialize Save button enable/disable tracking
-    initFormChangeTracking($editModal, $transForm, $editModal.find('button[type="submit"]'));
+    initFormChangeTracking($transModal, $transForm, $transModal.find('button[type="submit"]'));
     initFormChangeTracking($qtyModal, $qtyForm, $qtyModal.find('button[type="submit"]'));
 });
 </script>

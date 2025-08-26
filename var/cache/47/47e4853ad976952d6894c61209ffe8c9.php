@@ -129,11 +129,11 @@ class __TwigTemplate_89cd06a319c3085e98affa7b7a73aa62 extends Template
                 // line 23
                 yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "date_unload", [], "any", false, false, false, 23), "d/m/Y"), "html", null, true);
                 yield " </td>
-            <td style=\"width: 90px\" class=\"align-middle p-0 col-month-load\"> ";
+            <td style=\"width: 100px\" class=\"align-middle p-0 col-month-load\"> ";
                 // line 24
                 yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_month_load", [], "any", false, false, false, 24), "html", null, true);
                 yield " </td>
-            <td style=\"width: 120px\" class=\"align-middle p-0 col-week-unload\"> ";
+            <td style=\"width: 100px\" class=\"align-middle p-0 col-week-unload\"> ";
                 // line 25
                 yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "week_unload", [], "any", false, false, false, 25), "html", null, true);
                 yield " </td>
@@ -234,19 +234,19 @@ class __TwigTemplate_89cd06a319c3085e98affa7b7a73aa62 extends Template
                 yield " </td>   
 
                             <th class=\"align-middle p-1\"> Quantità nominale caricata [kg] </th>
-                            <td class=\"align-middle col-kg-load\"> ";
+                            <td class=\"bg-light align-middle col-kg-load\"> ";
                 // line 75
                 yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(((CoreExtension::getAttribute($this->env, $this->source, $context["t"], "kg_load", [], "any", true, true, false, 75)) ? (Twig\Extension\CoreExtension::default(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "kg_load", [], "any", false, false, false, 75), "—")) : ("—")), "html", null, true);
                 yield " </td>   
 
                             <th class=\"align-middle p-1\"> Raffreddamento </th>            
-                            <td class=\"align-middle col-cooling\"> ";
+                            <td class=\"bg-light align-middle col-cooling\"> ";
                 // line 78
                 yield (((CoreExtension::getAttribute($this->env, $this->source, $context["t"], "cooling", [], "any", false, false, false, 78) == 600)) ? ("600") : ("No"));
                 yield " </td>
 
                             <th class=\"align-middle p-1\"> Tipologia costo extra </th>            
-                            <td class=\"align-middle col-price-typology\"> ";
+                            <td class=\"bg-light align-middle col-price-typology\"> ";
                 // line 81
                 yield (((CoreExtension::getAttribute($this->env, $this->source, $context["t"], "price_typology", [], "any", false, false, false, 81) == "yes")) ? ("Sì") : ("No"));
                 yield " </td>   
@@ -372,13 +372,11 @@ $context["t"]]));
 ";
         // line 142
         yield from $this->unwrap()->yieldBlock('jquery', $context, $blocks);
-        // line 158
+        // line 148
         yield "
+
 ";
-        // line 165
-        yield "
-";
-        // line 166
+        // line 150
         yield from $this->unwrap()->yieldBlock('page_script', $context, $blocks);
         yield from [];
     }
@@ -395,30 +393,18 @@ $context["t"]]));
         integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
         crossorigin=\"anonymous\">
 </script>
-    ";
-        // line 148
-        yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js\" 
-        integrity=\"sha256-umbTaFxP31Fv6O1itpLS/3+v5fOAWDLOUzlmvOGaKV4=\" 
-        crossorigin=\"anonymous\">
-</script>
-    ";
-        // line 153
-        yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js\" 
-        integrity=\"sha256-MtEA819Zls6dtLt5S5BpEMOhifPyz7gfzfgtNtY75lE=\" 
-        crossorigin=\"anonymous\">
-</script>
 ";
         yield from [];
     }
 
-    // line 166
+    // line 150
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_page_script(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 167
+        // line 151
         yield "<script>
 \$(document).ready(function () {
 /***  Pagination setup  ***/
@@ -427,60 +413,32 @@ $context["t"]]));
         const page = \$(this).data('page');
         const csrfToken = \$('input[name=\"csrf_token\"]').val();
 
-        \$.ajax({
-            type: 'POST',
-            url: 'pagination', 
-            dataType: 'json',
-            data: {
-                csrf_token: csrfToken,
-                page: page,
-                show_type: true
-            },
-            success: function (response) {
-                if (response.success) {
-                    \$('#transport-tbody').html(response.tbody);
-                    \$('#transport-tfoot').html(response.pagination);
+            \$.ajax({
+                type: 'POST',
+                url: 'pagination', 
+                dataType: 'json',
+                data: {
+                    csrf_token: csrfToken,
+                    page: page,
+                    show_type: true
+                },
+                success: function (response) {
+                    if (response.success) {
+                        \$('#transport-tbody').html(response.tbody);
+                        \$('#transport-tfoot').html(response.pagination);
+                    }
+                },
+                error: function () {
+                    alert('Errore nel caricamento della pagina.');
                 }
-            },
-            error: function () {
-                alert('Errore nel caricamento della pagina.');
-            }
-        });
+            });
 
-        // avoid multiple fast clicks by disabling temporarily
+        //  Avoid multiple fast clicks by disabling temporarily
         if (\$(this).parent().hasClass('disabled') || \$(this).parent().hasClass('active')) {
             return;
         }
-
-        // scroll to table after page load starts
+        //  Scroll to table after page load starts
         \$('html, body').animate({ scrollTop: \$('#transport-table').offset().top }, 300);
-    });
-
-//  Quantity edit button, open modal with populated quantity's data
-    \$(document).on('click', '.updateQty', function () {
-        const id = \$(this).data('id');
-        const csrfToken = \$('input[name=\"csrf_token\"]').val(); 
-
-        \$.post('get-quantity', { action: 'getQuantityData', id_transport: id, csrf_token: csrfToken }, function (response) {
-            if (response.success) {
-                const quantity = response.quantity;
-
-                    \$('#editQtyModal #id_transport').val(quantity.id_transport);
-                    \$('#editQtyModal #id_quantity').val(quantity.id_quantity);
-                    \$('#editQtyModal #kg_load').val(quantity.kg_load);
-                    \$('#editQtyModal #cooling').val(quantity.cooling);
-                    \$('#editQtyModal #price_typology').val(quantity.price_typology);
-                    \$('#editQtyModal #price_value').val(quantity.price_value);
-                    \$('#editQtyModal #kg_unload').val(quantity.kg_unload);
-                    \$('#editQtyModal #liquid_density').val(quantity.liquid_density);
-                    \$('#editQtyModal #gas_weight').val(quantity.gas_weight);
-                    \$('#editQtyModal #pcs_ghv').val(quantity.pcs_ghv);
-
-                    \$('#editQtyModal').modal('show');
-            } else {
-                alert(response.message || 'Errore durante il caricamento dei dati.');
-            }
-        }, 'json');
     });
 
 //  Delete transport button
@@ -561,7 +519,7 @@ $context["t"]]));
      */
     public function getDebugInfo(): array
     {
-        return array (  422 => 167,  415 => 166,  406 => 153,  400 => 148,  394 => 143,  387 => 142,  382 => 166,  379 => 165,  376 => 158,  374 => 142,  371 => 141,  356 => 139,  352 => 137,  350 => 135,  349 => 134,  348 => 133,  343 => 132,  341 => 131,  339 => 130,  329 => 123,  323 => 120,  317 => 117,  311 => 114,  303 => 109,  297 => 106,  291 => 103,  285 => 100,  277 => 95,  271 => 92,  265 => 89,  259 => 86,  251 => 81,  245 => 78,  239 => 75,  233 => 72,  226 => 68,  222 => 66,  216 => 62,  206 => 55,  203 => 54,  201 => 53,  194 => 50,  189 => 46,  180 => 42,  177 => 41,  175 => 40,  172 => 39,  165 => 34,  158 => 31,  155 => 30,  153 => 29,  148 => 27,  142 => 26,  138 => 25,  134 => 24,  130 => 23,  126 => 22,  122 => 21,  118 => 20,  114 => 19,  110 => 18,  106 => 17,  101 => 16,  95 => 14,  93 => 13,  86 => 9,  82 => 8,  78 => 7,  66 => 5,  64 => 4,  46 => 3,  44 => 2,);
+        return array (  408 => 151,  401 => 150,  392 => 143,  385 => 142,  380 => 150,  376 => 148,  374 => 142,  371 => 141,  356 => 139,  352 => 137,  350 => 135,  349 => 134,  348 => 133,  343 => 132,  341 => 131,  339 => 130,  329 => 123,  323 => 120,  317 => 117,  311 => 114,  303 => 109,  297 => 106,  291 => 103,  285 => 100,  277 => 95,  271 => 92,  265 => 89,  259 => 86,  251 => 81,  245 => 78,  239 => 75,  233 => 72,  226 => 68,  222 => 66,  216 => 62,  206 => 55,  203 => 54,  201 => 53,  194 => 50,  189 => 46,  180 => 42,  177 => 41,  175 => 40,  172 => 39,  165 => 34,  158 => 31,  155 => 30,  153 => 29,  148 => 27,  142 => 26,  138 => 25,  134 => 24,  130 => 23,  126 => 22,  122 => 21,  118 => 20,  114 => 19,  110 => 18,  106 => 17,  101 => 16,  95 => 14,  93 => 13,  86 => 9,  82 => 8,  78 => 7,  66 => 5,  64 => 4,  46 => 3,  44 => 2,);
     }
 
     public function getSourceContext(): Source
@@ -589,8 +547,8 @@ $context["t"]]));
             <td style=\"width: 180px\" class=\"align-middle p-1 col-univoco\"> {{ t.univoco|upper }} </td>
             <td style=\"width: 120px\" class=\"align-middle p-1 col-load\"> {{ t.date_load|date(\"d/m/Y\") }} </td>
             <td style=\"width: 120px\" class=\"align-middle p-1 col-unload\"> {{ t.date_unload|date(\"d/m/Y\") }} </td>
-            <td style=\"width: 90px\" class=\"align-middle p-0 col-month-load\"> {{ t.id_month_load }} </td>
-            <td style=\"width: 120px\" class=\"align-middle p-0 col-week-unload\"> {{ t.week_unload }} </td>
+            <td style=\"width: 100px\" class=\"align-middle p-0 col-month-load\"> {{ t.id_month_load }} </td>
+            <td style=\"width: 100px\" class=\"align-middle p-0 col-week-unload\"> {{ t.week_unload }} </td>
             <td style=\"width: 130px\" class=\"align-middle p-1 col-month-unload\"> {{ t.id_month_unload }} - {{ t.month_unload|capitalize }} </td>
             <td style=\"width: 160px\" class=\"align-middle p-1 col-container\"> {{ t.container|upper }} </td>
             <td style=\"width: 80px\" class=\"align-middle p-1 btns\">   
@@ -640,13 +598,13 @@ $context["t"]]));
                             <td class=\"bg-light align-middle col-mwh\"> {{ t.mwh|default('—') }} </td>   
 
                             <th class=\"align-middle p-1\"> Quantità nominale caricata [kg] </th>
-                            <td class=\"align-middle col-kg-load\"> {{ t.kg_load|default('—') }} </td>   
+                            <td class=\"bg-light align-middle col-kg-load\"> {{ t.kg_load|default('—') }} </td>   
 
                             <th class=\"align-middle p-1\"> Raffreddamento </th>            
-                            <td class=\"align-middle col-cooling\"> {{ t.cooling == 600 ? '600' : 'No' }} </td>
+                            <td class=\"bg-light align-middle col-cooling\"> {{ t.cooling == 600 ? '600' : 'No' }} </td>
 
                             <th class=\"align-middle p-1\"> Tipologia costo extra </th>            
-                            <td class=\"align-middle col-price-typology\"> {{ t.price_typology == 'yes'? 'Sì' : 'No' }} </td>   
+                            <td class=\"bg-light align-middle col-price-typology\"> {{ t.price_typology == 'yes'? 'Sì' : 'No' }} </td>   
                         </tr>
                                     
                         <tr>
@@ -712,24 +670,8 @@ $context["t"]]));
         integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
         crossorigin=\"anonymous\">
 </script>
-    {# JQuery Validation #}
-<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js\" 
-        integrity=\"sha256-umbTaFxP31Fv6O1itpLS/3+v5fOAWDLOUzlmvOGaKV4=\" 
-        crossorigin=\"anonymous\">
-</script>
-    {# JQuery Validation Additional Methods #}
-<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js\" 
-        integrity=\"sha256-MtEA819Zls6dtLt5S5BpEMOhifPyz7gfzfgtNtY75lE=\" 
-        crossorigin=\"anonymous\">
-</script>
 {% endblock %}
 
-{# block datepicker %}
-<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js\" 
-        integrity=\"sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=\" 
-        crossorigin=\"anonymous\">
-</script>
-{% endblock #}
 
 {% block page_script %}
 <script>
@@ -740,60 +682,32 @@ $context["t"]]));
         const page = \$(this).data('page');
         const csrfToken = \$('input[name=\"csrf_token\"]').val();
 
-        \$.ajax({
-            type: 'POST',
-            url: 'pagination', 
-            dataType: 'json',
-            data: {
-                csrf_token: csrfToken,
-                page: page,
-                show_type: true
-            },
-            success: function (response) {
-                if (response.success) {
-                    \$('#transport-tbody').html(response.tbody);
-                    \$('#transport-tfoot').html(response.pagination);
+            \$.ajax({
+                type: 'POST',
+                url: 'pagination', 
+                dataType: 'json',
+                data: {
+                    csrf_token: csrfToken,
+                    page: page,
+                    show_type: true
+                },
+                success: function (response) {
+                    if (response.success) {
+                        \$('#transport-tbody').html(response.tbody);
+                        \$('#transport-tfoot').html(response.pagination);
+                    }
+                },
+                error: function () {
+                    alert('Errore nel caricamento della pagina.');
                 }
-            },
-            error: function () {
-                alert('Errore nel caricamento della pagina.');
-            }
-        });
+            });
 
-        // avoid multiple fast clicks by disabling temporarily
+        //  Avoid multiple fast clicks by disabling temporarily
         if (\$(this).parent().hasClass('disabled') || \$(this).parent().hasClass('active')) {
             return;
         }
-
-        // scroll to table after page load starts
+        //  Scroll to table after page load starts
         \$('html, body').animate({ scrollTop: \$('#transport-table').offset().top }, 300);
-    });
-
-//  Quantity edit button, open modal with populated quantity's data
-    \$(document).on('click', '.updateQty', function () {
-        const id = \$(this).data('id');
-        const csrfToken = \$('input[name=\"csrf_token\"]').val(); 
-
-        \$.post('get-quantity', { action: 'getQuantityData', id_transport: id, csrf_token: csrfToken }, function (response) {
-            if (response.success) {
-                const quantity = response.quantity;
-
-                    \$('#editQtyModal #id_transport').val(quantity.id_transport);
-                    \$('#editQtyModal #id_quantity').val(quantity.id_quantity);
-                    \$('#editQtyModal #kg_load').val(quantity.kg_load);
-                    \$('#editQtyModal #cooling').val(quantity.cooling);
-                    \$('#editQtyModal #price_typology').val(quantity.price_typology);
-                    \$('#editQtyModal #price_value').val(quantity.price_value);
-                    \$('#editQtyModal #kg_unload').val(quantity.kg_unload);
-                    \$('#editQtyModal #liquid_density').val(quantity.liquid_density);
-                    \$('#editQtyModal #gas_weight').val(quantity.gas_weight);
-                    \$('#editQtyModal #pcs_ghv').val(quantity.pcs_ghv);
-
-                    \$('#editQtyModal').modal('show');
-            } else {
-                alert(response.message || 'Errore durante il caricamento dei dati.');
-            }
-        }, 'json');
     });
 
 //  Delete transport button

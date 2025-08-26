@@ -32,8 +32,6 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         $this->blocks = [
             'title' => [$this, 'block_title'],
             'head' => [$this, 'block_head'],
-            'search' => [$this, 'block_search'],
-            'browse' => [$this, 'block_browse'],
             'content' => [$this, 'block_content'],
             'jquery' => [$this, 'block_jquery'],
             'datepicker' => [$this, 'block_datepicker'],
@@ -87,269 +85,212 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
     /**
      * @return iterable<null|scalar|\Stringable>
      */
-    public function block_search(array $context, array $blocks = []): iterable
-    {
-        $macros = $this->macros;
-        // line 10
-        yield "    ";
-        // line 11
-        yield "    <section class=\"row my-auto mx-auto search-header\">
-        <div class=\"my-auto m-0 search-bar\">
-            <form id=\"search-form\">
-                <button type=\"button\" class=\"my-1 search-btn\">
-                    <i class=\"bi bi-search\"></i>
-                </button>
-                <input type=\"text\" class=\"my-1 search-input\" id=\"search\" placeholder=\"      Cerca..\" />  
-            </form>
-        </div>
-    </section>
-";
-        yield from [];
-    }
-
-    // line 23
-    /**
-     * @return iterable<null|scalar|\Stringable>
-     */
-    public function block_browse(array $context, array $blocks = []): iterable
-    {
-        $macros = $this->macros;
-        // line 24
-        yield "    ";
-        // line 25
-        yield "    <section class=\"row my-auto mx-auto browse-header\">
-        <div class=\"my-auto m-0 browse-bar\">
-            <form id=\"browse-form\" enctype=\"multipart/form-data\" method=\"POST\" action=\"";
-        // line 27
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["doc_root"] ?? null), "html", null, true);
-        yield "import-csv\">
-                <label for=\"browse-input\" class=\"my-1 browse-btn\">
-                    <i class=\"bi bi-upload\"></i>
-                </label>
-                
-                <input type=\"file\" class=\"my-1 browse-input\" id=\"browse-input\" name=\"browse-input\" 
-                    onchange=\"\$('.browse-label').val(\$(this).val()); \$('.browse-group').css('display', 'block');\" />
-                <input type=\"text\" class=\"my-1 browse-label\" readonly />
-                
-                <span class=\"my-1 browse-group\"> 
-                    <button type=\"button\" class=\"my-1 remove-btn\" onclick=\"document.querySelector('.browse-label').value=''; \$('.browse-group').css('display', 'none');\">
-                        <i class=\"bi bi-x-circle\"></i>
-                    </button>
-
-                    <button type=\"button\" class=\"my-1 upload-btn\">
-                        <i class=\"bi bi-check-circle\"></i>
-                    </button>
-                </span>
-                
-                <!--<button type=\"button\" class=\"my-1 browse-btn\">
-                    <i class=\"bi bi-upload\"></i>
-                </button>-->
-                
-                <!--<div class=\"input-group my-1 browse-group\">
-                    <input type=\"text\" class=\"my-1 browse-label\" name=\"browse-label\" readonly />  
-                        <button type=\"button\" class=\"my-1 upload-btn\">
-                            <span>
-                                <i class=\"bi bi-plus-circle\"></i>
-                            </span>
-                        </button>
-
-                        <button type=\"button\" class=\"my-1 remove-btn\">
-                            <span>
-                                <i class=\"bi bi-x-circle\"></i>
-                            </span>
-                        </button>
-                </div>-->
-            </form>
-        </div>
-    </section>
-    <!--    ===>    END BROWSE FILE BAR    <===    -->
-";
-        yield from [];
-    }
-
-    // line 70
-    /**
-     * @return iterable<null|scalar|\Stringable>
-     */
     public function block_content(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
         yield " 
     ";
-        // line 71
-        yield from $this->loadTemplate("shared/transports-navigation.twig", "transports.twig", 71)->unwrap()->yield($context);
-        // line 72
+        // line 10
+        yield from $this->loadTemplate("shared/transports-navigation.twig", "transports.twig", 10)->unwrap()->yield($context);
+        // line 11
         yield "
 <section class=\"col-12 m-auto\">
-    <div class=\"d-flex justify-content-center table-responsive\">          
-        <table class=\"table table-hover table-stripped caption-top text-center platform\" id=\"transport-table\">
-            <caption class=\"px-3 mb-2 text-white text-shadow-dark\" style=\"font-size: 1.9rem\"> 
-                <div class=\"dropdown-center\">
-                    <button class=\"btn btn-secondary btn-lg dropdown-toggle\" type=\"button\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">                
-                        <span>
-                            ";
-        // line 80
+    ";
+        // line 14
+        yield "    <div class=\"card platform-caption\">
+        <div class=\"card-header d-flex align-items-start border-0 my-1\">
+            <button class=\"dropdown-toggle mb-1 platform-btn\" type=\"button\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">                
+                <span class=\"p-1 my-auto\" style=\"font-size: 1.6rem\">
+                    ";
+        // line 18
         if ((null === ($context["type"] ?? null))) {
-            // line 81
-            yield "                                TUTTI TRASPORTI
-                            ";
-        } elseif ((        // line 82
+            // line 19
+            yield "                        TUTTI TRASPORTI
+                    ";
+        } elseif ((        // line 20
 ($context["type"] ?? null) == "F")) {
-            // line 83
-            yield "                                TRASPORTI PIENI
-                            ";
-        } elseif ((        // line 84
+            // line 21
+            yield "                        TRASPORTI PIENI
+                    ";
+        } elseif ((        // line 22
 ($context["type"] ?? null) == "P")) {
-            // line 85
-            yield "                                TRASPORTI PARZIALI
-                            ";
+            // line 23
+            yield "                        TRASPORTI PARZIALI
+                    ";
         }
-        // line 87
-        yield "                        </span>
-                    </button>
-                    <ul class=\"dropdown-menu\">
-                        <li>
-                            <a class=\"dropdown-item ";
-        // line 91
+        // line 25
+        yield "                </span>
+            </button>
+
+            <ul class=\"dropdown-menu\">
+                <li class=\"dropdown-header\">
+                    <h5> ◦ TRASPORTI ◦ </h5>
+                </li>      
+                    <li>
+                        <hr class=\"dropdown-divider\">
+                    </li>
+                <li>
+                    <a class=\"dropdown-item ";
+        // line 36
         if ((null === ($context["type"] ?? null))) {
             yield "active";
         }
-        yield "\" style=\"text-align:center;\" href=\"/transports\"> - TUTTI TRASPORTI - </a>
-                        </li>
-                        <li>
-                            <a class=\"dropdown-item ";
-        // line 94
+        yield "\" style=\"text-align:center;\" href=\"/transports\"> 
+                        Tutti
+                    </a>
+                </li>            
+                    <li>
+                        <hr class=\"dropdown-divider\">
+                    </li>
+                <li>
+                    <a class=\"dropdown-item ";
+        // line 44
         if ((($context["type"] ?? null) == "F")) {
             yield "active";
         }
-        yield "\" style=\"text-align:center;\" href=\"/transports-full\"> - TRASPORTI PIENI - </a>
-                        </li>
-                        <li>
-                            <a class=\"dropdown-item ";
-        // line 97
+        yield "\" style=\"text-align:center;\" href=\"/transports-full\"> 
+                        Pieni
+                    </a>
+                </li>       
+                    <li>
+                        <hr class=\"dropdown-divider\">
+                    </li>
+                <li>
+                    <a class=\"dropdown-item ";
+        // line 52
         if ((($context["type"] ?? null) == "P")) {
             yield "active";
         }
-        yield "\" style=\"text-align:center;\" href=\"/transports-part\"> - TRASPORTI PARZIALI - </a>
-                        </li>
-                    </ul>
-                </div>
-            </caption>
+        yield "\" style=\"text-align:center;\" href=\"/transports-part\"> 
+                        Parziali
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
-            <thead id=\"transport-head\">
+    <div class=\"d-flex justify-content-center table-responsive\">          
+        <table class=\"table table-hover text-center platform\" id=\"transports-table\">
+            ";
+        // line 63
+        yield "            <thead id=\"transport-head\">
                 ";
-        // line 104
+        // line 64
         if ((($context["type"] ?? null) == "F")) {
-            // line 105
+            // line 65
             yield "                    ";
-            yield from $this->loadTemplate("shared/transports-head.twig", "transports.twig", 105)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
-            // line 106
+            yield from $this->loadTemplate("shared/transports-head.twig", "transports.twig", 65)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
+            // line 66
             yield "                ";
         } elseif ((($context["type"] ?? null) == "P")) {
-            // line 107
+            // line 67
             yield "                    ";
-            yield from $this->loadTemplate("shared/transports-head.twig", "transports.twig", 107)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
-            // line 108
+            yield from $this->loadTemplate("shared/transports-head.twig", "transports.twig", 67)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
+            // line 68
             yield "                ";
         } else {
-            // line 109
+            // line 69
             yield "                    ";
-            yield from $this->loadTemplate("shared/transports-head.twig", "transports.twig", 109)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => true]));
-            // line 110
+            yield from $this->loadTemplate("shared/transports-head.twig", "transports.twig", 69)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => true]));
+            // line 70
             yield "                ";
         }
-        // line 111
+        // line 71
         yield "            </thead>
 
-            <tbody id=\"transport-tbody\" class=\"table-group-divider transport-row-group\">
+            ";
+        // line 74
+        yield "            <tbody id=\"transport-tbody\" class=\"table-group-divider transport-row-group\">
                 ";
-        // line 114
+        // line 75
         if ((($context["type"] ?? null) == "F")) {
-            // line 115
+            // line 76
             yield "                    ";
-            yield from $this->loadTemplate("transports-full-ajax.twig", "transports.twig", 115)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
-            // line 116
+            yield from $this->loadTemplate("transports-full-ajax.twig", "transports.twig", 76)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
+            // line 77
             yield "                ";
         } elseif ((($context["type"] ?? null) == "P")) {
-            // line 117
+            // line 78
             yield "                    ";
-            yield from $this->loadTemplate("transports-part-ajax.twig", "transports.twig", 117)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
-            // line 118
+            yield from $this->loadTemplate("transports-part-ajax.twig", "transports.twig", 78)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
+            // line 79
             yield "                ";
         } else {
-            // line 119
+            // line 80
             yield "                    ";
-            yield from $this->loadTemplate("transports-ajax.twig", "transports.twig", 119)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => true]));
-            // line 120
+            yield from $this->loadTemplate("transports-ajax.twig", "transports.twig", 80)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => true]));
+            // line 81
             yield "                ";
         }
-        // line 121
+        // line 82
         yield "            </tbody>
 
-            <tfoot id=\"transport-tfoot\">
+            ";
+        // line 85
+        yield "            <tfoot id=\"transport-tfoot\">
                 ";
-        // line 124
+        // line 86
         if ((($context["type"] ?? null) == "F")) {
-            // line 125
+            // line 87
             yield "                    ";
-            yield from $this->loadTemplate("shared/pagination.twig", "transports.twig", 125)->unwrap()->yield(CoreExtension::merge($context, ["page" =>             // line 126
-($context["page"] ?? null), "csrf_token" =>             // line 127
+            yield from $this->loadTemplate("shared/pagination.twig", "transports.twig", 87)->unwrap()->yield(CoreExtension::merge($context, ["page" =>             // line 88
+($context["page"] ?? null), "csrf_token" =>             // line 89
 ($context["csrfToken"] ?? null), "show_type" => false]));
-            // line 130
+            // line 92
             yield "                ";
         } elseif ((($context["type"] ?? null) == "P")) {
-            // line 131
+            // line 93
             yield "                    ";
-            yield from $this->loadTemplate("shared/pagination.twig", "transports.twig", 131)->unwrap()->yield(CoreExtension::merge($context, ["page" =>             // line 132
-($context["page"] ?? null), "srf_token" =>             // line 133
+            yield from $this->loadTemplate("shared/pagination.twig", "transports.twig", 93)->unwrap()->yield(CoreExtension::merge($context, ["page" =>             // line 94
+($context["page"] ?? null), "srf_token" =>             // line 95
 ($context["csrfToken"] ?? null), "show_type" => false]));
-            // line 136
+            // line 98
             yield "                ";
         } else {
-            // line 137
+            // line 99
             yield "                    ";
-            yield from $this->loadTemplate("shared/pagination.twig", "transports.twig", 137)->unwrap()->yield(CoreExtension::merge($context, ["page" =>             // line 138
-($context["page"] ?? null), "csrf_token" =>             // line 139
+            yield from $this->loadTemplate("shared/pagination.twig", "transports.twig", 99)->unwrap()->yield(CoreExtension::merge($context, ["page" =>             // line 100
+($context["page"] ?? null), "csrf_token" =>             // line 101
 ($context["csrfToken"] ?? null), "show_type" => true]));
-            // line 142
+            // line 104
             yield "                ";
         }
-        // line 143
+        // line 105
         yield "            </tfoot>
         </table>
     </div>    
 </section> 
 
 <input type=\"hidden\" name=\"csrf_token\" value=\"";
-        // line 148
+        // line 110
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["csrf_token"] ?? null), "html", null, true);
         yield "\">
     ";
-        // line 149
-        yield from $this->loadTemplate("transport-modal.twig", "transports.twig", 149)->unwrap()->yield($context);
+        // line 111
+        yield from $this->loadTemplate("transport-modals.twig", "transports.twig", 111)->unwrap()->yield($context);
         yield from [];
     }
 
-    // line 152
+    // line 114
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_jquery(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 153
+        // line 115
         yield "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
         integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
         crossorigin=\"anonymous\">
 </script>
     ";
-        // line 158
+        // line 120
         yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js\" 
         integrity=\"sha256-umbTaFxP31Fv6O1itpLS/3+v5fOAWDLOUzlmvOGaKV4=\" 
         crossorigin=\"anonymous\">
 </script>
     ";
-        // line 163
+        // line 125
         yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js\" 
         integrity=\"sha256-MtEA819Zls6dtLt5S5BpEMOhifPyz7gfzfgtNtY75lE=\" 
         crossorigin=\"anonymous\">
@@ -358,14 +299,14 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         yield from [];
     }
 
-    // line 169
+    // line 131
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_datepicker(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 170
+        // line 132
         yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js\" 
         integrity=\"sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=\" 
         crossorigin=\"anonymous\">
@@ -374,22 +315,24 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         yield from [];
     }
 
-    // line 176
+    // line 138
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_page_script(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 177
+        // line 139
         yield "<script>
 \$(function () {
 //  Cache modal, form, and buttons
-    const \$editModal = \$('#editTransModal');
+    const \$transModal = \$('#editTransModal');
     const \$qtyModal  = \$('#editQtyModal');
+
     const \$transForm = \$('#transport-edit');
     const \$qtyForm   = \$('#quantity-edit');
     const \$partForm  = \$('#partial-edit');
+    
     const csrfToken  = \$('input[name=\"csrf_token\"]').val();
 
 //  Global originalData for resetting form on modal hide and updating after submit
@@ -398,26 +341,38 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
 //  Utility: get form data as { name: value }
     function getFormData(\$form) {
         const data = {};
-        \$form.find(':input[name]').each(function () {
-            data[this.name] = \$(this).val();
-        });
-        return data;
+            \$form.serializeArray().forEach(f => {
+                let val = f.value.trim();
+                    //  Normalize comma to dot for decimals
+                    if (/^\\d+(,|\\.)\\d+\$/.test(val)) {
+                        val = val.replace(',', '.');
+                    }
+                data[f.name] = val;
+            });
+        return data;/*
+            \$form.find(':input[name]').each(function () {
+                data[this.name] = \$(this).val();
+            });
+        return data;*/
     }
 
 //  Utility: compare two form data objects
     function isFormChanged(original, current) {
-        return Object.keys(current).some(key => original[key] !== current[key]);
+        return Object.keys(current).some(key => current[key] !== original[key]);
     }
 
 //  Utility: reset form inputs to original values, clear errors
     function resetFormToOriginal(\$form) {
-        \$form.find(':input[name]').each(function () {
+        for (const [k, v] of Object.entries(originalData)) {
+            \$form.find(`[name=\"\${k}\"]`).val(v);
+        }
+        /*\$form.find(':input[name]').each(function () {
             if (originalData.hasOwnProperty(this.name)) {
                 \$(this).val(originalData[this.name]).trigger('change').removeClass('is-invalid');
                 \$(this).closest('.form-group').find('.error-placeholder').empty();
             }
         });
-        \$form.removeClass('is-invalid');
+        \$form.removeClass('is-invalid');*/
     }
 
 //  On modal hide, reset form if changed
@@ -438,7 +393,23 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
 //  ========== Change detection and Save button enable/disable ==========
 //  Initialize form change tracking per modal and form
     function initFormChangeTracking(\$modal, \$form, \$saveBtn) {
-        let modalOriginalData = {};
+        originalData = getFormData(\$form);
+
+    \$form.on('input change', function () {
+        const current = getFormData(\$form);
+        if (isFormChanged(originalData, current)) {
+            \$saveBtn.prop('disabled', false);
+        } else {
+            \$saveBtn.prop('disabled', true);
+        }
+    });
+
+    \$modal.on('hide.bs.modal', function () {
+        resetFormToOriginal(\$form);
+        \$saveBtn.prop('disabled', true);
+    });
+        
+        /*let modalOriginalData = {};
 
     //  On modal show: cache original form data & disable Save button
         \$modal.on('show.bs.modal', function () {
@@ -454,36 +425,15 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                 } else {
                     \$saveBtn.prop('disabled', true);
                 }
-        });
+        });*/
     }
 
-//  Date helpers
-    /*function parseDMY(str) {
-        const [d, m, y] = str.split('-');
-        return new Date(y, m - 1, d);
-    }
-
-    function parseAnyDate(dateStr) {
-        const norm = dateStr.replace(/[./]/g, '-').trim();
-        const parts = norm.split('-');
-            if (parts.length !== 3) return null;
-
-        let d, m, y;
-            if (parts[0].length === 4) {
-                y = +parts[0]; m = +parts[1] - 1; d = +parts[2];
-            } else {
-                d = +parts[0]; m = +parts[1] - 1; y = +parts[2];
-            }
-
-        const dt = new Date(y, m, d);
-        return dt.getFullYear() === y && dt.getMonth() === m && dt.getDate() === d ? dt : null;
-    }
-*/
     function formatToDMY(date) {
         const d = String(date.getDate()).padStart(2, '0');
         const m = String(date.getMonth() + 1).padStart(2, '0');
             return `\${d}-\${m}-\${date.getFullYear()}`;
     }
+
 //  Parse date with multiple separators and formats 
     function parseAnyDate(dateStr) {
         if (!dateStr) return null;
@@ -492,12 +442,11 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
             if (parts.length !== 3) return null;
 
         let d, m, y;
-            //  Handle yyyy-mm-dd or dd-mm-yyyy
             if (parts[0].length === 4) {    // yyyy-mm-dd
                 y = +parts[0];
                 m = +parts[1] - 1;
                 d = +parts[2];
-            } else {
+            } else {                        // dd-mm-yyyy
                 d = +parts[0];
                 m = +parts[1] - 1;
                 y = +parts[2];
@@ -507,13 +456,11 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         return (dt.getFullYear() === y && dt.getMonth() === m && dt.getDate() === d) ? dt : null;
     }
 
-
-
 //  Initialize datepicker and validation for both forms
     function initValidation() {
         const minDate = new Date(2006, 0, 1); // 01-01-2006
         const today = new Date();
-        //today.setHours(0, 0, 0, 0);
+
     //  Datepicker init (both forms)
         \$('.datepicker').datepicker({
             format: 'dd-mm-yyyy',
@@ -639,7 +586,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                     success: response => {
                         if (response.success) {
                             updateOriginalDataFromResponse(response.edited);
-                            \$editModal.modal('hide');
+                            \$transModal.modal('hide');
 
                             const edited = response.edited;
                             const row = \$('#id-' + edited.id_transport);
@@ -684,6 +631,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
 
         //  Quantity form validation
         \$qtyForm.validate({
+            onfocusout: el => \$(el).valid(),
             rules: {
                 kg_load: { required: true, number: true, min: 0 },
                 cooling: { required: true, digits: true },
@@ -701,7 +649,6 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                 liquid_density: { required: true, number: true, min: 0 },
                 gas_weight: { required: true, number: true, min: 0 },
                 pcs_ghv: { required: true, number: true, min: 0 }
-                //price_value: { required: function () { return \$('#price_typology').val() !== 'no'; }, number: true, min: 0 },
             },
             messages: {
                 kg_load: {
@@ -758,51 +705,25 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                     success: response => {
                         if (response.success) {
                             updateOriginalDataFromResponse(response.updated);
-                            \$qtyModal.modal('hide');
+                            //\$qtyModal.modal('hide');
 
                             const updated = response.updated;
                             const row = \$('#qty-table-' + updated.id_transport);
 
-                            //  Map of field keys to class selectors
-                            const fieldsMap = {
-                                kg_load: '.col-kg-load',
-                                cooling: '.col-cooling',
-                                price_typology: '.col-price-typology',
-                                price_value: '.col-price-value',
-                                kg_unload: '.col-kg-unload',
-                                liquid_density: '.col-liquid-density',
-                                gas_weight: '.col-gas-weight',
-                                pcs_ghv: '.col-pcs-ghv',
-                                mwh: '.col-mwh',
-                                mj_kg: '.col-mj-kg',
-                                volume_mc: '.col-volume-mc',
-                                volume_nmc: '.col-volume-nmc',
-                                smc_mc: '.col-smc-mc',
-                                gas_nmc: '.col-gas-nmc',
-                                gas_smc: '.col-gas-smc',
-                                smc_kg: '.col-smc-kg'
-                            };
+                            row.find('.col-kg-load').text(updated.kg_load);
+                            row.find('.col-cooling').text(updated.cooling);
+                            row.find('.col-price-typology').text(updated.price_typology);
+                            row.find('.col-price-value').text(updated.price_value);
+                            row.find('.col-kg-unload').text(updated.kg_unload);
+                            row.find('.col-liquid-density').text(updated.liquid_density);
+                            row.find('.col-gas-weight').text(updated.gas_weight);
+                            row.find('.col-pcs-ghv').text(updated.pcs_ghv);
 
-                            const changedCells = [];
+                            \$qtyModal.modal('hide');
 
-                            //  Loop through each mapped field
-                            \$.each(fieldsMap, (field, selector) => {
-                                const cell = row.find(selector);
-                                const oldValue = cell.text().trim();
-                                const newValue = updated[field] !== undefined ? updated[field] : '—';
-
-                                    if (oldValue !== String(newValue)) {
-                                        cell.text(newValue);
-                                        changedCells.push(cell);
-                                    }
-                            });
-
-                            //  Animate only changed cells
-                            changedCells.forEach(cell => {
-                                cell.removeClass('bg-light');
-                                cell.addClass('bg-success bg-opacity-25');
-                                setTimeout(() => cell.removeClass('bg-success bg-opacity-25'), 2500);
-                            });
+                            //  Reset tracking
+                            originalData = getFormData(\$qtyForm);
+                     
 
                             \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
                         } else {
@@ -830,7 +751,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         const \$pv = \$('#price_value');
         const typology = \$('#price_typology').val();
 
-            if (typology === 'no') {
+            if (typology !== 'yes') {
                 switched = true;
                 \$pv.val(0).prop('disabled', true).removeClass('is-valid is-invalid')
                     .closest('.form-group').find('.error-placeholder').empty();
@@ -869,20 +790,19 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         \$.post('get-transport', { action: 'getTransportData', id_transport: id, csrf_token: csrfToken }, response => {
             if (response.success) {
                 const t = response.transport;
-                \$editModal.find('#id_transport').val(t.id_transport);
-                \$editModal.find('#slot').val(t.slot.toUpperCase());
-                \$editModal.find('#cmr').val(t.cmr.toUpperCase());
-                \$editModal.find('#issuer').val(t.issuer.toUpperCase());
-                \$editModal.find('#supplier').val(t.supplier.toUpperCase());
-                \$editModal.find('#transport').val(t.transport.toUpperCase());
-                \$editModal.find('#date_load').val(t.date_load);
-                \$editModal.find('#date_unload').val(t.date_unload);
-                \$editModal.find('#container').val(t.container.toUpperCase());
+                    \$transModal.find('#id_transport').val(t.id_transport);
+                    \$transModal.find('#slot').val(t.slot.toUpperCase());
+                    \$transModal.find('#cmr').val(t.cmr.toUpperCase());
+                    \$transModal.find('#issuer').val(t.issuer.toUpperCase());
+                    \$transModal.find('#supplier').val(t.supplier.toUpperCase());
+                    \$transModal.find('#transport').val(t.transport.toUpperCase());
+                    \$transModal.find('#date_load').val(t.date_load);
+                    \$transModal.find('#date_unload').val(t.date_unload);
+                    \$transModal.find('#container').val(t.container.toUpperCase());
 
-                \$editModal.find('#original_slot').val(t.slot.toUpperCase());
-                \$editModal.find('#original_cmr').val(t.cmr.toUpperCase());
-
-                \$editModal.modal('show');
+                    \$transModal.find('#original_slot').val(t.slot.toUpperCase());
+                    \$transModal.find('#original_cmr').val(t.cmr.toUpperCase());
+                \$transModal.modal('show');
             } else {
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
@@ -905,8 +825,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                     \$qtyModal.find('#liquid_density').val(q.liquid_density);
                     \$qtyModal.find('#gas_weight').val(q.gas_weight);
                     \$qtyModal.find('#pcs_ghv').val(q.pcs_ghv);
-
-                    \$qtyModal.modal('show');
+                \$qtyModal.modal('show');
             } else {
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
@@ -917,10 +836,10 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
     \$('#editTransModal input[name=\"slot\"], #editTransModal input[name=\"cmr\"]').on('change', function () {
         const field = \$(this).attr('name');
         const value = \$(this).val();
-        const id = \$editModal.find('input[name=\"id_transport\"]').val();
+        const id = \$transModal.find('input[name=\"id_transport\"]').val();
 
         \$.post('check-transport', { field, value, id_transport: id, csrf_token: csrfToken }, function (response) {
-            const input = \$editModal.find(`[name=\"\${field}\"]`);
+            const input = \$transModal.find(`[name=\"\${field}\"]`);
             const group = input.closest('.form-group');
             const errorDiv = group.find('.error-placeholder');
 
@@ -940,7 +859,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
     initValidation();
 
 //  Initialize Save button enable/disable tracking
-    initFormChangeTracking(\$editModal, \$transForm, \$editModal.find('button[type=\"submit\"]'));
+    initFormChangeTracking(\$transModal, \$transForm, \$transModal.find('button[type=\"submit\"]'));
     initFormChangeTracking(\$qtyModal, \$qtyForm, \$qtyModal.find('button[type=\"submit\"]'));
 });
 </script>
@@ -969,7 +888,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  385 => 177,  378 => 176,  369 => 170,  362 => 169,  353 => 163,  347 => 158,  341 => 153,  334 => 152,  329 => 149,  325 => 148,  318 => 143,  315 => 142,  313 => 139,  312 => 138,  310 => 137,  307 => 136,  305 => 133,  304 => 132,  302 => 131,  299 => 130,  297 => 127,  296 => 126,  294 => 125,  292 => 124,  287 => 121,  284 => 120,  281 => 119,  278 => 118,  275 => 117,  272 => 116,  269 => 115,  267 => 114,  262 => 111,  259 => 110,  256 => 109,  253 => 108,  250 => 107,  247 => 106,  244 => 105,  242 => 104,  230 => 97,  222 => 94,  214 => 91,  208 => 87,  204 => 85,  202 => 84,  199 => 83,  197 => 82,  194 => 81,  192 => 80,  182 => 72,  180 => 71,  171 => 70,  124 => 27,  120 => 25,  118 => 24,  111 => 23,  96 => 11,  94 => 10,  87 => 9,  80 => 5,  78 => 4,  71 => 3,  58 => 2,  47 => 1,);
+        return array (  326 => 139,  319 => 138,  310 => 132,  303 => 131,  294 => 125,  288 => 120,  282 => 115,  275 => 114,  270 => 111,  266 => 110,  259 => 105,  256 => 104,  254 => 101,  253 => 100,  251 => 99,  248 => 98,  246 => 95,  245 => 94,  243 => 93,  240 => 92,  238 => 89,  237 => 88,  235 => 87,  233 => 86,  230 => 85,  226 => 82,  223 => 81,  220 => 80,  217 => 79,  214 => 78,  211 => 77,  208 => 76,  206 => 75,  203 => 74,  199 => 71,  196 => 70,  193 => 69,  190 => 68,  187 => 67,  184 => 66,  181 => 65,  179 => 64,  176 => 63,  161 => 52,  148 => 44,  135 => 36,  122 => 25,  118 => 23,  116 => 22,  113 => 21,  111 => 20,  108 => 19,  106 => 18,  100 => 14,  96 => 11,  94 => 10,  85 => 9,  78 => 5,  76 => 4,  69 => 3,  56 => 2,  45 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -982,100 +901,60 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         integrity=\"sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=\" crossorigin=\"anonymous\">
 {% endblock %}
 
-{% block search %}
-    {# Search Bar #}
-    <section class=\"row my-auto mx-auto search-header\">
-        <div class=\"my-auto m-0 search-bar\">
-            <form id=\"search-form\">
-                <button type=\"button\" class=\"my-1 search-btn\">
-                    <i class=\"bi bi-search\"></i>
-                </button>
-                <input type=\"text\" class=\"my-1 search-input\" id=\"search\" placeholder=\"      Cerca..\" />  
-            </form>
-        </div>
-    </section>
-{% endblock %}
- 
-{% block browse %}
-    {# Browse Bar #}
-    <section class=\"row my-auto mx-auto browse-header\">
-        <div class=\"my-auto m-0 browse-bar\">
-            <form id=\"browse-form\" enctype=\"multipart/form-data\" method=\"POST\" action=\"{{ doc_root }}import-csv\">
-                <label for=\"browse-input\" class=\"my-1 browse-btn\">
-                    <i class=\"bi bi-upload\"></i>
-                </label>
-                
-                <input type=\"file\" class=\"my-1 browse-input\" id=\"browse-input\" name=\"browse-input\" 
-                    onchange=\"\$('.browse-label').val(\$(this).val()); \$('.browse-group').css('display', 'block');\" />
-                <input type=\"text\" class=\"my-1 browse-label\" readonly />
-                
-                <span class=\"my-1 browse-group\"> 
-                    <button type=\"button\" class=\"my-1 remove-btn\" onclick=\"document.querySelector('.browse-label').value=''; \$('.browse-group').css('display', 'none');\">
-                        <i class=\"bi bi-x-circle\"></i>
-                    </button>
-
-                    <button type=\"button\" class=\"my-1 upload-btn\">
-                        <i class=\"bi bi-check-circle\"></i>
-                    </button>
-                </span>
-                
-                <!--<button type=\"button\" class=\"my-1 browse-btn\">
-                    <i class=\"bi bi-upload\"></i>
-                </button>-->
-                
-                <!--<div class=\"input-group my-1 browse-group\">
-                    <input type=\"text\" class=\"my-1 browse-label\" name=\"browse-label\" readonly />  
-                        <button type=\"button\" class=\"my-1 upload-btn\">
-                            <span>
-                                <i class=\"bi bi-plus-circle\"></i>
-                            </span>
-                        </button>
-
-                        <button type=\"button\" class=\"my-1 remove-btn\">
-                            <span>
-                                <i class=\"bi bi-x-circle\"></i>
-                            </span>
-                        </button>
-                </div>-->
-            </form>
-        </div>
-    </section>
-    <!--    ===>    END BROWSE FILE BAR    <===    -->
-{% endblock %}
-
 {% block content %} 
     {% include 'shared/transports-navigation.twig' %}
 
 <section class=\"col-12 m-auto\">
-    <div class=\"d-flex justify-content-center table-responsive\">          
-        <table class=\"table table-hover table-stripped caption-top text-center platform\" id=\"transport-table\">
-            <caption class=\"px-3 mb-2 text-white text-shadow-dark\" style=\"font-size: 1.9rem\"> 
-                <div class=\"dropdown-center\">
-                    <button class=\"btn btn-secondary btn-lg dropdown-toggle\" type=\"button\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">                
-                        <span>
-                            {% if type is null %}
-                                TUTTI TRASPORTI
-                            {% elseif type == 'F' %}
-                                TRASPORTI PIENI
-                            {% elseif type == 'P' %}
-                                TRASPORTI PARZIALI
-                            {% endif %}
-                        </span>
-                    </button>
-                    <ul class=\"dropdown-menu\">
-                        <li>
-                            <a class=\"dropdown-item {% if type is null %}active{% endif %}\" style=\"text-align:center;\" href=\"/transports\"> - TUTTI TRASPORTI - </a>
-                        </li>
-                        <li>
-                            <a class=\"dropdown-item {% if type == 'F' %}active{% endif %}\" style=\"text-align:center;\" href=\"/transports-full\"> - TRASPORTI PIENI - </a>
-                        </li>
-                        <li>
-                            <a class=\"dropdown-item {% if type == 'P' %}active{% endif %}\" style=\"text-align:center;\" href=\"/transports-part\"> - TRASPORTI PARZIALI - </a>
-                        </li>
-                    </ul>
-                </div>
-            </caption>
+    {# Table Caption #}
+    <div class=\"card platform-caption\">
+        <div class=\"card-header d-flex align-items-start border-0 my-1\">
+            <button class=\"dropdown-toggle mb-1 platform-btn\" type=\"button\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">                
+                <span class=\"p-1 my-auto\" style=\"font-size: 1.6rem\">
+                    {% if type is null %}
+                        TUTTI TRASPORTI
+                    {% elseif type == 'F' %}
+                        TRASPORTI PIENI
+                    {% elseif type == 'P' %}
+                        TRASPORTI PARZIALI
+                    {% endif %}
+                </span>
+            </button>
 
+            <ul class=\"dropdown-menu\">
+                <li class=\"dropdown-header\">
+                    <h5> ◦ TRASPORTI ◦ </h5>
+                </li>      
+                    <li>
+                        <hr class=\"dropdown-divider\">
+                    </li>
+                <li>
+                    <a class=\"dropdown-item {% if type is null %}active{% endif %}\" style=\"text-align:center;\" href=\"/transports\"> 
+                        Tutti
+                    </a>
+                </li>            
+                    <li>
+                        <hr class=\"dropdown-divider\">
+                    </li>
+                <li>
+                    <a class=\"dropdown-item {% if type == 'F' %}active{% endif %}\" style=\"text-align:center;\" href=\"/transports-full\"> 
+                        Pieni
+                    </a>
+                </li>       
+                    <li>
+                        <hr class=\"dropdown-divider\">
+                    </li>
+                <li>
+                    <a class=\"dropdown-item {% if type == 'P' %}active{% endif %}\" style=\"text-align:center;\" href=\"/transports-part\"> 
+                        Parziali
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class=\"d-flex justify-content-center table-responsive\">          
+        <table class=\"table table-hover text-center platform\" id=\"transports-table\">
+            {# Table Head #}
             <thead id=\"transport-head\">
                 {% if type == 'F' %}
                     {% include 'shared/transports-head.twig' with { show_type: false } %}
@@ -1086,6 +965,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                 {% endif %}
             </thead>
 
+            {# Table Body #}
             <tbody id=\"transport-tbody\" class=\"table-group-divider transport-row-group\">
                 {% if type == 'F' %}
                     {% include 'transports-full-ajax.twig' with { show_type: false } %}
@@ -1096,6 +976,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                 {% endif %}
             </tbody>
 
+            {# Table Footer #}
             <tfoot id=\"transport-tfoot\">
                 {% if type == 'F' %}
                     {% include 'shared/pagination.twig' with {
@@ -1122,7 +1003,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
 </section> 
 
 <input type=\"hidden\" name=\"csrf_token\" value=\"{{ csrf_token }}\">
-    {% include 'transport-modal.twig' %}
+    {% include 'transport-modals.twig' %}
 {% endblock %}
    
 {% block jquery %}
@@ -1153,11 +1034,13 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
 <script>
 \$(function () {
 //  Cache modal, form, and buttons
-    const \$editModal = \$('#editTransModal');
+    const \$transModal = \$('#editTransModal');
     const \$qtyModal  = \$('#editQtyModal');
+
     const \$transForm = \$('#transport-edit');
     const \$qtyForm   = \$('#quantity-edit');
     const \$partForm  = \$('#partial-edit');
+    
     const csrfToken  = \$('input[name=\"csrf_token\"]').val();
 
 //  Global originalData for resetting form on modal hide and updating after submit
@@ -1166,26 +1049,38 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
 //  Utility: get form data as { name: value }
     function getFormData(\$form) {
         const data = {};
-        \$form.find(':input[name]').each(function () {
-            data[this.name] = \$(this).val();
-        });
-        return data;
+            \$form.serializeArray().forEach(f => {
+                let val = f.value.trim();
+                    //  Normalize comma to dot for decimals
+                    if (/^\\d+(,|\\.)\\d+\$/.test(val)) {
+                        val = val.replace(',', '.');
+                    }
+                data[f.name] = val;
+            });
+        return data;/*
+            \$form.find(':input[name]').each(function () {
+                data[this.name] = \$(this).val();
+            });
+        return data;*/
     }
 
 //  Utility: compare two form data objects
     function isFormChanged(original, current) {
-        return Object.keys(current).some(key => original[key] !== current[key]);
+        return Object.keys(current).some(key => current[key] !== original[key]);
     }
 
 //  Utility: reset form inputs to original values, clear errors
     function resetFormToOriginal(\$form) {
-        \$form.find(':input[name]').each(function () {
+        for (const [k, v] of Object.entries(originalData)) {
+            \$form.find(`[name=\"\${k}\"]`).val(v);
+        }
+        /*\$form.find(':input[name]').each(function () {
             if (originalData.hasOwnProperty(this.name)) {
                 \$(this).val(originalData[this.name]).trigger('change').removeClass('is-invalid');
                 \$(this).closest('.form-group').find('.error-placeholder').empty();
             }
         });
-        \$form.removeClass('is-invalid');
+        \$form.removeClass('is-invalid');*/
     }
 
 //  On modal hide, reset form if changed
@@ -1206,7 +1101,23 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
 //  ========== Change detection and Save button enable/disable ==========
 //  Initialize form change tracking per modal and form
     function initFormChangeTracking(\$modal, \$form, \$saveBtn) {
-        let modalOriginalData = {};
+        originalData = getFormData(\$form);
+
+    \$form.on('input change', function () {
+        const current = getFormData(\$form);
+        if (isFormChanged(originalData, current)) {
+            \$saveBtn.prop('disabled', false);
+        } else {
+            \$saveBtn.prop('disabled', true);
+        }
+    });
+
+    \$modal.on('hide.bs.modal', function () {
+        resetFormToOriginal(\$form);
+        \$saveBtn.prop('disabled', true);
+    });
+        
+        /*let modalOriginalData = {};
 
     //  On modal show: cache original form data & disable Save button
         \$modal.on('show.bs.modal', function () {
@@ -1222,36 +1133,15 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                 } else {
                     \$saveBtn.prop('disabled', true);
                 }
-        });
+        });*/
     }
 
-//  Date helpers
-    /*function parseDMY(str) {
-        const [d, m, y] = str.split('-');
-        return new Date(y, m - 1, d);
-    }
-
-    function parseAnyDate(dateStr) {
-        const norm = dateStr.replace(/[./]/g, '-').trim();
-        const parts = norm.split('-');
-            if (parts.length !== 3) return null;
-
-        let d, m, y;
-            if (parts[0].length === 4) {
-                y = +parts[0]; m = +parts[1] - 1; d = +parts[2];
-            } else {
-                d = +parts[0]; m = +parts[1] - 1; y = +parts[2];
-            }
-
-        const dt = new Date(y, m, d);
-        return dt.getFullYear() === y && dt.getMonth() === m && dt.getDate() === d ? dt : null;
-    }
-*/
     function formatToDMY(date) {
         const d = String(date.getDate()).padStart(2, '0');
         const m = String(date.getMonth() + 1).padStart(2, '0');
             return `\${d}-\${m}-\${date.getFullYear()}`;
     }
+
 //  Parse date with multiple separators and formats 
     function parseAnyDate(dateStr) {
         if (!dateStr) return null;
@@ -1260,12 +1150,11 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
             if (parts.length !== 3) return null;
 
         let d, m, y;
-            //  Handle yyyy-mm-dd or dd-mm-yyyy
             if (parts[0].length === 4) {    // yyyy-mm-dd
                 y = +parts[0];
                 m = +parts[1] - 1;
                 d = +parts[2];
-            } else {
+            } else {                        // dd-mm-yyyy
                 d = +parts[0];
                 m = +parts[1] - 1;
                 y = +parts[2];
@@ -1275,13 +1164,11 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         return (dt.getFullYear() === y && dt.getMonth() === m && dt.getDate() === d) ? dt : null;
     }
 
-
-
 //  Initialize datepicker and validation for both forms
     function initValidation() {
         const minDate = new Date(2006, 0, 1); // 01-01-2006
         const today = new Date();
-        //today.setHours(0, 0, 0, 0);
+
     //  Datepicker init (both forms)
         \$('.datepicker').datepicker({
             format: 'dd-mm-yyyy',
@@ -1407,7 +1294,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                     success: response => {
                         if (response.success) {
                             updateOriginalDataFromResponse(response.edited);
-                            \$editModal.modal('hide');
+                            \$transModal.modal('hide');
 
                             const edited = response.edited;
                             const row = \$('#id-' + edited.id_transport);
@@ -1452,6 +1339,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
 
         //  Quantity form validation
         \$qtyForm.validate({
+            onfocusout: el => \$(el).valid(),
             rules: {
                 kg_load: { required: true, number: true, min: 0 },
                 cooling: { required: true, digits: true },
@@ -1469,7 +1357,6 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                 liquid_density: { required: true, number: true, min: 0 },
                 gas_weight: { required: true, number: true, min: 0 },
                 pcs_ghv: { required: true, number: true, min: 0 }
-                //price_value: { required: function () { return \$('#price_typology').val() !== 'no'; }, number: true, min: 0 },
             },
             messages: {
                 kg_load: {
@@ -1526,51 +1413,25 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                     success: response => {
                         if (response.success) {
                             updateOriginalDataFromResponse(response.updated);
-                            \$qtyModal.modal('hide');
+                            //\$qtyModal.modal('hide');
 
                             const updated = response.updated;
                             const row = \$('#qty-table-' + updated.id_transport);
 
-                            //  Map of field keys to class selectors
-                            const fieldsMap = {
-                                kg_load: '.col-kg-load',
-                                cooling: '.col-cooling',
-                                price_typology: '.col-price-typology',
-                                price_value: '.col-price-value',
-                                kg_unload: '.col-kg-unload',
-                                liquid_density: '.col-liquid-density',
-                                gas_weight: '.col-gas-weight',
-                                pcs_ghv: '.col-pcs-ghv',
-                                mwh: '.col-mwh',
-                                mj_kg: '.col-mj-kg',
-                                volume_mc: '.col-volume-mc',
-                                volume_nmc: '.col-volume-nmc',
-                                smc_mc: '.col-smc-mc',
-                                gas_nmc: '.col-gas-nmc',
-                                gas_smc: '.col-gas-smc',
-                                smc_kg: '.col-smc-kg'
-                            };
+                            row.find('.col-kg-load').text(updated.kg_load);
+                            row.find('.col-cooling').text(updated.cooling);
+                            row.find('.col-price-typology').text(updated.price_typology);
+                            row.find('.col-price-value').text(updated.price_value);
+                            row.find('.col-kg-unload').text(updated.kg_unload);
+                            row.find('.col-liquid-density').text(updated.liquid_density);
+                            row.find('.col-gas-weight').text(updated.gas_weight);
+                            row.find('.col-pcs-ghv').text(updated.pcs_ghv);
 
-                            const changedCells = [];
+                            \$qtyModal.modal('hide');
 
-                            //  Loop through each mapped field
-                            \$.each(fieldsMap, (field, selector) => {
-                                const cell = row.find(selector);
-                                const oldValue = cell.text().trim();
-                                const newValue = updated[field] !== undefined ? updated[field] : '—';
-
-                                    if (oldValue !== String(newValue)) {
-                                        cell.text(newValue);
-                                        changedCells.push(cell);
-                                    }
-                            });
-
-                            //  Animate only changed cells
-                            changedCells.forEach(cell => {
-                                cell.removeClass('bg-light');
-                                cell.addClass('bg-success bg-opacity-25');
-                                setTimeout(() => cell.removeClass('bg-success bg-opacity-25'), 2500);
-                            });
+                            //  Reset tracking
+                            originalData = getFormData(\$qtyForm);
+                     
 
                             \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
                         } else {
@@ -1598,7 +1459,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         const \$pv = \$('#price_value');
         const typology = \$('#price_typology').val();
 
-            if (typology === 'no') {
+            if (typology !== 'yes') {
                 switched = true;
                 \$pv.val(0).prop('disabled', true).removeClass('is-valid is-invalid')
                     .closest('.form-group').find('.error-placeholder').empty();
@@ -1637,20 +1498,19 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         \$.post('get-transport', { action: 'getTransportData', id_transport: id, csrf_token: csrfToken }, response => {
             if (response.success) {
                 const t = response.transport;
-                \$editModal.find('#id_transport').val(t.id_transport);
-                \$editModal.find('#slot').val(t.slot.toUpperCase());
-                \$editModal.find('#cmr').val(t.cmr.toUpperCase());
-                \$editModal.find('#issuer').val(t.issuer.toUpperCase());
-                \$editModal.find('#supplier').val(t.supplier.toUpperCase());
-                \$editModal.find('#transport').val(t.transport.toUpperCase());
-                \$editModal.find('#date_load').val(t.date_load);
-                \$editModal.find('#date_unload').val(t.date_unload);
-                \$editModal.find('#container').val(t.container.toUpperCase());
+                    \$transModal.find('#id_transport').val(t.id_transport);
+                    \$transModal.find('#slot').val(t.slot.toUpperCase());
+                    \$transModal.find('#cmr').val(t.cmr.toUpperCase());
+                    \$transModal.find('#issuer').val(t.issuer.toUpperCase());
+                    \$transModal.find('#supplier').val(t.supplier.toUpperCase());
+                    \$transModal.find('#transport').val(t.transport.toUpperCase());
+                    \$transModal.find('#date_load').val(t.date_load);
+                    \$transModal.find('#date_unload').val(t.date_unload);
+                    \$transModal.find('#container').val(t.container.toUpperCase());
 
-                \$editModal.find('#original_slot').val(t.slot.toUpperCase());
-                \$editModal.find('#original_cmr').val(t.cmr.toUpperCase());
-
-                \$editModal.modal('show');
+                    \$transModal.find('#original_slot').val(t.slot.toUpperCase());
+                    \$transModal.find('#original_cmr').val(t.cmr.toUpperCase());
+                \$transModal.modal('show');
             } else {
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
@@ -1673,8 +1533,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                     \$qtyModal.find('#liquid_density').val(q.liquid_density);
                     \$qtyModal.find('#gas_weight').val(q.gas_weight);
                     \$qtyModal.find('#pcs_ghv').val(q.pcs_ghv);
-
-                    \$qtyModal.modal('show');
+                \$qtyModal.modal('show');
             } else {
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
@@ -1685,10 +1544,10 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
     \$('#editTransModal input[name=\"slot\"], #editTransModal input[name=\"cmr\"]').on('change', function () {
         const field = \$(this).attr('name');
         const value = \$(this).val();
-        const id = \$editModal.find('input[name=\"id_transport\"]').val();
+        const id = \$transModal.find('input[name=\"id_transport\"]').val();
 
         \$.post('check-transport', { field, value, id_transport: id, csrf_token: csrfToken }, function (response) {
-            const input = \$editModal.find(`[name=\"\${field}\"]`);
+            const input = \$transModal.find(`[name=\"\${field}\"]`);
             const group = input.closest('.form-group');
             const errorDiv = group.find('.error-placeholder');
 
@@ -1708,7 +1567,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
     initValidation();
 
 //  Initialize Save button enable/disable tracking
-    initFormChangeTracking(\$editModal, \$transForm, \$editModal.find('button[type=\"submit\"]'));
+    initFormChangeTracking(\$transModal, \$transForm, \$transModal.find('button[type=\"submit\"]'));
     initFormChangeTracking(\$qtyModal, \$qtyForm, \$qtyModal.find('button[type=\"submit\"]'));
 });
 </script>

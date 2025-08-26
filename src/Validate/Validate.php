@@ -55,59 +55,6 @@ class Validate {
             return $age >= $min;
     }
 
-    /*public static function validate_date(string $date): ?string {
-        $date = trim($date);
-        if (!$date) return null;
-
-        $inputDate = \DateTime::createFromFormat('d-m-Y', $date);
-        /*if (!$inputDate || $inputDate->format('d-m-Y') !== $date) {
-            return null;
-        }*/
-
-        /*$today = new \DateTime('today');
-        if ($inputDate > $today) {
-            return null;
-        }*/
-
-        /*$min = new \DateTime('01-01-2006');
-
-        if ($inputDate < $min) {
-            return null;
-        }
-
-        return $inputDate->format('Y-m-d');  // Return date formatted for DB
-    }*/
-
-    /*public static function validate_date_field(?string $dateStr, string $fieldName, ?string $compareDate = null): ?array {
-        $dateStr = trim($dateStr ?? '');
-        $errors = [];
-
-            if (!$dateStr) {
-                $errors[$fieldName] = "Campo obbligatorio.";
-                    return $errors;
-            }
-
-            // Validate format and year range
-            if (!self::validate_date($dateStr)) {
-                $errors[$fieldName] = "Inserire una data valida. Non sono permesse date precedenti al 2006.";
-                    return $errors;
-            }
-
-        $formatted = self::format_database($dateStr);
-        $today = (new \DateTime('today'))->format('Y-m-d');
-
-            if ($formatted > $today) {
-                $errors[$fieldName] = "Inserire una data valida. Non sono permesse date future.";
-            }
-
-            if ($compareDate && $formatted < $compareDate) {
-                $errors[$fieldName] = "La data di scarico non può essere precedente alla data di carico.";
-            }
-
-        return $errors ?: null;
-    }*/
-
-
 //  Format date to standard Y-m-d format for db insertion
     public static function format_database(string $inputDate): ?string {
         //$dt = \DateTime::createFromFormat('d-m-Y', $inputDate);
@@ -239,13 +186,21 @@ class Validate {
         return (bool) (preg_match($pattern, $value));         
     }
 
+    public static function normalize_number(string $value): float {
+        $normalized = str_replace(',','.', ($value));
+        return (float) $normalized;
+    }
+
     public static function validate_number(string $value, string $type, int $min = 0, int $max = PHP_INT_MAX): bool {
+        $value = str_replace(',', '.', trim($value));
+
         switch ($type) {
             case 'digits':          // Only digits, no dots or signs
-                if (!ctype_digit($value)) {
+                /*if (!ctype_digit($value)) {
                     return false;
                 }
-                break;
+                break;*/
+                return ctype_digit($value);
 
             case 'number':          // Integer or float, optional sign
                 if (!is_numeric($value)) {
@@ -277,11 +232,16 @@ class Validate {
                 }
                 break;
 
-            case 'precision_2':     // Max 2 decimal places
-                if (!is_numeric($value) || !preg_match('/^-?\d+(\.\d{1,2})?$/', $value)) {
+            case '2decimals': 
+                return is_numeric($value) && (float)$value < 0;
+            case 'float':     // Allow any decimals with dot or comma    
+                return is_numeric($value) ? (float)$value : false;          
+                /*if (!is_numeric($value) || !preg_match('/^-?\d+(\.\d{1,2})?$/', $value)) {
                     return false;
-                }
-                break;
+                }*/
+
+                //return (bool)preg_match('/^-?\d+(?:[.,]\d+)?$/', $value);
+                //break;
 
             default:
                 return false;
