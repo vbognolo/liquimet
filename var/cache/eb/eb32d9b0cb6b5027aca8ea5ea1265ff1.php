@@ -39,33 +39,69 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
     {
         $macros = $this->macros;
         // line 2
-        yield "<td colspan=\"16\" class=\"border-0\">
-    <h4 class=\"mx-auto my-3 text-center\"> 
-        <span class=\"btn my-auto collapse-title edit-data updateQty\" style=\"cursor: default\">
-            Scarichi parziali:
-        </span>
-    </h4>
+        yield "<td colspan=\"14\" class=\"mx-auto my-auto border-0\" style=\"--bs-table-bg-state: rgb(255, 254, 246)\">
+    <div class=\"d-flex align-items-center\">
+            ";
+        // line 5
+        yield "        <div class=\"my-auto me-3 ms-3 text-wrap col-1\" id=\"collapse-1\" style=\"border: 1px solid black\">
+            <h4 class=\"mx-auto\" style=\"border: 1px solid red\"> 
+                <span class=\"btn collapse-title edit-data\" style=\"cursor: default\">
+                    Parziali
+                </span>
+            </h4>
 
-    <table class=\"table table-bordered table-light mb-1\" id=\"part-table-";
-        // line 9
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["t"] ?? null), "id_transport", [], "any", false, false, false, 9), "html", null, true);
+            ";
+        // line 12
+        if ((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "role", [], "any", false, false, false, 12) == "admin")) {
+            // line 13
+            yield "                <h6 class=\"me-2\" style=\"border: 1px solid green\">
+                    <button type=\"button\" class=\"btn edit-data\" data-bs-toggle=\"modal\" 
+                            data-bs-target=\"#deletePartModal\" data-id=\"";
+            // line 15
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["t"] ?? null), "id_transport", [], "any", false, false, false, 15), "html", null, true);
+            yield "\">   
+                        <span class=\"icon-wrap\">
+                            <i class=\"bi bi-trash\"></i>
+                            <i class=\"bi bi-trash-fill\"></i>
+                        </span>
+                                    
+                        <span class=\"collapse-subtitle\"> Elimina </span> 
+                    </button> 
+                </h6>
+            ";
+        }
+        // line 25
+        yield "        </div>
+
+            ";
+        // line 28
+        yield "        <div class=\"flex-grow-1 my-2 px-2\">
+            <table class=\"table table-sm table-bordered table-hover caption-top my-auto part-table\" id=\"part-table-";
+        // line 29
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["t"] ?? null), "id_transport", [], "any", false, false, false, 29), "html", null, true);
         yield "\">
-        <thead>
-            <tr class=\"border-top border-light bg-primary bg-gradient table-title\">
-                <th scope=\"col\" class=\"align-middle px-3 small-col\"> # </th>
-                <th scope=\"col\" class=\"align-middle px-2\"> Destinazione </th>
-                <th scope=\"col\" class=\"align-middle px-2\"> EXW </th>
-                <th scope=\"col\" class=\"align-middle px-2\"> Data </th>
-                <th scope=\"col\" class=\"align-middle px-2\"> Luogo </th>
-                <th scope=\"col\" class=\"align-middle px-2\"> Quantità scaricata </th>
-                <th scope=\"col\" class=\"align-middle px-2\"> Fattura </th>
-                <th scope=\"col\" class=\"align-middle px-2 small-col\"> <i class=\"bi bi-gear\"></i> </th>
-            </tr>
-        </thead>
+                <caption class=\"ms-3 my-0\">
+                    TOTALE PARZIALI: ";
+        // line 31
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["total_part"] ?? null), "html", null, true);
+        yield "
+                </caption>
+                <thead class=\"\">
+                    <tr class=\"table-light\">
+                        <th scope=\"col\" class=\"align-middle small-col\" style=\"width: 50px\"> # </th>
+                        <th scope=\"col\" class=\"align-middle p-2\" style=\"width: 150px\"> Destinazione </th>
+                        <th scope=\"col\" class=\"align-middle p-2\" style=\"width: 100px\"> EXW </th>
+                        <th scope=\"col\" class=\"align-middle p-2\" style=\"width: 100px\"> Data </th>
+                        <th scope=\"col\" class=\"align-middle p-2\" style=\"width: 150px\"> Luogo </th>
+                        <th scope=\"col\" class=\"align-middle p-2\" style=\"width: 150px\"> Quantità scaricata </th>
+                        <th scope=\"col\" class=\"align-middle p-2\" style=\"width: 100px\"> Fattura </th>
+                        <th scope=\"col\" class=\"align-middle small-col\" style=\"width: 50px\"> <i class=\"bi bi-gear\"></i> </th>
+                    </tr>
+                </thead>
                                                      
-        <tbody>
-        ";
-        // line 24
+                <tbody class=\"table-group-divider\">
+                ";
+        // line 47
         $context['_parent'] = $context;
         $context['_seq'] = CoreExtension::ensureTraversable(($context["partials"] ?? null));
         $context['loop'] = [
@@ -82,82 +118,82 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
             $context['loop']['last'] = 1 === $length;
         }
         foreach ($context['_seq'] as $context["_key"] => $context["p"]) {
-            // line 25
-            yield "            <tr class=\"bg-light bg-gradient\">
-                <td scope=\"row\" class=\"align-middle p-1\"> 
-                    ";
-            // line 27
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["loop"], "index", [], "any", false, false, false, 27), "html", null, true);
+            // line 48
+            yield "                    <tr>
+                        <td scope=\"row\" class=\"align-middle p-1\"> 
+                            ";
+            // line 50
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["loop"], "index", [], "any", false, false, false, 50), "html", null, true);
             yield "
-                </td>         
-                <td class=\"align-middle p-1 col-destination\" id=\"dest\"> ";
-            // line 29
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["p"], "destination", [], "any", false, false, false, 29)), "html", null, true);
-            yield " </td>                                   
-                <td class=\"align-middle p-1 col-exw\" id=\"exw\"> ";
-            // line 30
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["p"], "exw", [], "any", false, false, false, 30)), "html", null, true);
-            yield " </td>  
-                <td class=\"align-middle p-1 col-date\" id=\"date\"> ";
-            // line 31
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "date", [], "any", false, false, false, 31), "d/m/Y"), "html", null, true);
-            yield " </td>                   
-                <td class=\"align-middle p-1 col-place\" id=\"place\"> ";
-            // line 32
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::capitalize($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["p"], "place", [], "any", false, false, false, 32)), "html", null, true);
-            yield " </td>
-                <td class=\"align-middle p-1 col-q-unloaded\" id=\"qty\"> ";
-            // line 33
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "q_unloaded", [], "any", false, false, false, 33), "html", null, true);
-            yield " </td>
-                <td class=\"align-middle p-1 col-invoice\" id=\"invoice\"> ";
-            // line 34
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "invoice", [], "any", false, false, false, 34), "html", null, true);
-            yield " </td>
-                <td class=\"align-middle m-auto btns\"> 
-                ";
-            // line 36
-            if (((CoreExtension::getAttribute($this->env, $this->source, ($context["user"] ?? null), "role", [], "any", false, false, false, 36) == "admin") || (CoreExtension::getAttribute($this->env, $this->source, ($context["user"] ?? null), "id_user", [], "any", false, false, false, 36) == CoreExtension::getAttribute($this->env, $this->source, ($context["t"] ?? null), "id_user", [], "any", false, false, false, 36)))) {
-                // line 37
-                yield "                    <button type=\"button\" class=\"edit-data edit-part\" data-bs-toggle=\"modal\" data-bs-target=\"#editPart-";
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "id_partial", [], "any", false, false, false, 37), "html", null, true);
-                yield "\" 
-                            data-id=\"";
-                // line 38
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "id_partial", [], "any", false, false, false, 38), "html", null, true);
-                yield "\">
-                                <i class=\"bi bi-pencil-square\"></i>
-                    </button> 
-                ";
-            } else {
-                // line 42
-                yield "                    <button type=\"button\" class=\"edit-data\" disabled>
-                        <i class=\"bi bi-x-octagon\"></i>
-                    </button>
-                ";
-            }
-            // line 46
-            yield "                                                    
-                ";
-            // line 47
-            if ((CoreExtension::getAttribute($this->env, $this->source, ($context["user"] ?? null), "role", [], "any", false, false, false, 47) == "admin")) {
-                // line 48
-                yield "                    <button type=\"button\" class=\"edit-data delete-data\" data-bs-toggle=\"modal\" data-bs-target=\"#deletePart-";
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "id_partial", [], "any", false, false, false, 48), "html", null, true);
-                yield "\"
-                            data-id=\"";
-                // line 49
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "id_partial", [], "any", false, false, false, 49), "html", null, true);
-                yield "\">
-                                <i class=\"bi bi-trash\"></i> 
-                    </button>     
-                ";
-            }
+                        </td>         
+                        <td class=\"align-middle p-1 col-destination\" id=\"dest\"> ";
             // line 52
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["p"], "destination", [], "any", false, false, false, 52)), "html", null, true);
+            yield " </td>                                   
+                        <td class=\"align-middle p-1 col-exw\" id=\"exw\"> ";
+            // line 53
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::upper($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["p"], "exw", [], "any", false, false, false, 53)), "html", null, true);
+            yield " </td>  
+                        <td class=\"align-middle p-1 col-date\" id=\"date\"> ";
+            // line 54
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "date", [], "any", false, false, false, 54), "d/m/Y"), "html", null, true);
+            yield " </td>                   
+                        <td class=\"align-middle p-1 col-place\" id=\"place\"> ";
+            // line 55
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(Twig\Extension\CoreExtension::capitalize($this->env->getCharset(), CoreExtension::getAttribute($this->env, $this->source, $context["p"], "place", [], "any", false, false, false, 55)), "html", null, true);
+            yield " </td>
+                        <td class=\"align-middle p-1 col-q-unloaded\" id=\"qty\"> ";
+            // line 56
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "q_unloaded", [], "any", false, false, false, 56), "html", null, true);
+            yield " </td>
+                        <td class=\"align-middle p-1 col-invoice\" id=\"invoice\"> ";
+            // line 57
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "invoice", [], "any", false, false, false, 57), "html", null, true);
+            yield " </td>
+                        <td class=\"align-middle m-auto btns\"> 
+                        ";
+            // line 59
+            if (((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "role", [], "any", false, false, false, 59) == "admin") || (CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "id_user", [], "any", false, false, false, 59) == CoreExtension::getAttribute($this->env, $this->source, ($context["t"] ?? null), "id_user", [], "any", false, false, false, 59)))) {
+                // line 60
+                yield "                            <button type=\"button\" class=\"edit-data edit-part\" data-bs-toggle=\"modal\" data-bs-target=\"#editPart-";
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "id_partial", [], "any", false, false, false, 60), "html", null, true);
+                yield "\" 
+                                    data-id=\"";
+                // line 61
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "id_partial", [], "any", false, false, false, 61), "html", null, true);
+                yield "\">
+                                        <i class=\"bi bi-pencil-square\"></i>
+                            </button> 
+                        ";
+            } else {
+                // line 65
+                yield "                            <button type=\"button\" class=\"edit-data\" disabled>
+                                <i class=\"bi bi-x-octagon\"></i>
+                            </button>
+                        ";
+            }
+            // line 69
+            yield "                                                            
+                        ";
+            // line 70
+            if ((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "role", [], "any", false, false, false, 70) == "admin")) {
+                // line 71
+                yield "                            <button type=\"button\" class=\"edit-data delete-data\" data-bs-toggle=\"modal\" data-bs-target=\"#deletePart-";
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "id_partial", [], "any", false, false, false, 71), "html", null, true);
+                yield "\"
+                                    data-id=\"";
+                // line 72
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "id_partial", [], "any", false, false, false, 72), "html", null, true);
+                yield "\">
+                                        <i class=\"bi bi-trash\"></i> 
+                            </button>     
+                        ";
+            }
+            // line 75
             yield "                        
-                </td> 
-            </tr>  
-        ";
+                        </td> 
+                    </tr>  
+                ";
             ++$context['loop']['index0'];
             ++$context['loop']['index'];
             $context['loop']['first'] = false;
@@ -170,9 +206,11 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_key'], $context['p'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 56
-        yield "        </tbody>
-    </table>
+        // line 79
+        yield "                </tbody>
+            </table>
+        </div>
+    </div>
 </td>";
         yield from [];
     }
@@ -198,68 +236,93 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  174 => 56,  157 => 52,  150 => 49,  145 => 48,  143 => 47,  140 => 46,  134 => 42,  127 => 38,  122 => 37,  120 => 36,  115 => 34,  111 => 33,  107 => 32,  103 => 31,  99 => 30,  95 => 29,  90 => 27,  86 => 25,  69 => 24,  51 => 9,  42 => 2,);
+        return array (  210 => 79,  193 => 75,  186 => 72,  181 => 71,  179 => 70,  176 => 69,  170 => 65,  163 => 61,  158 => 60,  156 => 59,  151 => 57,  147 => 56,  143 => 55,  139 => 54,  135 => 53,  131 => 52,  126 => 50,  122 => 48,  105 => 47,  86 => 31,  81 => 29,  78 => 28,  74 => 25,  61 => 15,  57 => 13,  55 => 12,  46 => 5,  42 => 2,);
     }
 
     public function getSourceContext(): Source
     {
         return new Source("{# Partials Table #}
-<td colspan=\"16\" class=\"border-0\">
-    <h4 class=\"mx-auto my-3 text-center\"> 
-        <span class=\"btn my-auto collapse-title edit-data updateQty\" style=\"cursor: default\">
-            Scarichi parziali:
-        </span>
-    </h4>
+<td colspan=\"14\" class=\"mx-auto my-auto border-0\" style=\"--bs-table-bg-state: rgb(255, 254, 246)\">
+    <div class=\"d-flex align-items-center\">
+            {# Left Side #}
+        <div class=\"my-auto me-3 ms-3 text-wrap col-1\" id=\"collapse-1\" style=\"border: 1px solid black\">
+            <h4 class=\"mx-auto\" style=\"border: 1px solid red\"> 
+                <span class=\"btn collapse-title edit-data\" style=\"cursor: default\">
+                    Parziali
+                </span>
+            </h4>
 
-    <table class=\"table table-bordered table-light mb-1\" id=\"part-table-{{ t.id_transport }}\">
-        <thead>
-            <tr class=\"border-top border-light bg-primary bg-gradient table-title\">
-                <th scope=\"col\" class=\"align-middle px-3 small-col\"> # </th>
-                <th scope=\"col\" class=\"align-middle px-2\"> Destinazione </th>
-                <th scope=\"col\" class=\"align-middle px-2\"> EXW </th>
-                <th scope=\"col\" class=\"align-middle px-2\"> Data </th>
-                <th scope=\"col\" class=\"align-middle px-2\"> Luogo </th>
-                <th scope=\"col\" class=\"align-middle px-2\"> Quantità scaricata </th>
-                <th scope=\"col\" class=\"align-middle px-2\"> Fattura </th>
-                <th scope=\"col\" class=\"align-middle px-2 small-col\"> <i class=\"bi bi-gear\"></i> </th>
-            </tr>
-        </thead>
-                                                     
-        <tbody>
-        {% for p in partials %}
-            <tr class=\"bg-light bg-gradient\">
-                <td scope=\"row\" class=\"align-middle p-1\"> 
-                    {{ loop.index }}
-                </td>         
-                <td class=\"align-middle p-1 col-destination\" id=\"dest\"> {{ p.destination|upper }} </td>                                   
-                <td class=\"align-middle p-1 col-exw\" id=\"exw\"> {{ p.exw|upper }} </td>  
-                <td class=\"align-middle p-1 col-date\" id=\"date\"> {{ p.date|date(\"d/m/Y\") }} </td>                   
-                <td class=\"align-middle p-1 col-place\" id=\"place\"> {{ p.place|capitalize }} </td>
-                <td class=\"align-middle p-1 col-q-unloaded\" id=\"qty\"> {{ p.q_unloaded }} </td>
-                <td class=\"align-middle p-1 col-invoice\" id=\"invoice\"> {{ p.invoice }} </td>
-                <td class=\"align-middle m-auto btns\"> 
-                {% if (user.role == 'admin') or (user.id_user == t.id_user) %}
-                    <button type=\"button\" class=\"edit-data edit-part\" data-bs-toggle=\"modal\" data-bs-target=\"#editPart-{{ p.id_partial }}\" 
-                            data-id=\"{{ p.id_partial }}\">
-                                <i class=\"bi bi-pencil-square\"></i>
+            {% if session.role == 'admin' %}
+                <h6 class=\"me-2\" style=\"border: 1px solid green\">
+                    <button type=\"button\" class=\"btn edit-data\" data-bs-toggle=\"modal\" 
+                            data-bs-target=\"#deletePartModal\" data-id=\"{{ t.id_transport }}\">   
+                        <span class=\"icon-wrap\">
+                            <i class=\"bi bi-trash\"></i>
+                            <i class=\"bi bi-trash-fill\"></i>
+                        </span>
+                                    
+                        <span class=\"collapse-subtitle\"> Elimina </span> 
                     </button> 
-                {% else %}
-                    <button type=\"button\" class=\"edit-data\" disabled>
-                        <i class=\"bi bi-x-octagon\"></i>
-                    </button>
-                {% endif %}
-                                                    
-                {% if (user.role == 'admin') %}
-                    <button type=\"button\" class=\"edit-data delete-data\" data-bs-toggle=\"modal\" data-bs-target=\"#deletePart-{{ p.id_partial }}\"
-                            data-id=\"{{ p.id_partial }}\">
-                                <i class=\"bi bi-trash\"></i> 
-                    </button>     
-                {% endif %}                        
-                </td> 
-            </tr>  
-        {% endfor %}
-        </tbody>
-    </table>
+                </h6>
+            {% endif %}
+        </div>
+
+            {# Right Side #}
+        <div class=\"flex-grow-1 my-2 px-2\">
+            <table class=\"table table-sm table-bordered table-hover caption-top my-auto part-table\" id=\"part-table-{{ t.id_transport }}\">
+                <caption class=\"ms-3 my-0\">
+                    TOTALE PARZIALI: {{ total_part }}
+                </caption>
+                <thead class=\"\">
+                    <tr class=\"table-light\">
+                        <th scope=\"col\" class=\"align-middle small-col\" style=\"width: 50px\"> # </th>
+                        <th scope=\"col\" class=\"align-middle p-2\" style=\"width: 150px\"> Destinazione </th>
+                        <th scope=\"col\" class=\"align-middle p-2\" style=\"width: 100px\"> EXW </th>
+                        <th scope=\"col\" class=\"align-middle p-2\" style=\"width: 100px\"> Data </th>
+                        <th scope=\"col\" class=\"align-middle p-2\" style=\"width: 150px\"> Luogo </th>
+                        <th scope=\"col\" class=\"align-middle p-2\" style=\"width: 150px\"> Quantità scaricata </th>
+                        <th scope=\"col\" class=\"align-middle p-2\" style=\"width: 100px\"> Fattura </th>
+                        <th scope=\"col\" class=\"align-middle small-col\" style=\"width: 50px\"> <i class=\"bi bi-gear\"></i> </th>
+                    </tr>
+                </thead>
+                                                     
+                <tbody class=\"table-group-divider\">
+                {% for p in partials %}
+                    <tr>
+                        <td scope=\"row\" class=\"align-middle p-1\"> 
+                            {{ loop.index }}
+                        </td>         
+                        <td class=\"align-middle p-1 col-destination\" id=\"dest\"> {{ p.destination|upper }} </td>                                   
+                        <td class=\"align-middle p-1 col-exw\" id=\"exw\"> {{ p.exw|upper }} </td>  
+                        <td class=\"align-middle p-1 col-date\" id=\"date\"> {{ p.date|date(\"d/m/Y\") }} </td>                   
+                        <td class=\"align-middle p-1 col-place\" id=\"place\"> {{ p.place|capitalize }} </td>
+                        <td class=\"align-middle p-1 col-q-unloaded\" id=\"qty\"> {{ p.q_unloaded }} </td>
+                        <td class=\"align-middle p-1 col-invoice\" id=\"invoice\"> {{ p.invoice }} </td>
+                        <td class=\"align-middle m-auto btns\"> 
+                        {% if (session.role == 'admin') or (session.id_user == t.id_user) %}
+                            <button type=\"button\" class=\"edit-data edit-part\" data-bs-toggle=\"modal\" data-bs-target=\"#editPart-{{ p.id_partial }}\" 
+                                    data-id=\"{{ p.id_partial }}\">
+                                        <i class=\"bi bi-pencil-square\"></i>
+                            </button> 
+                        {% else %}
+                            <button type=\"button\" class=\"edit-data\" disabled>
+                                <i class=\"bi bi-x-octagon\"></i>
+                            </button>
+                        {% endif %}
+                                                            
+                        {% if session.role == 'admin' %}
+                            <button type=\"button\" class=\"edit-data delete-data\" data-bs-toggle=\"modal\" data-bs-target=\"#deletePart-{{ p.id_partial }}\"
+                                    data-id=\"{{ p.id_partial }}\">
+                                        <i class=\"bi bi-trash\"></i> 
+                            </button>     
+                        {% endif %}                        
+                        </td> 
+                    </tr>  
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </td>", "partials.twig", "C:\\wamp64\\www\\liquimet\\templates\\partials.twig");
     }
 }

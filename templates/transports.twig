@@ -29,27 +29,36 @@
                 <li class="dropdown-header">
                     <h5> ◦ TRASPORTI ◦ </h5>
                 </li>      
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+
                 <li>
-                    <a class="dropdown-item {% if type is null %}active{% endif %}" style="text-align:center;" href="/transports"> 
+                    <hr class="dropdown-divider">
+                </li>
+                
+                <li>
+                    <a class="dropdown-item {% if type is null %}active{% endif %}" style="text-align: center" href="javascript:void(0);"
+                        data-type="all"> 
                         Tutti
                     </a>
                 </li>            
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                
                 <li>
-                    <a class="dropdown-item {% if type == 'F' %}active{% endif %}" style="text-align:center;" href="/transports-full"> 
+                    <hr class="dropdown-divider">
+                </li>
+                
+                <li>
+                    <a class="dropdown-item {% if type == 'F' %}active{% endif %}" style="text-align: center" 
+                        href="javascript:void(0);" data-type="F"> 
                         Pieni
                     </a>
                 </li>       
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                
                 <li>
-                    <a class="dropdown-item {% if type == 'P' %}active{% endif %}" style="text-align:center;" href="/transports-part"> 
+                    <hr class="dropdown-divider">
+                </li>
+                
+                <li>
+                    <a class="dropdown-item {% if type == 'P' %}active{% endif %}" style="text-align: center" 
+                        href="javascript:void(0);" data-type="P"> 
                         Parziali
                     </a>
                 </li>
@@ -61,13 +70,14 @@
         <table class="table table-hover text-center platform" id="transports-table">
             {# Table Head #}
             <thead id="transport-head">
-                {% if type == 'F' %}
+                {% include 'shared/transports-head.twig' %}
+                {# if type == 'F' %}
                     {% include 'shared/transports-head.twig' with { show_type: false } %}
                 {% elseif type == 'P' %}
                     {% include 'shared/transports-head.twig' with { show_type: false } %}
                 {% else %}
                     {% include 'shared/transports-head.twig' with { show_type: true } %}
-                {% endif %}
+                {% endif #}
             </thead>
 
             {# Table Body #}
@@ -93,7 +103,7 @@
                     {% include 'shared/pagination.twig' with {
                         page: page,
                         srf_token: csrfToken,
-                        show_type: false
+                        show_type: type is null
                     } %}
                 {% else %}
                     {% include 'shared/pagination.twig' with {
@@ -138,6 +148,78 @@
 {% block page_script %}
 <script>
 $(function () {
+    $(document).on('shown.bs.collapse', '.collapse', function () {
+        let targetId = $(this).attr('id');
+        $(`[data-bs-target="#${targetId}"]`).attr('aria-expanded', 'true');
+    });
+    $(document).on('hidden.bs.collapse', '.collapse', function () {
+        let targetId = $(this).attr('id');
+        $(`[data-bs-target="#${targetId}"]`).attr('aria-expanded', 'false');
+    });
+
+    $(document).on('click', '.collapse-btn', function() {
+        var $icon = $(this).find('i.icon-plus');
+
+        // Smooth fade-out
+        $icon.css({opacity: 0, transform: 'scale(0.5)'});
+
+        // After short delay, swap icon and fade-in
+        setTimeout(function() {
+            $icon.toggleClass('bi-plus-lg bi-dash-lg');
+            $icon.css({opacity: 1, transform: 'scale(1)'});
+        }, 350); // 100ms for smooth transition
+    });
+
+    $('.dropdown-item').on('click', function(e) {
+        e.preventDefault();
+
+        // Remove active from all items and set active on clicked
+        $('.dropdown-item').removeClass('active');
+        $(this).addClass('active');
+
+        // Update dropdown button title
+        let type = $(this).data('type');
+        let title = '';
+        switch(type) {
+            case 'all':
+                title = 'TUTTI TRASPORTI';
+                type = ''; // send null to server
+                break;
+            case 'F':
+                title = 'TRASPORTI PIENI';
+                break;
+            case 'P':
+                title = 'TRASPORTI PARZIALI';
+                break;
+        }
+        // Change span text
+        $(this).closest('.card-header').find('span').text(title);
+
+        // Send AJAX request to update tbody (optional)
+        let csrfToken = $('input[name="csrf_token"]').val();
+        $.ajax({
+            url: 'pagination', // your controller route
+            type: 'POST',
+            data: { 
+                type: type,
+                page: 1,
+                csrf_token: csrfToken
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    $('#transport-tbody').html(response.tbody);
+                    $('#transport-tfoot').html(response.pagination);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Error loading transports. Please reload the page.');
+            }
+        });
+    });
+
 //  Cache modal, form, and buttons
     const $transModal = $('#editTransModal');
     const $qtyModal  = $('#editQtyModal');

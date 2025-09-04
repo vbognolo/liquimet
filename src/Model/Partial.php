@@ -189,4 +189,13 @@ public function update(array $data, int $user): bool {
              
         return $this->db->runSQL($sql)->fetchColumn();                      
     }
+
+    public function totalPartials($id): int {
+        $sql = "SELECT COUNT(id_partial) 
+                FROM `partials`
+                WHERE id_transport = :id";
+
+
+        return (int) $this->db->runSQL($sql, ['id' => $id])->fetchColumn();      
+    }
 }

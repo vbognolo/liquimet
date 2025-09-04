@@ -40,79 +40,47 @@ class PlatformController {
         $this->viewTransportsByType('P');
     }
 
-    private function buildTransportData(?string $type, int $limit, int $offset, int $page, ?string $csrfToken = null): array {
-        $transports = $this->mTrans->getAllTransports($limit, $offset, $type);
-        $total      = $this->mTrans->totalTransports($type);
-        $pagination = max(1, ceil($total / $limit));
+        private function viewTransportsByType(?string $type) {                                                       // Helper method for view
+            $this->session->requireLogin();                                                                                // Loads data based on $type
 
-        $partials = [];
-            if ($type === null || $type === 'P') {
-                foreach ($this->mPart->getAll() as $p) {
-                    $partials[$p['id_transport']][] = $p;
+            $page = (int) ($_GET['page'] ?? 1);
+            $limit = 5;
+            $offset = ($page - 1) * $limit;
+/*
+            $total = $this->mTrans->totalTransports($type);
+            $pagination = max(1, ceil($total / $limit));
+            $transports = $this->mTrans->getAllTransports($limit, $offset, $type);
+
+            $partials = [];
+                if ($type === null || $type === 'P') {
+                    foreach ($this->mPart->getAll() as $p) {
+                        $partials[$p['id_transport']][] = $p;
+                    }
                 }
-            }
+*/
+            /*$data = [
+                'session'     => [
+                    'id_user'  => $this->session->getID(),
+                    'username' => $this->session->getUsername(),
+                    'name'     => $this->session->getName(),
+                    'role'     => $this->session->getRole()
+                ],
+                'transports'  => $transports,
+                'partials'    => $partials,
+                'page'        => $page,
+                'limit'       => $limit,
+                'pagination'  => $pagination,
+                'total'       => $total,
+                'csrf_token'  => $this->session->generateCsrfToken(),
+                'show_type'   => true,
+                'type'        => $type 
+            ];*/
 
-        return [
-            'session'     => [
-                'id_user'  => $this->session->getID(),
-                'username' => $this->session->getUsername(),
-                'name'     => $this->session->getName(),
-                'role'     => $this->session->getRole()
-            ],
-            'transports'  => $transports,
-            'partials'    => $partials,
-            'page'        => $page,
-            'limit'       => $limit,
-            'pagination'  => $pagination,
-            'total'       => $total,
-            'csrf_token'  => $csrfToken ?? $this->session->generateCsrfToken(),
-            'show_type'   => $type === null, // true only if showing all
-            'type'        => $type
-        ];
-    }
+            $data = $this->buildTransportData($type, $limit, $offset, $page);
+                echo $this->twig->render('transports.twig', $data);
+        }
 
-
-    private function viewTransportsByType(?string $type) {                                                           // Helper method for view
-        $this->session->requireLogin();                                              //  Helper method that loads data based on $type ('F', 'P' or null)
-
-        $page = (int) ($_GET['page'] ?? 1);
-        $limit = 5;
-        $offset = ($page - 1) * $limit;
-
-        $total = $this->mTrans->totalTransports($type);
-        $pagination = max(1, ceil($total / $limit));
-        $transports = $this->mTrans->getAllTransports($limit, $offset, $type);
-
-        $partials = [];
-            if ($type === null || $type === 'P') {
-                foreach ($this->mPart->getAll() as $p) {
-                    $partials[$p['id_transport']][] = $p;
-                }
-            }
-
-        /*$data = [
-            'session'     => [
-                'id_user'  => $this->session->getID(),
-                'username' => $this->session->getUsername(),
-                'name'     => $this->session->getName(),
-                'role'     => $this->session->getRole()
-            ],
-            'transports'  => $transports,
-            'partials'    => $partials,
-            'page'        => $page,
-            'limit'       => $limit,
-            'pagination'  => $pagination,
-            'total'       => $total,
-            'csrf_token'  => $this->session->generateCsrfToken(),
-            'show_type'   => true,
-            'type'        => $type 
-        ];*/
-
-        $data = $this->buildTransportData($type, $limit, $offset, $page);
-        echo $this->twig->render('transports.twig', $data);
-    }
-
-    public function viewPagination() {                                                                               // Render PAGINATION
+    public function viewPagination() {                                                                              // Render PAGINATION
         $this->session->requireLogin();
 
         $csrfToken = $_POST['csrf_token'] ?? '';
@@ -128,7 +96,7 @@ class PlatformController {
         $offset = ($page - 1) * $limit;
 
         //  If $type is null, it returns all
-        $total = $this->mTrans->totalTransports($type);                                         
+        /*$total = $this->mTrans->totalTransports($type);                                         
         $transports = $this->mTrans->getAllTransports($limit, $offset, $type);
         $pagination = (int) ceil($total / $limit);
 
@@ -174,6 +142,37 @@ class PlatformController {
         ]);
         exit();
     }
+
+        private function buildTransportData(?string $type, int $limit, int $offset, int $page, ?string $csrfToken = null): array {
+            $transports = $this->mTrans->getAllTransports($limit, $offset, $type);
+            $total      = $this->mTrans->totalTransports($type);
+            $pagination = max(1, ceil($total / $limit));
+
+            $partials = [];
+                if ($type === null || $type === 'P') {
+                    foreach ($this->mPart->getAll() as $p) {
+                        $partials[$p['id_transport']][] = $p;
+                    }
+                }
+
+            return [
+                'session'     => [
+                    'id_user'  => $this->session->getID(),
+                    'username' => $this->session->getUsername(),
+                    'name'     => $this->session->getName(),
+                    'role'     => $this->session->getRole()
+                ],
+                'transports'  => $transports,
+                'partials'    => $partials,
+                'page'        => $page,
+                'limit'       => $limit,
+                'pagination'  => $pagination,
+                'total'       => $total,
+                'csrf_token'  => $csrfToken ?? $this->session->generateCsrfToken(),
+                'show_type'   => $type === null, // true only if showing all
+                'type'        => $type
+            ];
+        }
 
     public function viewTransportModals(){                                                                            // Render transport MODALS
         $this->session->requireLogin();

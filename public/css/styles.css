@@ -659,21 +659,18 @@ main {
 --------------------------------------------------------------*/
 /* Table Caption + Dropdown Menu */
 .card.platform-caption {
-    --bs-card-cap-bg: rgba(var(--bs-body-color-rgb), 0.0); /* Transparent */
+    --bs-card-cap-bg: rgba(var(--bs-body-color-rgb), 0.0);     /* Transparent */
     background: none; 
     border: none;
 }
-
 .platform-caption .platform-btn {
     font-size: 1.6rem;
 }
-
 .platform-caption .dropdown-menu {
     border: 2px solid rgb(144, 6, 73); 
     border-radius: 5%;
     top: 0.1rem !important; 
 }
-
 .platform-caption .dropdown-header h5 {
     font-size: 1.6rem;
     font-weight: 600;
@@ -681,13 +678,11 @@ main {
     text-transform: uppercase;
     letter-spacing: 0.1rem;
 }
-
 .platform-caption .dropdown-item {
     font-size: 1.7rem;
     padding: 10px 15px;
     transition: 0.3s;
 }
-
 .platform-caption .dropdown-item:hover, 
 .platform-caption .dropdown-item.active {
     background-color: #f6f9ff;
@@ -695,227 +690,78 @@ main {
     color: #900649;
 }
 
-/* Table Platform */
+/* Table Platform (thead, tbody, tfoot) */
 table th, table td {
     white-space: normal;
 }
-
 .text-shadow-dark {
     text-shadow: 0px 0px 2px #000000;
 }
-
-.platform {
-    border: 2px solid rgba(250, 235, 215, 0.8);
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-    overflow: auto;
-    scrollbar-width: thin;
-} 
-/* 
-.platform caption span {
-    letter-spacing: 0.1rem;
-    color: #ffffff;
-    text-shadow: 1px 1px 2px #000000;
-    background-color: transparent;
-    padding: 5px 15px;
-    border-top: 2px solid #ffffff;
-    border-bottom: 2px solid #ffffff;
-    border-radius: 1.2rem;
-    box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
-}
-*/
-.platform thead th {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    text-transform: uppercase;
-    border: 1px solid rgba(255, 255, 255, 0.4); /*rgb(11, 50, 90);*/
-}
-
-.platform thead th, 
-.platform tfoot td {
-    background-color: rgba(2, 51, 101, 0.8); /*#e8f5e0;*/
-    color: rgb(255, 255, 255);	/*rgb(11, 50, 90);*/
-    font-size: 1.5rem;
-    outline: none;
-}
-
-.platform thead td {
-    font-size: 1.6rem;
-    /*border-right: none;*/
-    color: #003300;
-}
-
-.platform .table-group-divider {
-    color: rgb(11, 50, 90);
-}
-
-.platform tbody td {
-    background: rgb(237, 240, 235);
-    font-size: 1.5rem;
-}
-
-.platform tbody button {
-    /*background: none;*/
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #000000;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    background-color: transparent;
-    border-top: 2px solid #000000;
-    border-bottom: 2px solid #000000;
-    border-right: 1px solid #000000;
-    border-left: 1px solid #000000; 
-    border-radius: 1.2rem;
-    box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
-    transition: all 0.1s ease-in-out;
-}
-
-.platform tbody td button:hover,     .platform tbody td button[aria-expanded="true"] {
-    transform: scale(0.98);
-    /*background-color: rgba(88, 86, 86, 0.5);*/
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.platform tbody button i {
-    font-size: 1.3rem;
-}
-
-.platform tbody td:first-child {
-    border-right: 1px solid rgb(11, 50, 90);
-}
-
-.platform tbody td:last-child {
-    border-left: 1px solid rgb(11, 50, 90);
-}
-
-.platform tbody td:last-child i {
-    font-size: 1.4rem;
-}
-/*
-.platform tbody td.last-border {
-    word-break: break-word;
-    border-left: none;
-}*/
-
 .word-wrap-container {
     word-break: break-all;
     text-align: center;
     hyphens: auto;
 }
 
-.platform tfoot .table-total {
+div.table-responsive {
+    overflow: hidden;                           /* ensures corners cut content */
+    border: 1px solid rgba(215, 225, 255, 0.8);
+    border-radius: 0.8rem;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+.table.platform {
+    border-collapse: separate !important;
+    border-spacing: 0;
+    margin-bottom: 0;                           /* prevent extra space breaking the radius */
+    scrollbar-width: thin;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+/*
+.collapse-platform .qty-table,
+.collapse-platform .part-table {
+    width: calc(100% - 45px);       /* subtract gear column */
+/*}*/
+/*
+.part-table thead th:first-child,
+.part-table thead th:last-child {
+    border-right: 1px solid rgb(11, 50, 90);
+}
+.part-table tbody .btns {
+    border-left: 1px solid rgb(11, 50, 90);
+}
+*/
+.platform thead#transport-head th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.5); /*rgb(11, 50, 90);*/
+}
+.platform thead#transport-head th, 
+.platform tfoot td {
     background-color: rgba(2, 51, 101, 0.8); /*#e8f5e0;*/
     color: rgb(255, 255, 255);	/*rgb(11, 50, 90);*/
     font-size: 1.5rem;
     outline: none;
 }
-
-.platform tfoot h5,
-.platform tfoot span {
-    font-size: 2.2rem;
-    font-weight: 600;
-    letter-spacing: 0.2rem;
-    text-transform: uppercase;
-    text-shadow: 1px 1px 2px #02172c;
+.platform tbody th {
+    color: rgb(11, 50, 90);
 }
-
-.platform tfoot h5 i {
-    font-size: 2.3rem;
-}
-
-.platform .all > td:first-child {
-    border-right: 2px solid rgba(250, 235, 215, 0.5);
-}
-
-.platform .all > td:first-child:hover {
-    border-right: 2px solid transparent;
-}
-
-.platform .note-icon {
-    /*background: transparent;*/
-    color: #000000;
-    outline: none;
-    border: none;
-    margin: 0;
-    padding: 0;
-    resize: none;
-    overflow: auto;
-    text-align: center;
-    vertical-align: middle;
-}
-/* End Table Platform */
-
-/* Collapse Table Platform */
-.platform tbody tr.collapse.show {
-    box-shadow: inset 0 1px 2px rgba(11, 50, 90, 1), -1px 0 2px rgba(11, 50, 90, 1);
-    background: rgba(237, 240, 235, 0.9);
-    transform: scaleY(0.98);
-    transition: all 0.1s ease-in-out;
-}
-/*.platform .rowQty h4, 
-.platform .rowQty span.collapse-title,
-.platform .rowQty i {
-    text-transform: uppercase;
-    color: #ffffff;
-    font-size: 1.9rem;
-    font-weight: 600;
-    letter-spacing: 0.2rem;
-    text-shadow: 2px 2px 4px #000000;
-    vertical-align: middle;
-}*/
-.collapse-platform h4 {
-    padding: 3px 5px;
-    border-top: 1px solid rgba(11, 50, 90, 0.5);
-    border-bottom: 1px solid rgb(11, 50, 90, 0.5);
-    border-radius: 1.2rem;
-    width: fit-content;
-}
-
-.collapse-platform h4 .collapse-title,     .collapse-platform h4 .collapse-title:hover,
-.collapse-platform h4 i {
-    text-transform: uppercase;
-    color: #0b325a; 
-    font-size: 1.8rem;
-    font-weight: 600;
-    letter-spacing: 0.2rem;
-    text-shadow: 1px 1px 0 #ffffff;
-}
-
-.collapse-platform tbody th {
-    color: rgb(2, 51, 101);
+.platform tbody td {
     font-size: 1.5rem;
-    font-weight: 600;
+    color: rgb(1, 26, 50);
 }
-
-.collapse-platform tbody td {
-    font-size: 1.6rem;
+.platform tbody td.row-loop {
+    border-right: 1px solid rgba(11, 50, 90, 0.5);
 }
-
-.collapse-platform > td:last-child {
-    border-right: none !important;
-    background-color: rgb(230, 236, 243); /*rgb(250, 235, 215, 0.7) !important;*/
+.platform tbody td.col-btns {
+    border-left: 1px solid rgba(11, 50, 90, 0.5);
 }
-
-.collapse-platform > td:not(:last-child) .btns {
-    border-right: none !important;
-    /*background-color: transparent;*/
+.platform tbody td.btns i {
+    font-size: 1.4rem;
 }
-/* End Collapse Platform */
-
-/* ===> FULL, PART TRANSPORTS PLATFORM <=== */
-.platform .trans-data .btns {
-    border-left: 2px solid rgba(248, 249, 250, 0.2); 
-    text-align: center; 
-}
-
-.platform .edit-data,
-.platform .edit-data:focus,
-.platform .edit-data:active,
-.platform .edit-data:visited,
-.platform .edit-data:disabled {
+.platform .edit-data,   .platform .edit-data:focus,   .platform .edit-data:active,   .platform .edit-data:visited,   .platform .edit-data:disabled {
     appearance: none;
         -moz-appearance: none;
         -webkit-appearance: none;
@@ -931,33 +777,284 @@ table th, table td {
         -moz-box-shadow: none;
         -webkit-box-shadow: none;
 }
-
 .platform .edit-part i,
 .platform .delete-data i {
     color: #000000;
     text-shadow: none;
 }
+.platform .table-group-divider {
+    color: rgba(11, 50, 90, 0.8);
+}
 
+.table.platform.table-hover tbody tr.full-row {
+    --bs-table-bg: rgb(235, 246, 253);
+}
+.table.platform.table-hover tbody tr.full-row:hover {
+    --bs-table-bg: rgb(236, 247, 254);
+}
+.platform tbody tr.full-row + .collapse-platform td:first-child,           /* Collapsed details under a full transport */
+.platform tbody tr.full-row:hover + .collapse-platform td:first-child {       
+    --bs-table-bg-state: rgb(247, 252, 255); /* rgb(224, 233, 251); */
+}
+.table.platform.table-hover tbody tr.partial-row {
+    --bs-table-bg: rgb(254, 252, 234);
+}
+.table.platform.table-hover tbody tr.partial-row:hover {
+    --bs-table-bg: rgb(254, 251, 225);
+}
+.platform tbody tr.partial-row + .collapse-platform td[colspan]:last-of-type, 
+.platform tbody tr.partial-row:hover + .collapse-platform td[colspan]:last-of-type {
+    --bs-table-bg-state: rgb(255, 254, 246);
+    background-color: rgb(255, 254, 246);
+}
+
+.collapse-btn {
+    font-size: 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border: 1px solid rgba(11, 50, 90, 0.6);
+    border-radius: 50%;
+    background-color: transparent; 
+    color: rgb(11, 50, 90, 0.6);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+.collapse-btn:hover,    .collapse-btn[aria-expanded="true"] {
+    background-color: #f8f9fa; 
+    border: 1px solid rgba(11, 50, 90, 1);
+    color: rgba(11, 50, 90, 1);
+}
+.collapse-btn i {
+    position: absolute; 
+    font-size: 1.2rem;
+    text-shadow: 0 0 1px currentColor;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+.collapse-btn .icon-plus {
+    opacity: 1;
+}
+.collapse-btn[aria-expanded="true"] .icon-plus {    /* Expanded → fade out +, fade in – */
+    opacity: 0;
+}
+.collapse-btn[aria-expanded="true"] .icon-minus {
+    opacity: 1;
+}
+
+.collapse-platform .qty-table,
+.collapse-platform .part-table {
+    width: calc(100% - 40px);                   /* subtract gear column */
+    border-collapse: separate !important;
+    border-spacing: 0;
+    border: 1px solid rgba(11, 50, 90, 0.2);
+    border-radius: 0.8rem;       
+    overflow: hidden;            
+    box-shadow: 0 0 5px rgba(255,255,255,0.3);
+}
+.collapse-platform .qty-table th,
+.collapse-platform .qty-table td,
+.collapse-platform .part-table th,
+.collapse-platform .part-table td {
+    border: 1px solid rgba(11, 50, 90, 0.2);    /* keep cell borders */
+}
+/*
+.platform .note-icon {
+    color: #000000;
+    outline: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    resize: none;
+    overflow: auto;
+    text-align: center;
+    vertical-align: middle;
+}*/
+
+/* Collapse Table Platform */
+.platform tbody tr.collapse.show {
+    /*box-shadow: inset 0 1px 2px rgba(11, 50, 90, 1), -1px 0 2px rgba(11, 50, 90, 1);*/
+    /*box-shadow: inset 0 1px 2px rgb(11, 50, 90);*/
+    box-shadow: 0 1px 2px rgba(11, 50, 90, 0.5);
+    transform: scale(1, 1);
+    transition: all 0.1s ease-in-out;
+}
+
+.collapse-platform h4 {
+    width: fit-content;
+    text-align: center;
+}
+.collapse-platform h4 span.collapse-title {
+    text-transform: uppercase;
+    color: #0b325a; 
+    font-size: 1.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15rem;
+    text-shadow: 1px 1px 0 #ffffff;
+    text-align: center;
+}
+.collapse-platform h6 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+.collapse-platform h6 .btn {  
+    position: relative;
+    font-weight: 400; 
+    color: #0b325a;
+    border-radius: 2rem;
+    padding: 6px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow: hidden;
+}
+.collapse-platform h6 .btn .icon-wrap {         /* Icon wrapper with circle */
+    position: relative;
+    width: 2.2rem;
+    height: 2.2rem;
+    border: 1px solid #0b325a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    flex-shrink: 0;
+    transform: translate(150%) scale(1);
+    transition: transform 0.3s ease;
+    overflow: hidden; 
+}
+.collapse-platform h6 .btn:hover .icon-wrap {
+    transform: translateX(0) scale(1);             
+}
+.collapse-platform h6 .btn .icon-wrap i {
+    font-size: 1.2rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    position: absolute;
+    transform: translateX(0) scale(1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.collapse-platform h6 .btn .icon-wrap .bi-pencil,
+.collapse-platform h6 .btn .icon-wrap .bi-trash {
+    opacity: 1;
+    transform: scale(1);
+}
+.collapse-platform h6 .btn:hover .icon-wrap .bi-pencil,
+.collapse-platform h6 .btn:hover .icon-wrap .bi-trash {
+    opacity: 0;
+    transform: scale(0);
+}
+.collapse-platform h6 .btn .icon-wrap .bi-pencil-fill,
+.collapse-platform h6 .btn .icon-wrap .bi-trash-fill {
+    opacity: 0;
+    transform: scale(0);
+}
+.collapse-platform h6 .btn:hover .icon-wrap .bi-pencil-fill,
+.collapse-platform h6 .btn:hover .icon-wrap .bi-trash-fill {
+    opacity: 1;
+    transform: scale(1);
+}
+.collapse-platform h6 .btn .collapse-subtitle {         /* Collapse button text */
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    opacity: 0;
+    transform: translateX(-10px);                       /* start closer to pencil */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.collapse-platform h6 .btn:hover .collapse-subtitle {
+    opacity: 1;
+    transform: translateX(0);                           /* fade/slide in from left */
+}
+.collapse-platform h6 .btn .collapse-subtitle::after {  /* Create hidden underline */
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;                                          /* underline */
+    width: 0%;
+    height: 1.3px;
+    background-color: rgba(11, 50, 90, 0.8);
+    transition: width 0.2s ease-in-out;
+}
+.collapse-platform h6 .btn:hover .collapse-subtitle::after {
+    width: 100%;
+}
+
+/*
+.collapse-platform tbody th {
+    color: rgb(2, 51, 101);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+*//*
+.collapse-platform tbody td {
+    font-size: 1.5rem;
+}
+
+.collapse-platform > td:last-child {
+    /*border-right: none; */
+    /*background-color: rgb(255, 255, 255);*/
+    /*transform: scale(0.99, 0.99);*/
+    /*box-shadow: inset 0 0 2px rgb(11, 50, 90);
+    /*background-color: rgb(230, 236, 243); /*rgb(250, 235, 215, 0.7) !important;*/
+/*}*/
+/*
+.collapse-platform > td:not(:last-child) .btns {
+    border-right: none !important;
+    /*background-color: transparent;*/
+/*}*/
+
+
+
+/*/*
 .platform .note-container {
     text-align: center; 
     /*border-top: 1px solid rgba(255, 255, 255, 0.7); */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    /*border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+}*/
+.collapse-platform .part-table caption {
+    color: rgb(11, 50, 90);
+    text-transform: uppercase;
+    font-size: 1.4rem;
 }
-/*
-.partial-table {
-  table-layout: fixed;
-  width: 90%;
+.collapse-platform .part-table thead th {
+    text-transform: uppercase;
+    color: rgb(11, 50, 90);	
+    font-size: 1.5rem;
+    outline: none;
+}
+.collapse-platform .part-table tbody td {
+    font-size: 1.5rem;
+    color: rgb(11, 50, 90);
 }
 
-.partial-table th {
-  width: 100% / 5; /* 100% / number of columns */
-  /*text-align: center; /* or center */
-/*}
 
-.partial-table th.small-col {
-  width: 10%; /* or 5%, adjust as needed */
-/*} */
-/* ===> END FULL, PART TRANSPORTS PLATFORM <=== */
+.platform tfoot .table-total {
+    background-color: rgba(2, 51, 101, 0.8); /*#e8f5e0;*/
+    color: rgb(255, 255, 255);	/*rgb(11, 50, 90);*/
+    font-size: 1.5rem;
+    outline: none;
+}
+.platform tfoot h5,
+.platform tfoot span {
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px #02172c;
+}
+.platform tfoot h5 i {
+    font-size: 2.3rem;
+}
 /*--------------------------------------------------------------
 # =====>                END TABLE DESIGN                       #    // FOR PAGES: PLATFORM, USERS, TITLES, TRANSPORTS-FULL, TRANSPORTS-PART
 --------------------------------------------------------------*/

@@ -126,42 +126,51 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                 <li class=\"dropdown-header\">
                     <h5> ◦ TRASPORTI ◦ </h5>
                 </li>      
-                    <li>
-                        <hr class=\"dropdown-divider\">
-                    </li>
+
+                <li>
+                    <hr class=\"dropdown-divider\">
+                </li>
+                
                 <li>
                     <a class=\"dropdown-item ";
-        // line 36
+        // line 38
         if ((null === ($context["type"] ?? null))) {
             yield "active";
         }
-        yield "\" style=\"text-align:center;\" href=\"/transports\"> 
+        yield "\" style=\"text-align: center\" href=\"javascript:void(0);\"
+                        data-type=\"all\"> 
                         Tutti
                     </a>
                 </li>            
-                    <li>
-                        <hr class=\"dropdown-divider\">
-                    </li>
+                
+                <li>
+                    <hr class=\"dropdown-divider\">
+                </li>
+                
                 <li>
                     <a class=\"dropdown-item ";
-        // line 44
+        // line 49
         if ((($context["type"] ?? null) == "F")) {
             yield "active";
         }
-        yield "\" style=\"text-align:center;\" href=\"/transports-full\"> 
+        yield "\" style=\"text-align: center\" 
+                        href=\"javascript:void(0);\" data-type=\"F\"> 
                         Pieni
                     </a>
                 </li>       
-                    <li>
-                        <hr class=\"dropdown-divider\">
-                    </li>
+                
+                <li>
+                    <hr class=\"dropdown-divider\">
+                </li>
+                
                 <li>
                     <a class=\"dropdown-item ";
-        // line 52
+        // line 60
         if ((($context["type"] ?? null) == "P")) {
             yield "active";
         }
-        yield "\" style=\"text-align:center;\" href=\"/transports-part\"> 
+        yield "\" style=\"text-align: center\" 
+                        href=\"javascript:void(0);\" data-type=\"P\"> 
                         Parziali
                     </a>
                 </li>
@@ -172,125 +181,110 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
     <div class=\"d-flex justify-content-center table-responsive\">          
         <table class=\"table table-hover text-center platform\" id=\"transports-table\">
             ";
-        // line 63
+        // line 72
         yield "            <thead id=\"transport-head\">
                 ";
-        // line 64
-        if ((($context["type"] ?? null) == "F")) {
-            // line 65
-            yield "                    ";
-            yield from $this->loadTemplate("shared/transports-head.twig", "transports.twig", 65)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
-            // line 66
-            yield "                ";
-        } elseif ((($context["type"] ?? null) == "P")) {
-            // line 67
-            yield "                    ";
-            yield from $this->loadTemplate("shared/transports-head.twig", "transports.twig", 67)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
-            // line 68
-            yield "                ";
-        } else {
-            // line 69
-            yield "                    ";
-            yield from $this->loadTemplate("shared/transports-head.twig", "transports.twig", 69)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => true]));
-            // line 70
-            yield "                ";
-        }
-        // line 71
+        // line 73
+        yield from $this->loadTemplate("shared/transports-head.twig", "transports.twig", 73)->unwrap()->yield($context);
+        // line 74
+        yield "                ";
+        // line 81
         yield "            </thead>
 
             ";
-        // line 74
+        // line 84
         yield "            <tbody id=\"transport-tbody\" class=\"table-group-divider transport-row-group\">
                 ";
-        // line 75
+        // line 85
         if ((($context["type"] ?? null) == "F")) {
-            // line 76
+            // line 86
             yield "                    ";
-            yield from $this->loadTemplate("transports-full-ajax.twig", "transports.twig", 76)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
-            // line 77
+            yield from $this->loadTemplate("transports-full-ajax.twig", "transports.twig", 86)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
+            // line 87
             yield "                ";
         } elseif ((($context["type"] ?? null) == "P")) {
-            // line 78
+            // line 88
             yield "                    ";
-            yield from $this->loadTemplate("transports-part-ajax.twig", "transports.twig", 78)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
-            // line 79
+            yield from $this->loadTemplate("transports-part-ajax.twig", "transports.twig", 88)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => false]));
+            // line 89
             yield "                ";
         } else {
-            // line 80
+            // line 90
             yield "                    ";
-            yield from $this->loadTemplate("transports-ajax.twig", "transports.twig", 80)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => true]));
-            // line 81
+            yield from $this->loadTemplate("transports-ajax.twig", "transports.twig", 90)->unwrap()->yield(CoreExtension::merge($context, ["show_type" => true]));
+            // line 91
             yield "                ";
         }
-        // line 82
+        // line 92
         yield "            </tbody>
 
             ";
-        // line 85
+        // line 95
         yield "            <tfoot id=\"transport-tfoot\">
                 ";
-        // line 86
+        // line 96
         if ((($context["type"] ?? null) == "F")) {
-            // line 87
+            // line 97
             yield "                    ";
-            yield from $this->loadTemplate("shared/pagination.twig", "transports.twig", 87)->unwrap()->yield(CoreExtension::merge($context, ["page" =>             // line 88
-($context["page"] ?? null), "csrf_token" =>             // line 89
+            yield from $this->loadTemplate("shared/pagination.twig", "transports.twig", 97)->unwrap()->yield(CoreExtension::merge($context, ["page" =>             // line 98
+($context["page"] ?? null), "csrf_token" =>             // line 99
 ($context["csrfToken"] ?? null), "show_type" => false]));
-            // line 92
+            // line 102
             yield "                ";
         } elseif ((($context["type"] ?? null) == "P")) {
-            // line 93
+            // line 103
             yield "                    ";
-            yield from $this->loadTemplate("shared/pagination.twig", "transports.twig", 93)->unwrap()->yield(CoreExtension::merge($context, ["page" =>             // line 94
-($context["page"] ?? null), "srf_token" =>             // line 95
-($context["csrfToken"] ?? null), "show_type" => false]));
-            // line 98
+            yield from $this->loadTemplate("shared/pagination.twig", "transports.twig", 103)->unwrap()->yield(CoreExtension::merge($context, ["page" =>             // line 104
+($context["page"] ?? null), "srf_token" =>             // line 105
+($context["csrfToken"] ?? null), "show_type" => (null ===             // line 106
+($context["type"] ?? null))]));
+            // line 108
             yield "                ";
         } else {
-            // line 99
+            // line 109
             yield "                    ";
-            yield from $this->loadTemplate("shared/pagination.twig", "transports.twig", 99)->unwrap()->yield(CoreExtension::merge($context, ["page" =>             // line 100
-($context["page"] ?? null), "csrf_token" =>             // line 101
+            yield from $this->loadTemplate("shared/pagination.twig", "transports.twig", 109)->unwrap()->yield(CoreExtension::merge($context, ["page" =>             // line 110
+($context["page"] ?? null), "csrf_token" =>             // line 111
 ($context["csrfToken"] ?? null), "show_type" => true]));
-            // line 104
+            // line 114
             yield "                ";
         }
-        // line 105
+        // line 115
         yield "            </tfoot>
         </table>
     </div>    
 </section> 
 
 <input type=\"hidden\" name=\"csrf_token\" value=\"";
-        // line 110
+        // line 120
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["csrf_token"] ?? null), "html", null, true);
         yield "\">
     ";
-        // line 111
-        yield from $this->loadTemplate("transport-modals.twig", "transports.twig", 111)->unwrap()->yield($context);
+        // line 121
+        yield from $this->loadTemplate("transport-modals.twig", "transports.twig", 121)->unwrap()->yield($context);
         yield from [];
     }
 
-    // line 114
+    // line 124
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_jquery(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 115
+        // line 125
         yield "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
         integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
         crossorigin=\"anonymous\">
 </script>
     ";
-        // line 120
+        // line 130
         yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js\" 
         integrity=\"sha256-umbTaFxP31Fv6O1itpLS/3+v5fOAWDLOUzlmvOGaKV4=\" 
         crossorigin=\"anonymous\">
 </script>
     ";
-        // line 125
+        // line 135
         yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/additional-methods.min.js\" 
         integrity=\"sha256-MtEA819Zls6dtLt5S5BpEMOhifPyz7gfzfgtNtY75lE=\" 
         crossorigin=\"anonymous\">
@@ -299,14 +293,14 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         yield from [];
     }
 
-    // line 131
+    // line 141
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_datepicker(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 132
+        // line 142
         yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js\" 
         integrity=\"sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=\" 
         crossorigin=\"anonymous\">
@@ -315,16 +309,88 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         yield from [];
     }
 
-    // line 138
+    // line 148
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_page_script(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 139
+        // line 149
         yield "<script>
 \$(function () {
+    \$(document).on('shown.bs.collapse', '.collapse', function () {
+        let targetId = \$(this).attr('id');
+        \$(`[data-bs-target=\"#\${targetId}\"]`).attr('aria-expanded', 'true');
+    });
+    \$(document).on('hidden.bs.collapse', '.collapse', function () {
+        let targetId = \$(this).attr('id');
+        \$(`[data-bs-target=\"#\${targetId}\"]`).attr('aria-expanded', 'false');
+    });
+
+    \$(document).on('click', '.collapse-btn', function() {
+        var \$icon = \$(this).find('i.icon-plus');
+
+        // Smooth fade-out
+        \$icon.css({opacity: 0, transform: 'scale(0.5)'});
+
+        // After short delay, swap icon and fade-in
+        setTimeout(function() {
+            \$icon.toggleClass('bi-plus-lg bi-dash-lg');
+            \$icon.css({opacity: 1, transform: 'scale(1)'});
+        }, 350); // 100ms for smooth transition
+    });
+
+    \$('.dropdown-item').on('click', function(e) {
+        e.preventDefault();
+
+        // Remove active from all items and set active on clicked
+        \$('.dropdown-item').removeClass('active');
+        \$(this).addClass('active');
+
+        // Update dropdown button title
+        let type = \$(this).data('type');
+        let title = '';
+        switch(type) {
+            case 'all':
+                title = 'TUTTI TRASPORTI';
+                type = ''; // send null to server
+                break;
+            case 'F':
+                title = 'TRASPORTI PIENI';
+                break;
+            case 'P':
+                title = 'TRASPORTI PARZIALI';
+                break;
+        }
+        // Change span text
+        \$(this).closest('.card-header').find('span').text(title);
+
+        // Send AJAX request to update tbody (optional)
+        let csrfToken = \$('input[name=\"csrf_token\"]').val();
+        \$.ajax({
+            url: 'pagination', // your controller route
+            type: 'POST',
+            data: { 
+                type: type,
+                page: 1,
+                csrf_token: csrfToken
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    \$('#transport-tbody').html(response.tbody);
+                    \$('#transport-tfoot').html(response.pagination);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Error loading transports. Please reload the page.');
+            }
+        });
+    });
+
 //  Cache modal, form, and buttons
     const \$transModal = \$('#editTransModal');
     const \$qtyModal  = \$('#editQtyModal');
@@ -888,7 +954,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  326 => 139,  319 => 138,  310 => 132,  303 => 131,  294 => 125,  288 => 120,  282 => 115,  275 => 114,  270 => 111,  266 => 110,  259 => 105,  256 => 104,  254 => 101,  253 => 100,  251 => 99,  248 => 98,  246 => 95,  245 => 94,  243 => 93,  240 => 92,  238 => 89,  237 => 88,  235 => 87,  233 => 86,  230 => 85,  226 => 82,  223 => 81,  220 => 80,  217 => 79,  214 => 78,  211 => 77,  208 => 76,  206 => 75,  203 => 74,  199 => 71,  196 => 70,  193 => 69,  190 => 68,  187 => 67,  184 => 66,  181 => 65,  179 => 64,  176 => 63,  161 => 52,  148 => 44,  135 => 36,  122 => 25,  118 => 23,  116 => 22,  113 => 21,  111 => 20,  108 => 19,  106 => 18,  100 => 14,  96 => 11,  94 => 10,  85 => 9,  78 => 5,  76 => 4,  69 => 3,  56 => 2,  45 => 1,);
+        return array (  320 => 149,  313 => 148,  304 => 142,  297 => 141,  288 => 135,  282 => 130,  276 => 125,  269 => 124,  264 => 121,  260 => 120,  253 => 115,  250 => 114,  248 => 111,  247 => 110,  245 => 109,  242 => 108,  240 => 106,  239 => 105,  238 => 104,  236 => 103,  233 => 102,  231 => 99,  230 => 98,  228 => 97,  226 => 96,  223 => 95,  219 => 92,  216 => 91,  213 => 90,  210 => 89,  207 => 88,  204 => 87,  201 => 86,  199 => 85,  196 => 84,  192 => 81,  190 => 74,  188 => 73,  185 => 72,  169 => 60,  153 => 49,  137 => 38,  122 => 25,  118 => 23,  116 => 22,  113 => 21,  111 => 20,  108 => 19,  106 => 18,  100 => 14,  96 => 11,  94 => 10,  85 => 9,  78 => 5,  76 => 4,  69 => 3,  56 => 2,  45 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -924,27 +990,36 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                 <li class=\"dropdown-header\">
                     <h5> ◦ TRASPORTI ◦ </h5>
                 </li>      
-                    <li>
-                        <hr class=\"dropdown-divider\">
-                    </li>
+
                 <li>
-                    <a class=\"dropdown-item {% if type is null %}active{% endif %}\" style=\"text-align:center;\" href=\"/transports\"> 
+                    <hr class=\"dropdown-divider\">
+                </li>
+                
+                <li>
+                    <a class=\"dropdown-item {% if type is null %}active{% endif %}\" style=\"text-align: center\" href=\"javascript:void(0);\"
+                        data-type=\"all\"> 
                         Tutti
                     </a>
                 </li>            
-                    <li>
-                        <hr class=\"dropdown-divider\">
-                    </li>
+                
                 <li>
-                    <a class=\"dropdown-item {% if type == 'F' %}active{% endif %}\" style=\"text-align:center;\" href=\"/transports-full\"> 
+                    <hr class=\"dropdown-divider\">
+                </li>
+                
+                <li>
+                    <a class=\"dropdown-item {% if type == 'F' %}active{% endif %}\" style=\"text-align: center\" 
+                        href=\"javascript:void(0);\" data-type=\"F\"> 
                         Pieni
                     </a>
                 </li>       
-                    <li>
-                        <hr class=\"dropdown-divider\">
-                    </li>
+                
                 <li>
-                    <a class=\"dropdown-item {% if type == 'P' %}active{% endif %}\" style=\"text-align:center;\" href=\"/transports-part\"> 
+                    <hr class=\"dropdown-divider\">
+                </li>
+                
+                <li>
+                    <a class=\"dropdown-item {% if type == 'P' %}active{% endif %}\" style=\"text-align: center\" 
+                        href=\"javascript:void(0);\" data-type=\"P\"> 
                         Parziali
                     </a>
                 </li>
@@ -956,13 +1031,14 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         <table class=\"table table-hover text-center platform\" id=\"transports-table\">
             {# Table Head #}
             <thead id=\"transport-head\">
-                {% if type == 'F' %}
+                {% include 'shared/transports-head.twig' %}
+                {# if type == 'F' %}
                     {% include 'shared/transports-head.twig' with { show_type: false } %}
                 {% elseif type == 'P' %}
                     {% include 'shared/transports-head.twig' with { show_type: false } %}
                 {% else %}
                     {% include 'shared/transports-head.twig' with { show_type: true } %}
-                {% endif %}
+                {% endif #}
             </thead>
 
             {# Table Body #}
@@ -988,7 +1064,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                     {% include 'shared/pagination.twig' with {
                         page: page,
                         srf_token: csrfToken,
-                        show_type: false
+                        show_type: type is null
                     } %}
                 {% else %}
                     {% include 'shared/pagination.twig' with {
@@ -1033,6 +1109,78 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
 {% block page_script %}
 <script>
 \$(function () {
+    \$(document).on('shown.bs.collapse', '.collapse', function () {
+        let targetId = \$(this).attr('id');
+        \$(`[data-bs-target=\"#\${targetId}\"]`).attr('aria-expanded', 'true');
+    });
+    \$(document).on('hidden.bs.collapse', '.collapse', function () {
+        let targetId = \$(this).attr('id');
+        \$(`[data-bs-target=\"#\${targetId}\"]`).attr('aria-expanded', 'false');
+    });
+
+    \$(document).on('click', '.collapse-btn', function() {
+        var \$icon = \$(this).find('i.icon-plus');
+
+        // Smooth fade-out
+        \$icon.css({opacity: 0, transform: 'scale(0.5)'});
+
+        // After short delay, swap icon and fade-in
+        setTimeout(function() {
+            \$icon.toggleClass('bi-plus-lg bi-dash-lg');
+            \$icon.css({opacity: 1, transform: 'scale(1)'});
+        }, 350); // 100ms for smooth transition
+    });
+
+    \$('.dropdown-item').on('click', function(e) {
+        e.preventDefault();
+
+        // Remove active from all items and set active on clicked
+        \$('.dropdown-item').removeClass('active');
+        \$(this).addClass('active');
+
+        // Update dropdown button title
+        let type = \$(this).data('type');
+        let title = '';
+        switch(type) {
+            case 'all':
+                title = 'TUTTI TRASPORTI';
+                type = ''; // send null to server
+                break;
+            case 'F':
+                title = 'TRASPORTI PIENI';
+                break;
+            case 'P':
+                title = 'TRASPORTI PARZIALI';
+                break;
+        }
+        // Change span text
+        \$(this).closest('.card-header').find('span').text(title);
+
+        // Send AJAX request to update tbody (optional)
+        let csrfToken = \$('input[name=\"csrf_token\"]').val();
+        \$.ajax({
+            url: 'pagination', // your controller route
+            type: 'POST',
+            data: { 
+                type: type,
+                page: 1,
+                csrf_token: csrfToken
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    \$('#transport-tbody').html(response.tbody);
+                    \$('#transport-tfoot').html(response.pagination);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Error loading transports. Please reload the page.');
+            }
+        });
+    });
+
 //  Cache modal, form, and buttons
     const \$transModal = \$('#editTransModal');
     const \$qtyModal  = \$('#editQtyModal');
