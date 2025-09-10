@@ -2,15 +2,15 @@
 <td colspan="14" class="mx-auto my-auto border-0" style="--bs-table-bg-state: rgb(255, 254, 246)">
     <div class="d-flex align-items-center">
             {# Left Side #}
-        <div class="my-auto me-3 ms-3 text-wrap col-1" id="collapse-1" style="border: 1px solid black">
-            <h4 class="mx-auto" style="border: 1px solid red"> 
+        <div class="my-auto me-3 ms-3 text-wrap col-1" id="collapse-1">
+            <h4 class="mx-auto"> 
                 <span class="btn collapse-title edit-data" style="cursor: default">
                     Parziali
                 </span>
             </h4>
 
             {% if session.role == 'admin' %}
-                <h6 class="me-2" style="border: 1px solid green">
+                <h6 class="me-2">
                     <button type="button" class="btn edit-data" data-bs-toggle="modal" 
                             data-bs-target="#deletePartModal" data-id="{{ t.id_transport }}">   
                         <span class="icon-wrap">
@@ -28,7 +28,7 @@
         <div class="flex-grow-1 my-2 px-2">
             <table class="table table-sm table-bordered table-hover caption-top my-auto part-table" id="part-table-{{ t.id_transport }}">
                 <caption class="ms-3 my-0">
-                    TOTALE PARZIALI: {{ total_part }}
+                    TOTALE PARZIALI: <strong>{{ total_part|default(0) }}</strong>
                 </caption>
                 <thead class="">
                     <tr class="table-light">
@@ -57,7 +57,7 @@
                         <td class="align-middle p-1 col-invoice" id="invoice"> {{ p.invoice }} </td>
                         <td class="align-middle m-auto btns"> 
                         {% if (session.role == 'admin') or (session.id_user == t.id_user) %}
-                            <button type="button" class="edit-data edit-part" data-bs-toggle="modal" data-bs-target="#editPart-{{ p.id_partial }}" 
+                            <button type="button" class="edit-data edit-part" data-bs-toggle="modal" data-bs-target="#editPartModal" 
                                     data-id="{{ p.id_partial }}">
                                         <i class="bi bi-pencil-square"></i>
                             </button> 
@@ -68,7 +68,7 @@
                         {% endif %}
                                                             
                         {% if session.role == 'admin' %}
-                            <button type="button" class="edit-data delete-data" data-bs-toggle="modal" data-bs-target="#deletePart-{{ p.id_partial }}"
+                            <button type="button" class="edit-data delete-data deleteParts" data-bs-toggle="modal" data-bs-target="#deletePartModal"
                                     data-id="{{ p.id_partial }}">
                                         <i class="bi bi-trash"></i> 
                             </button>     

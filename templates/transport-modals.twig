@@ -3,14 +3,14 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header mx-auto row">
-                <h2 class="modal-title" id="editTransLabel"> 
+                <h2 class="mt-2 modal-title" id="editTransLabel"> 
                     <i class="bi bi-pencil-square my-auto mx-1"></i>
                         MODIFICA
                     <i class="bi bi-pencil-square my-auto mx-1"></i>
                 </h2>
 
-                <h4 class="modal-subtitle my-2"> 
-                    Modifica i dati esistenti del trasporto.
+                <h4 class="my-2 modal-subtitle"> 
+                    Modifica dati del trasporto.
                 </h4>
             </div>
         
@@ -160,15 +160,15 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header mx-auto row">
-                <h2 class="modal-title" id="editQtyLabel"> 
+                <h2 class="mt-2 modal-title" id="editQtyLabel"> 
                     <i class="bi bi-pencil-square my-auto mx-1"></i>
                         MODIFICA
                     <i class="bi bi-pencil-square my-auto mx-1"></i>
                 </h2>
 
-                    <h4 class="modal-subtitle my-2"> 
-                        Modifica le quantità del trasporto.
-                    </h4>
+                <h4 class="my-2 modal-subtitle"> 
+                    Modifica quantità del trasporto.
+                </h4>
             </div>
         
             <div class="modal-body">
@@ -176,15 +176,15 @@
                     <form id="quantity-edit" method="POST" action="quantity-edit" autocomplete="off" novalidate>
                         <input type="hidden" name="id_transport" id="id_transport" />
                         <input type="hidden" name="id_quantity" id="id_quantity" />
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />   
 
-                        {# Kg Load #}
+                        {# Kg Load #}                   
                         <div class="row form-group mx-auto my-3">
-                            <label class="col-4 form-control-label my-1"> Quantità caricata: </label>
+                            <label for="kg_load" class="col-5 form-control-label my-1"> Quantità caricata: </label>
                             
-                            <div class="col-8">
-                                <input type="text" name="kg_load" id="kg_load" 
-                                    class="form-control {% if errors.kg_load %}is-invalid{% endif %}" />
+                            <div class="col-6 ms-1">
+                                <input type="text" name="kg_load" id="kg_load" value="{{ quantity.kg_load }}" 
+                                       class="form-control {% if errors.kg_load %}is-invalid{% endif %}" />
 
                                 <div class="error-placeholder">
                                     {% if errors.kg_load %}<div class="invalid-feedback">{{ errors.kg_load }}</div>{% endif %}
@@ -194,17 +194,12 @@
 
                         {# Cooling  #}
                         <div class="row form-group mx-auto mb-3">
-                            <label class="col-4 form-control-label my-1"> Raffreddamento: </label>
+                            <label for="cooling" class="col-5 form-control-label my-1"> Raffreddamento: </label>
                         
-                            <div class="col-8">
+                            <div class="col-6 ms-1">
                                 <select name="cooling" id="cooling" class="form-control {% if errors.cooling %}is-invalid{% endif %}">
-                                    <option value="600" class="opt-type"> 
-                                        SÌ = 600
-                                    </option>
-                                    
-                                    <option value="0" class="opt-type"> 
-                                        NO = 0
-                                    </option>
+                                    <option value="600" class="opt-type"> SÌ = 600 </option>
+                                    <option value="0" class="opt-type"> NO = 0 </option>
                                 </select>
 
                                 <div class="error-placeholder">
@@ -215,25 +210,12 @@
                         
                         {# Price Typology #}
                         <div class="row form-group mx-auto mb-3">
-                            <label class="col-4 form-control-label my-1"> Tipologia costo extra: </label>
+                            <label for="price_typology" class="col-5 form-control-label my-1"> Tipologia costo extra: </label>
                             
-                            <div class="col-8">
-                                <select name="price_typology" id="price_typology" class="form-control {% if errors.price_typology %}is-invalid{% endif %}">
-                                    {#<option class="opt-type">
-                                        {% if (quantity.price_typology == 'yes') %}
-                                            SÌ
-                                        {% else %}
-                                            NO
-                                        {% endif %}
-                                    </option>   #}
-                                    
-                                    <option value="yes" class="opt-type"> 
-                                        SÌ
-                                    </option>
-                                        
-                                    <option value="no" class="opt-type"> 
-                                        NO
-                                    </option>
+                            <div class="col-6 ms-1">
+                                <select name="price_typology" id="price_typology" class="form-control {% if errors.price_typology %}is-invalid{% endif %}">                                   
+                                    <option value="yes" class="opt-type"> SÌ </option>
+                                    <option value="no" class="opt-type"> NO </option>
                                 </select>
 
                                 <div class="error-placeholder">
@@ -244,13 +226,12 @@
                             
                         {# Price Value #}
                         <div class="row form-group mx-auto mb-3">
-                            <label class="col-4 form-control-label my-1"> Valore costo extra: </label>
+                            <label for="price_value" class="col-5 form-control-label my-1"> Valore costo extra: </label>
                             
-                            <div class="col-8">
+                            <div class="col-6 ms-1">
                                 <input type="text" name="price_value" id="price_value"
-                                    class="form-control {% if errors.price_value %}is-invalid{% endif %}" />
+                                       class="form-control {% if errors.price_value %}is-invalid{% endif %}" />
                                 {#<input type="hidden" name="price_value" id="price_value_hidden">#}
-
 
                                 <div class="error-placeholder">
                                     {% if errors.price_value %}<div class="invalid-feedback">{{ errors.price_value }}</div>{% endif %}
@@ -260,11 +241,11 @@
                             
                         {# Kg Unload #}
                         <div class="row form-group mx-auto mb-3">
-                            <label class="col-4 form-control-label my-1"> Quantità scaricata: </label>
+                            <label for="kg_unload" class="col-5 form-control-label my-1"> Quantità scaricata: </label>
                             
-                            <div class="col-8">
+                            <div class="col-6 ms-1">
                                 <input type="text" name="kg_unload" id="kg_unload"
-                                    class="form-control {% if errors.kg_unload %}is-invalid{% endif %}" />
+                                       class="form-control {% if errors.kg_unload %}is-invalid{% endif %}" />
 
                                 <div class="error-placeholder">
                                     {% if errors.kg_unload %}<div class="invalid-feedback">{{ errors.kg_unload }}</div>{% endif %}
@@ -274,11 +255,11 @@
 
                         {# Liquid Density #}
                         <div class="row form-group mx-auto mb-3">
-                            <label class="col-4 form-control-label my-1"> Densità liquido: </label>
+                            <label for="liquid_density" class="col-5 form-control-label my-1"> Densità liquido: </label>
                             
-                            <div class="col-8">
+                            <div class="col-6 ms-1">
                                 <input type="text" name="liquid_density" id="liquid_density" 
-                                    class="form-control {% if errors.liquid_density %}is-invalid{% endif %}" />
+                                       class="form-control {% if errors.liquid_density %}is-invalid{% endif %}" />
 
                                 <div class="error-placeholder">
                                     {% if errors.liquid_density %}<div class="invalid-feedback">{{ errors.liquid_density }}</div>{% endif %}
@@ -288,11 +269,11 @@
                             
                         {# Gas Weight #}
                         <div class="row form-group mx-auto mb-3">
-                            <label class="col-4 form-control-label my-1"> Peso specifico (gas): </label>
+                            <label for="gas_weight" class="col-5 form-control-label my-1"> Peso specifico (gas): </label>
                             
-                            <div class="col-8">
+                            <div class="col-6 ms-1">
                                 <input type="text" name="gas_weight" id="gas_weight" 
-                                    class="form-control {% if errors.gas_weight %}is-invalid{% endif %}" />
+                                       class="form-control {% if errors.gas_weight %}is-invalid{% endif %}" />
 
                                 <div class="error-placeholder">
                                     {% if errors.gas_weight %}<div class="invalid-feedback">{{ errors.gas_weight }}</div>{% endif %}
@@ -301,12 +282,12 @@
                         </div>
                             
                         {# Pcs Ghv #}
-                        <div class="row form-group mx-auto mb-3">
-                            <label class="col-4 form-control-label my-1"> PCS/GHV: </label>
+                        <div class="row form-group mx-auto mb-3 ">
+                            <label for="pcs_ghv" class="col-5 form-control-label my-1"> PCS/GHV: </label>
                             
-                            <div class="col-8">
+                            <div class="col-6 ms-1">
                                 <input type="text" name="pcs_ghv" id="pcs_ghv"
-                                    class="form-control {% if errors.pcs_ghv %}is-invalid{% endif %}" />
+                                       class="form-control {% if errors.pcs_ghv %}is-invalid{% endif %}" />
 
                                 <div class="error-placeholder">
                                     {% if errors.pcs_ghv %}<div class="invalid-feedback">{{ errors.pcs_ghv }}</div>{% endif %}
@@ -321,7 +302,7 @@
                                 </span>    
                             </button>
                             
-                            <button type="submit" class="btn btn-default modal-save" name="update_quantity">
+                            <button type="submit" class="btn btn-default modal-save">
                                 <span class="bi bi-check-circle">
                                     SALVA
                                 </span>   
@@ -411,7 +392,7 @@
                 </h2>
 
                     <h4 class="modal-subtitle my-2"> 
-                        Rimuovi il trasporto scelto.
+                        Conferma rimozione del trasporto
                     </h4>
             </div>
         
@@ -422,8 +403,8 @@
                         <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
 
                         <p class="container delete-msg">
-                            Rimuovere il trasporto (SLOT ID)? <br>
-                                <span id="slot-placeholder"></span>
+                            Rimuovere il trasporto (SLOT ID) <br>
+                                <span id="slot-placeholder"></span>?
                         </p>                     
                         
                         <div class="modal-footer">
@@ -459,7 +440,7 @@
                 </h2>
 
                     <h4 class="modal-subtitle my-2"> 
-                        Modifica i dati esistenti del trasporto parziale.
+                        Modifica dati dello scarico parziale
                     </h4>
             </div>
         
@@ -569,6 +550,57 @@
                                 </span>    
                             </button>
                                 
+                            <button type="submit" class="btn btn-default modal-save" name="delete_trans">
+                                <span class="bi bi-check-circle">
+                                    CONFERMA
+                                </span>   
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Delete Partials Confirmation Modal #}    
+<div class="modal fade" id="deletePartModal" tabindex="-1" role="dialog" aria-labelledby="deletePartLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header mx-auto row">
+                <h2 class="modal-title" id="deletePartLabel"> 
+                    <i class="bi bi-trash my-auto mx-1"></i>
+                        RIMUOVI
+                    <i class="bi bi-trash my-auto mx-1"></i>
+                </h2>
+
+                <h4 class="modal-subtitle my-2"> 
+                    Rimuovi tutti i scarichi parziali del trasporto. <br>
+                    <h5 class="text-center">
+                        [Il trasporto verrà spostato dal tipo di trasporto 
+                        <b style="color: #6d1741">parziale (P)</b> a quello <b style="color: #6d1741">pieno (F)</b>]
+                    </h5>
+                </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form id="partials-delete" method="POST" action="partials-delete" autocomplete="off" novalidate>
+                        <input type="hidden" name="id_transport" id="id_transport" />
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
+
+                        <div class="container delete-msg">
+                            Rimuovere tutti i scarichi parziali del trasporto <br>
+                                SlotID <span id="slot-placeholder"></span> ? <br>
+                        </div>  
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default modal-cancel" data-bs-dismiss="modal">
+                                <span class="bi bi-x-circle">
+                                    ANNULLA
+                                </span>    
+                            </button>
+                            
                             <button type="submit" class="btn btn-default modal-save" name="delete_trans">
                                 <span class="bi bi-check-circle">
                                     CONFERMA

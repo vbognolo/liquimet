@@ -41,11 +41,7 @@ class __TwigTemplate_211d2dcc98bf2825694b325355d951a7 extends Template
         // line 2
         yield "<tr class=\"border-top border-light bg-primary bg-gradient table-title\">
     <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 50px\"> # </th>
-        ";
-        // line 5
-        yield "    ";
-        // line 8
-        yield "    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 350px\"> Slot ID </th>
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 350px\"> Slot ID </th>
     <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 250px\"> Numero CMR </th>
     <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 150px\"> Emittente </th>
     <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 150px\"> Fornitore </th>
@@ -75,7 +71,7 @@ class __TwigTemplate_211d2dcc98bf2825694b325355d951a7 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  48 => 8,  46 => 5,  42 => 2,);
+        return array (  42 => 2,);
     }
 
     public function getSourceContext(): Source
@@ -83,11 +79,7 @@ class __TwigTemplate_211d2dcc98bf2825694b325355d951a7 extends Template
         return new Source("{# Transports Table Head #}
 <tr class=\"border-top border-light bg-primary bg-gradient table-title\">
     <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 50px\"> # </th>
-        {# Add extra head column conditionally via Twig block #}
-    {# if show_type %}
-        <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 50px\"> Tipo </th>
-    {% endif #}
-    <th scope=\"col\" class=\"align-middle px-2\" style=\"width: 350px\"> Slot ID </th>
+    <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 350px\"> Slot ID </th>
     <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 250px\"> Numero CMR </th>
     <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 150px\"> Emittente </th>
     <th scope=\"col\" class=\"align-middle px-3\" style=\"width: 150px\"> Fornitore </th>

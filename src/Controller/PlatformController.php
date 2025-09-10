@@ -31,15 +31,12 @@ class PlatformController {
     public function viewAllTransports() {                                                                            // Render ALL transports 
         $this->viewTransportsByType(null);
     }
-
     public function viewFullTransports() {                                                                           // Render FULL transports
         $this->viewTransportsByType('F');
     }
-
     public function viewPartTransports() {                                                                           // Render PARTIAL transports
         $this->viewTransportsByType('P');
     }
-
         private function viewTransportsByType(?string $type) {                                                       // Helper method for view
             $this->session->requireLogin();                                                                                // Loads data based on $type
 
@@ -96,17 +93,17 @@ class PlatformController {
         $offset = ($page - 1) * $limit;
 
         //  If $type is null, it returns all
-        /*$total = $this->mTrans->totalTransports($type);                                         
-        $transports = $this->mTrans->getAllTransports($limit, $offset, $type);
-        $pagination = (int) ceil($total / $limit);
+        /*$total = $this->mTrans->totalTransports($type);          */                               
+       /* $transports = $this->mTrans->getAllTransports($limit, $offset, $type);
+        /*$pagination = (int) ceil($total / $limit);*/
 
         //  Group partials only if $type is 'P' or null (to support mixed type display)
-        $partials = [];
+        /*$partials = [];
             if ($type === null || $type === 'P') {
                 foreach ($this->mPart->getAll() as $p) {
                     $partials[$p['id_transport']][] = $p;
                 }
-            }
+            }*/
 
        /* $data = [
             'csrf_token'  => $csrfToken,
@@ -149,10 +146,20 @@ class PlatformController {
             $pagination = max(1, ceil($total / $limit));
 
             $partials = [];
-                if ($type === null || $type === 'P') {
-                    foreach ($this->mPart->getAll() as $p) {
-                        $partials[$p['id_transport']][] = $p;
-                    }
+            $totalPartials = [];
+
+                foreach ($transports as $t) {
+                        $transportType = strtoupper(trim($t['type']));
+
+        if ($transportType === 'P') {
+                            $partials[$t['id_transport']] = $this->mPart->getPartByTransportID($t['id_transport']);
+                            $totalPartials[$t['id_transport']] = $this->mPart->totalPartials($t['id_transport']);
+                            // DEBUG LOG to see what total_part is
+            error_log("Transport ID: {$t['id_transport']}, total_part: " . ($totalPartials[$t['id_transport']] ?? 'NULL'));
+                        } else {
+                            $totalPartials[$t['id_transport']] = 0;
+                        }
+                    
                 }
 
             return [
@@ -164,6 +171,7 @@ class PlatformController {
                 ],
                 'transports'  => $transports,
                 'partials'    => $partials,
+                'total_part'  => $totalPartials,
                 'page'        => $page,
                 'limit'       => $limit,
                 'pagination'  => $pagination,
@@ -254,13 +262,13 @@ class PlatformController {
                 
         $id = isset($_POST['id_transport']) ? (int) $_POST['id_transport'] : 0;
             if ($id <= 0) {
-                echo json_encode(['success' => false, 'message' => 'Quantità non trovata.']);
+                echo json_encode(['success' => false, 'message' => 'Trasporto non trovato.']);
                 exit();
             }
 
         $quantity = $this->mQty->getQtyByTransportID($id);
             if (!$quantity) {
-                echo json_encode(['success' => false, 'message' => 'Quantity not found.']);
+                echo json_encode(['success' => false, 'message' => 'Quantità non trovata.']);
                 exit();
             }
 
@@ -276,36 +284,37 @@ class PlatformController {
                 
         $fmt = fn($v) => number_format((float)$v, 2, '.', '');
 
-        header('Content-Type: application/json');
-        echo json_encode([
-            'success' => true,
-            'quantity' => [
-                'id_quantity'    => $quantity['id_quantity'],
-                'kg_load'        => $quantity['kg_load'],
-                'cooling'        => $quantity['cooling'],
-                'price_typology' => $quantity['price_typology'],
-                'price_value'    => $quantity['price_value'],
-                'kg_unload'      => $quantity['kg_unload'],
-                'liquid_density' => $fmt($quantity['liquid_density']),
-                'gas_weight'     => $fmt($quantity['gas_weight']),
-                'pcs_ghv'        => $fmt($quantity['pcs_ghv']), 
-                'mwh'            => $fmt($mwh),
-                'mj_kg'          => $fmt($mj_kg),
-                'volume_mc'      => $fmt($volume_mc),
-                'volume_nmc'     => $volume_nmc,
-                'smc_mc'         => $fmt($smc_mc),
-                'gas_nmc'        => $fmt($gas_nmc),
-                'gas_smc'        => $fmt($gas_smc),
-                'smc_kg'         => $fmt($smc_kg),
-                'id_transport'   => $quantity['id_transport']
-            ],
-            'csrf_token' => $csrfToken
-        ]);
-        exit();
-            /*} else {
+            if ($quantity) {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'success' => true,
+                    'quantity' => [
+                        'id_quantity'    => $quantity['id_quantity'],
+                        'kg_load'        => $quantity['kg_load'],
+                        'cooling'        => $quantity['cooling'],
+                        'price_typology' => $quantity['price_typology'],
+                        'price_value'    => $quantity['price_value'],
+                        'kg_unload'      => $quantity['kg_unload'],
+                        'liquid_density' => $fmt($quantity['liquid_density']),
+                        'gas_weight'     => $fmt($quantity['gas_weight']),
+                        'pcs_ghv'        => $fmt($quantity['pcs_ghv']), 
+                        'mwh'            => $fmt($mwh),
+                        'mj_kg'          => $fmt($mj_kg),
+                        'volume_mc'      => $fmt($volume_mc),
+                        'volume_nmc'     => $volume_nmc,
+                        'smc_mc'         => $fmt($smc_mc),
+                        'gas_nmc'        => $fmt($gas_nmc),
+                        'gas_smc'        => $fmt($gas_smc),
+                        'smc_kg'         => $fmt($smc_kg),
+                        'id_transport'   => $quantity['id_transport']
+                    ],
+                    'csrf_token' => $csrfToken
+                ]);
+                exit();
+            } else {
                 echo json_encode(['success' => false, 'message' => 'Quantità non trovata.']);
                 exit();
-            }*/
+            }
     }
 
     public function getPartialData(){
@@ -554,14 +563,13 @@ class PlatformController {
                     'original_cmr'  => Validate::validate_input($_POST['original_cmr']),
                 ]; 
 
-                //  merge in date-specific validation errors
+                //  Merge in date-specific validation errors
                 $dateErrors = $this->mTrans->validate_transport_dates($transport['date_load'], $transport['date_unload']);
                     if (!empty($dateErrors)) {
                         echo json_encode(['success' => false, 'errors' => $dateErrors]);
                         exit();
                     }
-
-                //  overwrite transport dates with formatted versions
+                //  Overwrite transport dates with formatted versions
                 $transport['date_load'] = Validate::format_database($transport['date_load']);
                 $transport['date_unload'] = Validate::format_database($transport['date_unload']);
                 
@@ -594,14 +602,14 @@ class PlatformController {
     public function editQuantity(){
         $this->session->requireLogin();
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {        
             $csrfToken = $_POST['csrf_token'] ?? '';
                 if (empty($csrfToken) || !$this->session->verifyCsrfToken($csrfToken)) {
                     echo json_encode(['success' => false, 'message' => 'Si è verificato un problema. Aggiornare la pagina e riprovare.']);
                     exit();
                 }
-    
-            $id = (int) (Validate::validate_input($_POST['id_quantity']) ?? 0); //isset($_POST['id_quantity']) ? (int) $_POST['id_quantity'] : 0;
+            
+            $id = isset($_POST['id_transport']) ? (int) $_POST['id_transport'] : 0;
                 if ($id <= 0) {
                     echo json_encode(['success' => false, 'message' => 'Quantità non trovata.']);
                     exit();
@@ -611,13 +619,14 @@ class PlatformController {
                 'kg_load'           => Validate::validate_input($_POST['kg_load']) ?? '',
                 'cooling'           => Validate::validate_input($_POST['cooling']) ?? null,
                 'price_typology'    => Validate::validate_input($_POST['price_typology']) ?? '',
-                'price_value'       => Validate::validate_input($_POST['price_value']) ?? 0,
+                'price_value'       => isset($_POST['price_value']) && $_POST['price_value'] !== 0 ? (Validate::validate_input($_POST['price_value'])) : 0,
                 'kg_unload'         => Validate::validate_input($_POST['kg_unload']) ?? '',
                 'liquid_density'    => Validate::validate_input($_POST['liquid_density']) ?? '',
                 'gas_weight'        => Validate::validate_input($_POST['gas_weight']) ?? '',
                 'pcs_ghv'           => Validate::validate_input($_POST['pcs_ghv']) ?? '',
                 'modified_by'       => $this->session->getID(),
-                'id_quantity'       => $id,
+                'id_transport'      => $id,
+                'id_quantity'       => isset($_POST['id_quantity']) ? (int) $_POST['id_quantity'] : 0,
             ]; 
 
             $errors = $this->mQty->validate_quantity_data($quantity);
@@ -630,11 +639,11 @@ class PlatformController {
                 }
 
                 if ($this->mQty->updateQuantity($quantity)) {
-                    $updated = $this->mQty->getQtyByTransportID((int) Validate::validate_input($_POST['id_transport']));    
+                    $updated = $this->mQty->getQtyByTransportID((int) $quantity['id_transport']);    
                     
-                    $updated['kg_load']        = number_format((float)$updated['kg_load'], 2, '.', '');
+                    $updated['kg_load']        = number_format((float)$updated['kg_load'], 0);
                     $updated['price_value']    = number_format((float)$updated['price_value'], 2, '.', '');
-                    $updated['kg_unload']      = number_format((float)$updated['kg_unload'], 2, '.', '');
+                    $updated['kg_unload']      = number_format((float)$updated['kg_unload'], 0);
                     $updated['liquid_density'] = number_format((float)$updated['liquid_density'], 2, '.', '');
                     $updated['gas_weight']     = number_format((float)$updated['gas_weight'], 2, '.', '');
                     $updated['pcs_ghv']        = number_format((float)$updated['pcs_ghv'], 2, '.', '');

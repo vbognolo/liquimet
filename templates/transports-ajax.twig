@@ -62,15 +62,15 @@
             <td colspan="14" class="mx-auto my-auto border-0">
                 <div class="d-flex align-items-center">
                         {# Left Side #}
-                    <div class="my-auto me-3 ms-3 text-wrap col-1" id="collapse-1" style="border: 1px solid black">
-                        <h4 class="mx-auto" style="border: 1px solid red"> 
+                    <div class="my-auto me-3 ms-3 text-wrap col-1" id="collapse-1">
+                        <h4 class="mx-auto"> 
                             <span class="btn collapse-title edit-data updateQty" style="cursor: default">
                                 Quantità
                             </span>
                         </h4>
 
                         {% if (session.role == 'admin') or (session.id_user == t.id_user) %}
-                            <h6 class="mx-auto" style="border: 1px solid green">
+                            <h6 class="mx-auto" >
                                 <button type="button" class="btn edit-data updateQty" data-bs-toggle="modal" 
                                         data-bs-target="#editQtyModal" data-id="{{ t.id_transport }}">   
                                     <span class="icon-wrap">
@@ -155,7 +155,8 @@
         <tr class="collapse accordion-collapse border-2 collapse-platform part-row" id="qty-{{ t.id_transport }}">        
             {% include 'partials.twig' with {
                 partials: partials[t.id_transport]|default([]),
-                t: t
+                t: t,
+                total_part: total_part[t.id_transport]|default(0)
             } only %}
         </tr>
         {% endif %}

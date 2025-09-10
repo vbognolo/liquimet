@@ -119,12 +119,9 @@ class __TwigTemplate_944c85a528fcee4500eb85a73adadfc6 extends Template
 ";
         // line 36
         yield "<tr>
-    <td colspan=\"";
-        // line 37
-        yield ((($context["show_type"] ?? null)) ? (16) : (15));
-        yield "\" class=\"text-light text-shadow-dark align-middle mb-2 p-2\">
+    <td colspan=\"14\" class=\"text-light text-shadow-dark align-middle mb-2 p-2\">
         <h5 class=\"align-middle my-auto\">
-            TOTALE <i class=\"bi bi-fuel-pump-fill ms-1\"></i>:
+            TOTALE <i class=\"bi bi-fuel-pump-fill ms-1\"></i> + <i class=\"bi bi-fuel-pump\"></i>:
                 <span> ";
         // line 40
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["total"] ?? null), "html", null, true);
@@ -157,7 +154,7 @@ class __TwigTemplate_944c85a528fcee4500eb85a73adadfc6 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  130 => 40,  124 => 37,  121 => 36,  118 => 34,  115 => 32,  104 => 24,  97 => 23,  94 => 21,  84 => 17,  80 => 16,  73 => 15,  69 => 14,  61 => 9,  54 => 8,  47 => 4,  45 => 3,  42 => 2,);
+        return array (  127 => 40,  121 => 36,  118 => 34,  115 => 32,  104 => 24,  97 => 23,  94 => 21,  84 => 17,  80 => 16,  73 => 15,  69 => 14,  61 => 9,  54 => 8,  47 => 4,  45 => 3,  42 => 2,);
     }
 
     public function getSourceContext(): Source
@@ -198,9 +195,9 @@ class __TwigTemplate_944c85a528fcee4500eb85a73adadfc6 extends Template
 
 {# Count Total Row #}
 <tr>
-    <td colspan=\"{{ show_type ? 16 : 15 }}\" class=\"text-light text-shadow-dark align-middle mb-2 p-2\">
+    <td colspan=\"14\" class=\"text-light text-shadow-dark align-middle mb-2 p-2\">
         <h5 class=\"align-middle my-auto\">
-            TOTALE <i class=\"bi bi-fuel-pump-fill ms-1\"></i>:
+            TOTALE <i class=\"bi bi-fuel-pump-fill ms-1\"></i> + <i class=\"bi bi-fuel-pump\"></i>:
                 <span> {{ total }} </span>
         </h5> 
     </td>

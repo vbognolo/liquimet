@@ -43,8 +43,8 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
     <div class=\"d-flex align-items-center\">
             ";
         // line 5
-        yield "        <div class=\"my-auto me-3 ms-3 text-wrap col-1\" id=\"collapse-1\" style=\"border: 1px solid black\">
-            <h4 class=\"mx-auto\" style=\"border: 1px solid red\"> 
+        yield "        <div class=\"my-auto me-3 ms-3 text-wrap col-1\" id=\"collapse-1\">
+            <h4 class=\"mx-auto\"> 
                 <span class=\"btn collapse-title edit-data\" style=\"cursor: default\">
                     Parziali
                 </span>
@@ -54,7 +54,7 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
         // line 12
         if ((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "role", [], "any", false, false, false, 12) == "admin")) {
             // line 13
-            yield "                <h6 class=\"me-2\" style=\"border: 1px solid green\">
+            yield "                <h6 class=\"me-2\">
                     <button type=\"button\" class=\"btn edit-data\" data-bs-toggle=\"modal\" 
                             data-bs-target=\"#deletePartModal\" data-id=\"";
             // line 15
@@ -81,10 +81,10 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["t"] ?? null), "id_transport", [], "any", false, false, false, 29), "html", null, true);
         yield "\">
                 <caption class=\"ms-3 my-0\">
-                    TOTALE PARZIALI: ";
+                    TOTALE PARZIALI: <strong>";
         // line 31
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["total_part"] ?? null), "html", null, true);
-        yield "
+        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(((array_key_exists("total_part", $context)) ? (Twig\Extension\CoreExtension::default(($context["total_part"] ?? null), 0)) : (0)), "html", null, true);
+        yield "</strong>
                 </caption>
                 <thead class=\"\">
                     <tr class=\"table-light\">
@@ -155,9 +155,7 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
             // line 59
             if (((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "role", [], "any", false, false, false, 59) == "admin") || (CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "id_user", [], "any", false, false, false, 59) == CoreExtension::getAttribute($this->env, $this->source, ($context["t"] ?? null), "id_user", [], "any", false, false, false, 59)))) {
                 // line 60
-                yield "                            <button type=\"button\" class=\"edit-data edit-part\" data-bs-toggle=\"modal\" data-bs-target=\"#editPart-";
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "id_partial", [], "any", false, false, false, 60), "html", null, true);
-                yield "\" 
+                yield "                            <button type=\"button\" class=\"edit-data edit-part\" data-bs-toggle=\"modal\" data-bs-target=\"#editPartModal\" 
                                     data-id=\"";
                 // line 61
                 yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "id_partial", [], "any", false, false, false, 61), "html", null, true);
@@ -178,9 +176,7 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
             // line 70
             if ((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "role", [], "any", false, false, false, 70) == "admin")) {
                 // line 71
-                yield "                            <button type=\"button\" class=\"edit-data delete-data\" data-bs-toggle=\"modal\" data-bs-target=\"#deletePart-";
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "id_partial", [], "any", false, false, false, 71), "html", null, true);
-                yield "\"
+                yield "                            <button type=\"button\" class=\"edit-data delete-data deleteParts\" data-bs-toggle=\"modal\" data-bs-target=\"#deletePartModal\"
                                     data-id=\"";
                 // line 72
                 yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "id_partial", [], "any", false, false, false, 72), "html", null, true);
@@ -236,7 +232,7 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  210 => 79,  193 => 75,  186 => 72,  181 => 71,  179 => 70,  176 => 69,  170 => 65,  163 => 61,  158 => 60,  156 => 59,  151 => 57,  147 => 56,  143 => 55,  139 => 54,  135 => 53,  131 => 52,  126 => 50,  122 => 48,  105 => 47,  86 => 31,  81 => 29,  78 => 28,  74 => 25,  61 => 15,  57 => 13,  55 => 12,  46 => 5,  42 => 2,);
+        return array (  206 => 79,  189 => 75,  182 => 72,  179 => 71,  177 => 70,  174 => 69,  168 => 65,  161 => 61,  158 => 60,  156 => 59,  151 => 57,  147 => 56,  143 => 55,  139 => 54,  135 => 53,  131 => 52,  126 => 50,  122 => 48,  105 => 47,  86 => 31,  81 => 29,  78 => 28,  74 => 25,  61 => 15,  57 => 13,  55 => 12,  46 => 5,  42 => 2,);
     }
 
     public function getSourceContext(): Source
@@ -245,15 +241,15 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
 <td colspan=\"14\" class=\"mx-auto my-auto border-0\" style=\"--bs-table-bg-state: rgb(255, 254, 246)\">
     <div class=\"d-flex align-items-center\">
             {# Left Side #}
-        <div class=\"my-auto me-3 ms-3 text-wrap col-1\" id=\"collapse-1\" style=\"border: 1px solid black\">
-            <h4 class=\"mx-auto\" style=\"border: 1px solid red\"> 
+        <div class=\"my-auto me-3 ms-3 text-wrap col-1\" id=\"collapse-1\">
+            <h4 class=\"mx-auto\"> 
                 <span class=\"btn collapse-title edit-data\" style=\"cursor: default\">
                     Parziali
                 </span>
             </h4>
 
             {% if session.role == 'admin' %}
-                <h6 class=\"me-2\" style=\"border: 1px solid green\">
+                <h6 class=\"me-2\">
                     <button type=\"button\" class=\"btn edit-data\" data-bs-toggle=\"modal\" 
                             data-bs-target=\"#deletePartModal\" data-id=\"{{ t.id_transport }}\">   
                         <span class=\"icon-wrap\">
@@ -271,7 +267,7 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
         <div class=\"flex-grow-1 my-2 px-2\">
             <table class=\"table table-sm table-bordered table-hover caption-top my-auto part-table\" id=\"part-table-{{ t.id_transport }}\">
                 <caption class=\"ms-3 my-0\">
-                    TOTALE PARZIALI: {{ total_part }}
+                    TOTALE PARZIALI: <strong>{{ total_part|default(0) }}</strong>
                 </caption>
                 <thead class=\"\">
                     <tr class=\"table-light\">
@@ -300,7 +296,7 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
                         <td class=\"align-middle p-1 col-invoice\" id=\"invoice\"> {{ p.invoice }} </td>
                         <td class=\"align-middle m-auto btns\"> 
                         {% if (session.role == 'admin') or (session.id_user == t.id_user) %}
-                            <button type=\"button\" class=\"edit-data edit-part\" data-bs-toggle=\"modal\" data-bs-target=\"#editPart-{{ p.id_partial }}\" 
+                            <button type=\"button\" class=\"edit-data edit-part\" data-bs-toggle=\"modal\" data-bs-target=\"#editPartModal\" 
                                     data-id=\"{{ p.id_partial }}\">
                                         <i class=\"bi bi-pencil-square\"></i>
                             </button> 
@@ -311,7 +307,7 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
                         {% endif %}
                                                             
                         {% if session.role == 'admin' %}
-                            <button type=\"button\" class=\"edit-data delete-data\" data-bs-toggle=\"modal\" data-bs-target=\"#deletePart-{{ p.id_partial }}\"
+                            <button type=\"button\" class=\"edit-data delete-data deleteParts\" data-bs-toggle=\"modal\" data-bs-target=\"#deletePartModal\"
                                     data-id=\"{{ p.id_partial }}\">
                                         <i class=\"bi bi-trash\"></i> 
                             </button>     

@@ -750,7 +750,7 @@ div.table-responsive {
 }
 .platform tbody td {
     font-size: 1.5rem;
-    color: rgb(1, 26, 50);
+    color: rgb(2, 29, 56);
 }
 .platform tbody td.row-loop {
     border-right: 1px solid rgba(11, 50, 90, 0.5);
@@ -760,6 +760,7 @@ div.table-responsive {
 }
 .platform tbody td.btns i {
     font-size: 1.4rem;
+    color: rgb(2, 29, 56);
 }
 .platform .edit-data,   .platform .edit-data:focus,   .platform .edit-data:active,   .platform .edit-data:visited,   .platform .edit-data:disabled {
     appearance: none;
@@ -846,6 +847,14 @@ div.table-responsive {
     opacity: 1;
 }
 
+/* Collapse Table Platform */
+.platform tbody tr.collapse.show {
+    /*box-shadow: inset 0 1px 2px rgba(11, 50, 90, 1), -1px 0 2px rgba(11, 50, 90, 1);*/
+    /*box-shadow: inset 0 1px 2px rgb(11, 50, 90);*/
+    box-shadow: 0 1px 2px rgba(11, 50, 90, 0.5);
+    transform: scale(1, 1);
+    transition: all 0.1s ease-in-out;
+}
 .collapse-platform .qty-table,
 .collapse-platform .part-table {
     width: calc(100% - 40px);                   /* subtract gear column */
@@ -854,7 +863,7 @@ div.table-responsive {
     border: 1px solid rgba(11, 50, 90, 0.2);
     border-radius: 0.8rem;       
     overflow: hidden;            
-    box-shadow: 0 0 5px rgba(255,255,255,0.3);
+    box-shadow: 0 1px 3px rgba(255, 255, 255, 0.3);
 }
 .collapse-platform .qty-table th,
 .collapse-platform .qty-table td,
@@ -874,23 +883,13 @@ div.table-responsive {
     text-align: center;
     vertical-align: middle;
 }*/
-
-/* Collapse Table Platform */
-.platform tbody tr.collapse.show {
-    /*box-shadow: inset 0 1px 2px rgba(11, 50, 90, 1), -1px 0 2px rgba(11, 50, 90, 1);*/
-    /*box-shadow: inset 0 1px 2px rgb(11, 50, 90);*/
-    box-shadow: 0 1px 2px rgba(11, 50, 90, 0.5);
-    transform: scale(1, 1);
-    transition: all 0.1s ease-in-out;
-}
-
 .collapse-platform h4 {
     width: fit-content;
     text-align: center;
 }
 .collapse-platform h4 span.collapse-title {
     text-transform: uppercase;
-    color: #0b325a; 
+    color: rgb(11, 50, 90); 
     font-size: 1.7rem;
     font-weight: 600;
     letter-spacing: 0.15rem;
@@ -902,11 +901,12 @@ div.table-responsive {
     justify-content: center;
     align-items: center;
     margin: 0;
+    color: rgb(11, 50, 90);
 }
 .collapse-platform h6 .btn {  
     position: relative;
     font-weight: 400; 
-    color: #0b325a;
+    color: rgb(11, 50, 90);
     border-radius: 2rem;
     padding: 6px 12px;
     display: inline-flex;
@@ -918,7 +918,7 @@ div.table-responsive {
     position: relative;
     width: 2.2rem;
     height: 2.2rem;
-    border: 1px solid #0b325a;
+    border: 1px solid rgb(11, 50, 90);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -929,7 +929,7 @@ div.table-responsive {
     transition: transform 0.3s ease;
     overflow: hidden; 
 }
-.collapse-platform h6 .btn:hover .icon-wrap {
+.collapse-platform h6 .btn:hover .icon-wrap,    .collapse-platform h6 .btn.active .icon-wrap {
     transform: translateX(0) scale(1);             
 }
 .collapse-platform h6 .btn .icon-wrap i {
@@ -948,7 +948,7 @@ div.table-responsive {
     opacity: 1;
     transform: scale(1);
 }
-.collapse-platform h6 .btn:hover .icon-wrap .bi-pencil,
+.collapse-platform h6 .btn:hover .icon-wrap .bi-pencil,     .collapse-platform h6 .btn.active .icon-wrap .bi-pencil,
 .collapse-platform h6 .btn:hover .icon-wrap .bi-trash {
     opacity: 0;
     transform: scale(0);
@@ -958,7 +958,7 @@ div.table-responsive {
     opacity: 0;
     transform: scale(0);
 }
-.collapse-platform h6 .btn:hover .icon-wrap .bi-pencil-fill,
+.collapse-platform h6 .btn:hover .icon-wrap .bi-pencil-fill,    .collapse-platform h6 .btn.active .icon-wrap .bi-pencil-fill,
 .collapse-platform h6 .btn:hover .icon-wrap .bi-trash-fill {
     opacity: 1;
     transform: scale(1);
@@ -971,7 +971,7 @@ div.table-responsive {
     transform: translateX(-10px);                       /* start closer to pencil */
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
-.collapse-platform h6 .btn:hover .collapse-subtitle {
+.collapse-platform h6 .btn:hover .collapse-subtitle,    .collapse-platform h6 .btn.active .collapse-subtitle {
     opacity: 1;
     transform: translateX(0);                           /* fade/slide in from left */
 }
@@ -985,36 +985,9 @@ div.table-responsive {
     background-color: rgba(11, 50, 90, 0.8);
     transition: width 0.2s ease-in-out;
 }
-.collapse-platform h6 .btn:hover .collapse-subtitle::after {
+.collapse-platform h6 .btn:hover .collapse-subtitle::after,     .collapse-platform h6 .btn.active .collapse-subtitle::after {
     width: 100%;
 }
-
-/*
-.collapse-platform tbody th {
-    color: rgb(2, 51, 101);
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-*//*
-.collapse-platform tbody td {
-    font-size: 1.5rem;
-}
-
-.collapse-platform > td:last-child {
-    /*border-right: none; */
-    /*background-color: rgb(255, 255, 255);*/
-    /*transform: scale(0.99, 0.99);*/
-    /*box-shadow: inset 0 0 2px rgb(11, 50, 90);
-    /*background-color: rgb(230, 236, 243); /*rgb(250, 235, 215, 0.7) !important;*/
-/*}*/
-/*
-.collapse-platform > td:not(:last-child) .btns {
-    border-right: none !important;
-    /*background-color: transparent;*/
-/*}*/
-
-
-
 /*/*
 .platform .note-container {
     text-align: center; 
@@ -1025,6 +998,8 @@ div.table-responsive {
     color: rgb(11, 50, 90);
     text-transform: uppercase;
     font-size: 1.4rem;
+    letter-spacing: 0.15rem;
+    font-weight: 400;
 }
 .collapse-platform .part-table thead th {
     text-transform: uppercase;
@@ -1034,7 +1009,10 @@ div.table-responsive {
 }
 .collapse-platform .part-table tbody td {
     font-size: 1.5rem;
-    color: rgb(11, 50, 90);
+    color: rgb(2, 29, 56);
+}
+.collapse-platform .part-table .btns i {
+    color: rgb(2, 29, 56);
 }
 
 
@@ -1436,13 +1414,11 @@ tr.highlight {
 
 
 /*--------------------------------------------------------------
-# =====>                 MODAL FORM PAGE                       #
+# =====>                MODAL FORM PAGE                        #
 --------------------------------------------------------------*/
 .modal .modal-dialog .modal-content {
     border-radius: 1.25rem;
     box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.6);
-        -moz-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.6);
-        -webkit-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.6);
 }
 
 /* Modal Header */
@@ -1451,43 +1427,40 @@ tr.highlight {
     margin: auto;
     background: rgba(5, 69, 133, 0.1);
 }
-
 .modal .modal-header .modal-title,
 .modal .modal-header .modal-title i {
     font-size: 2.1rem;
     font-weight: 600;
-    color: #0b325a;
-    text-shadow: 0 0 1px #054585;    
+    color: rgba(11, 50, 90, 0.9);
+    text-shadow: 0 1px 0 rgba(11, 50, 90, 0.7);   
     text-transform: uppercase;
     letter-spacing: 0.2rem;
     text-align: center;
 }
-
 .modal .modal-header .modal-subtitle {
     font-size: 1.7rem;
     font-weight: 400;
-    color: #023365;
+    color: rgba(11, 50, 90, 0.7);
+    text-shadow: 0 1px 0 rgba(11, 50, 90, 0.5);
     text-align: center;
 }
-/* End Modal Header */
 
 /* Modal Body */
 .modal .modal-body .form-control-label {
     font-size: 1.8rem;
-    font-weight: 400;
-    color: #0066cc;
+    font-weight: 600;
+    color: rgba(11, 50, 90, 0.9);
     text-transform: uppercase;
     text-align: center;
-    text-shadow: 1px 1px 0px rgba(2, 82, 162, 0.7);
+    /*text-shadow: 1px 1px 0 rgba(11, 50, 90, 0.9);*/
 }
-
 .modal .modal-body input,       .modal .modal-body input[readonly="readonly"],
 .modal .modal-body select,      .modal .modal-body select option,
 .modal .modal-body textarea {
     font-size: 1.7rem;
     font-weight: 400;
     /*width: 90%;*/
-    color: #023365;
+    color: rgb(2, 29, 56);
     text-align: center;
     border: 1px solid rgba(76, 103, 130, 0.35);
     border-radius: 0.5rem;
@@ -1496,29 +1469,22 @@ tr.highlight {
     resize: none;
     line-height: 2.5rem;
 }
-
 .modal .modal-body textarea {
     resize: none;
     outline: none;
 }
-
-.modal .modal-body .form-control:focus,     .modal .modal-body input[readonly="readonly"]:focus,
-.modal .modal-body select:focus,
-.modal .modal-body textarea:focus {
-        border: 1px solid rgb(0, 102, 204);
-        box-shadow: none;
-        outline-width: 0;
-        outline: none ;
-        transition: all 0.2s ease-out;
-            -moz-transition: all 0.2s ease-out;
-            -webkit-transition: all 0.2s ease-out;
-            -o-transition: all 0.2s ease-out;   
+.modal .modal-body .form-control.input-focused,     .modal .modal-body input[readonly="readonly"].input-focused,
+/*.modal .modal-body select.input-focused,*/
+.modal .modal-body textarea.input-focused {
+    border: 1px solid rgb(2, 29, 56) !important;
+    box-shadow: none !important;
+    outline: none !important;
+    transition: all 0.2s ease-out;  
 }
-
 .modal .modal-body .form-group select {
     font-size: 1.7rem;
     font-weight: 400;
-    color: rgb(2, 51, 101);
+    color: rgb(2, 29, 56);
     text-align: center;
 }
 
@@ -1535,23 +1501,20 @@ tr.highlight {
     font-weight: 400;
     text-align: center;
     font-size: 2rem;
-    color: #023365;
+    color: rgb(2, 51, 101);
 }
-
 .modal .modal-body .delete-msg span {
     color: #6d1741;
     font-size: 2rem;
     font-weight: 600;
     text-align: center;
 }
-
 .modal .modal-body .success-msg {
     display: none;
     text-align: center;
     font-size: 2.2rem;
-    color: #023365;
+    color: rgb(2, 51, 101);
 }
-
 .modal .modal-body .success-msg span {
     /*color: #023365;*/
     color: rgb(76, 103, 130);
@@ -1560,7 +1523,6 @@ tr.highlight {
     text-align: center;
     text-transform: uppercase;
 }
-
 .modal .modal-body .success-msg span i {
     color: rgb(93, 175, 92);
     font-size: 2rem;
@@ -1570,32 +1532,25 @@ tr.highlight {
 .form-control.text-upper {
     text-transform: uppercase;
 }
-
 .form-control.text-capitalize {
     text-transform: capitalize;
 }
-/* End Modal Body */
 
-/* Modal Footer */
+/* Modal Footer + Buttons */
 .modal .modal-footer .btn {
     border: none;
     outline: none;
     box-shadow: none;
-        -moz-box-shadow: none;
-        -webkit-box-shadow: none;
 }
-
 .modal .modal-footer .btn span {
     color: #023365;
     font-size: 2rem;
     font-weight: 600;
     text-transform: uppercase;
 }
-
 .modal .modal-footer .modal-cancel {
     float: left;
 }
-
 .modal .modal-footer .btn:hover,
 .modal .modal-footer .btn:focus, 
 .modal .modal-footer .btn:active {
@@ -1604,47 +1559,39 @@ tr.highlight {
     border: none;
     outline: none;
     box-shadow: none;
-        -moz-box-shadow: none;
-        -webkit-box-shadow: none;
 }
-
 .modal .modal-footer .modal-save span:hover, 
 .modal .modal-footer .modal-save span:focus, 
 .modal .modal-footer .modal-save span:active {
     color: #5daf5c; 
 }
-
 .modal .modal-footer .modal-cancel span:hover,
 .modal .modal-footer .modal-cancel span:focus,
 .modal .modal-footer .modal-cancel span:active {
-    color: #972059; 
+    color: rgb(151, 32, 89); 
 }
-
 .modal .modal-footer .modal-reset span:hover,
 .modal .modal-footer .modal-reset span:focus,
 .modal .modal-footer .modal-reset span:active {
     color: #525eb7;
 }
-/* End Modal Footer */
 
+/* Modal Errors */
+.is-invalid {
+    border: 1px solid rgb(220, 53, 69) !important;                            /* Red border */
+    box-shadow: 0 0 4px rgba(220, 53, 69, 0.5) !important;                    /* Optional glow effect */
+}
+.is-valid {
+    border: 1px solid rgb(40, 167, 69) !important;                            /* Green border for valid inputs */
+    box-shadow: 0 0 4px rgba(40, 167, 69, 0.5) !important;
+}
 #user-edit .error-placeholder,
 #transport-edit .error-placeholder,
 #quantity-edit .error-placeholder {
     min-height: 1.65rem;    
     line-height: 1.3rem;
-    font-size: 1rem;                                                   /* Adjust this based on expected error message height */
+    font-size: 1rem;                                                   
 }
-
-.form-control.is-invalid, .form-control.is-invalid:focus {
-    border: 1px solid rgb(220, 53, 69) !important;                            /* Red border */
-    box-shadow: 0 0 4px rgba(220, 53, 69, 0.5) !important;                               /* Optional glow effect */
-}
-
-.form-control.is-valid, .form-control.is-valid:focus {
-    border: 1px solid rgb(40, 167, 69) !important;                            /* Green border for valid inputs */
-    box-shadow: 0 0 4px rgba(40, 167, 69, 0.5) !important;
-}
-
 /*--------------------------------------------------------------
 # =====>         END EDIT/DELETE MODAL FORM PAGE               #
 --------------------------------------------------------------*/
@@ -2059,13 +2006,13 @@ tr.highlight {
 
 
 
+
 /*--------------------------------------------------------------
-#                      ERROR 404 PAGE                          #
+#   =====>               ERROR 404 PAGE                        #
 --------------------------------------------------------------*/
 .error-404 {
     padding: 30px;
-}
-  
+}  
 .error-404 h1 {
     font-size: 180px;
     font-weight: 700;
@@ -2073,23 +2020,20 @@ tr.highlight {
     margin-bottom: 0;
     line-height: 150px;
 }
-  
 .error-404 h2 {
     font-size: 24px;
     font-weight: 700;
     color: #012970;
     margin-bottom: 30px;
 }
-  
 .error-404 .btn {
     background: #51678f;
     color: #fff;
     padding: 8px 30px;
 }
-  
 .error-404 .btn:hover {
     background: #3e4f6f;
 }
 /*--------------------------------------------------------------
-#                     END ERROR 404 PAGE                       #                              
+#   =====>             END ERROR 404 PAGE                      #
 --------------------------------------------------------------*/

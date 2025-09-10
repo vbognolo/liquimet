@@ -16,10 +16,10 @@ class Quantity{
         $sql = "SELECT id_quantity, kg_load, cooling, price_typology, price_value, kg_unload, mwh, liquid_density, 
                        gas_weight, mj_kg, pcs_ghv, volume_mc, volume_nmc, smc_mc, gas_nmc, gas_smc, smc_kg, id_transport
                 FROM `quantities`
-                WHERE id_transport = :id_transport
+                WHERE id_quantity = :id_quantity
                 LIMIT 1"; 
         
-        $quantity = $this->db->runSQL($sql, ['id_transport' => $id])->fetch();  
+        $quantity = $this->db->runSQL($sql, ['id_quantity' => $id])->fetch();  
             return $quantity ?: false;
     }
 
@@ -151,7 +151,7 @@ class Quantity{
                     gas_weight = :gas_weight, 
                     pcs_ghv = :pcs_ghv,
                     modified = :modified, 
-                    modified_by = :modified_by
+                    modified_by = :modified_by 
                 WHERE id_quantity = :id_quantity"; 
 
         $args = [

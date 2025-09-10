@@ -214,8 +214,8 @@ class __TwigTemplate_89cd06a319c3085e98affa7b7a73aa62 extends Template
                 <div class=\"d-flex align-items-center\">
                         ";
                 // line 65
-                yield "                    <div class=\"my-auto me-3 ms-3 text-wrap col-1\" id=\"collapse-1\" style=\"border: 1px solid black\">
-                        <h4 class=\"mx-auto\" style=\"border: 1px solid red\"> 
+                yield "                    <div class=\"my-auto me-3 ms-3 text-wrap col-1\" id=\"collapse-1\">
+                        <h4 class=\"mx-auto\"> 
                             <span class=\"btn collapse-title edit-data updateQty\" style=\"cursor: default\">
                                 Quantità
                             </span>
@@ -225,7 +225,7 @@ class __TwigTemplate_89cd06a319c3085e98affa7b7a73aa62 extends Template
                 // line 72
                 if (((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "role", [], "any", false, false, false, 72) == "admin") || (CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "id_user", [], "any", false, false, false, 72) == CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_user", [], "any", false, false, false, 72)))) {
                     // line 73
-                    yield "                            <h6 class=\"mx-auto\" style=\"border: 1px solid green\">
+                    yield "                            <h6 class=\"mx-auto\" >
                                 <button type=\"button\" class=\"btn edit-data updateQty\" data-bs-toggle=\"modal\" 
                                         data-bs-target=\"#editQtyModal\" data-id=\"";
                     // line 75
@@ -375,12 +375,13 @@ class __TwigTemplate_89cd06a319c3085e98affa7b7a73aa62 extends Template
                     // line 156
                     yield from $this->loadTemplate("partials.twig", "transports-ajax.twig", 156)->unwrap()->yield(CoreExtension::toArray(["partials" => ((CoreExtension::getAttribute($this->env, $this->source,                     // line 157
 ($context["partials"] ?? null), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 157), [], "array", true, true, false, 157)) ? (Twig\Extension\CoreExtension::default((($_v0 = ($context["partials"] ?? null)) && is_array($_v0) || $_v0 instanceof ArrayAccess ? ($_v0[CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 157)] ?? null) : null), [])) : ([])), "t" =>                     // line 158
-$context["t"]]));
-                    // line 160
+$context["t"], "total_part" => ((CoreExtension::getAttribute($this->env, $this->source,                     // line 159
+($context["total_part"] ?? null), CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 159), [], "array", true, true, false, 159)) ? (Twig\Extension\CoreExtension::default((($_v1 = ($context["total_part"] ?? null)) && is_array($_v1) || $_v1 instanceof ArrayAccess ? ($_v1[CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 159)] ?? null) : null), 0)) : (0))]));
+                    // line 161
                     yield "        </tr>
         ";
                 }
-                // line 162
+                // line 163
                 yield "    ";
                 ++$context['loop']['index0'];
                 ++$context['loop']['index'];
@@ -395,27 +396,27 @@ $context["t"]]));
             unset($context['_seq'], $context['_key'], $context['t'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
         }
-        // line 164
-        yield "
-";
         // line 165
-        yield from $this->unwrap()->yieldBlock('jquery', $context, $blocks);
-        // line 171
         yield "
 ";
+        // line 166
+        yield from $this->unwrap()->yieldBlock('jquery', $context, $blocks);
         // line 172
+        yield "
+";
+        // line 173
         yield from $this->unwrap()->yieldBlock('page_script', $context, $blocks);
         yield from [];
     }
 
-    // line 165
+    // line 166
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_jquery(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 166
+        // line 167
         yield "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
         integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
         crossorigin=\"anonymous\">
@@ -424,14 +425,14 @@ $context["t"]]));
         yield from [];
     }
 
-    // line 172
+    // line 173
     /**
      * @return iterable<null|scalar|\Stringable>
      */
     public function block_page_script(array $context, array $blocks = []): iterable
     {
         $macros = $this->macros;
-        // line 173
+        // line 174
         yield "<script>
 \$(document).ready(function () {
 /***  Pagination setup  ***/
@@ -546,7 +547,7 @@ $context["t"]]));
      */
     public function getDebugInfo(): array
     {
-        return array (  435 => 173,  428 => 172,  419 => 166,  412 => 165,  407 => 172,  404 => 171,  402 => 165,  399 => 164,  384 => 162,  380 => 160,  378 => 158,  377 => 157,  376 => 156,  371 => 155,  369 => 154,  367 => 153,  355 => 144,  349 => 141,  343 => 138,  337 => 135,  329 => 130,  323 => 127,  317 => 124,  311 => 121,  303 => 116,  297 => 113,  291 => 110,  285 => 107,  277 => 102,  271 => 99,  265 => 96,  259 => 93,  252 => 89,  249 => 88,  245 => 85,  232 => 75,  228 => 73,  226 => 72,  217 => 65,  210 => 61,  205 => 57,  196 => 53,  193 => 52,  191 => 51,  188 => 50,  181 => 45,  174 => 42,  171 => 41,  169 => 40,  164 => 38,  158 => 37,  154 => 36,  150 => 35,  146 => 34,  142 => 33,  138 => 32,  134 => 31,  130 => 30,  126 => 29,  122 => 28,  118 => 27,  109 => 21,  105 => 20,  101 => 18,  98 => 17,  94 => 15,  90 => 13,  87 => 12,  85 => 11,  80 => 9,  66 => 5,  64 => 4,  46 => 3,  44 => 2,);
+        return array (  436 => 174,  429 => 173,  420 => 167,  413 => 166,  408 => 173,  405 => 172,  403 => 166,  400 => 165,  385 => 163,  381 => 161,  379 => 159,  378 => 158,  377 => 157,  376 => 156,  371 => 155,  369 => 154,  367 => 153,  355 => 144,  349 => 141,  343 => 138,  337 => 135,  329 => 130,  323 => 127,  317 => 124,  311 => 121,  303 => 116,  297 => 113,  291 => 110,  285 => 107,  277 => 102,  271 => 99,  265 => 96,  259 => 93,  252 => 89,  249 => 88,  245 => 85,  232 => 75,  228 => 73,  226 => 72,  217 => 65,  210 => 61,  205 => 57,  196 => 53,  193 => 52,  191 => 51,  188 => 50,  181 => 45,  174 => 42,  171 => 41,  169 => 40,  164 => 38,  158 => 37,  154 => 36,  150 => 35,  146 => 34,  142 => 33,  138 => 32,  134 => 31,  130 => 30,  126 => 29,  122 => 28,  118 => 27,  109 => 21,  105 => 20,  101 => 18,  98 => 17,  94 => 15,  90 => 13,  87 => 12,  85 => 11,  80 => 9,  66 => 5,  64 => 4,  46 => 3,  44 => 2,);
     }
 
     public function getSourceContext(): Source
@@ -615,15 +616,15 @@ $context["t"]]));
             <td colspan=\"14\" class=\"mx-auto my-auto border-0\">
                 <div class=\"d-flex align-items-center\">
                         {# Left Side #}
-                    <div class=\"my-auto me-3 ms-3 text-wrap col-1\" id=\"collapse-1\" style=\"border: 1px solid black\">
-                        <h4 class=\"mx-auto\" style=\"border: 1px solid red\"> 
+                    <div class=\"my-auto me-3 ms-3 text-wrap col-1\" id=\"collapse-1\">
+                        <h4 class=\"mx-auto\"> 
                             <span class=\"btn collapse-title edit-data updateQty\" style=\"cursor: default\">
                                 Quantità
                             </span>
                         </h4>
 
                         {% if (session.role == 'admin') or (session.id_user == t.id_user) %}
-                            <h6 class=\"mx-auto\" style=\"border: 1px solid green\">
+                            <h6 class=\"mx-auto\" >
                                 <button type=\"button\" class=\"btn edit-data updateQty\" data-bs-toggle=\"modal\" 
                                         data-bs-target=\"#editQtyModal\" data-id=\"{{ t.id_transport }}\">   
                                     <span class=\"icon-wrap\">
@@ -708,7 +709,8 @@ $context["t"]]));
         <tr class=\"collapse accordion-collapse border-2 collapse-platform part-row\" id=\"qty-{{ t.id_transport }}\">        
             {% include 'partials.twig' with {
                 partials: partials[t.id_transport]|default([]),
-                t: t
+                t: t,
+                total_part: total_part[t.id_transport]|default(0)
             } only %}
         </tr>
         {% endif %}
