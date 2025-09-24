@@ -302,98 +302,31 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         // line 126
         yield "<script>
 \$(function () {
-    \$('.updateQty').on('click', function() {
-        \$('.updateQty').removeClass('active');                  // Remove active from all buttons first
-        \$(this).addClass('active');                             // Add active to clicked button
-        \$('#editQtyModal').data('trigger', this);               // Store this button in modal
-    });
-
-    \$('#editQtyModal').on('hidden.bs.modal', function() {
-        var btn = \$(this).data('trigger');                      // Find the button that triggered the modal
-            if (btn) {
-                \$(btn).removeClass('active');                   // Remove active class
-                \$(btn).blur();                                  // Remove focus so :focus styles go away
-                \$(this).removeData('trigger');                  // Clean up stored reference
-            }       
-    });
-
-//  ==================== Collapse Btn and Dropdown Menu ====================
-    \$(document).on('shown.bs.collapse', '.collapse', function () {
-        let targetId = \$(this).attr('id');
-        \$(`[data-bs-target=\"#\${targetId}\"]`).attr('aria-expanded', 'true');
-    });
-    \$(document).on('hidden.bs.collapse', '.collapse', function () {
-        let targetId = \$(this).attr('id');
-        \$(`[data-bs-target=\"#\${targetId}\"]`).attr('aria-expanded', 'false');
-    });
-    \$(document).on('click', '.collapse-btn', function() {
-        var \$icon = \$(this).find('i.icon-plus');
-
-        \$icon.css({opacity: 0, transform: 'scale(0.5)'});        // Smooth fade-out
-        setTimeout(function() {                                  // After short delay, swap icon and fade-in
-            \$icon.toggleClass('bi-plus-lg bi-dash-lg');
-            \$icon.css({opacity: 1, transform: 'scale(1)'});
-        }, 350);                                                 // 100ms for smooth transition
-    });
-    \$('.dropdown-item').on('click', function(e) {
-        e.preventDefault();
-        \$('.dropdown-item').removeClass('active');               // Remove active from all items and set active on clicked
-        \$(this).addClass('active');
-
-        let csrfToken = \$('input[name=\"csrf_token\"]').val();     // Send AJAX request to update tbody (optional)
-        let type = \$(this).data('type');                         // Update dropdown button title
-        let title = '';
-            switch(type) {
-                case 'all':
-                    title = 'TUTTI TRASPORTI';
-                    type = '';                                   // Send null to server
-                        break;
-                case 'F':
-                    title = 'TRASPORTI PIENI';
-                        break;
-                case 'P':
-                    title = 'TRASPORTI PARZIALI';
-                        break;
-            }
-        \$(this).closest('.card-header').find('span').text(title);       
-
-        \$.ajax({
-            url: 'pagination', 
-            type: 'POST',
-            data: { 
-                type: type,
-                page: 1,
-                csrf_token: csrfToken
-            },
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    \$('#transport-tbody').html(response.tbody);
-                    \$('#transport-tfoot').html(response.pagination);
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function() {
-                alert('Error loading transports. Please reload the page.');
-            }
-        });
-    });
-
-//  ============ Cache modal, form and buttons ============
-    const csrfToken  = \$('input[name=\"csrf_token\"]').val();
+/*   ____________________________________________
+//  |                                            |
+//  |          CACHE: MODAL, FORM, BTNS          |
+//  |____________________________________________|
+*/
+    const csrfToken = \$('input[name=\"csrf_token\"]').val();
 
     const \$transModal = \$('#editTransModal');                     
-    const \$qtyModal  = \$('#editQtyModal');
+    const \$transForm  = \$('#transport-edit');       
 
-    const \$transForm = \$('#transport-edit');                      
-    const \$qtyForm   = \$('#quantity-edit');
-    const \$partForm  = \$('#partial-edit');
+    const \$qtyModal = \$('#editQtyModal');              
+    const \$qtyForm  = \$('#editQtyModal').find('#quantity-edit');
+
+    const \$partModal = \$('#editPartModal'); 
+    const \$partForm  = \$('#editPartModal').find('#partial-edit');
     
     let originalData = {};                                       //  Global originalData for resetting form on modal hide and updating after submit
-
-//  ============================= Utilities =============================
-//  Utility: get form data as { name: value }
+    let switched     = false;
+    let activeID     = null;
+/*   ______________________________
+//  |                              |
+//  |          UTILITIES           |
+//  |______________________________|
+*/
+//  Get form data as { name: value }
     function getFormData(\$form) {
         const data = {};
             \$form.serializeArray().forEach(f => {
@@ -405,52 +338,31 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
             });
         return data;
     }
-//  Utility: compare two form data objects
+//  Compare 2 form data objects
     function isFormChanged(original, current) {
-        return Object.keys(current).some(key => current[key] !== original[key]);
+        for (const key in original) {
+            if ((original[key] || '') !== (current[key] || '')) {
+                return true;                                     // Changed
+            }
+        }
+        return false;                                            // No change
     }
-//  Utility: reset form inputs to original values, clear errors
+//  Reset form inputs to original values, clear errors
     function resetFormToOriginal(\$form) {
         for (const [k, v] of Object.entries(originalData)) {
             \$form.find(`[name=\"\${k}\"]`).val(v);
         }
     }
-//  On modal hide, reset form if changed
-    \$('#editTransModal, #editQtyModal').on('hide.bs.modal', function () {
-        const \$form = \$(this).find('form');
-        const currentData = getFormData(\$form);
-            if (isFormChanged(originalData, currentData)) {
-                resetFormToOriginal(\$form);
-            }
-    });
-//  Utility: update global originalData after successful AJAX submit
+//  Update global originalData after successful AJAX submit
     function updateOriginalDataFromResponse(data) {
         if (!data) return;
         Object.keys(data).forEach(k => originalData[k] = data[k]);
     }
-
-//  =========== Change detection and Save button enable/disable ===========
-//  Initialize form change tracking per modal and form
-    function initFormChangeTracking(\$modal, \$form, \$saveBtn) {
-        let modalOriginalData = {};
-
-    //  On modal show: cache original form data & disable Save button
-        \$modal.on('show.bs.modal', function () {
-            modalOriginalData = getFormData(\$form);
-            \$saveBtn.prop('disabled', true);
-        });
-    //  On any input or change, enable Save if form changed
-        \$form.on('input change', ':input', function () {
-            const currentData = getFormData(\$form);
-                if (isFormChanged(modalOriginalData, currentData)) {
-                    \$saveBtn.prop('disabled', false);
-                } else {
-                    \$saveBtn.prop('disabled', true);
-                }
-        });
-    }
-
-//  =========================== Date formatting ===========================
+/*   ____________________________________
+//  |                                    |
+//  |          DATE FORMATTING           |
+//  |____________________________________|
+*/
     function formatToDMY(date) {
         const d = String(date.getDate()).padStart(2, '0');
         const m = String(date.getMonth() + 1).padStart(2, '0');
@@ -477,14 +389,53 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         const dt = new Date(y, m, d);
         return (dt.getFullYear() === y && dt.getMonth() === m && dt.getDate() === d) ? dt : null;
     }
+/*   ____________________________________________________
+//  |                                                    |
+//  |          FORM CHANGE TRACKING INITIALIZER          |  Save btn enabled/disabled
+//  |____________________________________________________|
+*/
+//  Initialize form change tracking per modal and form
+    function initFormChangeTracking(\$modal, \$form, \$saveBtn) {
+        let modalOriginalData = {};
 
-//  ============================ Initialization ============================
+    //  On modal show: cache original form data & disable Save button
+        \$modal.on('show.bs.modal', function () {
+            modalOriginalData = getFormData(\$form);
+            \$saveBtn.prop('disabled', true);
+
+        //  Ensure validator is clean
+            if (\$form.data('validator')) {
+                \$form.validate().resetForm();
+            }
+            \$form.find('.is-invalid, .is-valid').removeClass('is-invalid is-valid');
+        });
+    //  On any input or change, enable Save if form changed
+        \$form.on('input change', ':input', function () {
+            const currentData = getFormData(\$form);
+            \$saveBtn.prop('disabled', !isFormChanged(modalOriginalData, currentData));
+        });
+
+    //  Return setter to update modalOriginalData externally (for AJAX-populated partial modal)
+        return function(newData) {
+            modalOriginalData = {...newData};
+            \$saveBtn.prop('disabled', true);  // Reset save button state
+        }
+    }
+
+    const setTransModalOriginalData = initFormChangeTracking(\$transModal, \$transForm, \$transModal.find('button[type=\"submit\"]'));
+    const setQtyModalOriginalData   = initFormChangeTracking(\$qtyModal,   \$qtyForm,   \$qtyModal.find('button[type=\"submit\"]'));
+    const setPartModalOriginalData  = initFormChangeTracking(\$partModal,  \$partForm,  \$partModal.find('button[type=\"submit\"]'));
+/*   ______________________________________________
+//  |                                              |
+//  |          VALIDATION INITIALIZATION           |
+//  |______________________________________________|
+*/
 //  Initialize datepicker and validation for both forms
     function initValidation() {
         const minDate = new Date(2006, 0, 1); // 01-01-2006
         const today = new Date();
 
-    //  Datepicker init (both forms)
+    //  Datepicker init (all forms)
         \$('.datepicker').datepicker({
             format: 'dd-mm-yyyy',
             endDate: today,
@@ -673,7 +624,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         \$qtyForm.validate({
             onkeyup: false,
             onfocusin: false,
-            onfocusout: el => \$(el).valid(),
+            onfocusout: function(el) { this.element(el); },
             rules: {
                 kg_load: { required: true, number: true, min: 0 },
                 cooling: { required: true, digits: true },
@@ -738,7 +689,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
             },
             highlight: el => \$(el).removeClass('is-valid').addClass('is-invalid'),
             unhighlight: el => \$(el).removeClass('is-invalid').closest('.form-group').find('.error-placeholder').empty(),
-            submitHandler: form => {
+            submitHandler: function (form) {
                 \$.ajax({
                     url: 'quantity-edit',
                     type: 'POST',
@@ -752,22 +703,27 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                             const updated = response.updated;
                             const row = \$('#qty-table-' + updated.id_transport);
 
-                            row.find('.col-kg-load').text(updated.kg_load);
-                            row.find('.col-cooling').text(updated.cooling);
-                            row.find('.col-price-typology').text(updated.price_typology);
-                            row.find('.col-price-value').text(updated.price_value);
-                            row.find('.col-kg-unload').text(updated.kg_unload);
-                            row.find('.col-liquid-density').text(updated.liquid_density);
-                            row.find('.col-gas-weight').text(updated.gas_weight);
-                            row.find('.col-pcs-ghv').text(updated.pcs_ghv);
+                                function updateCell(selector, newValue) {
+                                    const cell = row.find(selector);
+                                    const oldValue = cell.text().trim();
 
-                            \$qtyModal.modal('hide');
-                            //  Reset tracking
+                                        if (oldValue != newValue) {
+                                            cell.text(newValue).addClass('table-success');
+                                            \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
+                                            setTimeout(() => cell.removeClass('table-success'), 2500);
+                                        }
+                                }
+
+                            updateCell('.col-kg-load', updated.kg_load);
+                            updateCell('.col-cooling', updated.cooling);
+                            updateCell('.col-price-typology', updated.price_typology);
+                            updateCell('.col-price-value', updated.price_value);
+                            updateCell('.col-kg-unload', updated.kg_unload);
+                            updateCell('.col-liquid-density', updated.liquid_density);
+                            updateCell('.col-gas-weight', updated.gas_weight);
+                            updateCell('.col-pcs-ghv', updated.pcs_ghv);
+
                             originalData = getFormData(\$qtyForm);
-
-                            row.addClass('table-success');
-                            \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
-                            setTimeout(() => row.removeClass('table-success'), 2500);
                         } else {
                             \$(\".invalid-feedback\").remove();
                             if (response.errors) {
@@ -798,10 +754,117 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
             \$(this).removeClass('input-focused');                               // Remove blue border
             \$qtyForm.validate().element(this);
         });
-    }
 
-//  =========================== Toggle Price Typology ===========================
-    let switched = false;
+            //  Partial Form Validation
+        \$partForm.validate({
+            onkeyup: false,
+            onfocusin: false,
+            onfocusout: function(el) { this.element(el); },
+            rules: {
+                destination: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
+                exw: { required: true },
+                date: { required: true },
+                place: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
+                q_unloaded: { required: true, number: true, min: 0 },
+                invoice: { required: true, digits: true, min: 1 },
+            },
+            messages: {
+                destination: {
+                    required: \"Campo obbligatorio.\",
+                    rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
+                    pattern: \"Destinazione può contenere solo lettere e spazi (senza spazio iniziale).\"
+                },
+                exw: {
+                    required: \"Campo obbligatorio.\"
+                },
+                date: {
+                    required: \"Campo obbligatorio.\"
+                }, 
+                place: {
+                    required: \"Campo obbligatorio.\",
+                    rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
+                    pattern: \"Fornitore può contenere solo lettere e spazi (senza spazio iniziale).\"
+                }, 
+                q_unloaded: {
+                    required: \"Campo obbligatorio.\",
+                    number: \"Quantità scaricata deve essere un numero positivo (intero o decimale).\",
+                    min: \"Il valore minimo deve essere maggiore o uguale a 0.\"
+                },
+                invoice: {
+                    required: \"Campo obbligatorio.\",
+                    digits: \"Fattura deve essere un numero intero positivo maggiore o uguale a 1, senza segni o decimali.\",
+                    min: \"Il valore minimo deve essere maggiore o uguale a 1.\",
+                }
+            },
+            errorPlacement: (error, el) => {
+                error.addClass(\"text-danger small\");
+                el.removeClass(\"is-valid\").addClass(\"is-invalid\");
+                el.closest(\".form-group\").find(\".error-placeholder\").html(error);
+            },
+            highlight: el => \$(el).removeClass('is-valid').addClass('is-invalid'),
+            unhighlight: el => \$(el).removeClass('is-invalid').closest('.form-group').find('.error-placeholder').empty(),
+            submitHandler: function (form) {
+                \$.ajax({
+                    url: 'partial-edit',
+                    type: 'POST',
+                    data: \$partForm.serialize(),
+                    dataType: 'json',
+                    success: response => {
+                        if (response.success) {
+                            updateOriginalDataFromResponse(response.modified);
+                            \$partModal.modal('hide');
+
+                            const p = response.modified;
+                            const row = \$('#part-table-' + p.id_transport);
+
+                            row.find('.col-destination').text(p.destination);
+                            row.find('.col-exw').text(p.exw);
+                            row.find('.col-date').text(p.date);
+                            row.find('.col-place').text(p.place);
+                            row.find('.col-q-unloaded').text(p.q_unloaded);
+                            row.find('.col-invoice').text(p.invoice);
+
+                            originalData = getFormData(\$partForm);
+
+                            row.addClass('table-success');
+                            \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
+                            setTimeout(() => row.removeClass('table-success'), 2500);
+                        } else {
+                            \$(\".invalid-feedback\").remove();
+                            if (response.errors) {
+                                \$.each(response.errors, (field, message) => {
+                                    const input = \$(\"[name='\" + field + \"']\");
+                                    input.removeClass(\"is-valid\").addClass(\"is-invalid\");
+                                    input.closest(\".form-group\").find(\".error-placeholder\")
+                                         .html('<div class=\"invalid-feedback\">' + message + '</div>');
+                                });
+                            }
+                        }
+                    },
+                    error: xhr => console.error(xhr.responseText)
+                });
+                return false;
+            },
+            success: (label, el) => {
+                \$(el).removeClass(\"is-invalid\").addClass(\"is-valid\");
+                \$(el).closest(\".form-group\").find(\".error-placeholder\").empty();
+            }
+        });
+
+        \$partModal.on('focus', '.form-control', function() {
+            \$(this).addClass('input-focused');                                  // Blue border while typing
+            \$(this).removeClass('is-invalid is-valid');                         // Remove validation styles while focused
+            /*\$(this).closest(\".form-group\").find(\".error-placeholder\").empty();  // hide error*/
+        }).on('blur', '.form-control', function() {
+            \$(this).removeClass('input-focused');                               // Remove blue border
+            \$partForm.validate().element(this);
+        });
+    }
+/*   __________________________________________
+//  |                                          |
+//  |          TOGGLE PRICE TYPOLOGY           |
+//  |__________________________________________|
+*/
     function togglePriceValueField() {
         const \$pv = \$('#price_value');
         const typology = \$('#price_typology').val();
@@ -824,92 +887,76 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                    \$pv.trigger('input');
             }
     }
+
+
+
+    // --- Click qty-btn ---
+/*\$(document).off('click', '.qty-btn').on('click', '.qty-btn', function() {
+    const \$btn = \$(this);
+    \$('.qty-btn').removeClass('active');
+    \$btn.addClass('active');
+    activeID = \$btn.data('id');
+    \$qtyModal.data('trigger', activeID);
+});*/ 
+/*   ___________________________________
+//  |                                   |
+//  |          INPUT BEHAVIOUR          |
+//  |___________________________________|
+*/
     \$('#price_typology').on('change', togglePriceValueField);
-    \$qtyModal.on('shown.bs.modal', () => {
-        togglePriceValueField();
-    })
+    \$qtyModal.on('shown.bs.modal', () => { togglePriceValueField(); })
 
-            /*if (typology !== 'yes') {
-                switched = true;
-                \$pv.val(0).prop('disabled', true).removeClass('is-valid is-invalid')
-                    .closest('.form-group').find('.error-placeholder').empty();
-            } else {
-                \$pv.prop('disabled', false).removeClass('is-valid is-invalid')
-                    .closest('.form-group').find('.error-placeholder').empty();
-                if (switched) \$pv.val('');
-                switched = false;
-                \$pv.trigger('input');
-            }
-    }
-    \$('#price_typology').on('change', togglePriceValueField);*/
-
-//  =========================== Modal Reset Handlers =============== ============
-    \$('#editTransModal, #editQtyModal').on('hidden.bs.modal', function () {
-        const dp = \$(this).find('.datepicker');
-        const \$form = \$(this).find('form');
-            
-            dp.datepicker('clearDates').val('');
-            \$form[0].reset();
-            \$form.validate().resetForm();
-            \$form.find('.is-invalid, .is-valid').removeClass('is-invalid is-valid');
-        
-        if (this.id === 'editQtyModal') switched = false;
-    });
 //  Normalize date input on focusout
-    \$('#date_load, #date_unload').on('focusout', function () {
+    \$('#date_load, #date_unload, #date').on('focusout', function () {
         const val = \$(this).val().trim();
             if (!val) return;
         const dt = parseAnyDate(val);
         \$(this).val(dt ? formatToDMY(dt) : '');
     });
+/*   _____________________________________________________
+//  |                                                     |
+//  |          MODAL POPULATION WITH DATA (AJAX)          |
+//  |_____________________________________________________|
+*/
+//  Transport Modal
 
-//  ===================== Modal Population with Data =====================
-//  Transport modal population on edit click
-    \$(document).off('click', '.updateTrans').on('click', '.updateTrans', function () {
+//  Quantity Modal
+
+//  Partial Modal
+    \$(document).off('click', '.updatePart').on('click', '.updatePart', function () {
         const id = \$(this).data('id');
-        \$.post('get-transport', { action: 'getTransportData', id_transport: id, csrf_token: csrfToken }, response => {
+        \$.post('get-partial', { action: 'getPartialData', id_partial: id, csrf_token: csrfToken }, response => {
             if (response.success) {
-                const t = response.transport;
-                    \$transModal.find('#id_transport').val(t.id_transport);
-                    \$transModal.find('#slot').val(t.slot.toUpperCase());
-                    \$transModal.find('#cmr').val(t.cmr.toUpperCase());
-                    \$transModal.find('#issuer').val(t.issuer.toUpperCase());
-                    \$transModal.find('#supplier').val(t.supplier.toUpperCase());
-                    \$transModal.find('#transport').val(t.transport.toUpperCase());
-                    \$transModal.find('#date_load').val(t.date_load);
-                    \$transModal.find('#date_unload').val(t.date_unload);
-                    \$transModal.find('#container').val(t.container.toUpperCase());
+                const p = response.partial;
+                const \$dateInput = \$partModal.find('#date'); 
+                    /*\$partModal.find('#id_transport').val(p.id_transport);*/
+                    \$partModal.find('#id_partial').val(p.id_partial);
+                    \$partModal.find('#destination').val(p.destination);
+                    \$partModal.find('#exw').val('').trigger('change'); // Reset
+                    \$partModal.find('#exw').val(p.exw).trigger('change');
+                    /*\$partModal.find('#date').val(p.date);*/
+                    \$partModal.find('#place').val(p.place);
+                    \$partModal.find('#q_unloaded').val(p.q_unloaded);
+                    \$partModal.find('#invoice').val(p.invoice);
 
-                    \$transModal.find('#original_slot').val(t.slot.toUpperCase());
-                    \$transModal.find('#original_cmr').val(t.cmr.toUpperCase());
-                \$transModal.modal('show');
+                    \$dateInput.val('');  
+                        if (p.date?.trim()) {
+                            const parts = p.date.split('-'); // dd-mm-yyyy from server
+                            const jsDate = new Date(parts[2], parts[1] - 1, parts[0]);
+                            \$dateInput.datepicker('setDate', jsDate);
+                        }
+                    setPartModalOriginalData(getFormData(\$partForm));
+                    \$partModal.modal('show');
             } else {
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
         }, 'json');
     });
-//  Quantity modal population on edit click
-    \$(document).off('click', '.updateQty').on('click', '.updateQty', function () {
-        const id = \$(this).data('id');
-        \$.post('get-quantity', { action: 'getQuantityData', id_transport: id, csrf_token: csrfToken }, response => {
-            if (response.success) {
-                const q = response.quantity;
-                    \$qtyModal.find('#id_transport').val(q.id_transport);
-                    \$qtyModal.find('#id_quantity').val(q.id_quantity);
-                    \$qtyModal.find('#kg_load').val(q.kg_load);
-                    \$qtyModal.find('#cooling').val(q.cooling);
-                    \$qtyModal.find('#price_typology').val(q.price_typology);
-                    \$qtyModal.find('#price_value').val(q.price_value);
-                    \$qtyModal.find('#kg_unload').val(q.kg_unload);
-                    \$qtyModal.find('#liquid_density').val(q.liquid_density);
-                    \$qtyModal.find('#gas_weight').val(q.gas_weight);
-                    \$qtyModal.find('#pcs_ghv').val(q.pcs_ghv);
-                \$qtyModal.modal('show');
-            } else {
-                alert(response.message || 'Errore durante il caricamento dei dati.');
-            }
-        }, 'json');
-    });
+/*   _____________________________________
+//  |                                     |
+//  |          EXISTENCE CHECKS           |
+//  |_____________________________________|
+*/
 //  Slot and CMR uniqueness live check inside edit transport modal
     \$('#editTransModal input[name=\"slot\"], #editTransModal input[name=\"cmr\"]').off('change').on('change', function () {
         const \$input = \$(this);
@@ -934,42 +981,13 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                 }
         }, 'json'); 
     });
-
-
-//  Delete all partials modal 
-    /*\$(document).off('click', '.deleteParts').on('click', '.deleteParts', function () {
-        const id = \$(this).data('id');
-        const slot = \$(this).data('slot');
-        const csrfToken = \$('input[name=\"csrf_token\"]').val(); 
-
-        \$(\"#deletePartsModal #id_transport\").val(id);
-        \$(\"#deletePartsModal #slot-placeholder\").text(slot);
-        /*const id = \$(this).data('id');
-        \$.post('partials-delete', { action: 'getQuantityData', id_transport: id, csrf_token: csrfToken }, response => {
-            if (response.success) {
-                const q = response.quantity;
-                    \$qtyModal.find('#id_transport').val(q.id_transport);
-                    \$qtyModal.find('#id_quantity').val(q.id_quantity);
-                    \$qtyModal.find('#kg_load').val(q.kg_load);
-                    \$qtyModal.find('#cooling').val(q.cooling);
-                    \$qtyModal.find('#price_typology').val(q.price_typology);
-                    \$qtyModal.find('#price_value').val(q.price_value);
-                    \$qtyModal.find('#kg_unload').val(q.kg_unload);
-                    \$qtyModal.find('#liquid_density').val(q.liquid_density);
-                    \$qtyModal.find('#gas_weight').val(q.gas_weight);
-                    \$qtyModal.find('#pcs_ghv').val(q.pcs_ghv);
-                \$qtyModal.modal('show');
-            } else {
-                alert(response.message || 'Errore durante il caricamento dei dati.');
-            }
-        }, 'json');*/
-    /*});*/
-
+/*   ___________________________________
+//  |                                   |
+//  |          INITIALIZATION           |
+//  |___________________________________|
+*/
 //  Initialize validation
     initValidation();
-//  Initialize Save button enable/disable tracking
-    initFormChangeTracking(\$transModal, \$transForm, \$transModal.find('button[type=\"submit\"]'));
-    initFormChangeTracking(\$qtyModal, \$qtyForm, \$qtyModal.find('button[type=\"submit\"]'));
 });
 </script>
 ";
@@ -1129,98 +1147,31 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
 {% block page_script %}
 <script>
 \$(function () {
-    \$('.updateQty').on('click', function() {
-        \$('.updateQty').removeClass('active');                  // Remove active from all buttons first
-        \$(this).addClass('active');                             // Add active to clicked button
-        \$('#editQtyModal').data('trigger', this);               // Store this button in modal
-    });
-
-    \$('#editQtyModal').on('hidden.bs.modal', function() {
-        var btn = \$(this).data('trigger');                      // Find the button that triggered the modal
-            if (btn) {
-                \$(btn).removeClass('active');                   // Remove active class
-                \$(btn).blur();                                  // Remove focus so :focus styles go away
-                \$(this).removeData('trigger');                  // Clean up stored reference
-            }       
-    });
-
-//  ==================== Collapse Btn and Dropdown Menu ====================
-    \$(document).on('shown.bs.collapse', '.collapse', function () {
-        let targetId = \$(this).attr('id');
-        \$(`[data-bs-target=\"#\${targetId}\"]`).attr('aria-expanded', 'true');
-    });
-    \$(document).on('hidden.bs.collapse', '.collapse', function () {
-        let targetId = \$(this).attr('id');
-        \$(`[data-bs-target=\"#\${targetId}\"]`).attr('aria-expanded', 'false');
-    });
-    \$(document).on('click', '.collapse-btn', function() {
-        var \$icon = \$(this).find('i.icon-plus');
-
-        \$icon.css({opacity: 0, transform: 'scale(0.5)'});        // Smooth fade-out
-        setTimeout(function() {                                  // After short delay, swap icon and fade-in
-            \$icon.toggleClass('bi-plus-lg bi-dash-lg');
-            \$icon.css({opacity: 1, transform: 'scale(1)'});
-        }, 350);                                                 // 100ms for smooth transition
-    });
-    \$('.dropdown-item').on('click', function(e) {
-        e.preventDefault();
-        \$('.dropdown-item').removeClass('active');               // Remove active from all items and set active on clicked
-        \$(this).addClass('active');
-
-        let csrfToken = \$('input[name=\"csrf_token\"]').val();     // Send AJAX request to update tbody (optional)
-        let type = \$(this).data('type');                         // Update dropdown button title
-        let title = '';
-            switch(type) {
-                case 'all':
-                    title = 'TUTTI TRASPORTI';
-                    type = '';                                   // Send null to server
-                        break;
-                case 'F':
-                    title = 'TRASPORTI PIENI';
-                        break;
-                case 'P':
-                    title = 'TRASPORTI PARZIALI';
-                        break;
-            }
-        \$(this).closest('.card-header').find('span').text(title);       
-
-        \$.ajax({
-            url: 'pagination', 
-            type: 'POST',
-            data: { 
-                type: type,
-                page: 1,
-                csrf_token: csrfToken
-            },
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    \$('#transport-tbody').html(response.tbody);
-                    \$('#transport-tfoot').html(response.pagination);
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function() {
-                alert('Error loading transports. Please reload the page.');
-            }
-        });
-    });
-
-//  ============ Cache modal, form and buttons ============
-    const csrfToken  = \$('input[name=\"csrf_token\"]').val();
+/*   ____________________________________________
+//  |                                            |
+//  |          CACHE: MODAL, FORM, BTNS          |
+//  |____________________________________________|
+*/
+    const csrfToken = \$('input[name=\"csrf_token\"]').val();
 
     const \$transModal = \$('#editTransModal');                     
-    const \$qtyModal  = \$('#editQtyModal');
+    const \$transForm  = \$('#transport-edit');       
 
-    const \$transForm = \$('#transport-edit');                      
-    const \$qtyForm   = \$('#quantity-edit');
-    const \$partForm  = \$('#partial-edit');
+    const \$qtyModal = \$('#editQtyModal');              
+    const \$qtyForm  = \$('#editQtyModal').find('#quantity-edit');
+
+    const \$partModal = \$('#editPartModal'); 
+    const \$partForm  = \$('#editPartModal').find('#partial-edit');
     
     let originalData = {};                                       //  Global originalData for resetting form on modal hide and updating after submit
-
-//  ============================= Utilities =============================
-//  Utility: get form data as { name: value }
+    let switched     = false;
+    let activeID     = null;
+/*   ______________________________
+//  |                              |
+//  |          UTILITIES           |
+//  |______________________________|
+*/
+//  Get form data as { name: value }
     function getFormData(\$form) {
         const data = {};
             \$form.serializeArray().forEach(f => {
@@ -1232,52 +1183,31 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
             });
         return data;
     }
-//  Utility: compare two form data objects
+//  Compare 2 form data objects
     function isFormChanged(original, current) {
-        return Object.keys(current).some(key => current[key] !== original[key]);
+        for (const key in original) {
+            if ((original[key] || '') !== (current[key] || '')) {
+                return true;                                     // Changed
+            }
+        }
+        return false;                                            // No change
     }
-//  Utility: reset form inputs to original values, clear errors
+//  Reset form inputs to original values, clear errors
     function resetFormToOriginal(\$form) {
         for (const [k, v] of Object.entries(originalData)) {
             \$form.find(`[name=\"\${k}\"]`).val(v);
         }
     }
-//  On modal hide, reset form if changed
-    \$('#editTransModal, #editQtyModal').on('hide.bs.modal', function () {
-        const \$form = \$(this).find('form');
-        const currentData = getFormData(\$form);
-            if (isFormChanged(originalData, currentData)) {
-                resetFormToOriginal(\$form);
-            }
-    });
-//  Utility: update global originalData after successful AJAX submit
+//  Update global originalData after successful AJAX submit
     function updateOriginalDataFromResponse(data) {
         if (!data) return;
         Object.keys(data).forEach(k => originalData[k] = data[k]);
     }
-
-//  =========== Change detection and Save button enable/disable ===========
-//  Initialize form change tracking per modal and form
-    function initFormChangeTracking(\$modal, \$form, \$saveBtn) {
-        let modalOriginalData = {};
-
-    //  On modal show: cache original form data & disable Save button
-        \$modal.on('show.bs.modal', function () {
-            modalOriginalData = getFormData(\$form);
-            \$saveBtn.prop('disabled', true);
-        });
-    //  On any input or change, enable Save if form changed
-        \$form.on('input change', ':input', function () {
-            const currentData = getFormData(\$form);
-                if (isFormChanged(modalOriginalData, currentData)) {
-                    \$saveBtn.prop('disabled', false);
-                } else {
-                    \$saveBtn.prop('disabled', true);
-                }
-        });
-    }
-
-//  =========================== Date formatting ===========================
+/*   ____________________________________
+//  |                                    |
+//  |          DATE FORMATTING           |
+//  |____________________________________|
+*/
     function formatToDMY(date) {
         const d = String(date.getDate()).padStart(2, '0');
         const m = String(date.getMonth() + 1).padStart(2, '0');
@@ -1304,14 +1234,53 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         const dt = new Date(y, m, d);
         return (dt.getFullYear() === y && dt.getMonth() === m && dt.getDate() === d) ? dt : null;
     }
+/*   ____________________________________________________
+//  |                                                    |
+//  |          FORM CHANGE TRACKING INITIALIZER          |  Save btn enabled/disabled
+//  |____________________________________________________|
+*/
+//  Initialize form change tracking per modal and form
+    function initFormChangeTracking(\$modal, \$form, \$saveBtn) {
+        let modalOriginalData = {};
 
-//  ============================ Initialization ============================
+    //  On modal show: cache original form data & disable Save button
+        \$modal.on('show.bs.modal', function () {
+            modalOriginalData = getFormData(\$form);
+            \$saveBtn.prop('disabled', true);
+
+        //  Ensure validator is clean
+            if (\$form.data('validator')) {
+                \$form.validate().resetForm();
+            }
+            \$form.find('.is-invalid, .is-valid').removeClass('is-invalid is-valid');
+        });
+    //  On any input or change, enable Save if form changed
+        \$form.on('input change', ':input', function () {
+            const currentData = getFormData(\$form);
+            \$saveBtn.prop('disabled', !isFormChanged(modalOriginalData, currentData));
+        });
+
+    //  Return setter to update modalOriginalData externally (for AJAX-populated partial modal)
+        return function(newData) {
+            modalOriginalData = {...newData};
+            \$saveBtn.prop('disabled', true);  // Reset save button state
+        }
+    }
+
+    const setTransModalOriginalData = initFormChangeTracking(\$transModal, \$transForm, \$transModal.find('button[type=\"submit\"]'));
+    const setQtyModalOriginalData   = initFormChangeTracking(\$qtyModal,   \$qtyForm,   \$qtyModal.find('button[type=\"submit\"]'));
+    const setPartModalOriginalData  = initFormChangeTracking(\$partModal,  \$partForm,  \$partModal.find('button[type=\"submit\"]'));
+/*   ______________________________________________
+//  |                                              |
+//  |          VALIDATION INITIALIZATION           |
+//  |______________________________________________|
+*/
 //  Initialize datepicker and validation for both forms
     function initValidation() {
         const minDate = new Date(2006, 0, 1); // 01-01-2006
         const today = new Date();
 
-    //  Datepicker init (both forms)
+    //  Datepicker init (all forms)
         \$('.datepicker').datepicker({
             format: 'dd-mm-yyyy',
             endDate: today,
@@ -1500,7 +1469,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
         \$qtyForm.validate({
             onkeyup: false,
             onfocusin: false,
-            onfocusout: el => \$(el).valid(),
+            onfocusout: function(el) { this.element(el); },
             rules: {
                 kg_load: { required: true, number: true, min: 0 },
                 cooling: { required: true, digits: true },
@@ -1565,7 +1534,7 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
             },
             highlight: el => \$(el).removeClass('is-valid').addClass('is-invalid'),
             unhighlight: el => \$(el).removeClass('is-invalid').closest('.form-group').find('.error-placeholder').empty(),
-            submitHandler: form => {
+            submitHandler: function (form) {
                 \$.ajax({
                     url: 'quantity-edit',
                     type: 'POST',
@@ -1579,22 +1548,27 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                             const updated = response.updated;
                             const row = \$('#qty-table-' + updated.id_transport);
 
-                            row.find('.col-kg-load').text(updated.kg_load);
-                            row.find('.col-cooling').text(updated.cooling);
-                            row.find('.col-price-typology').text(updated.price_typology);
-                            row.find('.col-price-value').text(updated.price_value);
-                            row.find('.col-kg-unload').text(updated.kg_unload);
-                            row.find('.col-liquid-density').text(updated.liquid_density);
-                            row.find('.col-gas-weight').text(updated.gas_weight);
-                            row.find('.col-pcs-ghv').text(updated.pcs_ghv);
+                                function updateCell(selector, newValue) {
+                                    const cell = row.find(selector);
+                                    const oldValue = cell.text().trim();
 
-                            \$qtyModal.modal('hide');
-                            //  Reset tracking
+                                        if (oldValue != newValue) {
+                                            cell.text(newValue).addClass('table-success');
+                                            \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
+                                            setTimeout(() => cell.removeClass('table-success'), 2500);
+                                        }
+                                }
+
+                            updateCell('.col-kg-load', updated.kg_load);
+                            updateCell('.col-cooling', updated.cooling);
+                            updateCell('.col-price-typology', updated.price_typology);
+                            updateCell('.col-price-value', updated.price_value);
+                            updateCell('.col-kg-unload', updated.kg_unload);
+                            updateCell('.col-liquid-density', updated.liquid_density);
+                            updateCell('.col-gas-weight', updated.gas_weight);
+                            updateCell('.col-pcs-ghv', updated.pcs_ghv);
+
                             originalData = getFormData(\$qtyForm);
-
-                            row.addClass('table-success');
-                            \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
-                            setTimeout(() => row.removeClass('table-success'), 2500);
                         } else {
                             \$(\".invalid-feedback\").remove();
                             if (response.errors) {
@@ -1625,10 +1599,117 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
             \$(this).removeClass('input-focused');                               // Remove blue border
             \$qtyForm.validate().element(this);
         });
-    }
 
-//  =========================== Toggle Price Typology ===========================
-    let switched = false;
+            //  Partial Form Validation
+        \$partForm.validate({
+            onkeyup: false,
+            onfocusin: false,
+            onfocusout: function(el) { this.element(el); },
+            rules: {
+                destination: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
+                exw: { required: true },
+                date: { required: true },
+                place: { required: true, rangelength: [3, 50], pattern: \"^[A-Za-z][A-Za-z ]*\$\" },
+                q_unloaded: { required: true, number: true, min: 0 },
+                invoice: { required: true, digits: true, min: 1 },
+            },
+            messages: {
+                destination: {
+                    required: \"Campo obbligatorio.\",
+                    rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
+                    pattern: \"Destinazione può contenere solo lettere e spazi (senza spazio iniziale).\"
+                },
+                exw: {
+                    required: \"Campo obbligatorio.\"
+                },
+                date: {
+                    required: \"Campo obbligatorio.\"
+                }, 
+                place: {
+                    required: \"Campo obbligatorio.\",
+                    rangelength: \"Usare almeno 3 e al massimo 50 caratteri.\",
+                    pattern: \"Fornitore può contenere solo lettere e spazi (senza spazio iniziale).\"
+                }, 
+                q_unloaded: {
+                    required: \"Campo obbligatorio.\",
+                    number: \"Quantità scaricata deve essere un numero positivo (intero o decimale).\",
+                    min: \"Il valore minimo deve essere maggiore o uguale a 0.\"
+                },
+                invoice: {
+                    required: \"Campo obbligatorio.\",
+                    digits: \"Fattura deve essere un numero intero positivo maggiore o uguale a 1, senza segni o decimali.\",
+                    min: \"Il valore minimo deve essere maggiore o uguale a 1.\",
+                }
+            },
+            errorPlacement: (error, el) => {
+                error.addClass(\"text-danger small\");
+                el.removeClass(\"is-valid\").addClass(\"is-invalid\");
+                el.closest(\".form-group\").find(\".error-placeholder\").html(error);
+            },
+            highlight: el => \$(el).removeClass('is-valid').addClass('is-invalid'),
+            unhighlight: el => \$(el).removeClass('is-invalid').closest('.form-group').find('.error-placeholder').empty(),
+            submitHandler: function (form) {
+                \$.ajax({
+                    url: 'partial-edit',
+                    type: 'POST',
+                    data: \$partForm.serialize(),
+                    dataType: 'json',
+                    success: response => {
+                        if (response.success) {
+                            updateOriginalDataFromResponse(response.modified);
+                            \$partModal.modal('hide');
+
+                            const p = response.modified;
+                            const row = \$('#part-table-' + p.id_transport);
+
+                            row.find('.col-destination').text(p.destination);
+                            row.find('.col-exw').text(p.exw);
+                            row.find('.col-date').text(p.date);
+                            row.find('.col-place').text(p.place);
+                            row.find('.col-q-unloaded').text(p.q_unloaded);
+                            row.find('.col-invoice').text(p.invoice);
+
+                            originalData = getFormData(\$partForm);
+
+                            row.addClass('table-success');
+                            \$('html, body').animate({ scrollTop: row.offset().top - 100 }, 600);
+                            setTimeout(() => row.removeClass('table-success'), 2500);
+                        } else {
+                            \$(\".invalid-feedback\").remove();
+                            if (response.errors) {
+                                \$.each(response.errors, (field, message) => {
+                                    const input = \$(\"[name='\" + field + \"']\");
+                                    input.removeClass(\"is-valid\").addClass(\"is-invalid\");
+                                    input.closest(\".form-group\").find(\".error-placeholder\")
+                                         .html('<div class=\"invalid-feedback\">' + message + '</div>');
+                                });
+                            }
+                        }
+                    },
+                    error: xhr => console.error(xhr.responseText)
+                });
+                return false;
+            },
+            success: (label, el) => {
+                \$(el).removeClass(\"is-invalid\").addClass(\"is-valid\");
+                \$(el).closest(\".form-group\").find(\".error-placeholder\").empty();
+            }
+        });
+
+        \$partModal.on('focus', '.form-control', function() {
+            \$(this).addClass('input-focused');                                  // Blue border while typing
+            \$(this).removeClass('is-invalid is-valid');                         // Remove validation styles while focused
+            /*\$(this).closest(\".form-group\").find(\".error-placeholder\").empty();  // hide error*/
+        }).on('blur', '.form-control', function() {
+            \$(this).removeClass('input-focused');                               // Remove blue border
+            \$partForm.validate().element(this);
+        });
+    }
+/*   __________________________________________
+//  |                                          |
+//  |          TOGGLE PRICE TYPOLOGY           |
+//  |__________________________________________|
+*/
     function togglePriceValueField() {
         const \$pv = \$('#price_value');
         const typology = \$('#price_typology').val();
@@ -1651,92 +1732,76 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                    \$pv.trigger('input');
             }
     }
+
+
+
+    // --- Click qty-btn ---
+/*\$(document).off('click', '.qty-btn').on('click', '.qty-btn', function() {
+    const \$btn = \$(this);
+    \$('.qty-btn').removeClass('active');
+    \$btn.addClass('active');
+    activeID = \$btn.data('id');
+    \$qtyModal.data('trigger', activeID);
+});*/ 
+/*   ___________________________________
+//  |                                   |
+//  |          INPUT BEHAVIOUR          |
+//  |___________________________________|
+*/
     \$('#price_typology').on('change', togglePriceValueField);
-    \$qtyModal.on('shown.bs.modal', () => {
-        togglePriceValueField();
-    })
+    \$qtyModal.on('shown.bs.modal', () => { togglePriceValueField(); })
 
-            /*if (typology !== 'yes') {
-                switched = true;
-                \$pv.val(0).prop('disabled', true).removeClass('is-valid is-invalid')
-                    .closest('.form-group').find('.error-placeholder').empty();
-            } else {
-                \$pv.prop('disabled', false).removeClass('is-valid is-invalid')
-                    .closest('.form-group').find('.error-placeholder').empty();
-                if (switched) \$pv.val('');
-                switched = false;
-                \$pv.trigger('input');
-            }
-    }
-    \$('#price_typology').on('change', togglePriceValueField);*/
-
-//  =========================== Modal Reset Handlers =============== ============
-    \$('#editTransModal, #editQtyModal').on('hidden.bs.modal', function () {
-        const dp = \$(this).find('.datepicker');
-        const \$form = \$(this).find('form');
-            
-            dp.datepicker('clearDates').val('');
-            \$form[0].reset();
-            \$form.validate().resetForm();
-            \$form.find('.is-invalid, .is-valid').removeClass('is-invalid is-valid');
-        
-        if (this.id === 'editQtyModal') switched = false;
-    });
 //  Normalize date input on focusout
-    \$('#date_load, #date_unload').on('focusout', function () {
+    \$('#date_load, #date_unload, #date').on('focusout', function () {
         const val = \$(this).val().trim();
             if (!val) return;
         const dt = parseAnyDate(val);
         \$(this).val(dt ? formatToDMY(dt) : '');
     });
+/*   _____________________________________________________
+//  |                                                     |
+//  |          MODAL POPULATION WITH DATA (AJAX)          |
+//  |_____________________________________________________|
+*/
+//  Transport Modal
 
-//  ===================== Modal Population with Data =====================
-//  Transport modal population on edit click
-    \$(document).off('click', '.updateTrans').on('click', '.updateTrans', function () {
+//  Quantity Modal
+
+//  Partial Modal
+    \$(document).off('click', '.updatePart').on('click', '.updatePart', function () {
         const id = \$(this).data('id');
-        \$.post('get-transport', { action: 'getTransportData', id_transport: id, csrf_token: csrfToken }, response => {
+        \$.post('get-partial', { action: 'getPartialData', id_partial: id, csrf_token: csrfToken }, response => {
             if (response.success) {
-                const t = response.transport;
-                    \$transModal.find('#id_transport').val(t.id_transport);
-                    \$transModal.find('#slot').val(t.slot.toUpperCase());
-                    \$transModal.find('#cmr').val(t.cmr.toUpperCase());
-                    \$transModal.find('#issuer').val(t.issuer.toUpperCase());
-                    \$transModal.find('#supplier').val(t.supplier.toUpperCase());
-                    \$transModal.find('#transport').val(t.transport.toUpperCase());
-                    \$transModal.find('#date_load').val(t.date_load);
-                    \$transModal.find('#date_unload').val(t.date_unload);
-                    \$transModal.find('#container').val(t.container.toUpperCase());
+                const p = response.partial;
+                const \$dateInput = \$partModal.find('#date'); 
+                    /*\$partModal.find('#id_transport').val(p.id_transport);*/
+                    \$partModal.find('#id_partial').val(p.id_partial);
+                    \$partModal.find('#destination').val(p.destination);
+                    \$partModal.find('#exw').val('').trigger('change'); // Reset
+                    \$partModal.find('#exw').val(p.exw).trigger('change');
+                    /*\$partModal.find('#date').val(p.date);*/
+                    \$partModal.find('#place').val(p.place);
+                    \$partModal.find('#q_unloaded').val(p.q_unloaded);
+                    \$partModal.find('#invoice').val(p.invoice);
 
-                    \$transModal.find('#original_slot').val(t.slot.toUpperCase());
-                    \$transModal.find('#original_cmr').val(t.cmr.toUpperCase());
-                \$transModal.modal('show');
+                    \$dateInput.val('');  
+                        if (p.date?.trim()) {
+                            const parts = p.date.split('-'); // dd-mm-yyyy from server
+                            const jsDate = new Date(parts[2], parts[1] - 1, parts[0]);
+                            \$dateInput.datepicker('setDate', jsDate);
+                        }
+                    setPartModalOriginalData(getFormData(\$partForm));
+                    \$partModal.modal('show');
             } else {
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
         }, 'json');
     });
-//  Quantity modal population on edit click
-    \$(document).off('click', '.updateQty').on('click', '.updateQty', function () {
-        const id = \$(this).data('id');
-        \$.post('get-quantity', { action: 'getQuantityData', id_transport: id, csrf_token: csrfToken }, response => {
-            if (response.success) {
-                const q = response.quantity;
-                    \$qtyModal.find('#id_transport').val(q.id_transport);
-                    \$qtyModal.find('#id_quantity').val(q.id_quantity);
-                    \$qtyModal.find('#kg_load').val(q.kg_load);
-                    \$qtyModal.find('#cooling').val(q.cooling);
-                    \$qtyModal.find('#price_typology').val(q.price_typology);
-                    \$qtyModal.find('#price_value').val(q.price_value);
-                    \$qtyModal.find('#kg_unload').val(q.kg_unload);
-                    \$qtyModal.find('#liquid_density').val(q.liquid_density);
-                    \$qtyModal.find('#gas_weight').val(q.gas_weight);
-                    \$qtyModal.find('#pcs_ghv').val(q.pcs_ghv);
-                \$qtyModal.modal('show');
-            } else {
-                alert(response.message || 'Errore durante il caricamento dei dati.');
-            }
-        }, 'json');
-    });
+/*   _____________________________________
+//  |                                     |
+//  |          EXISTENCE CHECKS           |
+//  |_____________________________________|
+*/
 //  Slot and CMR uniqueness live check inside edit transport modal
     \$('#editTransModal input[name=\"slot\"], #editTransModal input[name=\"cmr\"]').off('change').on('change', function () {
         const \$input = \$(this);
@@ -1761,42 +1826,13 @@ class __TwigTemplate_defee4b09bc811995f36aa333096627b extends Template
                 }
         }, 'json'); 
     });
-
-
-//  Delete all partials modal 
-    /*\$(document).off('click', '.deleteParts').on('click', '.deleteParts', function () {
-        const id = \$(this).data('id');
-        const slot = \$(this).data('slot');
-        const csrfToken = \$('input[name=\"csrf_token\"]').val(); 
-
-        \$(\"#deletePartsModal #id_transport\").val(id);
-        \$(\"#deletePartsModal #slot-placeholder\").text(slot);
-        /*const id = \$(this).data('id');
-        \$.post('partials-delete', { action: 'getQuantityData', id_transport: id, csrf_token: csrfToken }, response => {
-            if (response.success) {
-                const q = response.quantity;
-                    \$qtyModal.find('#id_transport').val(q.id_transport);
-                    \$qtyModal.find('#id_quantity').val(q.id_quantity);
-                    \$qtyModal.find('#kg_load').val(q.kg_load);
-                    \$qtyModal.find('#cooling').val(q.cooling);
-                    \$qtyModal.find('#price_typology').val(q.price_typology);
-                    \$qtyModal.find('#price_value').val(q.price_value);
-                    \$qtyModal.find('#kg_unload').val(q.kg_unload);
-                    \$qtyModal.find('#liquid_density').val(q.liquid_density);
-                    \$qtyModal.find('#gas_weight').val(q.gas_weight);
-                    \$qtyModal.find('#pcs_ghv').val(q.pcs_ghv);
-                \$qtyModal.modal('show');
-            } else {
-                alert(response.message || 'Errore durante il caricamento dei dati.');
-            }
-        }, 'json');*/
-    /*});*/
-
+/*   ___________________________________
+//  |                                   |
+//  |          INITIALIZATION           |
+//  |___________________________________|
+*/
 //  Initialize validation
     initValidation();
-//  Initialize Save button enable/disable tracking
-    initFormChangeTracking(\$transModal, \$transForm, \$transModal.find('button[type=\"submit\"]'));
-    initFormChangeTracking(\$qtyModal, \$qtyForm, \$qtyModal.find('button[type=\"submit\"]'));
 });
 </script>
 {% endblock %}

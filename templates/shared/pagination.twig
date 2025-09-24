@@ -5,7 +5,7 @@
             <nav class="my-1 mx-auto">
                 <ul class="pagination justify-content-center my-auto">
                     {# Previous Page Link #}
-                    <li class="page-item {% if page <= 1 %}disabled{% endif %}">
+                    <li class="page-item my-auto {% if page <= 1 %}disabled{% endif %}">
                         <button class="page-link transport-page" data-page="{{ page - 1 }}">
                             &laquo;
                         </button>
@@ -20,7 +20,7 @@
                     {% endfor %}
 
                     {# Next Page Link #}
-                    <li class="page-item {% if page >= pagination %}disabled{% endif %}">
+                    <li class="page-item my-auto {% if page >= pagination %}disabled{% endif %}">
                         <button class="page-link transport-page" data-page="{{ page + 1 }}">
                             &raquo;
                         </button>

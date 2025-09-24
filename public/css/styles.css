@@ -1587,7 +1587,8 @@ tr.highlight {
 }
 #user-edit .error-placeholder,
 #transport-edit .error-placeholder,
-#quantity-edit .error-placeholder {
+#quantity-edit .error-placeholder,
+#partial-edit .error-placeholder {
     min-height: 1.65rem;    
     line-height: 1.3rem;
     font-size: 1rem;                                                   
@@ -1809,6 +1810,103 @@ tr.highlight {
 /*--------------------------------------------------------------
 # =====>                END SEARCH FORM                        #
 --------------------------------------------------------------*/
+
+
+
+/*--------------------------------------------------------------
+# =====>                  PAGINATION                           #
+--------------------------------------------------------------*/
+/* --- Pagination Table Cell --- */
+td.bg-light.align-middle.my-auto.p-1 {
+    background-color: rgb(162, 150, 203);     
+    padding: 0.5rem 0.75rem;
+    text-align: center;
+}
+
+/* --- Pagination Nav and List --- */
+td nav.my-1.mx-auto { display: inline-block; margin: 0.25rem auto; }
+.pagination.justify-content-center.my-auto {
+    justify-content: center;
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+/* --- Page Items --- */
+.pagination .page-item {
+    margin: 0 3px;
+    transition: all 0.2s ease;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: rgb(192, 175, 243);   /* bright blue for active */
+    color: #ffffff;
+    border-color: #44475a;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.pagination .page-item.disabled .page-link {
+    pointer-events: none;
+    opacity: 0.4;               /* dim disabled button */
+}
+
+/* --- Page Links (Buttons) --- */
+.page-link.transport-page {
+    border: 1px solid rgb(207, 196, 241);       /* subtle border */
+    border-radius: 50%;              /* perfectly round buttons */
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    line-height: 36px;               /* vertical centering */
+    font-size: 0.9rem;
+    background-color: rgb(207, 196, 241);   /* dark button background */
+    color: rgb(11, 50, 90);
+    transition: all 0.25s ease;
+}
+
+/* Hover effect */
+.page-link.transport-page:hover {
+    background-color: rgb(162, 150, 203);
+    color: #ffffff;
+    border-color: rgb(162, 150, 203);
+    transform: translateY(-1px);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(13,110,253,0.4);
+}
+
+/* --- Previous / Next Arrows (Override Bootstrap) --- */
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+    background-color: rgb(207, 196, 241);
+    color: rgb(11, 50, 90);
+    display: flex;                 /* use flex to perfectly center arrow */
+    align-items: center;
+    justify-content: center;
+    border-radius: 50% !important; /* override Bootstrap’s corner radius */
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    font-size: 1.2rem;               /* larger than numbers for visibility */
+    font-weight: 600;
+    line-height: 30px;                /* prevent vertical misalignment */
+}
+
+
+/* --- Total Row Styling --- */
+td.text-light.text-shadow-dark.align-middle.mb-2.p-2 {
+    background-color: rgb(10, 57, 132);       /* match pagination row */
+    color: #f8f9fa;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    vertical-align: middle;
+    padding: 0.5rem 0.75rem;
+}
+
+td.text-light h5 {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1rem;
+    display: f
+}
 
 
 

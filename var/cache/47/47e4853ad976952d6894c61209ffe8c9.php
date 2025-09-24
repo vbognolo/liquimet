@@ -216,7 +216,7 @@ class __TwigTemplate_89cd06a319c3085e98affa7b7a73aa62 extends Template
                 // line 65
                 yield "                    <div class=\"my-auto me-3 ms-3 text-wrap col-1\" id=\"collapse-1\">
                         <h4 class=\"mx-auto\"> 
-                            <span class=\"btn collapse-title edit-data updateQty\" style=\"cursor: default\">
+                            <span class=\"btn collapse-title edit-data\" style=\"cursor: default\">
                                 Quantità
                             </span>
                         </h4>
@@ -226,7 +226,7 @@ class __TwigTemplate_89cd06a319c3085e98affa7b7a73aa62 extends Template
                 if (((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "role", [], "any", false, false, false, 72) == "admin") || (CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "id_user", [], "any", false, false, false, 72) == CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_user", [], "any", false, false, false, 72)))) {
                     // line 73
                     yield "                            <h6 class=\"mx-auto\" >
-                                <button type=\"button\" class=\"btn edit-data updateQty\" data-bs-toggle=\"modal\" 
+                                <button type=\"button\" class=\"btn edit-data updateQty qty-btn\" data-bs-toggle=\"modal\" 
                                         data-bs-target=\"#editQtyModal\" data-id=\"";
                     // line 75
                     yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["t"], "id_transport", [], "any", false, false, false, 75), "html", null, true);
@@ -435,42 +435,200 @@ $context["t"], "total_part" => ((CoreExtension::getAttribute($this->env, $this->
         // line 174
         yield "<script>
 \$(document).ready(function () {
-/***  Pagination setup  ***/
+/*   ____________________________________________
+//  |                                            |
+//  |          CACHE: MODAL, FORM, BTNS          |
+//  |____________________________________________|
+*/
+    //const csrfToken = \$('input[name=\"csrf_token\"]').val();
+
+    const \$transModal = \$('#editTransModal');                     
+    const \$transForm  = \$('#transport-edit');       
+
+    const \$qtyModal = \$('#editQtyModal');              
+    const \$qtyForm  = \$('#editQtyModal').find('#quantity-edit');
+
+    const \$partModal = \$('#editPartModal'); 
+    const \$partForm  = \$('#editPartModal').find('#partial-edit');
+
+    \$(document).off('click', '.updateQty').on('click', '.updateQty', function() {
+        const \$btn = \$(this);
+        \$('.updateQty').removeClass('active');
+        \$btn.addClass('active');
+        activeID = \$btn.data('id');
+        \$('#editQtyModal').data('trigger', activeID);
+    });
+/*   ____________________________
+//  |                            |
+//  |          COLLAPSE          |
+//  |____________________________|
+*/
+    \$(document).on('shown.bs.collapse', '.collapse', function () {
+        let targetId = \$(this).attr('id');
+        \$(`[data-bs-target=\"#\${targetId}\"]`).attr('aria-expanded', 'true');
+    });
+    \$(document).on('hidden.bs.collapse', '.collapse', function () {
+        let targetId = \$(this).attr('id');
+        \$(`[data-bs-target=\"#\${targetId}\"]`).attr('aria-expanded', 'false');
+    });
+    \$(document).on('click', '.collapse-btn', function() {
+        var \$icon = \$(this).find('i.icon-plus');
+
+        \$icon.css({opacity: 0, transform: 'scale(0.5)'});        // Smooth fade-out
+        setTimeout(function() {                                  // After short delay, swap icon and fade-in
+            \$icon.toggleClass('bi-plus-lg bi-dash-lg');
+            \$icon.css({opacity: 1, transform: 'scale(1)'});
+        }, 350);                                                 // 100ms for smooth transition
+    });
+/*   _________________________________
+//  |                                 |
+//  |          DROPDOWN MENU          |
+//  |_________________________________|
+*/
+    \$('.dropdown-item').on('click', function(e) {
+        e.preventDefault();
+        \$('.dropdown-item').removeClass('active');               // Remove active from all items and set active on clicked
+        \$(this).addClass('active');
+
+        const csrfToken = \$('input[name=\"csrf_token\"]').val();     // Send AJAX request to update tbody (optional)
+        let type = \$(this).data('type');                         // Update dropdown button title
+        let title = '';
+            
+            switch(type) {
+                case 'all': title = 'TUTTI TRASPORTI'; type = ''; break;
+                case 'F':   title = 'TRASPORTI PIENI'; break;
+                case 'P':   title = 'TRASPORTI PARZIALI'; break;
+            }
+        \$(this).closest('.card-header').find('span').text(title);       
+
+        \$.ajax({
+            url: 'pagination', 
+            type: 'POST',
+            data: { 
+                type: type,
+                page: 1,
+                csrf_token: csrfToken
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    \$('#transport-tbody').html(response.tbody);
+                    \$('#transport-tfoot').html(response.pagination);
+       
+// --- Reapply active to qty-btn after table reload ---
+                          /*  const triggerId = \$qtyModal.data('trigger');
+                            if (triggerId !== undefined && triggerId !== null) {
+                                const \$btn = \$(`#transport-tbody .qty-btn[data-id=\"\${triggerId}\"]`);
+                                if (\$btn.length) {
+                                    \$('.qty-btn.active').not(\$btn).removeClass('active'); // remove any others
+                                    \$btn.addClass('active');                        // restore active on trigger
+                                } else {
+                                    \$qtyModal.removeData('trigger'); // button not present on new page
+                                }
+                            } else {
+                                \$('.qty-btn.active').removeClass('active'); // no trigger, ensure clean
+                            }*/
+
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Error loading transports. Please reload the page.');
+            }
+        });
+    });
+
+    \$(document).off('click', '.updateTrans').on('click', '.updateTrans', function () {
+        const id = \$(this).data('id');
+        \$.post('get-transport', { action: 'getTransportData', id_transport: id, csrf_token: csrfToken }, response => {
+            if (response.success) {
+                const t = response.transport;
+                    \$transModal.find('#id_transport').val(t.id_transport);
+                    \$transModal.find('#slot').val(t.slot.toUpperCase());
+                    \$transModal.find('#cmr').val(t.cmr.toUpperCase());
+                    \$transModal.find('#issuer').val(t.issuer.toUpperCase());
+                    \$transModal.find('#supplier').val(t.supplier.toUpperCase());
+                    \$transModal.find('#transport').val(t.transport.toUpperCase());
+                    \$transModal.find('#date_load').val(t.date_load);
+                    \$transModal.find('#date_unload').val(t.date_unload);
+                    \$transModal.find('#container').val(t.container.toUpperCase());
+
+                    \$transModal.find('#original_slot').val(t.slot.toUpperCase());
+                    \$transModal.find('#original_cmr').val(t.cmr.toUpperCase());
+
+                    setTransModalOriginalData(getFormData(\$transForm));
+                    \$transModal.modal('show');
+            } else {
+                alert(response.message || 'Errore durante il caricamento dei dati.');
+            }
+        }, 'json');
+    });
+
+    \$(document).off('click', '.updateQty').on('click', '.updateQty', function () {
+        const id = \$(this).data('id');  // transport ID
+        \$.post('get-quantity', { action: 'getQuantityData', id_transport: id, csrf_token: csrfToken }, response => {
+            if (response.success) {
+                const q = response.quantity;
+
+                \$qtyModal.find('#id_transport').val(q.id_transport);
+                \$qtyModal.find('#id_quantity').val(q.id_quantity);
+                \$qtyModal.find('#kg_load').val(q.kg_load);
+                \$qtyModal.find('#cooling').val(q.cooling);
+                \$qtyModal.find('#price_typology').val(q.price_typology);
+                \$qtyModal.find('#price_value').val(q.price_value);
+                \$qtyModal.find('#kg_unload').val(q.kg_unload);
+                \$qtyModal.find('#liquid_density').val(q.liquid_density);
+                \$qtyModal.find('#gas_weight').val(q.gas_weight);
+                \$qtyModal.find('#pcs_ghv').val(q.pcs_ghv);
+
+                // Capture original data
+                setQtyModalOriginalData(getFormData(\$qtyForm));
+                \$qtyModal.modal('show');
+            } else {
+                    // failure: remove visual active to avoid stuck UI
+                                //\$('.updateQty[data-id=\"' + id + '\"]').removeClass('active');
+                               // \$qtyModal.removeData('trigger');
+
+                alert(response.message || 'Errore durante il caricamento dei dati.');
+            }
+        }, 'json');
+    });
+/*** --- PAGINATION --- ***/
     \$(document).on('click', '.transport-page', function(e) {
         e.preventDefault();
         const page = \$(this).data('page');
         const csrfToken = \$('input[name=\"csrf_token\"]').val();
 
-            \$.ajax({
-                type: 'POST',
-                url: 'pagination', 
-                dataType: 'json',
-                data: {
-                    csrf_token: csrfToken,
-                    page: page,
-                    show_type: true
-                },
-                success: function (response) {
-                    if (response.success) {
-                        \$('#transport-tbody').html(response.tbody);
-                        \$('#transport-tfoot').html(response.pagination);
-                    }
-                },
-                error: function () {
-                    alert('Errore nel caricamento della pagina.');
-                }
-            });
-
-        //  Avoid multiple fast clicks by disabling temporarily
         if (\$(this).parent().hasClass('disabled') || \$(this).parent().hasClass('active')) {
             return;
         }
-        //  Scroll to table after page load starts
-        \$('html, body').animate({ scrollTop: \$('#transport-table').offset().top }, 300);
+
+        \$.ajax({
+            type: 'POST',
+            url: 'pagination',
+            dataType: 'json',
+            data: {
+                csrf_token: csrfToken,
+                page: page,
+                show_type: true
+            },
+            success: function (response) {
+                if (response.success) {
+                    \$('#transport-tbody').html(response.tbody);
+                    \$('#transport-tfoot').html(response.pagination);
+                } else {
+                    alert(response.message || 'Errore nel caricamento della pagina.');
+                }
+            },
+            error: function () {
+                alert('Errore nel caricamento della pagina.');
+            }
+        });
     });
 
 //  Delete transport button
-    \$(document).on('click', '.deleteTrans', function () {
+    /*\$(document).on('click', '.deleteTrans', function () {
         const id = \$(this).data('id');
         const slot = \$(this).data('slot');
         const csrfToken = \$('input[name=\"csrf_token\"]').val(); 
@@ -519,7 +677,7 @@ $context["t"], "total_part" => ((CoreExtension::getAttribute($this->env, $this->
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
         }, 'json');
-    });
+    });*/
 });
 </script>
 ";
@@ -618,14 +776,14 @@ $context["t"], "total_part" => ((CoreExtension::getAttribute($this->env, $this->
                         {# Left Side #}
                     <div class=\"my-auto me-3 ms-3 text-wrap col-1\" id=\"collapse-1\">
                         <h4 class=\"mx-auto\"> 
-                            <span class=\"btn collapse-title edit-data updateQty\" style=\"cursor: default\">
+                            <span class=\"btn collapse-title edit-data\" style=\"cursor: default\">
                                 Quantità
                             </span>
                         </h4>
 
                         {% if (session.role == 'admin') or (session.id_user == t.id_user) %}
                             <h6 class=\"mx-auto\" >
-                                <button type=\"button\" class=\"btn edit-data updateQty\" data-bs-toggle=\"modal\" 
+                                <button type=\"button\" class=\"btn edit-data updateQty qty-btn\" data-bs-toggle=\"modal\" 
                                         data-bs-target=\"#editQtyModal\" data-id=\"{{ t.id_transport }}\">   
                                     <span class=\"icon-wrap\">
                                         <i class=\"bi bi-pencil\"></i>
@@ -653,7 +811,7 @@ $context["t"], "total_part" => ((CoreExtension::getAttribute($this->env, $this->
                                     <td class=\"align-middle col-cooling\"> {{ t.cooling == 600 ? '600' : 'No' }} </td>
 
                                     <th class=\"table-light align-middle p-1\"> Tipologia costo extra </th>            
-                                    <td class=\"align-middle col-price-typology\"> {{ t.price_typology == 'yes'? 'Sì' : 'No' }} </td>   
+                                    <td class=\"align-middle col-price-typology\"> {{ t.price_typology == 'yes' ? 'Sì' : 'No' }} </td>   
                                 </tr>
                                             
                                 <tr>
@@ -727,42 +885,200 @@ $context["t"], "total_part" => ((CoreExtension::getAttribute($this->env, $this->
 {% block page_script %}
 <script>
 \$(document).ready(function () {
-/***  Pagination setup  ***/
+/*   ____________________________________________
+//  |                                            |
+//  |          CACHE: MODAL, FORM, BTNS          |
+//  |____________________________________________|
+*/
+    //const csrfToken = \$('input[name=\"csrf_token\"]').val();
+
+    const \$transModal = \$('#editTransModal');                     
+    const \$transForm  = \$('#transport-edit');       
+
+    const \$qtyModal = \$('#editQtyModal');              
+    const \$qtyForm  = \$('#editQtyModal').find('#quantity-edit');
+
+    const \$partModal = \$('#editPartModal'); 
+    const \$partForm  = \$('#editPartModal').find('#partial-edit');
+
+    \$(document).off('click', '.updateQty').on('click', '.updateQty', function() {
+        const \$btn = \$(this);
+        \$('.updateQty').removeClass('active');
+        \$btn.addClass('active');
+        activeID = \$btn.data('id');
+        \$('#editQtyModal').data('trigger', activeID);
+    });
+/*   ____________________________
+//  |                            |
+//  |          COLLAPSE          |
+//  |____________________________|
+*/
+    \$(document).on('shown.bs.collapse', '.collapse', function () {
+        let targetId = \$(this).attr('id');
+        \$(`[data-bs-target=\"#\${targetId}\"]`).attr('aria-expanded', 'true');
+    });
+    \$(document).on('hidden.bs.collapse', '.collapse', function () {
+        let targetId = \$(this).attr('id');
+        \$(`[data-bs-target=\"#\${targetId}\"]`).attr('aria-expanded', 'false');
+    });
+    \$(document).on('click', '.collapse-btn', function() {
+        var \$icon = \$(this).find('i.icon-plus');
+
+        \$icon.css({opacity: 0, transform: 'scale(0.5)'});        // Smooth fade-out
+        setTimeout(function() {                                  // After short delay, swap icon and fade-in
+            \$icon.toggleClass('bi-plus-lg bi-dash-lg');
+            \$icon.css({opacity: 1, transform: 'scale(1)'});
+        }, 350);                                                 // 100ms for smooth transition
+    });
+/*   _________________________________
+//  |                                 |
+//  |          DROPDOWN MENU          |
+//  |_________________________________|
+*/
+    \$('.dropdown-item').on('click', function(e) {
+        e.preventDefault();
+        \$('.dropdown-item').removeClass('active');               // Remove active from all items and set active on clicked
+        \$(this).addClass('active');
+
+        const csrfToken = \$('input[name=\"csrf_token\"]').val();     // Send AJAX request to update tbody (optional)
+        let type = \$(this).data('type');                         // Update dropdown button title
+        let title = '';
+            
+            switch(type) {
+                case 'all': title = 'TUTTI TRASPORTI'; type = ''; break;
+                case 'F':   title = 'TRASPORTI PIENI'; break;
+                case 'P':   title = 'TRASPORTI PARZIALI'; break;
+            }
+        \$(this).closest('.card-header').find('span').text(title);       
+
+        \$.ajax({
+            url: 'pagination', 
+            type: 'POST',
+            data: { 
+                type: type,
+                page: 1,
+                csrf_token: csrfToken
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    \$('#transport-tbody').html(response.tbody);
+                    \$('#transport-tfoot').html(response.pagination);
+       
+// --- Reapply active to qty-btn after table reload ---
+                          /*  const triggerId = \$qtyModal.data('trigger');
+                            if (triggerId !== undefined && triggerId !== null) {
+                                const \$btn = \$(`#transport-tbody .qty-btn[data-id=\"\${triggerId}\"]`);
+                                if (\$btn.length) {
+                                    \$('.qty-btn.active').not(\$btn).removeClass('active'); // remove any others
+                                    \$btn.addClass('active');                        // restore active on trigger
+                                } else {
+                                    \$qtyModal.removeData('trigger'); // button not present on new page
+                                }
+                            } else {
+                                \$('.qty-btn.active').removeClass('active'); // no trigger, ensure clean
+                            }*/
+
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert('Error loading transports. Please reload the page.');
+            }
+        });
+    });
+
+    \$(document).off('click', '.updateTrans').on('click', '.updateTrans', function () {
+        const id = \$(this).data('id');
+        \$.post('get-transport', { action: 'getTransportData', id_transport: id, csrf_token: csrfToken }, response => {
+            if (response.success) {
+                const t = response.transport;
+                    \$transModal.find('#id_transport').val(t.id_transport);
+                    \$transModal.find('#slot').val(t.slot.toUpperCase());
+                    \$transModal.find('#cmr').val(t.cmr.toUpperCase());
+                    \$transModal.find('#issuer').val(t.issuer.toUpperCase());
+                    \$transModal.find('#supplier').val(t.supplier.toUpperCase());
+                    \$transModal.find('#transport').val(t.transport.toUpperCase());
+                    \$transModal.find('#date_load').val(t.date_load);
+                    \$transModal.find('#date_unload').val(t.date_unload);
+                    \$transModal.find('#container').val(t.container.toUpperCase());
+
+                    \$transModal.find('#original_slot').val(t.slot.toUpperCase());
+                    \$transModal.find('#original_cmr').val(t.cmr.toUpperCase());
+
+                    setTransModalOriginalData(getFormData(\$transForm));
+                    \$transModal.modal('show');
+            } else {
+                alert(response.message || 'Errore durante il caricamento dei dati.');
+            }
+        }, 'json');
+    });
+
+    \$(document).off('click', '.updateQty').on('click', '.updateQty', function () {
+        const id = \$(this).data('id');  // transport ID
+        \$.post('get-quantity', { action: 'getQuantityData', id_transport: id, csrf_token: csrfToken }, response => {
+            if (response.success) {
+                const q = response.quantity;
+
+                \$qtyModal.find('#id_transport').val(q.id_transport);
+                \$qtyModal.find('#id_quantity').val(q.id_quantity);
+                \$qtyModal.find('#kg_load').val(q.kg_load);
+                \$qtyModal.find('#cooling').val(q.cooling);
+                \$qtyModal.find('#price_typology').val(q.price_typology);
+                \$qtyModal.find('#price_value').val(q.price_value);
+                \$qtyModal.find('#kg_unload').val(q.kg_unload);
+                \$qtyModal.find('#liquid_density').val(q.liquid_density);
+                \$qtyModal.find('#gas_weight').val(q.gas_weight);
+                \$qtyModal.find('#pcs_ghv').val(q.pcs_ghv);
+
+                // Capture original data
+                setQtyModalOriginalData(getFormData(\$qtyForm));
+                \$qtyModal.modal('show');
+            } else {
+                    // failure: remove visual active to avoid stuck UI
+                                //\$('.updateQty[data-id=\"' + id + '\"]').removeClass('active');
+                               // \$qtyModal.removeData('trigger');
+
+                alert(response.message || 'Errore durante il caricamento dei dati.');
+            }
+        }, 'json');
+    });
+/*** --- PAGINATION --- ***/
     \$(document).on('click', '.transport-page', function(e) {
         e.preventDefault();
         const page = \$(this).data('page');
         const csrfToken = \$('input[name=\"csrf_token\"]').val();
 
-            \$.ajax({
-                type: 'POST',
-                url: 'pagination', 
-                dataType: 'json',
-                data: {
-                    csrf_token: csrfToken,
-                    page: page,
-                    show_type: true
-                },
-                success: function (response) {
-                    if (response.success) {
-                        \$('#transport-tbody').html(response.tbody);
-                        \$('#transport-tfoot').html(response.pagination);
-                    }
-                },
-                error: function () {
-                    alert('Errore nel caricamento della pagina.');
-                }
-            });
-
-        //  Avoid multiple fast clicks by disabling temporarily
         if (\$(this).parent().hasClass('disabled') || \$(this).parent().hasClass('active')) {
             return;
         }
-        //  Scroll to table after page load starts
-        \$('html, body').animate({ scrollTop: \$('#transport-table').offset().top }, 300);
+
+        \$.ajax({
+            type: 'POST',
+            url: 'pagination',
+            dataType: 'json',
+            data: {
+                csrf_token: csrfToken,
+                page: page,
+                show_type: true
+            },
+            success: function (response) {
+                if (response.success) {
+                    \$('#transport-tbody').html(response.tbody);
+                    \$('#transport-tfoot').html(response.pagination);
+                } else {
+                    alert(response.message || 'Errore nel caricamento della pagina.');
+                }
+            },
+            error: function () {
+                alert('Errore nel caricamento della pagina.');
+            }
+        });
     });
 
 //  Delete transport button
-    \$(document).on('click', '.deleteTrans', function () {
+    /*\$(document).on('click', '.deleteTrans', function () {
         const id = \$(this).data('id');
         const slot = \$(this).data('slot');
         const csrfToken = \$('input[name=\"csrf_token\"]').val(); 
@@ -811,7 +1127,7 @@ $context["t"], "total_part" => ((CoreExtension::getAttribute($this->env, $this->
                 alert(response.message || 'Errore durante il caricamento dei dati.');
             }
         }, 'json');
-    });
+    });*/
 });
 </script>
 {% endblock %}", "transports-ajax.twig", "C:\\wamp64\\www\\liquimet\\templates\\transports-ajax.twig");

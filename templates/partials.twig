@@ -57,7 +57,7 @@
                         <td class="align-middle p-1 col-invoice" id="invoice"> {{ p.invoice }} </td>
                         <td class="align-middle m-auto btns"> 
                         {% if (session.role == 'admin') or (session.id_user == t.id_user) %}
-                            <button type="button" class="edit-data edit-part" data-bs-toggle="modal" data-bs-target="#editPartModal" 
+                            <button type="button" class="edit-data edit-part updatePart" data-bs-toggle="modal" data-bs-target="#editPartModal" 
                                     data-id="{{ p.id_partial }}">
                                         <i class="bi bi-pencil-square"></i>
                             </button> 

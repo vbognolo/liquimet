@@ -155,7 +155,7 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
             // line 59
             if (((CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "role", [], "any", false, false, false, 59) == "admin") || (CoreExtension::getAttribute($this->env, $this->source, ($context["session"] ?? null), "id_user", [], "any", false, false, false, 59) == CoreExtension::getAttribute($this->env, $this->source, ($context["t"] ?? null), "id_user", [], "any", false, false, false, 59)))) {
                 // line 60
-                yield "                            <button type=\"button\" class=\"edit-data edit-part\" data-bs-toggle=\"modal\" data-bs-target=\"#editPartModal\" 
+                yield "                            <button type=\"button\" class=\"edit-data edit-part updatePart\" data-bs-toggle=\"modal\" data-bs-target=\"#editPartModal\" 
                                     data-id=\"";
                 // line 61
                 yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["p"], "id_partial", [], "any", false, false, false, 61), "html", null, true);
@@ -296,7 +296,7 @@ class __TwigTemplate_c92867b5082a36e01e36e84b228d15ea extends Template
                         <td class=\"align-middle p-1 col-invoice\" id=\"invoice\"> {{ p.invoice }} </td>
                         <td class=\"align-middle m-auto btns\"> 
                         {% if (session.role == 'admin') or (session.id_user == t.id_user) %}
-                            <button type=\"button\" class=\"edit-data edit-part\" data-bs-toggle=\"modal\" data-bs-target=\"#editPartModal\" 
+                            <button type=\"button\" class=\"edit-data edit-part updatePart\" data-bs-toggle=\"modal\" data-bs-target=\"#editPartModal\" 
                                     data-id=\"{{ p.id_partial }}\">
                                         <i class=\"bi bi-pencil-square\"></i>
                             </button> 

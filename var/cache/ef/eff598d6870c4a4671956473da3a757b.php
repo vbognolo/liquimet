@@ -32,6 +32,9 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
         $this->parent = false;
 
         $this->blocks = [
+            'jquery' => [$this, 'block_jquery'],
+            'datepicker' => [$this, 'block_datepicker'],
+            'page_script' => [$this, 'block_page_script'],
         ];
     }
 
@@ -755,20 +758,20 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
     <div class=\"modal-dialog modal-lg modal-dialog-centered\">
         <div class=\"modal-content\">
             <div class=\"modal-header mx-auto row\">
-                <h2 class=\"modal-title\" id=\"editPartLabel\"> 
+                <h2 class=\"mt-2 modal-title\" id=\"editPartLabel\"> 
                     <i class=\"bi bi-pencil-square my-auto mx-1\"></i>
                         MODIFICA
                     <i class=\"bi bi-pencil-square my-auto mx-1\"></i>
                 </h2>
 
-                    <h4 class=\"modal-subtitle my-2\"> 
-                        Modifica dati dello scarico parziale
-                    </h4>
+                <h4 class=\"my-2 modal-subtitle\"> 
+                    Modifica dati dello scarico parziale.
+                </h4>
             </div>
         
             <div class=\"modal-body\">
                 <div class=\"container-fluid\">
-                    <form id=\"partial-edit\" method=\"POST\" action=\"partial-edit\" autocomplete=\"off\" novalidate>
+                    <form id=\"partial-edit\" method=\"POST\" action=\"partial-edit\" autocomplete=\"off\" novalidate >
                         <input type=\"hidden\" name=\"id_partial\" id=\"id_partial\" />
                         <input type=\"hidden\" id=\"date_load\" value=\"";
         // line 451
@@ -785,7 +788,7 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
 
                         ";
         // line 456
-        yield "                        <div class=\"row form-group mx-auto mb-3\">
+        yield "                        <div class=\"row form-group mx-auto my-2\">
                             <label for=\"destination\" class=\"col-4 form-control-label my-1\"> Destinazione: </label>
                             
                             <div class=\"col-8\">
@@ -812,7 +815,7 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
 
                         ";
         // line 470
-        yield "                        <div class=\"row form-group mx-auto mb-3\">
+        yield "                        <div class=\"row form-group mx-auto my-2\">
                             <label for=\"exw\" class=\"col-4 form-control-label my-1\"> EXW: </label>
                             
                             <div class=\"col-8\">
@@ -822,132 +825,127 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
             yield "is-invalid";
         }
         yield "\">
-                                    <option value=\"destino\" class=\"opt-type\"> 
-                                        DESTINO
-                                    </option>
-                                        
-                                    <option value=\"fos\" class=\"opt-type\"> 
-                                        FOS
-                                    </option>
+                                    <option value=\"destino\" class=\"opt-type\"> DESTINO </option>
+                                    <option value=\"fos\" class=\"opt-type\"> FOS </option>
                                 </select>
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 485
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "exw", [], "any", false, false, false, 485)) {
+        // line 480
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "exw", [], "any", false, false, false, 480)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "exw", [], "any", false, false, false, 485), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "exw", [], "any", false, false, false, 480), "html", null, true);
             yield "</div>";
         }
-        // line 486
+        // line 481
         yield "                                </div>
                             </div>
                         </div>
                             
                         ";
-        // line 491
-        yield "                        <div class=\"row form-group mx-auto mb-3\">
+        // line 486
+        yield "                        <div class=\"row form-group mx-auto my-2\">
                             <label for=\"date\" class=\"col-4 form-control-label my-1\"> Data carico: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"date\" id=\"date\" 
                                        class=\"form-control datepicker ";
-        // line 496
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date", [], "any", false, false, false, 496)) {
+        // line 491
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date", [], "any", false, false, false, 491)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 499
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date", [], "any", false, false, false, 499)) {
+        // line 494
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date", [], "any", false, false, false, 494)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date", [], "any", false, false, false, 499), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "date", [], "any", false, false, false, 494), "html", null, true);
             yield "</div>";
         }
-        // line 500
+        // line 495
         yield "                                </div> 
                             </div>
                         </div>
 
                         ";
-        // line 505
+        // line 500
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label for=\"place\" class=\"col-4 form-control-label my-1\"> Luogo: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"place\" id=\"place\"
                                        class=\"form-control ";
-        // line 510
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "place", [], "any", false, false, false, 510)) {
+        // line 505
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "place", [], "any", false, false, false, 505)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 513
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "place", [], "any", false, false, false, 513)) {
+        // line 508
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "place", [], "any", false, false, false, 508)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "place", [], "any", false, false, false, 513), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "place", [], "any", false, false, false, 508), "html", null, true);
             yield "</div>";
         }
-        // line 514
+        // line 509
         yield "                                </div> 
                             </div>
                         </div>
 
                         ";
-        // line 519
+        // line 514
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label for=\"q_unloaded\" class=\"col-4 form-control-label my-1\"> Quantità scaricata: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"q_unloaded\" id=\"q_unloaded\" 
-                                    class=\"form-control ";
-        // line 524
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "q_unloaded", [], "any", false, false, false, 524)) {
+                                       class=\"form-control ";
+        // line 519
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "q_unloaded", [], "any", false, false, false, 519)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 527
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "q_unloaded", [], "any", false, false, false, 527)) {
+        // line 522
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "q_unloaded", [], "any", false, false, false, 522)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "q_unloaded", [], "any", false, false, false, 527), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "q_unloaded", [], "any", false, false, false, 522), "html", null, true);
             yield "</div>";
         }
-        // line 528
+        // line 523
         yield "                                </div> 
                             </div>
                         </div>
 
                         ";
-        // line 533
+        // line 528
         yield "                        <div class=\"row form-group mx-auto mb-3\">
                             <label for=\"invoice\" class=\"col-4 form-control-label my-1\"> Fattura: </label>
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"invoice\" id=\"invoice\" 
-                                    class=\"form-control ";
-        // line 538
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "invoice", [], "any", false, false, false, 538)) {
+                                       class=\"form-control ";
+        // line 533
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "invoice", [], "any", false, false, false, 533)) {
             yield "is-invalid";
         }
         yield "\" />
 
                                 <div class=\"error-placeholder\">
                                     ";
-        // line 541
-        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "invoice", [], "any", false, false, false, 541)) {
+        // line 536
+        if (CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "invoice", [], "any", false, false, false, 536)) {
             yield "<div class=\"invalid-feedback\">";
-            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "invoice", [], "any", false, false, false, 541), "html", null, true);
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, ($context["errors"] ?? null), "invoice", [], "any", false, false, false, 536), "html", null, true);
             yield "</div>";
         }
-        // line 542
+        // line 537
         yield "                                </div> 
                             </div>
                         </div>
@@ -955,13 +953,13 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
                         <div class=\"modal-footer\">
                             <button type=\"button\" class=\"btn btn-default modal-cancel\" data-bs-dismiss=\"modal\">
                                 <span class=\"bi bi-x-circle\">
-                                    ANNULLA
+                                    CHIUDI 
                                 </span>    
                             </button>
-                                
-                            <button type=\"submit\" class=\"btn btn-default modal-save\" name=\"delete_trans\">
+                            
+                            <button type=\"submit\" class=\"btn btn-default modal-save\">
                                 <span class=\"bi bi-check-circle\">
-                                    CONFERMA
+                                    SALVA
                                 </span>   
                             </button>
                         </div>
@@ -973,7 +971,7 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
 </div>
 
 ";
-        // line 566
+        // line 561
         yield "    
 <div class=\"modal fade\" id=\"deletePartModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"deletePartLabel\" aria-hidden=\"true\">
     <div class=\"modal-dialog modal-lg modal-dialog-centered\">
@@ -999,7 +997,7 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
                     <form id=\"partials-delete\" method=\"POST\" action=\"partials-delete\" autocomplete=\"off\" novalidate>
                         <input type=\"hidden\" name=\"id_transport\" id=\"id_transport\" />
                         <input type=\"hidden\" name=\"csrf_token\" value=\"";
-        // line 590
+        // line 585
         yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(($context["csrf_token"] ?? null), "html", null, true);
         yield "\" />
 
@@ -1026,7 +1024,127 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
             </div>
         </div>
     </div>
-</div>";
+</div>
+
+";
+        // line 612
+        yield from $this->unwrap()->yieldBlock('jquery', $context, $blocks);
+        // line 618
+        yield "
+";
+        // line 619
+        yield from $this->unwrap()->yieldBlock('datepicker', $context, $blocks);
+        // line 625
+        yield "
+";
+        // line 626
+        yield from $this->unwrap()->yieldBlock('page_script', $context, $blocks);
+        yield from [];
+    }
+
+    // line 612
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_jquery(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        // line 613
+        yield "<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
+        integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
+        crossorigin=\"anonymous\">
+</script>
+";
+        yield from [];
+    }
+
+    // line 619
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_datepicker(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        // line 620
+        yield "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js\" 
+        integrity=\"sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=\" 
+        crossorigin=\"anonymous\">
+</script>
+";
+        yield from [];
+    }
+
+    // line 626
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_page_script(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        // line 627
+        yield "<script>
+\$(document).ready(function () {
+/*   ____________________________________________
+//  |                                            |
+//  |          CACHE: MODAL, FORM, BTNS          |
+//  |____________________________________________|
+*/
+    const csrfToken = \$('input[name=\"csrf_token\"]').val();
+
+    /*const \$transModal = \$('#editTransModal');                     
+    const \$transForm  = \$('#transport-edit');       
+
+    const \$qtyModal = \$('#editQtyModal');              
+    const \$qtyForm  = \$('#editQtyModal').find('#quantity-edit');
+
+    const \$partModal = \$('#editPartModal'); 
+    const \$partForm  = \$('#editPartModal').find('#partial-edit');*/
+
+
+/*   _________________________________
+//  |                                 |
+//  |          MODAL EVENTS           |
+//  |_________________________________|
+*/
+//  On modal hide, reset form if changed but not saved
+    \$('#editTransModal, #editQtyModal, #editPartModal').on('hide.bs.modal', function () {
+        const \$form = \$(this).find('form');
+        const currentData = getFormData(\$form);
+            if (isFormChanged(originalData, currentData)) {
+                resetFormToOriginal(\$form);
+            }
+    });
+//  When hidden, reset datepicker and form
+    \$('#editTransModal, #editQtyModal, #editPartModal').on('hidden.bs.modal', function () {
+        const dp = \$(this).find('.datepicker');
+        const \$form = \$(this).find('form');
+            
+            dp.datepicker('clearDates').val('');
+            \$form[0].reset();
+
+                if (\$form.data('validator')) {
+                    \$form.validate().resetForm();
+                }
+ 
+            \$form.find('.is-invalid, .is-valid').removeClass('is-invalid is-valid');
+        
+        if (this.id === 'editQtyModal') switched = false;
+    });
+//  Quantity edit button active status
+    \$('#editQtyModal').on('hidden.bs.modal', function() {
+        const id = \$(this).data('trigger');                  // stored ID of the button
+        const \$btn = \$(`#transport-tbody .updateQty[data-id=\"\${id}\"]`);
+            if (id) {
+                // Remove active class and blur the button
+                \$btn.removeClass('active').blur();
+            }     
+        \$(this).removeData('trigger');                  // clean stored reference
+    }); 
+
+
+});
+</script>
+";
         yield from [];
     }
 
@@ -1051,7 +1169,7 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  1003 => 590,  977 => 566,  951 => 542,  945 => 541,  937 => 538,  930 => 533,  924 => 528,  918 => 527,  910 => 524,  903 => 519,  897 => 514,  891 => 513,  883 => 510,  876 => 505,  870 => 500,  864 => 499,  856 => 496,  849 => 491,  843 => 486,  837 => 485,  821 => 474,  815 => 470,  809 => 465,  803 => 464,  795 => 461,  788 => 456,  783 => 453,  779 => 452,  775 => 451,  754 => 432,  751 => 430,  722 => 403,  701 => 384,  698 => 382,  667 => 352,  661 => 351,  652 => 347,  642 => 340,  620 => 320,  617 => 318,  592 => 294,  586 => 293,  578 => 290,  571 => 285,  565 => 280,  559 => 279,  551 => 276,  544 => 271,  538 => 266,  532 => 265,  524 => 262,  517 => 257,  511 => 252,  505 => 251,  497 => 248,  490 => 243,  484 => 238,  478 => 237,  474 => 235,  468 => 233,  461 => 228,  455 => 223,  449 => 222,  438 => 216,  432 => 212,  426 => 207,  420 => 206,  409 => 200,  403 => 196,  397 => 191,  391 => 190,  383 => 187,  379 => 186,  372 => 181,  367 => 179,  345 => 159,  342 => 157,  317 => 133,  311 => 132,  303 => 129,  299 => 128,  293 => 124,  287 => 119,  281 => 118,  273 => 115,  269 => 114,  263 => 110,  257 => 105,  251 => 104,  243 => 101,  239 => 100,  233 => 96,  227 => 91,  221 => 90,  213 => 87,  209 => 86,  203 => 82,  197 => 77,  191 => 76,  183 => 73,  179 => 72,  173 => 68,  167 => 63,  161 => 62,  153 => 59,  149 => 58,  143 => 54,  137 => 49,  131 => 48,  123 => 45,  117 => 44,  111 => 40,  105 => 35,  99 => 34,  91 => 31,  85 => 30,  79 => 26,  74 => 23,  70 => 22,  66 => 21,  62 => 20,  42 => 2,);
+        return array (  1085 => 627,  1078 => 626,  1069 => 620,  1062 => 619,  1053 => 613,  1046 => 612,  1041 => 626,  1038 => 625,  1036 => 619,  1033 => 618,  1031 => 612,  1001 => 585,  975 => 561,  949 => 537,  943 => 536,  935 => 533,  928 => 528,  922 => 523,  916 => 522,  908 => 519,  901 => 514,  895 => 509,  889 => 508,  881 => 505,  874 => 500,  868 => 495,  862 => 494,  854 => 491,  847 => 486,  841 => 481,  835 => 480,  824 => 474,  818 => 470,  812 => 465,  806 => 464,  798 => 461,  791 => 456,  786 => 453,  782 => 452,  778 => 451,  757 => 432,  754 => 430,  725 => 403,  704 => 384,  701 => 382,  670 => 352,  664 => 351,  655 => 347,  645 => 340,  623 => 320,  620 => 318,  595 => 294,  589 => 293,  581 => 290,  574 => 285,  568 => 280,  562 => 279,  554 => 276,  547 => 271,  541 => 266,  535 => 265,  527 => 262,  520 => 257,  514 => 252,  508 => 251,  500 => 248,  493 => 243,  487 => 238,  481 => 237,  477 => 235,  471 => 233,  464 => 228,  458 => 223,  452 => 222,  441 => 216,  435 => 212,  429 => 207,  423 => 206,  412 => 200,  406 => 196,  400 => 191,  394 => 190,  386 => 187,  382 => 186,  375 => 181,  370 => 179,  348 => 159,  345 => 157,  320 => 133,  314 => 132,  306 => 129,  302 => 128,  296 => 124,  290 => 119,  284 => 118,  276 => 115,  272 => 114,  266 => 110,  260 => 105,  254 => 104,  246 => 101,  242 => 100,  236 => 96,  230 => 91,  224 => 90,  216 => 87,  212 => 86,  206 => 82,  200 => 77,  194 => 76,  186 => 73,  182 => 72,  176 => 68,  170 => 63,  164 => 62,  156 => 59,  152 => 58,  146 => 54,  140 => 49,  134 => 48,  126 => 45,  120 => 44,  114 => 40,  108 => 35,  102 => 34,  94 => 31,  88 => 30,  82 => 26,  77 => 23,  73 => 22,  69 => 21,  65 => 20,  45 => 2,);
     }
 
     public function getSourceContext(): Source
@@ -1491,27 +1609,27 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
     <div class=\"modal-dialog modal-lg modal-dialog-centered\">
         <div class=\"modal-content\">
             <div class=\"modal-header mx-auto row\">
-                <h2 class=\"modal-title\" id=\"editPartLabel\"> 
+                <h2 class=\"mt-2 modal-title\" id=\"editPartLabel\"> 
                     <i class=\"bi bi-pencil-square my-auto mx-1\"></i>
                         MODIFICA
                     <i class=\"bi bi-pencil-square my-auto mx-1\"></i>
                 </h2>
 
-                    <h4 class=\"modal-subtitle my-2\"> 
-                        Modifica dati dello scarico parziale
-                    </h4>
+                <h4 class=\"my-2 modal-subtitle\"> 
+                    Modifica dati dello scarico parziale.
+                </h4>
             </div>
         
             <div class=\"modal-body\">
                 <div class=\"container-fluid\">
-                    <form id=\"partial-edit\" method=\"POST\" action=\"partial-edit\" autocomplete=\"off\" novalidate>
+                    <form id=\"partial-edit\" method=\"POST\" action=\"partial-edit\" autocomplete=\"off\" novalidate >
                         <input type=\"hidden\" name=\"id_partial\" id=\"id_partial\" />
                         <input type=\"hidden\" id=\"date_load\" value=\"{{ transport.date_load }}\">
                         <input type=\"hidden\" id=\"date_unload\" value=\"{{ transport.date_unload }}\">
                         <input type=\"hidden\" name=\"csrf_token\" value=\"{{ csrf_token }}\" />
 
                         {# Destination #}
-                        <div class=\"row form-group mx-auto mb-3\">
+                        <div class=\"row form-group mx-auto my-2\">
                             <label for=\"destination\" class=\"col-4 form-control-label my-1\"> Destinazione: </label>
                             
                             <div class=\"col-8\">
@@ -1525,18 +1643,13 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
                         </div>
 
                         {# EXW #}
-                        <div class=\"row form-group mx-auto mb-3\">
+                        <div class=\"row form-group mx-auto my-2\">
                             <label for=\"exw\" class=\"col-4 form-control-label my-1\"> EXW: </label>
                             
                             <div class=\"col-8\">
                                 <select name=\"exw\" id=\"exw\" class=\"form-control {% if errors.exw %}is-invalid{% endif %}\">
-                                    <option value=\"destino\" class=\"opt-type\"> 
-                                        DESTINO
-                                    </option>
-                                        
-                                    <option value=\"fos\" class=\"opt-type\"> 
-                                        FOS
-                                    </option>
+                                    <option value=\"destino\" class=\"opt-type\"> DESTINO </option>
+                                    <option value=\"fos\" class=\"opt-type\"> FOS </option>
                                 </select>
 
                                 <div class=\"error-placeholder\">
@@ -1546,7 +1659,7 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
                         </div>
                             
                         {# Date #}
-                        <div class=\"row form-group mx-auto mb-3\">
+                        <div class=\"row form-group mx-auto my-2\">
                             <label for=\"date\" class=\"col-4 form-control-label my-1\"> Data carico: </label>
                             
                             <div class=\"col-8\">
@@ -1579,7 +1692,7 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"q_unloaded\" id=\"q_unloaded\" 
-                                    class=\"form-control {% if errors.q_unloaded %}is-invalid{% endif %}\" />
+                                       class=\"form-control {% if errors.q_unloaded %}is-invalid{% endif %}\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.q_unloaded %}<div class=\"invalid-feedback\">{{ errors.q_unloaded }}</div>{% endif %}
@@ -1593,7 +1706,7 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
                             
                             <div class=\"col-8\">
                                 <input type=\"text\" name=\"invoice\" id=\"invoice\" 
-                                    class=\"form-control {% if errors.invoice %}is-invalid{% endif %}\" />
+                                       class=\"form-control {% if errors.invoice %}is-invalid{% endif %}\" />
 
                                 <div class=\"error-placeholder\">
                                     {% if errors.invoice %}<div class=\"invalid-feedback\">{{ errors.invoice }}</div>{% endif %}
@@ -1604,13 +1717,13 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
                         <div class=\"modal-footer\">
                             <button type=\"button\" class=\"btn btn-default modal-cancel\" data-bs-dismiss=\"modal\">
                                 <span class=\"bi bi-x-circle\">
-                                    ANNULLA
+                                    CHIUDI 
                                 </span>    
                             </button>
-                                
-                            <button type=\"submit\" class=\"btn btn-default modal-save\" name=\"delete_trans\">
+                            
+                            <button type=\"submit\" class=\"btn btn-default modal-save\">
                                 <span class=\"bi bi-check-circle\">
-                                    CONFERMA
+                                    SALVA
                                 </span>   
                             </button>
                         </div>
@@ -1670,6 +1783,85 @@ class __TwigTemplate_e0043cc8f79df4f49d66ad244a62f5a5 extends Template
             </div>
         </div>
     </div>
-</div>", "transport-modals.twig", "C:\\wamp64\\www\\liquimet\\templates\\transport-modals.twig");
+</div>
+
+{% block jquery %}
+<script src=\"https://code.jquery.com/jquery-3.7.1.min.js\" 
+        integrity=\"sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=\" 
+        crossorigin=\"anonymous\">
+</script>
+{% endblock %}
+
+{% block datepicker %}
+<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js\" 
+        integrity=\"sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=\" 
+        crossorigin=\"anonymous\">
+</script>
+{% endblock %}
+
+{% block page_script %}
+<script>
+\$(document).ready(function () {
+/*   ____________________________________________
+//  |                                            |
+//  |          CACHE: MODAL, FORM, BTNS          |
+//  |____________________________________________|
+*/
+    const csrfToken = \$('input[name=\"csrf_token\"]').val();
+
+    /*const \$transModal = \$('#editTransModal');                     
+    const \$transForm  = \$('#transport-edit');       
+
+    const \$qtyModal = \$('#editQtyModal');              
+    const \$qtyForm  = \$('#editQtyModal').find('#quantity-edit');
+
+    const \$partModal = \$('#editPartModal'); 
+    const \$partForm  = \$('#editPartModal').find('#partial-edit');*/
+
+
+/*   _________________________________
+//  |                                 |
+//  |          MODAL EVENTS           |
+//  |_________________________________|
+*/
+//  On modal hide, reset form if changed but not saved
+    \$('#editTransModal, #editQtyModal, #editPartModal').on('hide.bs.modal', function () {
+        const \$form = \$(this).find('form');
+        const currentData = getFormData(\$form);
+            if (isFormChanged(originalData, currentData)) {
+                resetFormToOriginal(\$form);
+            }
+    });
+//  When hidden, reset datepicker and form
+    \$('#editTransModal, #editQtyModal, #editPartModal').on('hidden.bs.modal', function () {
+        const dp = \$(this).find('.datepicker');
+        const \$form = \$(this).find('form');
+            
+            dp.datepicker('clearDates').val('');
+            \$form[0].reset();
+
+                if (\$form.data('validator')) {
+                    \$form.validate().resetForm();
+                }
+ 
+            \$form.find('.is-invalid, .is-valid').removeClass('is-invalid is-valid');
+        
+        if (this.id === 'editQtyModal') switched = false;
+    });
+//  Quantity edit button active status
+    \$('#editQtyModal').on('hidden.bs.modal', function() {
+        const id = \$(this).data('trigger');                  // stored ID of the button
+        const \$btn = \$(`#transport-tbody .updateQty[data-id=\"\${id}\"]`);
+            if (id) {
+                // Remove active class and blur the button
+                \$btn.removeClass('active').blur();
+            }     
+        \$(this).removeData('trigger');                  // clean stored reference
+    }); 
+
+
+});
+</script>
+{% endblock %}", "transport-modals.twig", "C:\\wamp64\\www\\liquimet\\templates\\transport-modals.twig");
     }
 }

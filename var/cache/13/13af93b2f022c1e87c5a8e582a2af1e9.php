@@ -51,7 +51,7 @@ class __TwigTemplate_944c85a528fcee4500eb85a73adadfc6 extends Template
                 <ul class=\"pagination justify-content-center my-auto\">
                     ";
             // line 8
-            yield "                    <li class=\"page-item ";
+            yield "                    <li class=\"page-item my-auto ";
             if ((($context["page"] ?? null) <= 1)) {
                 yield "disabled";
             }
@@ -94,7 +94,7 @@ class __TwigTemplate_944c85a528fcee4500eb85a73adadfc6 extends Template
             yield "
                     ";
             // line 23
-            yield "                    <li class=\"page-item ";
+            yield "                    <li class=\"page-item my-auto ";
             if ((($context["page"] ?? null) >= ($context["pagination"] ?? null))) {
                 yield "disabled";
             }
@@ -166,7 +166,7 @@ class __TwigTemplate_944c85a528fcee4500eb85a73adadfc6 extends Template
             <nav class=\"my-1 mx-auto\">
                 <ul class=\"pagination justify-content-center my-auto\">
                     {# Previous Page Link #}
-                    <li class=\"page-item {% if page <= 1 %}disabled{% endif %}\">
+                    <li class=\"page-item my-auto {% if page <= 1 %}disabled{% endif %}\">
                         <button class=\"page-link transport-page\" data-page=\"{{ page - 1 }}\">
                             &laquo;
                         </button>
@@ -181,7 +181,7 @@ class __TwigTemplate_944c85a528fcee4500eb85a73adadfc6 extends Template
                     {% endfor %}
 
                     {# Next Page Link #}
-                    <li class=\"page-item {% if page >= pagination %}disabled{% endif %}\">
+                    <li class=\"page-item my-auto {% if page >= pagination %}disabled{% endif %}\">
                         <button class=\"page-link transport-page\" data-page=\"{{ page + 1 }}\">
                             &raquo;
                         </button>

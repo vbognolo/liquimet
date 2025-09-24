@@ -433,27 +433,27 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header mx-auto row">
-                <h2 class="modal-title" id="editPartLabel"> 
+                <h2 class="mt-2 modal-title" id="editPartLabel"> 
                     <i class="bi bi-pencil-square my-auto mx-1"></i>
                         MODIFICA
                     <i class="bi bi-pencil-square my-auto mx-1"></i>
                 </h2>
 
-                    <h4 class="modal-subtitle my-2"> 
-                        Modifica dati dello scarico parziale
-                    </h4>
+                <h4 class="my-2 modal-subtitle"> 
+                    Modifica dati dello scarico parziale.
+                </h4>
             </div>
         
             <div class="modal-body">
                 <div class="container-fluid">
-                    <form id="partial-edit" method="POST" action="partial-edit" autocomplete="off" novalidate>
+                    <form id="partial-edit" method="POST" action="partial-edit" autocomplete="off" novalidate >
                         <input type="hidden" name="id_partial" id="id_partial" />
                         <input type="hidden" id="date_load" value="{{ transport.date_load }}">
                         <input type="hidden" id="date_unload" value="{{ transport.date_unload }}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token }}" />
 
                         {# Destination #}
-                        <div class="row form-group mx-auto mb-3">
+                        <div class="row form-group mx-auto my-2">
                             <label for="destination" class="col-4 form-control-label my-1"> Destinazione: </label>
                             
                             <div class="col-8">
@@ -467,18 +467,13 @@
                         </div>
 
                         {# EXW #}
-                        <div class="row form-group mx-auto mb-3">
+                        <div class="row form-group mx-auto my-2">
                             <label for="exw" class="col-4 form-control-label my-1"> EXW: </label>
                             
                             <div class="col-8">
                                 <select name="exw" id="exw" class="form-control {% if errors.exw %}is-invalid{% endif %}">
-                                    <option value="destino" class="opt-type"> 
-                                        DESTINO
-                                    </option>
-                                        
-                                    <option value="fos" class="opt-type"> 
-                                        FOS
-                                    </option>
+                                    <option value="destino" class="opt-type"> DESTINO </option>
+                                    <option value="fos" class="opt-type"> FOS </option>
                                 </select>
 
                                 <div class="error-placeholder">
@@ -488,7 +483,7 @@
                         </div>
                             
                         {# Date #}
-                        <div class="row form-group mx-auto mb-3">
+                        <div class="row form-group mx-auto my-2">
                             <label for="date" class="col-4 form-control-label my-1"> Data carico: </label>
                             
                             <div class="col-8">
@@ -521,7 +516,7 @@
                             
                             <div class="col-8">
                                 <input type="text" name="q_unloaded" id="q_unloaded" 
-                                    class="form-control {% if errors.q_unloaded %}is-invalid{% endif %}" />
+                                       class="form-control {% if errors.q_unloaded %}is-invalid{% endif %}" />
 
                                 <div class="error-placeholder">
                                     {% if errors.q_unloaded %}<div class="invalid-feedback">{{ errors.q_unloaded }}</div>{% endif %}
@@ -535,7 +530,7 @@
                             
                             <div class="col-8">
                                 <input type="text" name="invoice" id="invoice" 
-                                    class="form-control {% if errors.invoice %}is-invalid{% endif %}" />
+                                       class="form-control {% if errors.invoice %}is-invalid{% endif %}" />
 
                                 <div class="error-placeholder">
                                     {% if errors.invoice %}<div class="invalid-feedback">{{ errors.invoice }}</div>{% endif %}
@@ -546,13 +541,13 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default modal-cancel" data-bs-dismiss="modal">
                                 <span class="bi bi-x-circle">
-                                    ANNULLA
+                                    CHIUDI 
                                 </span>    
                             </button>
-                                
-                            <button type="submit" class="btn btn-default modal-save" name="delete_trans">
+                            
+                            <button type="submit" class="btn btn-default modal-save">
                                 <span class="bi bi-check-circle">
-                                    CONFERMA
+                                    SALVA
                                 </span>   
                             </button>
                         </div>
@@ -613,3 +608,82 @@
         </div>
     </div>
 </div>
+
+{% block jquery %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+        crossorigin="anonymous">
+</script>
+{% endblock %}
+
+{% block datepicker %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" 
+        integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" 
+        crossorigin="anonymous">
+</script>
+{% endblock %}
+
+{% block page_script %}
+<script>
+$(document).ready(function () {
+/*   ____________________________________________
+//  |                                            |
+//  |          CACHE: MODAL, FORM, BTNS          |
+//  |____________________________________________|
+*/
+    const csrfToken = $('input[name="csrf_token"]').val();
+
+    /*const $transModal = $('#editTransModal');                     
+    const $transForm  = $('#transport-edit');       
+
+    const $qtyModal = $('#editQtyModal');              
+    const $qtyForm  = $('#editQtyModal').find('#quantity-edit');
+
+    const $partModal = $('#editPartModal'); 
+    const $partForm  = $('#editPartModal').find('#partial-edit');*/
+
+
+/*   _________________________________
+//  |                                 |
+//  |          MODAL EVENTS           |
+//  |_________________________________|
+*/
+//  On modal hide, reset form if changed but not saved
+    $('#editTransModal, #editQtyModal, #editPartModal').on('hide.bs.modal', function () {
+        const $form = $(this).find('form');
+        const currentData = getFormData($form);
+            if (isFormChanged(originalData, currentData)) {
+                resetFormToOriginal($form);
+            }
+    });
+//  When hidden, reset datepicker and form
+    $('#editTransModal, #editQtyModal, #editPartModal').on('hidden.bs.modal', function () {
+        const dp = $(this).find('.datepicker');
+        const $form = $(this).find('form');
+            
+            dp.datepicker('clearDates').val('');
+            $form[0].reset();
+
+                if ($form.data('validator')) {
+                    $form.validate().resetForm();
+                }
+ 
+            $form.find('.is-invalid, .is-valid').removeClass('is-invalid is-valid');
+        
+        if (this.id === 'editQtyModal') switched = false;
+    });
+//  Quantity edit button active status
+    $('#editQtyModal').on('hidden.bs.modal', function() {
+        const id = $(this).data('trigger');                  // stored ID of the button
+        const $btn = $(`#transport-tbody .updateQty[data-id="${id}"]`);
+            if (id) {
+                // Remove active class and blur the button
+                $btn.removeClass('active').blur();
+            }     
+        $(this).removeData('trigger');                  // clean stored reference
+    }); 
+
+
+});
+</script>
+{% endblock %}

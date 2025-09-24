@@ -54,14 +54,14 @@ class Quantity{
     public function validate_quantity_data(array $quantity): array {
         $errors = [];
 
-        //  Required fields 
+    //  Required fields 
         foreach (['kg_load', 'cooling', 'price_typology', 'kg_unload', 'liquid_density', 'gas_weight', 'pcs_ghv'] as $field) {
             if (!isset($quantity[$field]) || $quantity[$field] === '') {
                 $errors[$field] = "Campo obbligatorio.";
             } 
         }
 
-        //  Kg Load validation
+    //  Kg Load validation
         if (!Validate::validate_number($quantity['kg_load'], 'number') || 
             !Validate::validate_number($quantity['kg_load'], 'min')) {
             $errors['kg_load'] = "Quantità caricata deve essere un numero positivo (intero o decimale).";
@@ -84,7 +84,6 @@ class Quantity{
                 $errors['price_value'] = "Campo obbligatorio.";
             }
         }
-
         //  Kg Unload validation
         if (!Validate::validate_number($quantity['kg_unload'], 'number') ||
             !Validate::validate_number($quantity['kg_unload'], 'min')) {

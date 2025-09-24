@@ -7,89 +7,12 @@ class Partial {
 
     public function __construct (Database $db) {
         $this->db = $db;                                 
-    }
-
-    public function validate_partial(array $partial, string $dateLoadStr, string $dateUnloadStr): array {
-        $errors = [];
-
-            //  Required fields check
-            foreach (['destination', 'exw', 'place', 'q_unloaded', 'invoice'] as $field) {
-                if (empty($partial[$field])) {
-                    $errors[$field] = "Campo obbligatorio.";
-                }
-            }
-
-            //  Destination validation
-            if (!empty($partial['destination']) && !Validate::validate_string($partial['destination'], 'lettersSpaces')) {
-                $errors['destination'] = "Destinazione può contenere lettere e spazi (senza spazio iniziale).";
-            } elseif (!empty($partial['destination']) && !Validate::chars_length($partial['destination'], 3, 50)) {
-                $errors['destination'] = "Usare almeno 3 e al massimo 50 caratteri.";
-            } 
-
-            //  Exw validation
-            if (!empty($partial['exw']) && !Validate::validate_string($partial['exw'], 'letters')) {
-                $errors['exw'] = "EXW può contenere solo lettere. Spazi non consentiti.";
-            } 
-
-            //  Place validation
-            if (!empty($partial['place']) && !Validate::validate_string($partial['place'], 'lettersSpaces')) {
-                $errors['place'] = "Luogo scarico può contenere lettere e spazi bianchi.";
-            } elseif (!empty($partial['place']) && !Validate::chars_length($partial['place'], 3, 50)) {
-                $errors['place'] = "Usare almeno 3 e al massimo 50 caratteri.";
-            } 
-
-            //  Q Unloaded validation
-            if (!empty($partial['q_unloaded']) && !Validate::validate_number($partial['q_unloaded'], 'digits')) {
-                $errors['q_unloaded'] = "";
-            } 
-
-            //  Invoice validation
-            if (!empty($partial['invoice']) && !Validate::validate_number($partial['invoice'], 'digits')) {
-                $errors['invoice'] = "";
-            } 
-
-            //  Date validation
-            $dateErrors = $this->validate_partial_date($partial['date'] ?? '', $dateLoadStr ?? '', $dateUnloadStr ?? '');
-            $errors = array_merge($errors, $dateErrors); 
-
-        return $errors;
-    }
-
-    public function validate_partial_date(string $dateStr, string $dateLoadStr, string $dateUnloadStr): array {
-        $errors = [];
-
-        $partialDate = trim($dateStr);
-        $dateLoad = trim($dateLoadStr);
-        $dateUnload = trim($dateUnloadStr);
-
-        $partialDate = \DateTime::createFromFormat('d-m-Y', $dateStr);
-        $dateLoad = \DateTime::createFromFormat('d-m-Y', $dateLoadStr);
-        $dateUnload = \DateTime::createFromFormat('d-m-Y', $dateUnloadStr);
-        $today = new \DateTime('today');
-
-            if (!$dateStr) {
-                $errors['date'] = "Campo obbligatorio.";
-            } elseif (!$partialDate || $partialDate->format('d-m-Y') !== $dateStr) {
-                $errors['date'] = "Inserire una data valida.";
-            } elseif ($partialDate > $today) {
-                $errors['date'] = "Inserire una data valida. Non sono permesse date future.";
-            } elseif ($dateLoad && $partialDate < $dateLoad) {
-                $errors['date'] = "La data non può essere precedente alla data di carico del trasporto.";
-            } elseif ($dateUnload && $partialDate > $dateUnload) {
-                $errors['date'] = "La data non può essere successiva alla data di scarico del trasporto.";
-            }
-
-        return $errors;
-    }
-
-/**********************************************************
- * SELECT statements to get transports 
- *    Get Partial By ID             => get($id)
- *    Get All Partials by Transport ID     => getParts($id)
- *    Get Platform Transports      => getAllTransports()
- *    Get All Full Transports      => getFull()
- *    Get All Partial Transports   => getPartial()  
- *********************************************************/ 
+    }  
+/*--------------- SELECT --------------------------------------------------------------------------------------------------------- SELECT ---------------/ 
+/                           ◦ get (id)                                                                                                                   /
+/                           ◦ getAll                                                                                                                     /
+/                           ◦ getRecent (user = null)                                                                                                    /
+/-------------------------------------------------------------------------------------------------------------------------------------------------------*/  
     public function get(int $id){
         $sql = "SELECT id_partial, destination, exw, date, place, q_unloaded, invoice, id_transport, id_user
                 FROM `partials`
@@ -106,6 +29,77 @@ class Partial {
                 
         return $this->db->runSQL($sql)->fetchAll(); 
     } 
+/*--------------- VALIDATION ------------------------------------------------------------------------------------------------- VALIDATION ---------------/ 
+/                               ◦ validate_partial_data (partial, ?id)                                                                                   /
+/                               ◦ validate_partial_date (dateStr, dateLoadStr, dateUnloadStr)                                                            /
+/-------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    public function validate_partial_data(array $partial, ?int $id = null): array {
+        $errors = [];
+        //  Required fields check
+            foreach (['destination', 'exw', 'place', 'q_unloaded', 'invoice'] as $field) {
+                if (empty($partial[$field])) {
+                    $errors[$field] = "Campo obbligatorio.";
+                }
+            }
+        //  Destination validation
+            if (!empty($partial['destination']) && !Validate::validate_string($partial['destination'], 'lettersSpaces')) {
+                $errors['destination'] = "Destinazione può contenere lettere e spazi (senza spazio iniziale).";
+            } elseif (!empty($partial['destination']) && !Validate::chars_length($partial['destination'], 3, 50)) {
+                $errors['destination'] = "Usare almeno 3 e al massimo 50 caratteri.";
+            } 
+        //  Exw validation
+            /*if (!empty($partial['exw']) && !Validate::validate_string($partial['exw'], 'letters')) {
+                $errors['exw'] = "EXW può contenere solo lettere. Spazi non consentiti.";
+            } */
+        //  Place validation
+            if (!empty($partial['place']) && !Validate::validate_string($partial['place'], 'lettersSpaces')) {
+                $errors['place'] = "Luogo scarico può contenere lettere e spazi bianchi.";
+            } elseif (!empty($partial['place']) && !Validate::chars_length($partial['place'], 3, 50)) {
+                $errors['place'] = "Usare almeno 3 e al massimo 50 caratteri.";
+            } 
+        //  Q Unloaded validation
+            if (!empty($partial['q_unloaded']) && 
+                !Validate::validate_number($partial['q_unloaded'], 'digits') ||
+                !Validate::validate_number($partial['q_unloaded'], 'min')) {
+                    $errors['q_unloaded'] = "Quantità scaricata deve essere un numero intero positivo maggiore o uguale a 1, senza segni o decimali.";
+            } 
+        //  Invoice validation
+            if (!empty($partial['invoice']) && 
+                !Validate::validate_number($partial['invoice'], 'digits') || 
+                !Validate::validate_number($partial['invoice'], 'min')) {
+                    $errors['invoice'] = "Fattura deve essere un numero intero positivo maggiore o uguale a 1, senza segni o decimali.";
+            } 
+        //  Date validation
+            /*$dateErrors = $this->validate_partial_date($partial['date'] ?? '', $dateLoadStr ?? '', $dateUnloadStr ?? '');
+            $errors = array_merge($errors, $dateErrors); */
+        return $errors;
+    }
+
+    public function validate_partial_date(string $dateStr, string $dateLoadStr, string $dateUnloadStr): array {
+        $errors = [];
+
+        $today = new \DateTime('today');
+        $minDate = \DateTime::createFromFormat('d-m-Y', '01-01-2006');
+        $date = \DateTime::createFromFormat('d-m-Y', $dateStr);
+        $dateLoad = \DateTime::createFromFormat('d-m-Y', $dateLoadStr);
+        $dateUnload = \DateTime::createFromFormat('d-m-Y', $dateUnloadStr);
+
+            if (!$date) { $errors['date'] = "Inserire una data valida."; } 
+            
+            if (empty($errors)) {
+                if ($date < $minDate) {
+                    $errors['date'] = "Inserire una data valida. Non sono permesse date precedenti all'anno 2006.";
+                } elseif ($dateLoad > $today) {
+                    $errors['date'] = "Inserire una data valida. Non sono permesse date future.";
+                } elseif ($dateLoad && $date < $dateLoad) {
+                    $errors["date"] = "La data non può essere precedente alla data di carico del trasporto.";
+                } elseif ($dateUnload && $date > $dateUnload) {
+                    $errors['date'] = "La data non può essere successiva alla data di scarico del trasporto.";
+                }
+            }
+
+        return $errors;
+    }
 
     public function getPartByTransportID(int $id): array {      
         $sql = "SELECT p.id_partial, p.destination, p.exw, p.date, p.place, p.q_unloaded, p.invoice, 
