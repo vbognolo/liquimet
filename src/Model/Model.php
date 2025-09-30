@@ -19,10 +19,6 @@ class Model {
         public function getPlatform() {
             return $this->getInstance(Platform::class);
         }
-
-        public function getNavigation() {
-            return $this->getInstance(Navigation::class);
-        }
     
         public function getTransport() {
             return $this->getInstance(Transport::class);
@@ -46,10 +42,6 @@ class Model {
 
         public function getLoginAttempt() {
             return $this->getInstance(LoginAttempt::class);
-        }
-    
-        public function getRoleManager() {
-            return $this->getInstance(RoleManager::class);
         }
 
         public function getTitle() {
